@@ -1,3 +1,9 @@
+To the user
+--------------------
+To view steps script used for MOC data run see pcsf_master.R
+
+Otherwise observe pcsf documentation below.
+
 
 
 PCSF: an R-Package for Network-Based Interpretation of High-throughput Data
