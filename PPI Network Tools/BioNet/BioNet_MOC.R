@@ -9,6 +9,7 @@ interactomne <- as_graphnel(interactome)
 
 
 
+
 pvals <- cbind(t = dataLym$t.pval, s = dataLym$s.pval)
 rownames(pvals) <- dataLym$label
 pval <- aggrPvals(pvals, order = 2, plot = FALSE)
