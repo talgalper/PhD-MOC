@@ -10,7 +10,9 @@ Notes: Was receiveing attribute error. networkx package depreciated and removed 
 
 ### In "hhio.py" line 155
 From: A = np.asarray(f[matrix_name].value, dtype=np.float32)
+
 To: A = np.asarray(f[(matrix_name)], dtype=np.float32)
+
 Notes: Was receiving attribute error. h5py deprecated dataset.value attribute 
 
 Hierarchical HotNet
