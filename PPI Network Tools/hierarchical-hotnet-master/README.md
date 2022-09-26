@@ -3,7 +3,9 @@ Changes:
 
 ### In "find_permutation_bins.py" line 31 
 From: G = max(nx.connected_component_subgraphs(G), key=len)
+
 To: G = max((G.subgraph(c) for c in G), key=len)
+
 Notes: Was receiveing attribute error. networkx package depreciated and removed connected_component_subgraphs attribute
 
 ### In "hhio.py" line 155
