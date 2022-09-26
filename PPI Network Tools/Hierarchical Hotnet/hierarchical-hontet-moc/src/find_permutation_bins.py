@@ -28,7 +28,7 @@ def run(args):
     G = nx.Graph()
     G.add_edges_from(edge_list)
     G = G.subgraph(gene_to_score)
-    G = max(nx.connected_component_subgraphs(G), key=len)
+    G = max((G.subgraph(c) for c in G), key=len)
     common_genes = set(G.nodes())
 
     degree_to_nodes = defaultdict(set)
