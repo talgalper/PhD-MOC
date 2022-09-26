@@ -1,3 +1,10 @@
+To the user:
+------------------------
+See `moc_commands_parallel.sh` for pipeline used to run MOC data
+
+Changes made to the src files in the example run were also made here. See `hierarchical-hotnet-master` for details of changes.
+
+
 Hierarchical HotNet
 =======================
 
