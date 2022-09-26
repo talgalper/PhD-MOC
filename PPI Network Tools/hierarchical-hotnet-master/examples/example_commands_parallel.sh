@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-data=$PWD/data
+data=$PWD/data/example_data
 intermediate=$PWD/intermediate
 results=$PWD/results
 
