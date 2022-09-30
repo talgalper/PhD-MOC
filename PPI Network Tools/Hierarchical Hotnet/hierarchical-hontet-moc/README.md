@@ -1,8 +1,9 @@
+Code now working but need to find suitable input data in SVI files somewhere
+=======================
+
 To the user:
 ------------------------
 See `moc_commands_parallel.sh` for pipeline used to run MOC data. 
-
-WARNING: Running MOC data is extremely resource intensive and would not recommend running unless you know what your doing. Was run using system with approximately 180GB of memory (192 cores) for 30min.
 
 Changes made to the src files in order to accomodate updated supporting packages. See `hierarchical-hotnet-master` for details of changes.
 
