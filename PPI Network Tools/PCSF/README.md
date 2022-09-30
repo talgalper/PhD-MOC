@@ -2,7 +2,7 @@ To the user
 --------------------
 To view script created for MOC data run see `pcsf_master.R`
 
-Otherwise observe pcsf documentation below.
+Otherwise refer to pcsf documentation below.
 
 
 
