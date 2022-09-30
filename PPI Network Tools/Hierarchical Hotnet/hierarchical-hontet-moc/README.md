@@ -1,5 +1,10 @@
 ### Code now working but need to find suitable input data in SVI files somewhere
 
+Need to creqate data directory with following labelled files:
+* Scores: `scores_1.tsv`
+* Index gene: `network_1_index_gene.tsv`
+* Edge list: `network_1_edge_list.tsv`
+
 
 To the user:
 ------------------------
