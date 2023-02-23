@@ -73,9 +73,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 
 
-elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
-    echo "Linux detected"
-    echo "Setting up fpocket for Linux..."
+elif [[ "$(lsb_release -si)" == "Ubuntu" ]]; then
+    echo "Ubuntu detected"
+    echo "Setting up fpocket for Ubuntu..."
 
     dpkg -s libnetcdf-dev &> /dev/null
     if [ $? -eq 0 ]; then
