@@ -21,8 +21,8 @@ pdb_dir <- "structures"
 pdb_files <- list.files(pdb_dir, pattern = "\\.pdb$", full.names = TRUE)
 
 # Create an empty data frame to store the results
-result_df <- data.frame(file_name = character(), atom_residue = logical(), struct_conf = numeric())
-removed_df <- data.frame(file_name = character(), atom_residue = logical(), struct_conf = numeric())
+result_df <- data.frame(file_name = character(), atom_residue = logical(), struct_score = numeric())
+removed_df <- data.frame(file_name = character(), atom_residue = logical(), struct_score = numeric())
 
 # Loop over the pdb files
 for (pdb_file in pdb_files) {
@@ -39,24 +39,24 @@ for (pdb_file in pdb_files) {
   atom_residue <- all(sapply(b_values, function(b) length(b) == 1))
   
   # Calculate the percentage of "b" column values that are greater than or equal to 50
-  struct_conf <- mean(pdb_df$b)
+  struct_score <- mean(pdb_df$b)
   
   # removes file prefix
   pdb_file <- gsub(".*/", "", pdb_file)
   
   # Add the result to the appropriate data frame
-  if (struct_conf >= 50) {
-    result_df <- rbind(result_df, data.frame(file_name = pdb_file, atom_residue = atom_residue, struct_conf = struct_conf))
+  if (struct_score >= 50) {
+    result_df <- rbind(result_df, data.frame(file_name = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
   } else {
-    removed_df <- rbind(removed_df, data.frame(file_name = pdb_file, atom_residue = atom_residue, struct_conf = struct_conf))
+    removed_df <- rbind(removed_df, data.frame(file_name = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
   }
 }
 
-write.csv(result_df, "results/af_struct_conf.csv", row.names = F)
+write.csv(result_df, "results/af_struct_score.csv", row.names = F)
 write.csv(removed_df, "results/af_low_conf_struct.csv", row.names = F)
 
 
 # for shell script: echo 
-# "Warning!: check af_struct_conf.csv for files with varying atomic confidence scores per amino acid residue"
+# "Warning!: check af_struct_score.csv for files with varying atomic confidence scores per amino acid residue"
 # if any values in the atom_residue column = FALSE
 
