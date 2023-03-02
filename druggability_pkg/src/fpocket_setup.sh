@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# fix ubuntu/linux detection and install
-
 ### Checking and installing fpocket requirements ###
 
 # Detect the user's system (Mac or Linux)
