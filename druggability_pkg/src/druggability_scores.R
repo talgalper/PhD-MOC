@@ -60,7 +60,6 @@ files <- list.files(input_dir)
 results <- data.frame(filename = character(),
                       pocket = logical(),
                       druggability = logical(),
-                      both_greater_than_0.4 = logical(),
                       stringsAsFactors = FALSE)
 
 # Loop through each file
@@ -77,9 +76,6 @@ for (file in files) {
   # Find the highest value in the second row
   druggability_max <- max(data[2,])
   
-  # Check if both column 2 and 3 are greater than or equal to 0.4
-  both_greater_than_0.4 <- pocket_max >= 0.4 & druggability_max >= 0.4
-  
   # Count the number of values above 0.4 in row 2
   num_drug_pockets <- sum(data[2,] >= 0.4)
   
@@ -88,10 +84,11 @@ for (file in files) {
                                        uniprot_id = uniprot_id,
                                        pocket = pocket_max,
                                        druggability = druggability_max,
-                                       both_greater_than_0.4 = both_greater_than_0.4,
                                        num_drug_pockets = num_drug_pockets))
 }
 
+# Order the table by highest druggability scores
+results <- results[order(-results$druggability),]
 
 write_csv(results, "results/fpocket_druggability.csv")
 

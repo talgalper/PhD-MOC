@@ -26,13 +26,14 @@ fi
 
 ## remove structures with less than 50% confidence
 # creates list of files with confidence >= 50%
-#Rscript src/af_struct_conf.R structures
+Rscript src/af_struct_conf.R structures
 
-# separates all files with confidence <50%
-filename_list=$(cut -d ',' -f 1 af_low_conf_struct.csv)
+# separates all files with confidence <50% and removes quotation marks
+filename_list=$(cut -d ',' -f 1 results/af_low_conf_struct.csv | tail -n +2 | sed 's/"//g')
 
 # loop through the filenames and move the corresponding files to the new directory
 for filename in $filename_list; do
+  echo "Moving file $filename to low_conf_struct/"
   mv structures/"$filename" low_conf_struct/
 done
 
@@ -40,18 +41,13 @@ done
 echo "Starting fpocket on structures"
 sh src/fpocket_run.sh structures/
 
-
 ## format scores
-#Rscript src/druggability_scores.R results/scores
+Rscript src/druggability_scores.R results/scores
 
 
-
-# try combine r scripts into single function make one results table.
-
+## potential additions
 # find best paraemter(number) for small molecule binding interface
 # can have a green zone 70-100% & 50-70%
 # highlight pymol druggability stuctures greater than 40 with green
 # search literature for druggability threshold
-# cannot detect ubuntu system
 
-# cant use deeppocket because you need CUDA and i have a intel GPU
