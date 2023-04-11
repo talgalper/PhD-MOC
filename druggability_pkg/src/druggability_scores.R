@@ -8,6 +8,8 @@ library(readr)
 args <- commandArgs(trailingOnly = TRUE)
 input_dir <- args[1]
 
+input_dir <- "results/scores/"
+
 
 fpocket_format <- function(txt_file){
   # read in .txt file
@@ -27,14 +29,18 @@ fpocket_format <- function(txt_file){
   new_df <- as.data.frame(new_df)
   
   # rename columns
-  colnames(new_df) <- new_df[1,]
   new_df <- new_df[-1,]
+  new_df <- as.data.frame(new_df) # make sure its a data frame
+  colnames(new_df) <- paste0("pocket_", 1:ncol(new_df))
   
   # rename rows
-  new_df <- cbind(new_df, do.call("rbind", strsplit(as.character(new_df$`Pocket 1 :`), ":")))
+  new_df <- cbind(new_df, do.call("rbind", strsplit(as.character(new_df$`pocket_1`), ":")))
   new_df <- new_df[, -ncol(new_df)]
-  rownames(new_df) <- new_df[, ncol(new_df)]
+  row_names <- new_df[, ncol(new_df)]
   new_df <- new_df[, -ncol(new_df)]
+  new_df <- as.data.frame(new_df) # make sure its a data frame
+  colnames(new_df) <- paste0("pocket_", 1:ncol(new_df))
+  rownames(new_df) <- row_names
   
   # loop through every cell in the data frame and remove text before ":"
   for (i in 1:nrow(new_df)) {
@@ -63,9 +69,12 @@ results <- data.frame(filename = character(),
                       stringsAsFactors = FALSE)
 
 # Loop through each file
-for (file in files) {
+for (i in seq_along(files)) {
+  file <- files[i]
   # Extract the UniProt ID from the filename
   uniprot_id <- gsub("^.*_(\\w{6})\\.txt$", "\\1", file)
+  
+  print(paste0("Formatting file ", i, " of ", length(files), ": ", file))
   
   # Read in the data using the function
   data <- fpocket_format(paste0("results/scores/", file))
@@ -86,6 +95,7 @@ for (file in files) {
                                        druggability = druggability_max,
                                        num_drug_pockets = num_drug_pockets))
 }
+
 
 # Order the table by highest druggability scores
 results <- results[order(-results$druggability),]
