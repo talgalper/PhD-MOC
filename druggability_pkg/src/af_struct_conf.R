@@ -14,9 +14,6 @@ library(RCurl)
 args <- commandArgs(trailingOnly = TRUE)
 pdb_dir <- args[1]
 
-# leave this in until the Rscript works in shell script
-pdb_dir <- "structures"
-
 # Get a list of all the PDB files in the directory
 pdb_files <- list.files(pdb_dir, pattern = "\\.pdb$", full.names = TRUE)
 
