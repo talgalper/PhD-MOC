@@ -71,7 +71,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 
 
-elif [[ "$(lsb_release -si)" == "Ubuntu" ]]; then
+elif grep -qi ubuntu /etc/os-release; then
     echo "Ubuntu detected"
     echo "Setting up fpocket for Ubuntu..."
 
