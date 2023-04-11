@@ -8,8 +8,6 @@ library(readr)
 args <- commandArgs(trailingOnly = TRUE)
 input_dir <- args[1]
 
-input_dir <- "results/scores/"
-
 
 fpocket_format <- function(txt_file){
   # read in .txt file
