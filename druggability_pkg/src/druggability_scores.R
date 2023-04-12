@@ -70,7 +70,7 @@ results <- data.frame(filename = character(),
 for (i in seq_along(files)) {
   file <- files[i]
   # Extract the UniProt ID from the filename
-  uniprot_id <- gsub("^.*_(\\w{6})\\.txt$", "\\1", file)
+  uniprot_id <- sub(".*-(.*?)-model.*", "\\1", filename)
   
   print(paste0("Formatting file ", i, " of ", length(files), ": ", file))
   
