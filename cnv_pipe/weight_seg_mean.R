@@ -105,321 +105,67 @@ weight_seg_mean <- function(cnv_data) {
   }
   
   
-  
-  # This code checks to see if this data frame is available within dfs[]
-  if (length(dfs) >= 1 && !is.null(dfs[[1]])) {
-    # assign segment means to each gene based on overlaps
-    overlaps_1 <- dfs[[1]]
-    # Merge no_overlaps_1 with cnv_data to assign segment_mean scores to loc_ids
-    overlaps_1 <- merge(overlaps_1, cnv_data[c("loc_id", "Segment_Mean")], by = "loc_id", all.x = TRUE)
-    
-    # remove unnecessary columns
-    overlaps_1 <- subset(overlaps_1, select = c("gene_id", "Segment_Mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_1) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  
-  if (length(dfs) >= 2 && !is.null(dfs[[2]])) {
-    
-    # Select the second overlaps dataframe
-    overlaps_2 <- dfs[[2]]
-    
-    # Split loc_id into overlap_a and overlap_b columns
-    overlaps_2 <- overlaps_2 %>% separate(loc_id, c("overlap_a", "overlap_b"), sep = ";")
-    
-    # Add columns with the length of each overlap
-    overlaps_2 <- overlaps_2 %>%
-      mutate(length_a = cnv_data$End[match(overlap_a, cnv_data$loc_id)] - cnv_data$Start[match(overlap_a, cnv_data$loc_id)] + 1,
-             length_b = cnv_data$End[match(overlap_b, cnv_data$loc_id)] - cnv_data$Start[match(overlap_b, cnv_data$loc_id)] + 1)
-    
-    # Calculate weighted segment mean for overlap_a
-    overlaps_2 <- overlaps_2 %>%
-      mutate(weighted_seg_mean_a = (length_a/(length_a + length_b)) * cnv_data$Segment_Mean[match(overlap_a, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_2 <- overlaps_2 %>%
-      mutate(weighted_seg_mean_b = (length_b/(length_a + length_b)) * cnv_data$Segment_Mean[match(overlap_b, cnv_data$loc_id)])
-    
-    # Calculate adjusted segment mean 
-    overlaps_2 <- overlaps_2 %>%
-      mutate(adjusted_seg_mean = (weighted_seg_mean_a + weighted_seg_mean_b) / 2)
-    
-    # remove unnecessary columns
-    overlaps_2 <- subset(overlaps_2, select = c("gene_id", "adjusted_seg_mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_2) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  
-  if (length(dfs) >= 3 && !is.null(dfs[[3]])) {
-    overlaps_3 <- dfs[[3]]
-    
-    # Split loc_id into overlap_a and overlap_b columns
-    overlaps_3 <- overlaps_3 %>% separate(loc_id, c("overlap_a", "overlap_b", "overlap_c"), sep = ";")
-    
-    # Add columns with the length of each overlap
-    overlaps_3 <- overlaps_3 %>%
-      mutate(length_a = cnv_data$End[match(overlap_a, cnv_data$loc_id)] - cnv_data$Start[match(overlap_a, cnv_data$loc_id)] + 1,
-             length_b = cnv_data$End[match(overlap_b, cnv_data$loc_id)] - cnv_data$Start[match(overlap_b, cnv_data$loc_id)] + 1,
-             length_c = cnv_data$End[match(overlap_c, cnv_data$loc_id)] - cnv_data$Start[match(overlap_c, cnv_data$loc_id)] + 1)
-    
-    # Calculate weighted segment mean for overlap_a
-    overlaps_3 <- overlaps_3 %>%
-      mutate(weighted_seg_mean_a = (length_a/(length_a + length_b + length_c)) * cnv_data$Segment_Mean[match(overlap_a, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_3 <- overlaps_3 %>%
-      mutate(weighted_seg_mean_b = (length_b/(length_a + length_b + length_c)) * cnv_data$Segment_Mean[match(overlap_b, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_3 <- overlaps_3 %>%
-      mutate(weighted_seg_mean_c = (length_c/(length_a + length_b + length_c)) * cnv_data$Segment_Mean[match(overlap_c, cnv_data$loc_id)])
-    
-    
-    # Calculate adjusted segment mean 
-    overlaps_3 <- overlaps_3 %>%
-      mutate(adjusted_seg_mean = (weighted_seg_mean_a + weighted_seg_mean_b + weighted_seg_mean_c) / 3)
-    
-    
-    # remove unnecessary columns
-    overlaps_3 <- subset(overlaps_3, select = c("gene_id", "adjusted_seg_mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_3) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  
-  if (length(dfs) >= 4 && !is.null(dfs[[4]])) {
-    overlaps_4 <- dfs[[4]]
-    
-    # Split loc_id into overlap_a and overlap_b columns
-    overlaps_4 <- overlaps_4 %>% separate(loc_id, c("overlap_a", "overlap_b", "overlap_c", "overlap_d"), sep = ";")
-    
-    # Add columns with the length of each overlap
-    overlaps_4 <- overlaps_4 %>%
-      mutate(length_a = cnv_data$End[match(overlap_a, cnv_data$loc_id)] - cnv_data$Start[match(overlap_a, cnv_data$loc_id)] + 1,
-             length_b = cnv_data$End[match(overlap_b, cnv_data$loc_id)] - cnv_data$Start[match(overlap_b, cnv_data$loc_id)] + 1,
-             length_c = cnv_data$End[match(overlap_c, cnv_data$loc_id)] - cnv_data$Start[match(overlap_c, cnv_data$loc_id)] + 1,
-             length_d = cnv_data$End[match(overlap_d, cnv_data$loc_id)] - cnv_data$Start[match(overlap_d, cnv_data$loc_id)] + 1)
-    
-    # Calculate weighted segment mean for overlap_a
-    overlaps_4 <- overlaps_4 %>%
-      mutate(weighted_seg_mean_a = (length_a/(length_a + length_b + length_c + length_d)) * cnv_data$Segment_Mean[match(overlap_a, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_4 <- overlaps_4 %>%
-      mutate(weighted_seg_mean_b = (length_b/(length_a + length_b + length_c + length_d)) * cnv_data$Segment_Mean[match(overlap_b, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_c
-    overlaps_4 <- overlaps_4 %>%
-      mutate(weighted_seg_mean_c = (length_c/(length_a + length_b + length_c + length_d)) * cnv_data$Segment_Mean[match(overlap_c, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_d
-    overlaps_4 <- overlaps_4 %>%
-      mutate(weighted_seg_mean_d = (length_d/(length_a + length_b + length_c + length_d)) * cnv_data$Segment_Mean[match(overlap_d, cnv_data$loc_id)])
-    
-    # Calculate adjusted segment mean 
-    overlaps_4 <- overlaps_4 %>%
-      mutate(adjusted_seg_mean = (weighted_seg_mean_a + weighted_seg_mean_b + weighted_seg_mean_c + weighted_seg_mean_d) / 4)
-    
-    
-    # remove unnecessary columns
-    overlaps_4 <- subset(overlaps_4, select = c("gene_id", "adjusted_seg_mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_4) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  
-  if (length(dfs) >= 5 && !is.null(dfs[[5]])) {
-    overlaps_5 <- dfs[[5]]
-    
-    # Split loc_id into overlap_a and overlap_b columns
-    overlaps_5 <- overlaps_5 %>% separate(loc_id, c("overlap_a", "overlap_b", "overlap_c", "overlap_d", "overlap_e"), sep = ";")
-    
-    # Add columns with the length of each overlap
-    overlaps_5 <- overlaps_5 %>%
-      mutate(length_a = cnv_data$End[match(overlap_a, cnv_data$loc_id)] - cnv_data$Start[match(overlap_a, cnv_data$loc_id)] + 1,
-             length_b = cnv_data$End[match(overlap_b, cnv_data$loc_id)] - cnv_data$Start[match(overlap_b, cnv_data$loc_id)] + 1,
-             length_c = cnv_data$End[match(overlap_c, cnv_data$loc_id)] - cnv_data$Start[match(overlap_c, cnv_data$loc_id)] + 1,
-             length_d = cnv_data$End[match(overlap_d, cnv_data$loc_id)] - cnv_data$Start[match(overlap_d, cnv_data$loc_id)] + 1,
-             length_e = cnv_data$End[match(overlap_e, cnv_data$loc_id)] - cnv_data$Start[match(overlap_e, cnv_data$loc_id)] + 1)
-    
-    # Calculate weighted segment mean for overlap_a
-    overlaps_5 <- overlaps_5 %>%
-      mutate(weighted_seg_mean_a = (length_a/(length_a + length_b + length_c + length_d + length_e)) * cnv_data$Segment_Mean[match(overlap_a, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_5 <- overlaps_5 %>%
-      mutate(weighted_seg_mean_b = (length_b/(length_a + length_b + length_c + length_d + length_e)) * cnv_data$Segment_Mean[match(overlap_b, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_c
-    overlaps_5 <- overlaps_5 %>%
-      mutate(weighted_seg_mean_c = (length_c/(length_a + length_b + length_c + length_d + length_e)) * cnv_data$Segment_Mean[match(overlap_c, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_d
-    overlaps_5 <- overlaps_5 %>%
-      mutate(weighted_seg_mean_d = (length_d/(length_a + length_b + length_c + length_d + length_e)) * cnv_data$Segment_Mean[match(overlap_d, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_e
-    overlaps_5 <- overlaps_5 %>%
-      mutate(weighted_seg_mean_e = (length_e/(length_a + length_b + length_c + length_d + length_e)) * cnv_data$Segment_Mean[match(overlap_e, cnv_data$loc_id)])
-    
-    
-    # Calculate adjusted segment mean 
-    overlaps_5 <- overlaps_5 %>%
-      mutate(adjusted_seg_mean = (weighted_seg_mean_a + weighted_seg_mean_b + weighted_seg_mean_c + weighted_seg_mean_d + weighted_seg_mean_e) / 5)
-    
-    
-    # remove unnecessary columns
-    overlaps_5 <- subset(overlaps_5, select = c("gene_id", "adjusted_seg_mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_5) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  
-  if (length(dfs) >= 6 && !is.null(dfs[[6]])) {
-    overlaps_6 <- dfs[[6]]
-    
-    
-    # Split loc_id into overlap_a and overlap_b columns
-    overlaps_6 <- overlaps_6 %>% separate(loc_id, c("overlap_a", "overlap_b", "overlap_c", "overlap_d", "overlap_e", "overlap_f"), sep = ";")
-    
-    # Add columns with the length of each overlap
-    overlaps_6 <- overlaps_6 %>%
-      mutate(length_a = cnv_data$End[match(overlap_a, cnv_data$loc_id)] - cnv_data$Start[match(overlap_a, cnv_data$loc_id)] + 1,
-             length_b = cnv_data$End[match(overlap_b, cnv_data$loc_id)] - cnv_data$Start[match(overlap_b, cnv_data$loc_id)] + 1,
-             length_c = cnv_data$End[match(overlap_c, cnv_data$loc_id)] - cnv_data$Start[match(overlap_c, cnv_data$loc_id)] + 1,
-             length_d = cnv_data$End[match(overlap_d, cnv_data$loc_id)] - cnv_data$Start[match(overlap_d, cnv_data$loc_id)] + 1,
-             length_e = cnv_data$End[match(overlap_e, cnv_data$loc_id)] - cnv_data$Start[match(overlap_e, cnv_data$loc_id)] + 1,
-             length_f = cnv_data$End[match(overlap_f, cnv_data$loc_id)] - cnv_data$Start[match(overlap_f, cnv_data$loc_id)] + 1)
-    
-    # Calculate weighted segment mean for overlap_a
-    overlaps_6 <- overlaps_6 %>%
-      mutate(weighted_seg_mean_a = (length_a/(length_a + length_b + length_c + length_d + length_e + length_f)) * cnv_data$Segment_Mean[match(overlap_a, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_6 <- overlaps_6 %>%
-      mutate(weighted_seg_mean_b = (length_b/(length_a + length_b + length_c + length_d + length_e + length_f)) * cnv_data$Segment_Mean[match(overlap_b, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_c
-    overlaps_6 <- overlaps_6 %>%
-      mutate(weighted_seg_mean_c = (length_c/(length_a + length_b + length_c + length_d + length_e + length_f)) * cnv_data$Segment_Mean[match(overlap_c, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_d
-    overlaps_6 <- overlaps_6 %>%
-      mutate(weighted_seg_mean_d = (length_d/(length_a + length_b + length_c + length_d + length_e + length_f)) * cnv_data$Segment_Mean[match(overlap_d, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_e
-    overlaps_6 <- overlaps_6 %>%
-      mutate(weighted_seg_mean_e = (length_e/(length_a + length_b + length_c + length_d + length_e + length_f)) * cnv_data$Segment_Mean[match(overlap_e, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_f
-    overlaps_6 <- overlaps_6 %>%
-      mutate(weighted_seg_mean_f = (length_f/(length_a + length_b + length_c + length_d + length_e + length_f)) * cnv_data$Segment_Mean[match(overlap_f, cnv_data$loc_id)])
-    
-    
-    # Calculate adjusted segment mean 
-    overlaps_6 <- overlaps_6 %>%
-      mutate(adjusted_seg_mean = (weighted_seg_mean_a + weighted_seg_mean_b + weighted_seg_mean_c + weighted_seg_mean_d + weighted_seg_mean_e + weighted_seg_mean_f) / 6)
-    
-    
-    # remove unnecessary columns
-    overlaps_6 <- subset(overlaps_6, select = c("gene_id", "adjusted_seg_mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_6) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  
-  if (length(dfs) >= 7 && !is.null(dfs[[7]])) {
-    overlaps_7 <- dfs[[7]]
-    
-    
-    # Split loc_id into overlap_a and overlap_b columns
-    overlaps_7 <- overlaps_7 %>% separate(loc_id, c("overlap_a", "overlap_b", "overlap_c", "overlap_d", "overlap_e", "overlap_f", "overlap_g"), sep = ";")
-    
-    # Add columns with the length of each overlap
-    overlaps_7 <- overlaps_7 %>%
-      mutate(length_a = cnv_data$End[match(overlap_a, cnv_data$loc_id)] - cnv_data$Start[match(overlap_a, cnv_data$loc_id)] + 1,
-             length_b = cnv_data$End[match(overlap_b, cnv_data$loc_id)] - cnv_data$Start[match(overlap_b, cnv_data$loc_id)] + 1,
-             length_c = cnv_data$End[match(overlap_c, cnv_data$loc_id)] - cnv_data$Start[match(overlap_c, cnv_data$loc_id)] + 1,
-             length_d = cnv_data$End[match(overlap_d, cnv_data$loc_id)] - cnv_data$Start[match(overlap_d, cnv_data$loc_id)] + 1,
-             length_e = cnv_data$End[match(overlap_e, cnv_data$loc_id)] - cnv_data$Start[match(overlap_e, cnv_data$loc_id)] + 1,
-             length_f = cnv_data$End[match(overlap_f, cnv_data$loc_id)] - cnv_data$Start[match(overlap_f, cnv_data$loc_id)] + 1,
-             length_g = cnv_data$End[match(overlap_g, cnv_data$loc_id)] - cnv_data$Start[match(overlap_g, cnv_data$loc_id)] + 1)
-    
-    # Calculate weighted segment mean for overlap_a
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_a = (length_a/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_a, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_b
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_b = (length_b/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_b, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_c
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_c = (length_c/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_c, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_d
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_d = (length_d/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_d, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_e
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_e = (length_e/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_e, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_f
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_f = (length_f/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_f, cnv_data$loc_id)])
-    
-    # Calculate weighted segment mean for overlap_g
-    overlaps_7 <- overlaps_7 %>%
-      mutate(weighted_seg_mean_g = (length_g/(length_a + length_b + length_c + length_d + length_e + length_f + length_g)) * cnv_data$Segment_Mean[match(overlap_g, cnv_data$loc_id)])
-    
-    
-    # Calculate adjusted segment mean 
-    overlaps_7 <- overlaps_7 %>%
-      mutate(adjusted_seg_mean = (weighted_seg_mean_a + weighted_seg_mean_b + weighted_seg_mean_c + weighted_seg_mean_d + weighted_seg_mean_e + weighted_seg_mean_f + weighted_seg_mean_g) / 7)
-    
-    
-    # remove unnecessary columns
-    overlaps_7 <- subset(overlaps_7, select = c("gene_id", "adjusted_seg_mean"))
-    
-    # rename columns to that all are the same
-    colnames(overlaps_7) <- c("gene_id", "seg_mean")
-  }
-  
-  
-  # List of overlaps data frames to check and rbind
-  overlaps_list <- list("overlaps_1", "overlaps_2", "overlaps_3", "overlaps_4", "overlaps_5", "overlaps_6", "overlaps_7")
-  
-  # Initialize empty list to store overlapping data frames
-  overlaps_to_rbind <- list()
-  
-  # Loop through each overlaps data frame and check if it exists in the workspace
-  for (i in seq_along(overlaps_list)) {
-    overlaps_name <- paste0("overlaps_", i)
-    if (exists(overlaps_name)) {
-      overlaps_to_rbind[[length(overlaps_to_rbind) + 1]] <- get(overlaps_name)
+  perform_weighting <- function(df, num_overlaps) {
+    
+    # Select the overlaps dataframe with the specified number of overlaps
+    overlaps <- df[[num_overlaps]]
+    
+    if (!is.null(overlaps)) {
+      
+      # Split loc_id into overlap_a, overlap_b, etc. columns
+      overlap_cols <- paste0("overlap_", letters[seq(num_overlaps)])
+      overlaps <- overlaps %>% separate(loc_id, overlap_cols, sep = ";")
+      
+      # Add columns with the length of each overlap
+      length_cols <- paste0("length_", letters[seq(num_overlaps)])
+      for (i in seq_along(overlap_cols)) {
+        overlaps <- overlaps %>%
+          mutate(!!length_cols[i] := cnv_data$End[match(!!sym(overlap_cols[i]), cnv_data$loc_id)] - 
+                   cnv_data$Start[match(!!sym(overlap_cols[i]), cnv_data$loc_id)] + 1)
+      }
+      
+      # Calculate weighted segment mean for each overlap
+      weighted_mean_cols <- paste0("weighted_seg_mean_", letters[seq(num_overlaps)])
+      for (i in seq_along(overlap_cols)) {
+        overlaps <- overlaps %>%
+          mutate(!!weighted_mean_cols[i] := (!!sym(length_cols[i]) / rowSums(select(overlaps, starts_with("length")))) * 
+                   cnv_data$Segment_Mean[match(!!sym(overlap_cols[i]), cnv_data$loc_id)])
+      }
+      
+      # Calculate adjusted segment mean 
+      overlaps <- overlaps %>%
+        mutate(adjusted_seg_mean = rowMeans(select(overlaps, starts_with("weighted_seg_mean"))))
+      
+      # Remove unnecessary columns
+      overlaps <- subset(overlaps, select = c("gene_id", "adjusted_seg_mean"))
+      
+      # Rename columns to be consistent
+      colnames(overlaps) <- c("gene_id", "seg_mean")
+      
+      return(overlaps)
+      
+    } else {
+      return(NULL)
     }
+    
   }
   
-  # rbind overlapping data frames
-  overlaps_master <- do.call(rbind, overlaps_to_rbind)
   
+  dfs <- list()  # Your list of overlaps dataframes
   
-  return(overlaps_master)
+  for (i in unique(overlap_df$loc_id_count)) {
+    dfs[[i]] <- subset(overlap_df, loc_id_count == i)
+  }
+  
+  results <- list()
+  
+  for (i in seq_along(dfs)) {
+    results[[i]] <- perform_weighting(dfs, i)
+  }
+  
+  final_df <- do.call(rbind, results)
+  
+  return(final_df)
 }
 
 
