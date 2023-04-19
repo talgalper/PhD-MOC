@@ -306,8 +306,13 @@ unweighted_master_df <- unweighted_master_df[,-1]
 avg_weighted_master_df <- data.frame(row.names = rownames(weighted_master_df), avg_seg_mean = apply(weighted_master_df, 1, mean))
 avg_unweighted_master_df <- data.frame(row.names = rownames(unweighted_master_df), avg_seg_mean = apply(unweighted_master_df, 1, mean))
 
+avg_weighted_master_df <- cbind(row.names(avg_weighted_master_df), avg_weighted_master_df)
+colnames(avg_weighted_master_df)[1] <- "gene_id"
+avg_unweighted_master_df <- cbind(row.names(avg_unweighted_master_df), avg_unweighted_master_df)
+colnames(avg_unweighted_master_df)[1] <- "gene_id"
 
 write.csv(avg_weighted_master_df, "results/avg_weighted_seg_mean.csv")
 write.csv(avg_unweighted_master_df, "results/avg_unweighted_seg_mean.csv")
+
 
 
