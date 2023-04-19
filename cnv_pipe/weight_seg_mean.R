@@ -17,6 +17,7 @@ for (package in required_packages) {
   }
 }
 
+dir.create("results")
 
 args <- commandArgs(trailingOnly = TRUE)
 cnv_dir <- args[1]
