@@ -263,7 +263,7 @@ unweighted_master_df <- data.frame(gene_id = character())
 for (i in seq_along(copy_number_files)) {
   file <- copy_number_files[i]
   cnv_data <- read.table(paste0(cnv_dir, file), header=TRUE, stringsAsFactors=FALSE, sep="\t")
-  print(paste0("processing file ", i, " of ", length(copy_number_files), ": ", file))
+  print(paste0("weighted seg means - processing file ", i, " of ", length(copy_number_files), ": ", file))
   
   # Get the weighted seg means
   weighted_seg_means <- weight_seg_mean(cnv_data)
@@ -280,7 +280,7 @@ for (i in seq_along(copy_number_files)) {
 for (i in seq_along(copy_number_files)) {
   file <- copy_number_files[i]
   cnv_data <- read.table(paste0(cnv_dir, file), header=TRUE, stringsAsFactors=FALSE, sep="\t")
-  print(paste0("processing file ", i, " of ", length(copy_number_files), ": ", file))
+  print(paste0("unweighted seg means - processing file ", i, " of ", length(copy_number_files), ": ", file))
   
   # Get the weighted seg means
   unweighted_seg_means <- unweighted_seg_mean(cnv_data)
@@ -293,9 +293,6 @@ for (i in seq_along(copy_number_files)) {
   unweighted_master_df <- merge(unweighted_master_df, unweighted_seg_means, by = "gene_id", all = TRUE)
 }
 
-
-weighted_master_df <- read.csv("results/weighted_seg_means_master.csv", row.names = 1)
-unweighted_master_df <- read.csv("results/unweighted_seg_means_master.csv", row.names = 1)
 
 ## Average out the segment means per gene across all samples
 # set gene_id to row names
