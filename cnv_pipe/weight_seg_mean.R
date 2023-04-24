@@ -5,7 +5,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
 # required packages
-required_packages <- c("ggplot2", "biomaRt", "dplyr", "tidyr", "GenomicRanges", "gridExtra", "knitr")
+required_packages <- c("biomaRt", "dplyr", "tidyr", "GenomicRanges", "gridExtra")
 
 # Check if the required packages are installed, if not then install them
 for (package in required_packages) {
