@@ -15,11 +15,14 @@ for (package in required_packages) {
   }
 }
 
+args <- commandArgs(trailingOnly = TRUE)
+druggability_data <- args[1] # path to fpocket_druggability.csv
+
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
 weighted_data <- read.csv("results/avg_weighted_seg_mean.csv")
-druggability_data <- read.csv("fpocket_druggability.csv")
+druggability_data <- read.csv(druggability_data)
 
 gene_ids <- weighted_data$gene_id
 

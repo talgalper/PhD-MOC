@@ -1,7 +1,21 @@
-library(biomaRt)
-library(tidyr)
-library(readr)
+### creates all necessary files for hierarchical hotnet ###
 
+# check BiocManager
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+# required packages
+required_packages <- c("biomaRt", "tidyr", "readr")
+
+# Check if the required packages are installed, if not then install them
+for (package in required_packages) {
+  if (!requireNamespace(package, quietly = TRUE)) {
+    BiocManager::install(package)
+    library(package, character.only = TRUE)
+  } else {
+    library(package, character.only = TRUE)
+  }
+}
 
 ### create protein (ensembl) to score file
 
@@ -9,7 +23,7 @@ library(readr)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # load weighted copy number data
-weighted_data <- read.csv("weighted_seg_mean_466074.csv", row.names = 1)
+weighted_data <- read.csv("avg_weighted_seg_mean_subset.csv", row.names = 1)
 df <- weighted_data # save to new variable as backup
 
 # create a vector of gene IDs from your data frame
@@ -48,7 +62,7 @@ write.table(gene_list, "protein_list.txt", col.names = F, row.names = F, quote =
 
 
 ## cytoscape output
-string_data <- read.table("single_run_466074/STRING protein ensembl default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+string_data <- read.table("STRING network default edge.csv", header = T, sep = ",", stringsAsFactors = F)
 ppi_list <- subset(string_data, select = c("name"))
 ppi_list <- ppi_list %>% 
   separate(name, sep = " ", into = c("node_1", "del", "node_2"))
