@@ -11,10 +11,10 @@ num_permutations=100
 # https://www.gnu.org/software/parallel/.  You can change the num_cores variable
 # to specify the number of cores for your system.
 
-num_cores=4
+num_cores=8
 
 # Compile Fortran module.
-#cd src/
+#cd ../src
 #f2py -c fortran_module.f95 -m fortran_module > /dev/null
 #cd ..
 
@@ -27,8 +27,20 @@ num_cores=4
 # Create data, intermediate data and results, and results directories.
 mkdir -p $data
 mkdir -p $intermediate
-mkdir -p $intermediate/scores
 mkdir -p $results
+
+for network in network_1
+do
+    mkdir -p $intermediate/"$network"
+done
+
+for network in network_1
+do
+    for score in scores_1
+    do
+        mkdir -p $intermediate/"$network"_"$score"
+    done
+done
 
 ################################################################################
 #
@@ -38,10 +50,13 @@ mkdir -p $results
 
 echo "Construct similarity matrices..."
 
-python src/construct_similarity_matrix.py \
-    -i   $data/dnreg_edge_list_index.tsv \
-    -o   $intermediate/similarity_matrix.h5 \
-    -bof $intermediate/beta.txt
+for network in network_1
+do
+    python src/construct_similarity_matrix.py \
+        -i   $data/dnreg_edge_list_index.tsv \
+        -o   $intermediate/similarity_matrix.h5 \
+        -bof $intermediate/beta.txt
+done
 
 ################################################################################
 #
@@ -51,22 +66,27 @@ python src/construct_similarity_matrix.py \
 
 echo "Permuting scores..."
 
-cp $data/dnreg_protein_to_score.tsv $intermediate/scores/scores_0.tsv
-
-python src/find_permutation_bins.py \
-    -gsf $intermediate/scores/scores_0.tsv \
-    -igf $data/dnreg_index_to_protein.tsv \
-    -elf $data/dnreg_edge_list_index.tsv \
-    -ms  1000 \
-    -o   $intermediate/score_bins.tsv
-
-for i in `seq $num_permutations`
+for network in network_1
 do
-    python src/permute_scores.py \
-        -i  $intermediate/scores/scores_0.tsv \
-        -bf $intermediate/score_bins.tsv \
-        -s  "$i" \
-        -o  $intermediate/scores/scores_"$i".tsv
+    for score in scores_1
+    do
+        cp $data/dnreg_protein_to_score.tsv $intermediate/scores/scores_0.tsv
+
+        python src/find_permutation_bins.py \
+            -gsf $intermediate/scores/scores_0.tsv \
+            -igf $data/dnreg_index_to_protein.tsv \
+            -elf $data/dnreg_edge_list_index.tsv \
+            -ms  1000 \
+            -o   $intermediate/score_bins.tsv
+
+        parallel -u -j $num_cores --bar \
+            python src/permute_scores.py \
+                -i  $intermediate/scores/scores_0.tsv \
+                -bf $intermediate/score_bins.tsv \
+                -s  "$i" \
+                -o  $intermediate/scores/scores_"$i".tsv
+            ::: `seq $num_permutations`
+    done
 done
 
 ################################################################################
@@ -77,15 +97,20 @@ done
 
 echo "Constructing hierarchies..."
 
-for i in `seq 0 $num_permutations`
+for network in network_1
+do
+    for score in scores_1
     do
-        python src/construct_hierarchy.py \
-            -smf  $intermediate/similarity_matrix.h5 \
-            -igf  $data/dnreg_index_to_protein.tsv \
-            -gsf  $intermediate/scores/scores_"$i".tsv \
-            -helf $intermediate/scores/hierarchy_dnreg_edge_list_index_"$i".tsv \
-            -higf $intermediate/scores/hierarchy_dnreg_index_to_protein_"$i".tsv
+        parallel -u -j $num_cores --bar \
+            python src/construct_hierarchy.py \
+                -smf  $intermediate/similarity_matrix.h5 \
+                -igf  $data/dnreg_index_to_protein.tsv \
+                -gsf  $intermediate/scores/scores_"$i".tsv \
+                -helf $intermediate/scores/hierarchy_dnreg_edge_list_index_"$i".tsv \
+                -higf $intermediate/scores/hierarchy_dnreg_index_to_protein_"$i".tsv
+            ::: `seq 0 $num_permutations`
     done
+done
 
 ################################################################################
 #
@@ -95,15 +120,24 @@ for i in `seq 0 $num_permutations`
 
 echo "Processing hierarchies..."
 
-python src/process_hierarchies.py \
-    -oelf $intermediate/scores/hierarchy_dnreg_edge_list_index_0.tsv \
-    -oigf $intermediate/scores/hierarchy_dnreg_index_to_protein_0.tsv \
-    -pelf $(for i in `seq $num_permutations`; do echo " $intermediate/$scores/hierarchy_dnreg_edge_list_index_"$i".tsv "; done) \
-    -pigf $(for i in `seq $num_permutations`; do echo " $intermediate/$scores/hierarchy_dnreg_index_to_protein_"$i".tsv "; done) \
-    -lsb  1 \
-    -cf   $results/clusters.tsv \
-    -pl   "Network" "Score" \
-    -pf   $results/sizes.pdf
+# This example uses -lsb/--lower_size_bound 1 because it is a small toy example
+# with 25 vertices.  Use larger value (default is 10) for larger graphs.
+for network in network_1
+do
+    for score in scores_1
+    do
+        python src/process_hierarchies.py \
+            -oelf $intermediate/scores/hierarchy_dnreg_edge_list_index_0.tsv \
+            -oigf $intermediate/scores/hierarchy_dnreg_index_to_protein_0.tsv \
+            -pelf $(for i in `seq $num_permutations`; do echo " $intermediate/$scores/hierarchy_dnreg_edge_list_index_"$i".tsv "; done) \
+            -pigf $(for i in `seq $num_permutations`; do echo " $intermediate/$scores/hierarchy_dnreg_index_to_protein_"$i".tsv "; done) \
+            -lsb  1 \
+            -cf   $results/clusters.tsv \
+            -pl   "Network" "Score" \
+            -pf   $results/sizes.pdf \
+            -nc   $num_cores
+    done
+done
 
 ################################################################################
 #
@@ -122,6 +156,3 @@ python src/perform_consensus.py \
     -t   2 \
     -cnf $results/consensus_nodes.tsv \
     -cef $results/consensus_edges.tsv
-
-
-
