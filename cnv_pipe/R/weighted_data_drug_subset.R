@@ -1,8 +1,8 @@
 
-
+### requires fpocket_druggability.csv from druggability package run ###
 
 weighted_data <- read.csv("results/avg_weighted_seg_mean.csv")
-druggability_data <- read.csv("druggability_pkg/results/fpocket_druggability.csv")
+druggability_data <- read.csv("fpocket_druggability.csv")
 
 gene_ids <- weighted_data$gene_id
 
