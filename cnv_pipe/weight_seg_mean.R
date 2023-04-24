@@ -97,19 +97,19 @@ weight_seg_mean <- function(cnv_data) {
   non_overlap_df <- annotated_regions[annotated_regions$hgnc_symbol %in% non_overlap_genes, ]
   
   
-  
-  # seperate genes based on how many segments they overlap
+  # separate genes based on how many segments they overlap and assign names to the dfs
   overlap_df$loc_id_count <- sapply(strsplit(overlap_df$loc_id, ";"), length)
   dfs <- list()
   for (i in unique(overlap_df$loc_id_count)) {
-    dfs[[i]] <- subset(overlap_df, loc_id_count == i)
+    df_name <- paste0("df_", i)  # generate unique name for each df
+    dfs[[df_name]] <- subset(overlap_df, loc_id_count == i)
   }
   
   
   perform_weighting <- function(df, num_overlaps) {
     
     # Select the overlaps dataframe with the specified number of overlaps
-    overlaps <- df[[num_overlaps]]
+    overlaps <- df[[as.character(num_overlaps)]]
     
     if (!is.null(overlaps)) {
       
@@ -152,10 +152,10 @@ weight_seg_mean <- function(cnv_data) {
   }
   
   
-  dfs <- list()  # Your list of overlaps dataframes
+  names(dfs) <- unique(as.character(overlap_df$loc_id_count))
   
-  for (i in unique(overlap_df$loc_id_count)) {
-    dfs[[i]] <- subset(overlap_df, loc_id_count == i)
+  for (i in names(dfs)) {
+    dfs[[i]] <- subset(overlap_df, loc_id_count == as.integer(i))
   }
   
   results <- list()
