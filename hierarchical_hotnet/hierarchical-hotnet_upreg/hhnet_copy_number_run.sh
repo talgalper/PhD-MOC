@@ -11,7 +11,7 @@ num_permutations=100
 # https://www.gnu.org/software/parallel/.  You can change the num_cores variable
 # to specify the number of cores for your system.
 
-num_cores=8
+num_cores=10
 
 # Compile Fortran module.
 #cd ../src
@@ -53,9 +53,9 @@ echo "Construct similarity matrices..."
 for network in network_1
 do
     python src/construct_similarity_matrix.py \
-        -i   $data/upreg_edge_list_index.tsv \
-        -o   $intermediate/similarity_matrix.h5 \
-        -bof $intermediate/beta.txt
+        -i   $data/"$network"_edge_list.tsv \
+        -o   $intermediate/"$network"/similarity_matrix.h5 \
+        -bof $intermediate/"$network"/beta.txt
 done
 
 ################################################################################
@@ -64,27 +64,29 @@ done
 #
 ################################################################################
 
+# This example does not use permuted networks, but these commands show how to
+# generate them.
 echo "Permuting scores..."
 
 for network in network_1
 do
     for score in scores_1
     do
-        cp $data/upreg_protein_to_score.tsv $intermediate/scores/scores_0.tsv
+        cp $data/"$score".tsv $intermediate/"$network"_"$score"/scores_0.tsv
 
         python src/find_permutation_bins.py \
-            -gsf $intermediate/scores/scores_0.tsv \
-            -igf $data/upreg_index_to_protein.tsv \
-            -elf $data/upreg_edge_list_index.tsv \
+            -gsf $intermediate/"$network"_"$score"/scores_0.tsv \
+            -igf $data/"$network"_index_gene.tsv \
+            -elf $data/"$network"_edge_list.tsv \
             -ms  1000 \
-            -o   $intermediate/score_bins.tsv
+            -o   $intermediate/"$network"_"$score"/score_bins.tsv
 
         parallel -u -j $num_cores --bar \
             python src/permute_scores.py \
-                -i  $intermediate/scores/scores_0.tsv \
-                -bf $intermediate/score_bins.tsv \
-                -s  "$i" \
-                -o  $intermediate/scores/scores_"$i".tsv
+                -i  $intermediate/"$network"_"$score"/scores_0.tsv \
+                -bf $intermediate/"$network"_"$score"/score_bins.tsv \
+                -s  {} \
+                -o  $intermediate/"$network"_"$score"/scores_{}.tsv \
             ::: `seq $num_permutations`
     done
 done
@@ -103,11 +105,11 @@ do
     do
         parallel -u -j $num_cores --bar \
             python src/construct_hierarchy.py \
-                -smf  $intermediate/similarity_matrix.h5 \
-                -igf  $data/upreg_index_to_protein.tsv \
-                -gsf  $intermediate/scores/scores_"$i".tsv \
-                -helf $intermediate/scores/hierarchy_upreg_edge_list_index_"$i".tsv \
-                -higf $intermediate/scores/hierarchy_upreg_index_to_protein_"$i".tsv
+                -smf  $intermediate/"$network"/similarity_matrix.h5 \
+                -igf  $data/"$network"_index_gene.tsv \
+                -gsf  $intermediate/"$network"_"$score"/scores_{}.tsv \
+                -helf $intermediate/"$network"_"$score"/hierarchy_edge_list_{}.tsv \
+                -higf $intermediate/"$network"_"$score"/hierarchy_index_gene_{}.tsv \
             ::: `seq 0 $num_permutations`
     done
 done
@@ -127,14 +129,14 @@ do
     for score in scores_1
     do
         python src/process_hierarchies.py \
-            -oelf $intermediate/scores/hierarchy_upreg_edge_list_index_0.tsv \
-            -oigf $intermediate/scores/hierarchy_upreg_index_to_protein_0.tsv \
-            -pelf $(for i in `seq $num_permutations`; do echo " $intermediate/$scores/hierarchy_upreg_edge_list_index_"$i".tsv "; done) \
-            -pigf $(for i in `seq $num_permutations`; do echo " $intermediate/$scores/hierarchy_upreg_index_to_protein_"$i".tsv "; done) \
+            -oelf $intermediate/"$network"_"$score"/hierarchy_edge_list_0.tsv \
+            -oigf $intermediate/"$network"_"$score"/hierarchy_index_gene_0.tsv \
+            -pelf $(for i in `seq $num_permutations`; do echo " $intermediate/"$network"_"$score"/hierarchy_edge_list_"$i".tsv "; done) \
+            -pigf $(for i in `seq $num_permutations`; do echo " $intermediate/"$network"_"$score"/hierarchy_index_gene_"$i".tsv "; done) \
             -lsb  1 \
-            -cf   $results/clusters.tsv \
-            -pl   "Network" "Score" \
-            -pf   $results/sizes.pdf \
+            -cf   $results/clusters_"$network"_"$score".tsv \
+            -pl   $network $score \
+            -pf   $results/sizes_"$network"_"$score".pdf \
             -nc   $num_cores
     done
 done
@@ -148,11 +150,11 @@ done
 echo "Performing consensus..."
 
 python src/perform_consensus.py \
-    -cf  $results/clusters.tsv \
-    -igf $data/upreg_index_to_protein.tsv \
-    -elf $data/upreg_edge_list_index.tsv \
-    -n   network \
-    -s   scores \
+    -cf  $results/clusters_network_1_scores_1.tsv \
+    -igf $data/network_1_index_gene.tsv $data/network_1_index_gene.tsv \
+    -elf $data/network_1_edge_list.tsv $data/network_1_edge_list.tsv \
+    -n   network_1 network_1 \
+    -s   scores_1 \
     -t   2 \
     -cnf $results/consensus_nodes.tsv \
     -cef $results/consensus_edges.tsv
