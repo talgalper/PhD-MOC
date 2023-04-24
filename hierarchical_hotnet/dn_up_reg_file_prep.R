@@ -23,7 +23,7 @@ for (package in required_packages) {
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # load weighted copy number data
-weighted_data <- read.csv("avg_weighted_seg_mean_subset.csv", row.names = 1)
+weighted_data <- read.csv("results/avg_weighted_seg_mean_subset.csv", row.names = 1)
 df <- weighted_data # save to new variable as backup
 
 # create a vector of gene IDs from your data frame
@@ -42,14 +42,14 @@ protein_to_score <- merge(df, protein_ens, by.x = "gene_id", by.y = "hgnc_symbol
 protein_to_score <- subset(protein_to_score, ensembl_peptide_id != "")
 protein_to_score$gene_id <- NULL
 
-protein_to_score <- protein_to_score[, c("ensembl_peptide_id", "seg_mean")]
+protein_to_score <- protein_to_score[, c("ensembl_peptide_id", "avg_seg_mean")]
 
 # seperate + and - values
-positive_df <- protein_to_score[protein_to_score$seg_mean > 0, ]
-negative_df <- protein_to_score[protein_to_score$seg_mean <= 0, ]
+positive_df <- protein_to_score[protein_to_score$avg_seg_mean > 0, ]
+negative_df <- protein_to_score[protein_to_score$avg_seg_mean <= 0, ]
 
 # convert all values in negative_df to positive
-negative_df$seg_mean <- abs(negative_df$seg_mean)
+negative_df$avg_seg_mean <- abs(negative_df$avg_seg_mean)
 
 
 ### create a indexed edge list file for + and - ###
@@ -58,7 +58,7 @@ negative_df$seg_mean <- abs(negative_df$seg_mean)
 # create list of proteins for cytoscape
 protein_list <- protein_to_score$ensembl_peptide_id
 protein_list <- as.data.frame(protein_list)
-write.table(gene_list, "protein_list.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_list, "protein_list.txt", col.names = F, row.names = F, quote = F)
 
 
 ## cytoscape output
@@ -101,14 +101,14 @@ write_tsv(dnreg_index_to_protein, "hierarchical-hotnet_dnreg/data/dnreg_index_to
 
 ### create a indexed edge list file ###
 upreg_edge_list_index<- data.frame(from = match(upreg_ppi_list$node_1, upreg_index_to_protein$ensembl_peptide_id),
-                              to = match(upreg_ppi_list$node_2, upreg_index_to_protein$ensembl_peptide_id))
+                                   to = match(upreg_ppi_list$node_2, upreg_index_to_protein$ensembl_peptide_id))
 upreg_edge_list_index <- na.omit(upreg_edge_list_index)
 write_tsv(upreg_edge_list_index, "hierarchical-hotnet_upreg/data/upreg_edge_list_index.tsv", col_names = F)
 
 
 # create indexed edge list for downregulated proteins
 dnreg_edge_list_index <- data.frame(from = match(dnreg_ppi_list$node_1, dnreg_index_to_protein$ensembl_peptide_id),
-                              to = match(dnreg_ppi_list$node_2, dnreg_index_to_protein$ensembl_peptide_id))
+                                    to = match(dnreg_ppi_list$node_2, dnreg_index_to_protein$ensembl_peptide_id))
 dnreg_edge_list_index <- na.omit(dnreg_edge_list_index)
 write_tsv(dnreg_edge_list_index, "hierarchical-hotnet_dnreg/data/dnreg_edge_list_index.tsv", col_names = F)
 

@@ -303,7 +303,13 @@ weighted_master_df <- weighted_master_df[,-1]
 rownames(unweighted_master_df) <- unweighted_master_df$gene_id
 unweighted_master_df <- unweighted_master_df[,-1]
 
+# distribution score
+weighted_zscore <- apply(weighted_master_df[,1:ncol(weighted_master_df)], 1, function(x) scale(x, center = TRUE, scale = TRUE)[1])
+unweighted_zscore <- apply(unweighted_master_df[,1:ncol(unweighted_master_df)], 1, function(x) scale(x, center = TRUE, scale = TRUE)[1])
+distribution_scores <- data.frame(weighted_zscore, unweighted_zscore)
+write.csv(distribution_scores, "results/distribution_scores.csv")
 
+# continue with averaging out
 avg_weighted_master_df <- data.frame(row.names = rownames(weighted_master_df), avg_seg_mean = apply(weighted_master_df, 1, mean))
 avg_unweighted_master_df <- data.frame(row.names = rownames(unweighted_master_df), avg_seg_mean = apply(unweighted_master_df, 1, mean))
 
