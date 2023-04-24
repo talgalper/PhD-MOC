@@ -1,5 +1,22 @@
+# check BiocManager
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
 
-### requires fpocket_druggability.csv from druggability package run ###
+# required packages
+required_packages <- c("biomaRt")
+
+# Check if the required packages are installed, if not then install them
+for (package in required_packages) {
+  if (!requireNamespace(package, quietly = TRUE)) {
+    BiocManager::install(package)
+    library(package, character.only = TRUE)
+  } else {
+    library(package, character.only = TRUE)
+  }
+}
+
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
 
 weighted_data <- read.csv("results/avg_weighted_seg_mean.csv")
 druggability_data <- read.csv("fpocket_druggability.csv")
@@ -28,7 +45,22 @@ merged_df <- subset(merged_df, avg_seg_mean !="")
 
 merged_df <- merged_df[merged_df$druggability >= 0.6, ]
 
-final_df <- subset(merged_df, select = c("gene_id", "avg_seg_mean"))
+weighted_df <- subset(merged_df, select = c("gene_id", "avg_seg_mean"))
+
+
+
+unweighted_data <- read.csv("results/avg_unweighted_seg_mean.csv")
+unweighted_data <- subset(unweighted_data, select = c("gene_id", "avg_seg_mean"))
+colnames(unweighted_data) <- c("gene_id", "avg_seg_mean_unweighted")
+
+unweighted_data <- merge(unweighted_data, weighted_df, by = "gene_id")
+unweighted_data <- subset(unweighted_data, select = c("gene_id", "avg_seg_mean_unweighted"))
+colnames(unweighted_data) <- c("gene_id", "avg_seg_mean")
+
+
+write.csv(weighted_df, "results/avg_weighted_seg_mean_subset.csv")
+write.csv(weighted_df, "results/avg_unweighted_seg_mean_subset.csv")
+
 
 
 
