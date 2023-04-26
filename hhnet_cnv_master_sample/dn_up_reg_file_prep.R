@@ -23,7 +23,7 @@ for (package in required_packages) {
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # load weighted copy number data
-weighted_data <- read.csv("results/avg_weighted_seg_mean_subset.csv", row.names = 1)
+weighted_data <- read.csv("cnv_pipe_sample/results/avg_weighted_seg_mean_subset.csv", row.names = 1)
 df <- weighted_data # save to new variable as backup
 
 # create a vector of gene IDs from your data frame
@@ -58,11 +58,11 @@ negative_df$avg_seg_mean <- abs(negative_df$avg_seg_mean)
 # create list of proteins for cytoscape
 protein_list <- protein_to_score$ensembl_peptide_id
 protein_list <- as.data.frame(protein_list)
-write.table(protein_list, "protein_list.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_list, "cnv_pipe_sample/protein_list.txt", col.names = F, row.names = F, quote = F)
 
 
 ## cytoscape output
-string_data <- read.table("STRING network default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+string_data <- read.table("cnv_pipe_sample/STRING network default edge.csv", header = T, sep = ",", stringsAsFactors = F)
 ppi_list <- subset(string_data, select = c("name"))
 ppi_list <- ppi_list %>% 
   separate(name, sep = " ", into = c("node_1", "del", "node_2"))
@@ -99,14 +99,14 @@ write_tsv(upreg_index_to_protein, "hierarchical-hotnet_upreg/data/upreg_index_to
 write_tsv(dnreg_index_to_protein, "hierarchical-hotnet_dnreg/data/dnreg_index_to_protein.tsv", col_names = F)
 
 
-### create a indexed edge list file ###
+### create a indexed edge list files ###
 upreg_edge_list_index<- data.frame(from = match(upreg_ppi_list$node_1, upreg_index_to_protein$ensembl_peptide_id),
                                    to = match(upreg_ppi_list$node_2, upreg_index_to_protein$ensembl_peptide_id))
 upreg_edge_list_index <- na.omit(upreg_edge_list_index)
 write_tsv(upreg_edge_list_index, "hierarchical-hotnet_upreg/data/upreg_edge_list_index.tsv", col_names = F)
 
 
-# create indexed edge list for downregulated proteins
+# create indexed edge list for down regulated proteins
 dnreg_edge_list_index <- data.frame(from = match(dnreg_ppi_list$node_1, dnreg_index_to_protein$ensembl_peptide_id),
                                     to = match(dnreg_ppi_list$node_2, dnreg_index_to_protein$ensembl_peptide_id))
 dnreg_edge_list_index <- na.omit(dnreg_edge_list_index)
