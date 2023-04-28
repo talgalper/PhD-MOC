@@ -5,7 +5,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
 # required packages
-required_packages <- c("biomaRt", "tidyr", "readr", "dplyr")
+required_packages <- c("biomaRt", "tidyr", "readr")
 
 # Check if the required packages are installed, if not then install them
 for (package in required_packages) {
@@ -43,8 +43,6 @@ protein_to_score <- subset(protein_to_score, ensembl_peptide_id != "")
 protein_to_score$gene_id <- NULL
 
 protein_to_score <- protein_to_score[, c("ensembl_peptide_id", "avg_seg_mean")]
-
-protein_to_score <- distinct(protein_to_score) # remove duplicate ensembles from name conversion
 
 # seperate + and - values
 positive_df <- protein_to_score[protein_to_score$avg_seg_mean > 0, ]
