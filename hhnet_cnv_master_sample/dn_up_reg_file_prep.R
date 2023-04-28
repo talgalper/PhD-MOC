@@ -44,6 +44,8 @@ protein_to_score$gene_id <- NULL
 
 protein_to_score <- protein_to_score[, c("ensembl_peptide_id", "avg_seg_mean")]
 
+protein_to_score <- distinct(protein_to_score)
+
 # seperate + and - values
 positive_df <- protein_to_score[protein_to_score$avg_seg_mean > 0, ]
 negative_df <- protein_to_score[protein_to_score$avg_seg_mean <= 0, ]
