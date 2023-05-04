@@ -5704,36 +5704,6 @@ results and added to table</p></li>
 <summary>
 Show code
 </summary>
-<pre class="r"><code># check BiocManager
-if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
-  install.packages(&quot;BiocManager&quot;)
-
-# required packages
-required_packages &lt;- c(&quot;biomaRt&quot;, &quot;dplyr&quot;, &quot;tidyr&quot;)
-
-# Check if the required packages are installed, if not then install them
-for (package in required_packages) {
-  if (!requireNamespace(package, quietly = TRUE)) {
-    BiocManager::install(package)
-    library(package, character.only = TRUE)
-  } else {
-    library(package, character.only = TRUE)
-  }
-}</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:biomaRt&#39;:
-## 
-##     select</code></pre>
-<pre><code>## The following object is masked from &#39;package:gridExtra&#39;:
-## 
-##     combine</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>#ensembl &lt;- useMart(&quot;ensembl&quot;, dataset = &quot;hsapiens_gene_ensembl&quot;)
 
 ### create PCSF files ###
@@ -5790,8 +5760,8 @@ unweighted_data &lt;- subset(unweighted_ens_means, select = c(&quot;ensembl_pept
 
 
 ## create ensemble protein list for cytoscape
-write.table(weighted_ens_means$ensembl_peptide_id, &quot;data/cytoscape_stuff/weighted_proteins.txt&quot;, row.names = F, col.names = F, quote = F)
-write.table(unweighted_ens_means$ensembl_peptide_id, &quot;data/cytoscape_stuff/unweighted_proteins.txt&quot;, row.names = F, col.names = F, quote = F)
+#write.table(weighted_ens_means$ensembl_peptide_id, &quot;data/cytoscape_stuff/weighted_proteins.txt&quot;, row.names = F, col.names = F, quote = F)
+#write.table(unweighted_ens_means$ensembl_peptide_id, &quot;data/cytoscape_stuff/unweighted_proteins.txt&quot;, row.names = F, col.names = F, quote = F)
 
 ## format cytoscape output
 # weighted PPI list
@@ -5836,35 +5806,6 @@ Show code
 </summary>
 <pre class="r"><code>#devtools::install_github(&quot;IOR-Bioinformatics/PCSF&quot;, dependencies=TRUE, type=&quot;source&quot;, force=TRUE)
 
-# check BiocManager
-if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
-  install.packages(&quot;BiocManager&quot;)
-
-# Check if the required packages are installed, if not then install them
-if (!requireNamespace(package, quietly = TRUE)) {
-    BiocManager::install(&quot;biomaRt&quot;)
-}
-
-library(PCSF)</code></pre>
-<pre><code>## Loading required package: igraph</code></pre>
-<pre><code>## 
-## Attaching package: &#39;igraph&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     crossing</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     as_data_frame, groups, union</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     decompose, spectrum</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     union</code></pre>
-<pre><code>## Loading required package: visNetwork</code></pre>
-<pre><code>## </code></pre>
-<pre><code>## </code></pre>
-<pre class="r"><code>library(biomaRt)
 
 #dir.create(&quot;results&quot;)
 
@@ -6521,6 +6462,46 @@ kable(data, row.names = F)</code></pre>
 <pre class="r"><code>plot.PCSF(unweighted_subnet, node_label_cex = 15)</code></pre>
 <div class="visNetwork html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f5ee52022b6e2113ba88" style="width:672px;height:480px;"></div>
 <script type="application/json" data-for="htmlwidget-f5ee52022b6e2113ba88">{"x":{"nodes":{"id":["ENSP00000231706","ENSP00000241261","ENSP00000250160","ENSP00000254624","ENSP00000254627","ENSP00000264674","ENSP00000265896","ENSP00000276708","ENSP00000286355","ENSP00000295797","ENSP00000295822","ENSP00000302578","ENSP00000312150","ENSP00000318016","ENSP00000319305","ENSP00000325978","ENSP00000326240","ENSP00000333037","ENSP00000337688","ENSP00000342188","ENSP00000346080","ENSP00000348161","ENSP00000373648","ENSP00000391299","ENSP00000404854","ENSP00000407107","ENSP00000414635","ENSP00000415243","ENSP00000419298","ENSP00000420294","ENSP00000479618","ENSP00000484634"],"prize":[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],"type":["Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Steiner","Terminal","Terminal","Terminal","Terminal","Steiner","Terminal"],"group":["Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Terminal","Steiner","Terminal","Terminal","Terminal","Terminal","Steiner","Terminal"],"size":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"title":["ENSP00000231706","ENSP00000241261","ENSP00000250160","ENSP00000254624","ENSP00000254627","ENSP00000264674","ENSP00000265896","ENSP00000276708","ENSP00000286355","ENSP00000295797","ENSP00000295822","ENSP00000302578","ENSP00000312150","ENSP00000318016","ENSP00000319305","ENSP00000325978","ENSP00000326240","ENSP00000333037","ENSP00000337688","ENSP00000342188","ENSP00000346080","ENSP00000348161","ENSP00000373648","ENSP00000391299","ENSP00000404854","ENSP00000407107","ENSP00000414635","ENSP00000415243","ENSP00000419298","ENSP00000420294","ENSP00000479618","ENSP00000484634"],"label":["ENSP00000231706","ENSP00000241261","ENSP00000250160","ENSP00000254624","ENSP00000254627","ENSP00000264674","ENSP00000265896","ENSP00000276708","ENSP00000286355","ENSP00000295797","ENSP00000295822","ENSP00000302578","ENSP00000312150","ENSP00000318016","ENSP00000319305","ENSP00000325978","ENSP00000326240","ENSP00000333037","ENSP00000337688","ENSP00000342188","ENSP00000346080","ENSP00000348161","ENSP00000373648","ENSP00000391299","ENSP00000404854","ENSP00000407107","ENSP00000414635","ENSP00000415243","ENSP00000419298","ENSP00000420294","ENSP00000479618","ENSP00000484634"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"x":[-0.145636857035425,-1,-0.639117164358423,0.390729339022827,0.214094546007686,0.889741729549762,-0.733896181570285,-0.971377353291502,0.745145751274787,0.876410979458404,-0.11618383904339,-0.72683703643441,-0.221272700763221,-0.63754111748663,-0.429165587336077,-0.0673298203411533,-0.297517135881662,0.165844530195652,0.797579406168671,0.0929236072261159,-0.202537680949866,0.603648664011832,0.962329172186903,0.454778236724801,-0.704056788627412,0.512628220197104,-0.255144645869552,0.66577949095121,-0.188477649544184,1,-0.781104198392495,0.542477991649547],"y":[0.723009412711424,0.392741046627514,0.833573545263119,0.822199321453137,1,0.159747601334105,-0.510837186991176,-0.113011694317544,0.540869687913845,-0.221891625764787,0.453727940607062,0.0032875835753543,0.195243874777197,-0.254010763101209,-0.0521467563326853,-0.843445785584018,-0.729284085004326,-0.963161584560119,-0.596572782815323,-0.64965589799279,0.966496714739216,-0.630785139097494,0.550461543511478,-0.217093794297051,0.601807112462894,0.591592424003809,-1,-0.387175742032595,-0.175937197573816,-0.0230062001016584,0.321508174373921,0.990164986743409]},"edges":{"from":["ENSP00000231706","ENSP00000231706","ENSP00000241261","ENSP00000250160","ENSP00000254624","ENSP00000254624","ENSP00000254624","ENSP00000264674","ENSP00000265896","ENSP00000276708","ENSP00000286355","ENSP00000286355","ENSP00000295797","ENSP00000295797","ENSP00000295822","ENSP00000302578","ENSP00000302578","ENSP00000302578","ENSP00000312150","ENSP00000318016","ENSP00000319305","ENSP00000325978","ENSP00000325978","ENSP00000325978","ENSP00000325978","ENSP00000337688","ENSP00000337688","ENSP00000348161","ENSP00000391299","ENSP00000404854"],"to":["ENSP00000295822","ENSP00000346080","ENSP00000479618","ENSP00000404854","ENSP00000254627","ENSP00000407107","ENSP00000484634","ENSP00000420294","ENSP00000318016","ENSP00000302578","ENSP00000373648","ENSP00000407107","ENSP00000415243","ENSP00000420294","ENSP00000312150","ENSP00000318016","ENSP00000319305","ENSP00000479618","ENSP00000319305","ENSP00000319305","ENSP00000419298","ENSP00000326240","ENSP00000333037","ENSP00000342188","ENSP00000414635","ENSP00000348161","ENSP00000415243","ENSP00000415243","ENSP00000415243","ENSP00000479618"],"weight":[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,7,10,10,3,10,10,10,10,10,7,10,3,10,10],"width":[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3.28571428571429,5,5,1,5,5,5,5,5,3.28571428571429,5,1,5,5]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false,"shadow":{"enabled":true,"size":12}},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false},"groups":{"Steiner":{"color":{"background":"lightblue","border":"blue"},"shape":"triangle"},"useDefaultGroups":true,"Terminal":{"color":{"background":"lightgreen","border":"green"},"shape":"dot"}}},"groups":["Terminal","Steiner"],"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.1,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":[{"label":"Terminal","shape":"dot","size":15,"color":{"background":"lightgreen","border":"green"},"label.cex":0.8},{"label":"Steiner","shape":"triangle","size":10,"color":{"background":"lightblue","border":"blue"},"label.cex":0.8}],"nodesToDataframe":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<p><br></p>
+<div id="heres-how-the-data-changed-through-this-pipeline" class="section level4">
+<h4>Here’s how the data changed through this pipeline:</h4>
+<ul>
+<li><p>Original data = 40,066 genes</p></li>
+<li><p>Removed genes with seg mean between -0.3 and 0.3</p>
+<ul>
+<li>Weighted = 87 genes</li>
+<li>unWieghted = 110 genes</li>
+</ul></li>
+<li><p>Converted genes to protein Ensembles for cytoscape:</p>
+<ul>
+<li>Weighted = 227 proteins</li>
+<li>unWeighted = 334 proteins</li>
+</ul></li>
+<li><p>Cytoscape/STRING output:</p>
+<ul>
+<li>Weighted = 37</li>
+<li>unWeighted = 53</li>
+</ul></li>
+<li><p>PCSF network:</p>
+<ul>
+<li>Weighted = 19</li>
+<li>unWeighted = 32</li>
+</ul></li>
+<li><p>Converted protein Ensembl to Uniprot IDs</p>
+<ul>
+<li>Weighted = 18</li>
+<li>unWeighted = 30</li>
+</ul></li>
+<li><p>Cross referenced Uniprot IDs with AlphaFold structrues
+(druggability):</p>
+<ul>
+<li>Weighted = 17</li>
+<li>unWeighted = 29</li>
+</ul></li>
+</ul>
+<p><br></p>
+</div>
 </div>
 </div>
 

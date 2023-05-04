@@ -8,7 +8,10 @@ date: "2023-05-03"
 library(gridExtra)
 library(knitr)
 library(png)
+library(dplyr)
+library(tidyr)
 library(biomaRt)
+library(PCSF)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 ```
@@ -59,24 +62,6 @@ PCSF_file_prep.R
 <details>
   <summary>Show code</summary>
 ```{r}
-
-# check BiocManager
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-
-# required packages
-required_packages <- c("biomaRt", "dplyr", "tidyr")
-
-# Check if the required packages are installed, if not then install them
-for (package in required_packages) {
-  if (!requireNamespace(package, quietly = TRUE)) {
-    BiocManager::install(package)
-    library(package, character.only = TRUE)
-  } else {
-    library(package, character.only = TRUE)
-  }
-}
-
 
 #ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
@@ -134,8 +119,8 @@ unweighted_data <- subset(unweighted_ens_means, select = c("ensembl_peptide_id",
 
 
 ## create ensemble protein list for cytoscape
-write.table(weighted_ens_means$ensembl_peptide_id, "data/cytoscape_stuff/weighted_proteins.txt", row.names = F, col.names = F, quote = F)
-write.table(unweighted_ens_means$ensembl_peptide_id, "data/cytoscape_stuff/unweighted_proteins.txt", row.names = F, col.names = F, quote = F)
+#write.table(weighted_ens_means$ensembl_peptide_id, "data/cytoscape_stuff/weighted_proteins.txt", row.names = F, col.names = F, quote = F)
+#write.table(unweighted_ens_means$ensembl_peptide_id, "data/cytoscape_stuff/unweighted_proteins.txt", row.names = F, col.names = F, quote = F)
 
 ## format cytoscape output
 # weighted PPI list
@@ -181,17 +166,6 @@ PCSF_run.R
 ```{r}
 #devtools::install_github("IOR-Bioinformatics/PCSF", dependencies=TRUE, type="source", force=TRUE)
 
-# check BiocManager
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-
-# Check if the required packages are installed, if not then install them
-if (!requireNamespace(package, quietly = TRUE)) {
-    BiocManager::install("biomaRt")
-}
-
-library(PCSF)
-library(biomaRt)
 
 #dir.create("results")
 
@@ -339,6 +313,40 @@ kable(data, row.names = F)
 ```{r}
 plot.PCSF(unweighted_subnet, node_label_cex = 15)
 ```
+</div>
+
+<br>
+
+#### Here's how the data changed through this pipeline:
+
+* Original data = 40,066 genes
+
+* Removed genes with seg mean between -0.3 and 0.3
+  * Weighted = 87 genes
+  * unWieghted = 110 genes
+
+* Converted genes to protein Ensembles for cytoscape:
+  * Weighted = 227 proteins
+  * unWeighted = 334 proteins
+
+* Cytoscape/STRING output:
+  * Weighted = 37
+  * unWeighted = 53
+
+* PCSF network:
+  * Weighted = 19
+  * unWeighted = 32
+
+* Converted protein Ensembl to Uniprot IDs
+  * Weighted = 18
+  * unWeighted = 30
+
+* Cross referenced Uniprot IDs with AlphaFold structrues (druggability):
+  * Weighted = 17
+  * unWeighted = 29
+
+<br>
+
 
 
 
