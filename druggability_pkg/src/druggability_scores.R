@@ -6,7 +6,7 @@ if (!require("readr")) {
 library(readr)
 
 args <- commandArgs(trailingOnly = TRUE)
-input_dir <- args[1]
+input_dir <- args[1] # path to scores
 
 
 fpocket_format <- function(txt_file){
@@ -94,9 +94,16 @@ for (i in seq_along(files)) {
                                        num_drug_pockets = num_drug_pockets))
 }
 
+af_struct_conf <- read.csv("results/af_struct_score.csv")
+
+results_master <- merge(results, af_struct_conf[c("uniprot_id", "struct_score")], by = "uniprot_id")
+
 
 # Order the table by highest druggability scores
-results <- results[order(-results$druggability),]
+results <- results_master[order(-results$druggability),]
 
-write_csv(results, "results/fpocket_druggability.csv")
+write_csv(results_master, "results/fpocket_druggability.csv")
+
+
+
 

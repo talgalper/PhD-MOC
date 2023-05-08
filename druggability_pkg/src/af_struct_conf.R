@@ -12,17 +12,22 @@ library(bio3d)
 library(RCurl)
 
 args <- commandArgs(trailingOnly = TRUE)
-pdb_dir <- args[1]
+pdb_dir <- args[1] # path to structres dir
 
 # Get a list of all the PDB files in the directory
 pdb_files <- list.files(pdb_dir, pattern = "\\.pdb$", full.names = TRUE)
 
 # Create an empty data frame to store the results
-result_df <- data.frame(file_name = character(), atom_residue = logical(), struct_score = numeric())
-removed_df <- data.frame(file_name = character(), atom_residue = logical(), struct_score = numeric())
-
+result_df <- data.frame(filename = character(), atom_residue = logical(), struct_score = numeric())
+removed_df <- data.frame(filename = character(), atom_residue = logical(), struct_score = numeric())
+  
 # Loop over the pdb files
-for (pdb_file in pdb_files) {
+for (i in seq_along(pdb_files)) {
+  
+  pdb_file <- pdb_files[i]
+  
+  print(paste0("Formatting file ", i, " of ", length(pdb_files), ": ", pdb_file))
+  
   # Load the pdb file into R using the `read.pdb` function
   pdb <- read.pdb(pdb_file)
   
@@ -43,9 +48,9 @@ for (pdb_file in pdb_files) {
   
   # Add the result to the appropriate data frame
   if (struct_score >= 50) {
-    result_df <- rbind(result_df, data.frame(file_name = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
+    result_df <- rbind(result_df, data.frame(filename = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
   } else {
-    removed_df <- rbind(removed_df, data.frame(file_name = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
+    removed_df <- rbind(removed_df, data.frame(filename = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
   }
 }
 

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-
 ### runs fpocket over all .pdb files in a directory ###
-
 
 # Check if directory path is provided
 if [ $# -eq 0 ]; then
@@ -19,9 +17,14 @@ if [ ! -d $output_dir ]; then
     mkdir $output_dir
 fi
 
+# Initialize file counter
+file_count=0
+
 # Loop through all PDB files in the directory
 for file in *.pdb; do
-    echo "Analysing file $file"
+    file_count=`expr $file_count + 1`
+    echo "Analysing file $file ($file_count of `ls -1 *.pdb | wc -l`):"
+
     # Run fpocket on each file
     fpocket -f "$file"
     
@@ -41,4 +44,3 @@ for file in *.pdb; do
         fi
     fi
 done
-
