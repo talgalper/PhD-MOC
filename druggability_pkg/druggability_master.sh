@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-# example command: ./druggability_master.sh input_structures/
+# example command: ./druggability_master.sh path/to/structures/
 #                                   or
 #                  sh druggability_master.sh path/to/structures/
 
