@@ -44,6 +44,8 @@ sh src/fpocket_run.sh structures/
 ## format scores
 Rscript src/druggability_scores.R results/scores
 
+echo "Results saved as fpocket_druggability.csv in results dir"
+
 
 ## potential additions
 # find best paraemter(number) for small molecule binding interface
