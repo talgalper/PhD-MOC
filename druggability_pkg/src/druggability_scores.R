@@ -100,7 +100,7 @@ results_master <- merge(results, af_struct_conf[c("uniprot_id", "struct_score")]
 
 
 # Order the table by highest druggability scores
-results <- results_master[order(-results$druggability),]
+results_master <- results_master[order(-results_master$druggability),]
 
 write_csv(results_master, "results/fpocket_druggability.csv")
 
