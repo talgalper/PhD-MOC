@@ -8,7 +8,6 @@ library(readr)
 args <- commandArgs(trailingOnly = TRUE)
 input_dir <- args[1] # path to scores
 
-
 fpocket_format <- function(txt_file){
   # read in .txt file
   df <- read.delim(txt_file, sep = ",", header = F)
@@ -58,10 +57,11 @@ fpocket_format <- function(txt_file){
 
 
 # List all files in directory "scores"
-files <- list.files(input_dir)
+files <- list.files("results/scores/")
 
 # Create a data frame to store the results
-results <- data.frame(filename = character(),
+results <- data.frame(file_id = character(),
+                      uniprot_id = character(),
                       pocket = logical(),
                       druggability = logical(),
                       stringsAsFactors = FALSE)
@@ -69,8 +69,17 @@ results <- data.frame(filename = character(),
 # Loop through each file
 for (i in seq_along(files)) {
   file <- files[i]
+
+  if (file.size(paste0("results/scores/", file)) == 0) {
+    print(paste0("File ", i, " of ", length(files), " is empty, skipping", ": ", file))
+    next
+  }
+  
   # Extract the UniProt ID from the filename
   uniprot_id <- sub("^[^-]+-([^-]+)-.*", "\\1", file)
+  
+  # file id identifier
+  file_id <- gsub("_info.txt", "", file)
   
   print(paste0("Formatting file ", i, " of ", length(files), ": ", file))
   
@@ -87,20 +96,22 @@ for (i in seq_along(files)) {
   num_drug_pockets <- sum(data[2,] >= 0.4)
   
   # Add the results to the data frame
-  results <- rbind(results, data.frame(filename = file,
+  results <- rbind(results, data.frame(file_id = file_id,
                                        uniprot_id = uniprot_id,
                                        pocket = pocket_max,
                                        druggability = druggability_max,
                                        num_drug_pockets = num_drug_pockets))
 }
 
+# read in results from af_struct_conf.R
 af_struct_conf <- read.csv("results/af_struct_score.csv")
 
-results_master <- merge(results, af_struct_conf[c("uniprot_id", "struct_score")], by = "uniprot_id")
-
+# add the structure confidence score to the final df
+results_master <- merge(results, af_struct_conf[c("file_id", "struct_score")], by = "file_id")
 
 # Order the table by highest druggability scores
-results_master <- results_master[order(-results_master$druggability),]
+results_master <- results_master[order(-results_master$druggability), ]
+
 
 write_csv(results_master, "results/fpocket_druggability.csv")
 

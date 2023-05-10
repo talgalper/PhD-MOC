@@ -12,21 +12,21 @@ library(bio3d)
 library(RCurl)
 
 args <- commandArgs(trailingOnly = TRUE)
-pdb_dir <- args[1] # path to structres dir
+pdb_dir <- args[1] # path to structures dir
 
 # Get a list of all the PDB files in the directory
 pdb_files <- list.files(pdb_dir, pattern = "\\.pdb$", full.names = TRUE)
 
 # Create an empty data frame to store the results
-result_df <- data.frame(filename = character(), atom_residue = logical(), struct_score = numeric())
-removed_df <- data.frame(filename = character(), atom_residue = logical(), struct_score = numeric())
+result_df <- data.frame(filename = character(), file_id = character(), uniprot_id = character(), atom_residue = logical(), struct_score = numeric())
+removed_df <- data.frame(filename = character(),file_id = character(),  uniprot_id = character(), atom_residue = logical(), struct_score = numeric())
   
 # Loop over the pdb files
 for (i in seq_along(pdb_files)) {
   
   pdb_file <- pdb_files[i]
   
-  print(paste0("Formatting file ", i, " of ", length(pdb_files), ": ", pdb_file))
+  print(paste0("Calculating file ", i, " of ", length(pdb_files), ": ", pdb_file))
   
   # Load the pdb file into R using the `read.pdb` function
   pdb <- read.pdb(pdb_file)
@@ -46,19 +46,31 @@ for (i in seq_along(pdb_files)) {
   # removes file prefix
   pdb_file <- gsub(".*/", "", pdb_file)
   
+  # isolate uniprot id from file name
+  uniprot_id <- sub("^[^-]+-([^-]+)-.*", "\\1", pdb_file)
+  
+  # create file id for cross reference with druggability_scores.R
+  file_id <- gsub(".pdb", "", pdb_file)
+  
   # Add the result to the appropriate data frame
   if (struct_score >= 50) {
-    result_df <- rbind(result_df, data.frame(filename = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
+    result_df <- rbind(result_df, data.frame(filename = pdb_file, file_id = file_id, uniprot_id = uniprot_id, atom_residue = atom_residue, struct_score = struct_score))
   } else {
-    removed_df <- rbind(removed_df, data.frame(filename = pdb_file, atom_residue = atom_residue, struct_score = struct_score))
+    removed_df <- rbind(removed_df, data.frame(filename = pdb_file, file_id = file_id, uniprot_id = uniprot_id, atom_residue = atom_residue, struct_score = struct_score))
   }
+}
+
+# check if there are any FALSE values in the atom_residue column
+if (any(result_df$atom_residue == FALSE)) {
+  message("Warning!: Some atoms within a single residue have varying confidence scores.
+          Advised to check af_struct_score.csv for these residues (look for the FLASE values)")
 }
 
 write.csv(result_df, "results/af_struct_score.csv", row.names = F)
 write.csv(removed_df, "results/af_low_conf_struct.csv", row.names = F)
 
 
-# for shell script: echo 
+# Add warning message
 # "Warning!: check af_struct_score.csv for files with varying atomic confidence scores per amino acid residue"
 # if any values in the atom_residue column = FALSE
 
