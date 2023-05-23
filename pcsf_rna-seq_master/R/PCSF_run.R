@@ -41,10 +41,17 @@ tcga_terminals <- setNames(as.numeric(tcga_data$logFC), tcga_data$uniprotswisspr
 kylie_terminals <- setNames(as.numeric(kylie_data$logFC), kylie_data$uniprotswissprot)
 
 # run PCSF with random noise
-tcga_subnet <- PCSF_rand(tcga_ppi, tcga_terminals, n = 50, r = 0.1, w = 2, b = 3, mu = 0.0005)
+
+# time a pcsf run
+start_time <- Sys.time()
+tcga_subnet <- PCSF_rand(tcga_ppi, tcga_terminals, n = 50, r = 0.1, w = 2, b = 1, mu = 0.0005)
+elapsed_time <- Sys.time() - start_time
+print(elapsed_time)
+
 plot.PCSF(tcga_subnet, node_label_cex = 15)
 
-kylie_subnet <- PCSF_rand(kylie_ppi, kylie_terminals, n = 10, r = 0.1, w = 2, b = 3, mu = 0.0005)
+
+kylie_subnet <- PCSF_rand(kylie_ppi, kylie_terminals, n = 50, r = 0.1, w = 2, b = 1, mu = 0.0005)
 plot.PCSF(kylie_subnet, node_label_cex = 15)
 
 # extract cluster data
@@ -66,18 +73,6 @@ tcga_df$degree_centrality <- as.integer(tcga_df$degree_centrality)
 # format row names
 rownames(tcga_df) <- 1:nrow(tcga_df)
 
-## add a uniprot id column
-#weighted_uniprots <- getBM(attributes = c("ensembl_peptide_id", "uniprotswissprot"), 
-#                              filters = "ensembl_peptide_id", 
-#                              values = weighted_df$ensembl_peptide_id, 
-#                              mart = ensembl)
-#
-#weighted_df <- merge(weighted_df, weighted_uniprots, by.x = "ensembl_peptide_id")
-#
-## format columns
-#weighted_df <- weighted_df[, c("ensembl_peptide_id", "uniprotswissprot", "cluster", "betweenness","degree_centrality")]
-#colnames(weighted_df)[2] <- "uniprot_id"
-
 # sort by cluster number
 tcga_df <- tcga_df[order(tcga_df$cluster), ]
 
@@ -95,14 +90,6 @@ kylie_df$betweenness <- as.integer(kylie_df$betweenness)
 kylie_df$degree_centrality <- as.integer(kylie_df$degree_centrality)
 
 rownames(kylie_df) <- 1:nrow(kylie_df)
-
-#unweighted_uniprots <- getBM(attributes = c("ensembl_peptide_id", "uniprotswissprot"), 
-#                           filters = "ensembl_peptide_id", 
-#                           values = unweighted_df$ensembl_peptide_id, 
-#                           mart = ensembl)
-#unweighted_df <- merge(unweighted_df, unweighted_uniprots, by.x = "ensembl_peptide_id")
-#unweighted_df <- unweighted_df[, c("ensembl_peptide_id", "uniprotswissprot", "cluster", "betweenness","degree_centrality")]
-#colnames(unweighted_df)[2] <- "uniprot_id"
 
 kylie_df <- kylie_df[order(kylie_df$cluster), ]
 

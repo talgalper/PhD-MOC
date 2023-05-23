@@ -23,7 +23,7 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 rm(list = ls()[!ls() %in% c("ensembl")])
 
 # identify which stage you want to run
-stage <- "stage_IV"
+stage <- "stage_I"
 
 # read in the data
 tcga_data <- read.csv(paste0("edgeR_results/tcga_data/", stage, "/", stage, "_edgeR_hits.csv"))
@@ -36,11 +36,11 @@ kylie_data <- subset(kylie_data, select = c("gene_id", "logFC"))
 hist(kylie_data$logFC)
 hist(tcga_data$logFC)
 
-# remove all values with logFC between -1 and 1
-tcga_data$logFC <- ifelse(tcga_data$logFC > -1 & tcga_data$logFC < 1, NA, tcga_data$logFC)
+# remove all values with logFC between whatever range ya want
+tcga_data$logFC <- ifelse(tcga_data$logFC > -3 & tcga_data$logFC < 3, NA, tcga_data$logFC)
 tcga_data <- na.omit(tcga_data)
 
-kylie_data$logFC <- ifelse(kylie_data$logFC > -1 & kylie_data$logFC < 1, NA, kylie_data$logFC)
+kylie_data$logFC <- ifelse(kylie_data$logFC > -3 & kylie_data$logFC < 3, NA, kylie_data$logFC)
 kylie_data <- na.omit(kylie_data)
 
 # convert to protein ensembl
