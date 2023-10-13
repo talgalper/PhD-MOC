@@ -240,13 +240,6 @@ plot_data <- data.frame(
 )
 
 
-# Dont think this is needed
-#plotData <-  ddply(plot_data, .(cluster), summarize, 
-#                 medianRank.pres = mean(medianRank.pres),
-#                 moduleSize = unique(moduleSize),
-#                 Zsummary.pres = mean(Zsummary.pres))
-
-
 modColors <- unique(plot_data$cluster) 
 plotData <-  plot_data[, c(2:ncol(plot_data), 1)]
 plotMods <-  !(modColors %in% c("grey", "gold"))
