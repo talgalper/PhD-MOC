@@ -98,7 +98,7 @@ wgcna_data <- subset(kylie_data, !(rownames(kylie_data) %in% gene_names[failed_g
 
 # logCPM normalisation
 wgcna_data <- cpm(wgcna_data, log = T)
-wgcna_data <- as.data.frame(data_log_norm)
+wgcna_data <- as.data.frame(wgcna_data)
 
 
 ## data visualisation
