@@ -63,7 +63,7 @@ pca_data <- as.data.frame(pca_data)
 
 
 # Merge sample-stage mapping with PCA data
-pca_data <- merge(pca_data, stage_info, by.x = "row.names", by.y = "Sample")
+pca_data <- merge(pca_data, stage_info, by.x = "col.names", by.y = "Sample")
 
 # Create a custom color palette for stages
 stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
@@ -73,6 +73,7 @@ ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
   geom_point() +
   geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
   scale_color_manual(values = stage_colors) + # Use the custom color palette
+  theme_bw() +
   labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
        y = paste0('PC2: ', pca_var_perc[2], ' %'))
 
@@ -86,7 +87,7 @@ kylie_data_subset <- kylie_data[, !colnames(kylie_data) %in% outliers]
 
 ## Normalisation
 
-# log transformation normalisation
+# logCPM normalisation
 data_log_norm <- cpm(kylie_data_subset, log = T)
 data_log_norm <- as.data.frame(data_log_norm)
 
@@ -137,7 +138,7 @@ print(summary(failed_genes))
 wgcna_data <- subset(data_log_norm, !(rownames(data_log_norm) %in% gene_names[failed_genes]))
 
 
-# separate disease and benign samples
+# separate disease and benign samples for preserved modules function
 disease_samples <- c(colnames(stage_I), colnames(stage_II), colnames(stage_III), colnames(stage_IV))
 wgcna_disease <- wgcna_data[, colnames(wgcna_data) %in% disease_samples]
 wgcna_disease <- t(wgcna_disease)
@@ -147,7 +148,38 @@ wgcna_benign <- t(wgcna_benign)
 
 
 wgcna_data <- t(wgcna_data)
-# need to run everything together to get modules
+
+
+# Choose a set of soft-threshold powers
+power <- c(c(1:10), seq(from = 12, to = 50, by = 2))
+
+# Call the network topology analysis function
+sft <- pickSoftThreshold(wgcna_data,
+                         powerVector = power,
+                         networkType = "signed",
+                         verbose = 5)
+
+sft_data <- sft$fitIndices
+
+
+# Visualise to pick power
+a1 <- ggplot(sft_data, aes(Power, SFT.R.sq, label = Power)) +
+  geom_point() +
+  geom_text(nudge_y = 0.1) +
+  geom_hline(yintercept = 0.8, color = 'red') +
+  labs(x = 'Power', y = 'Scale free topology model fit, signed R^2') +
+  theme_classic()
+
+a2 <- ggplot(sft_data, aes(Power, mean.k., label = Power)) +
+  geom_point() +
+  geom_text(nudge_y = 0.1) +
+  labs(x = 'Power', y = 'Mean Connectivity') +
+  theme_classic()
+
+grid.arrange(a1, a2, nrow = 2)
+
+
+# identify modules
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
                           TOMType = "signed",
@@ -178,7 +210,6 @@ multidata <- multiData(Reference = benign_adj,
 
 
 multicolour <- list(Reference = bwnet$colors)
-
 
 
 start_time <- Sys.time()
