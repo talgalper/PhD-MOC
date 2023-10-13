@@ -40,70 +40,28 @@ for (stage in stages) {
 }
 
 
-## Outlier detection
+## removing 0 Variance and low activity genes
 
 # Identify outliers. Searches for 0 variance genes and missing entries
 gsg <- goodSamplesGenes(t(kylie_data))
 summary(gsg)
 gsg$allOK
 
-# This method visualises outliers as cluster tree
-htree <- hclust(dist(t(kylie_data)))
-plot(htree)
 
-
-# PCA
-pca <- prcomp(t(kylie_data))
-pca_data <- pca$x
-pca_var <- pca$sdev^2
-
-pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
-
-pca_data <- as.data.frame(pca_data)
-
-
-# Merge sample-stage mapping with PCA data
-pca_data <- merge(pca_data, stage_info, by.x = "col.names", by.y = "Sample")
-
-# Create a custom color palette for stages
-stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
-
-# Create the PCA plot with color mapping
-ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
-  geom_point() +
-  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
-  scale_color_manual(values = stage_colors) + # Use the custom color palette
-  theme_bw() +
-  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
-       y = paste0('PC2: ', pca_var_perc[2], ' %'))
-
-
-outliers <- c("GAMuT_23091", "GAMuT_41828",  # BEN
-              "GAMuT_IC257") # Stage I
-
-
-kylie_data_subset <- kylie_data[, !colnames(kylie_data) %in% outliers]
-
-
-## Normalisation
-
-# logCPM normalisation
-data_log_norm <- cpm(kylie_data_subset, log = T)
-data_log_norm <- as.data.frame(data_log_norm)
 
 # top x% of samples
-num_genes <- nrow(data_log_norm)
+num_genes <- nrow(kylie_data)
 top_threshold <- ceiling(num_genes * 0.50)
 
 # min required samples
-num_samples <- ncol(data_log_norm)
+num_samples <- ncol(kylie_data)
 min_required_samples <- ceiling(num_samples * 0.10)
 
 
 
 # Extract the gene names and data columns
-gene_names <- rownames(data_log_norm)
-data_columns <- data_log_norm
+gene_names <- rownames(kylie_data)
+data_columns <- kylie_data
 
 # Initialise an empty data frame
 results_df <- data.frame(gene_id = gene_names)
@@ -119,7 +77,7 @@ for (col_id in seq_along(data_columns)) {
   top_indices <- sorted_indices[1:top_threshold]
   
   # Create a logical vector for gene presence in top_threshold
-  gene_presence <- rep(FALSE, nrow(data_log_norm))
+  gene_presence <- rep(FALSE, nrow(kylie_data))
   gene_presence[top_indices] <- TRUE
   
   # Add to the results data frame
@@ -135,7 +93,52 @@ gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
 failed_genes <- gene_counts < min_required_samples
 print(summary(failed_genes))
 
-wgcna_data <- subset(data_log_norm, !(rownames(data_log_norm) %in% gene_names[failed_genes]))
+wgcna_data <- subset(kylie_data, !(rownames(kylie_data) %in% gene_names[failed_genes]))
+
+
+# logCPM normalisation
+wgcna_data <- cpm(wgcna_data, log = T)
+wgcna_data <- as.data.frame(data_log_norm)
+
+
+## data visualisation
+
+# This method visualises data as cluster tree
+htree <- hclust(dist(t(wgcna_data)))
+plot(htree)
+
+
+# PCA
+pca <- prcomp(t(wgcna_data))
+pca_data <- pca$x
+pca_var <- pca$sdev^2
+
+pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+
+pca_data <- as.data.frame(pca_data)
+
+
+# Merge sample-stage mapping with PCA data
+pca_data <- merge(pca_data, stage_info, by.x = "row.names", by.y = "Sample")
+
+# Create a custom color palette for stages
+stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
+
+# Create the PCA plot with color mapping
+ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
+  geom_point() +
+  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+  scale_color_manual(values = stage_colors) + # Use the custom color palette
+  theme_bw() +
+  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+       y = paste0('PC2: ', pca_var_perc[2], ' %'))
+
+
+#outliers <- c("GAMuT_23091", "GAMuT_41828",  # BEN
+#              "GAMuT_IC257") # Stage I
+
+
+#kylie_data_subset <- kylie_data[, !colnames(kylie_data) %in% outliers]
 
 
 # separate disease and benign samples for preserved modules function
@@ -183,7 +186,7 @@ grid.arrange(a1, a2, nrow = 2)
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
                           TOMType = "signed",
-                          power = 12,
+                          power = 9,
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
@@ -200,8 +203,8 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
 
 
 # create adjacency matrix
-disease_adj <- adjacency(wgcna_disease, power = 12, type = "signed")
-benign_adj <- adjacency(wgcna_benign, power = 18, type = "signed")
+disease_adj <- adjacency(wgcna_disease, power = 9, type = "signed")
+benign_adj <- adjacency(wgcna_benign, power = 9, type = "signed")
 
 
 
@@ -219,7 +222,7 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         quickCor = 1,
                                         randomSeed = 1234,
                                         verbose = 3,
-                                        nPermutations = 1,
+                                        nPermutations = 10,
                                         testNetworks = 2,
                                         maxModuleSize = max(table(bwnet$colors)),
                                         calculateClusterCoeff = F)
