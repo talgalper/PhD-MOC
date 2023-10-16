@@ -290,12 +290,27 @@ gene_names <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
 non_preserved_genes <- cbind(gene_names, non_preserved_genes)
 non_preserved_genes <- non_preserved_genes[, -3]
 
+median_rank <- preserved_modules$preservation$observed$ref.Reference$inColumnsAlsoPresentIn.Test
+median_rank <- rownames_to_column(median_rank)
+median_rank <- subset(median_rank, select = c("rowname", "medianRank.pres"))
+merged <- merge(non_preserved_genes, median_rank, by.x = "cluster", by.y = "rowname")
+
+
+# min-max normalization function. smallest value = 1
+min_max_normalization <- function(x) {
+  return(1 - (x - min(x)) / (max(x) - min(x)))
+}
+
+# Apply modified min-max normalization to the selected column
+merged$medianRank.pres <- min_max_normalization(merged$medianRank.pres)
+
+
+
+# diff_i method
 gene_indices <- rownames(disease_adj) %in% non_preserved_genes$ensembl_gene_id
 disease_subset <- disease_adj[gene_indices, gene_indices]
 benign_subset <- benign_adj[gene_indices, gene_indices]
 
-
-# diff_i method
 sum_matrix <- disease_subset + benign_subset
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
