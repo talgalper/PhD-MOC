@@ -295,6 +295,11 @@ median_rank <- rownames_to_column(median_rank)
 median_rank <- subset(median_rank, select = c("rowname", "medianRank.pres"))
 merged <- merge(non_preserved_genes, median_rank, by.x = "cluster", by.y = "rowname")
 
+Zsummary <- preserved_modules$preservation$Z$ref.Reference$inColumnsAlsoPresentIn.Test
+Zsummary <- rownames_to_column(Zsummary)
+Zsummary <- subset(Zsummary, select = c("rowname", "Zsummary.pres"))
+
+merged <- merge(merged, Zsummary, by.x = "cluster", by.y = "rowname")
 
 # min-max normalization function. smallest value = 1
 min_max_normalization <- function(x) {
@@ -306,17 +311,19 @@ merged$medianRank.pres <- min_max_normalization(merged$medianRank.pres)
 
 
 
-# diff_i method
-gene_indices <- rownames(disease_adj) %in% non_preserved_genes$ensembl_gene_id
+## diff_i method
+
+# subset genes from adj using non preserved genes
+gene_indices <- rownames(disease_adj) %in% non_preserved_genes$ensembl_gene_id 
 disease_subset <- disease_adj[gene_indices, gene_indices]
 benign_subset <- benign_adj[gene_indices, gene_indices]
 
+# perform diff_i method
 sum_matrix <- disease_subset + benign_subset
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
 median <- rowMedians(normalised_scores)
-differential_weigthts <- normalised_scores - median
-
+differential_weigthts <- as.data.frame(normalised_scores - median)
 
 
 
