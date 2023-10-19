@@ -301,13 +301,18 @@ Zsummary <- subset(Zsummary, select = c("rowname", "Zsummary.pres"))
 
 merged <- merge(merged, Zsummary, by.x = "cluster", by.y = "rowname")
 
-# min-max normalization function. smallest value = 1
-min_max_normalization <- function(x) {
-  return(1 - (x - min(x)) / (max(x) - min(x)))
-}
 
-# Apply modified min-max normalization to the selected column
-merged$medianRank.pres <- min_max_normalization(merged$medianRank.pres)
+# min-max normalization function. smallest value = 1
+#min_max_normalization <- function(x) {
+#  return(1 - (x - min(x)) / (max(x) - min(x)))
+#}
+#
+## Apply modified min-max normalization to the selected column
+#merged$medianRank.pres <- min_max_normalization(merged$medianRank.pres)
+
+
+
+## basic differential method
 
 
 
