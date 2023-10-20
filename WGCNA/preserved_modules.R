@@ -182,7 +182,7 @@ a2 <- ggplot(sft_data, aes(Power, mean.k., label = Power)) +
 grid.arrange(a1, a2, nrow = 2)
 
 
-# identify modules
+# identify modules. this includes both benign and disease groups.
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
                           TOMType = "signed",
