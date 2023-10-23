@@ -7,6 +7,7 @@ library(plyr)
 library(gridExtra)
 library(biomaRt)
 library(matrixStats)
+library(reshape2)
 
 
 # combine stages
@@ -207,7 +208,6 @@ disease_adj <- adjacency(wgcna_disease, power = 9, type = "signed")
 benign_adj <- adjacency(wgcna_benign, power = 9, type = "signed")
 
 
-
 multidata <- multiData(Reference = benign_adj, 
                        Test = disease_adj)
 
@@ -313,18 +313,24 @@ merged <- merge(merged, Zsummary, by.x = "cluster", by.y = "rowname")
 
 
 ## basic differential method
+# Can't just subtract correlaiton values from each other
+#diff_adj <- disease_adj - benign_adj
+#diff_edge <- melt(diff_adj)
+#colnames(diff_edge) <- c("node_1", "node_2", "weight")
+#sum(diff_edge$weight >= 0.1)
+#sum(diff_edge$weight <= -0.1)
 
 
 
 ## diff_i method
 
 # subset genes from adj using non preserved genes
-gene_indices <- rownames(disease_adj) %in% non_preserved_genes$ensembl_gene_id 
-disease_subset <- disease_adj[gene_indices, gene_indices]
-benign_subset <- benign_adj[gene_indices, gene_indices]
+#gene_indices <- rownames(disease_adj) %in% non_preserved_genes$ensembl_gene_id 
+#disease_subset <- disease_adj[gene_indices, gene_indices]
+#benign_subset <- benign_adj[gene_indices, gene_indices]
 
 # perform diff_i method
-sum_matrix <- disease_subset + benign_subset
+sum_matrix <- disease_adj + benign_adj
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
 median <- rowMedians(normalised_scores)
