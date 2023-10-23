@@ -334,7 +334,7 @@ sum_matrix <- disease_adj + benign_adj
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
 median <- rowMedians(normalised_scores)
-differential_weigthts <- as.data.frame(normalised_scores - median)
+differential_weights <- as.data.frame(normalised_scores - median)
 
 
 
