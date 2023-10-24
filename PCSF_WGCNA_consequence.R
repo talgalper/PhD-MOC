@@ -29,8 +29,21 @@ differential_weigthts <- as.matrix(differential_weigthts)
 edge_list <- melt(differential_weigthts)
 colnames(edge_list) <- c("node_1", "node_2", "weight")
 
+# add a column indicating +ve or -ve for later
+edge_list$correlation <- ifelse(edge_list$weight > 0, "positive", "negative")
 
-interactome <- construct_interactome(diff_edge)
+# remove new column for PCSF
+edge_list <- edge_list[, -4]
+
+# any negative values will be >1. closer to 0 means more significant co-expression 
+edge_list$weight <- 1 - edge_list$weight
+
+
+start_time <- Sys.time()
+interactome <- construct_interactome(edge_list)
+elapsed_time <- Sys.time() - start_time
+print(elapsed_time)
+
 terminals <- setNames(as.numeric(mean_consequence$Consequence_Rank), mean_consequence$ensembl_gene_id)
 
 start_time <- Sys.time()
