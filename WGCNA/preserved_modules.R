@@ -302,25 +302,6 @@ Zsummary <- subset(Zsummary, select = c("rowname", "Zsummary.pres"))
 merged <- merge(merged, Zsummary, by.x = "cluster", by.y = "rowname")
 
 
-# min-max normalization function. smallest value = 1
-#min_max_normalization <- function(x) {
-#  return(1 - (x - min(x)) / (max(x) - min(x)))
-#}
-#
-## Apply modified min-max normalization to the selected column
-#merged$medianRank.pres <- min_max_normalization(merged$medianRank.pres)
-
-
-
-## basic differential method
-# Can't just subtract correlaiton values from each other
-#diff_adj <- disease_adj - benign_adj
-#diff_edge <- melt(diff_adj)
-#colnames(diff_edge) <- c("node_1", "node_2", "weight")
-#sum(diff_edge$weight >= 0.1)
-#sum(diff_edge$weight <= -0.1)
-
-
 
 ## diff_i method
 
@@ -334,8 +315,7 @@ sum_matrix <- disease_adj + benign_adj
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
 median <- rowMedians(normalised_scores)
-differential_weights <- as.data.frame(normalised_scores - median)
-
+differential_weights <- normalised_scores - median
 
 
 

@@ -22,45 +22,17 @@ gene_ensembl <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"),
 mean_consequence <- merge(gene_ensembl, mean_rank_by_gene, by.x = "external_gene_name", by.y = "SYMBOL")
 mean_consequence <- mean_consequence[, -1]
 
-
+# mac
 load("~/Desktop/WGCNA_RData_large/differential_weights(full).RData")
-differential_weigthts <- as.matrix(differential_weigthts)
+# ubuntu
+load("~/Desktop/large_WGCNA_git_files/differential_weights.RData")
+
+
+graph <- graph_from_data_frame(differential_weigthts)
+edge_list <- as_edgelist(graph)
 
 edge_list <- melt(differential_weigthts)
-colnames(edge_list) <- c("node_1", "node_2", "weight")
-
-# add a column indicating +ve or -ve for later
-edge_list$correlation <- ifelse(edge_list$weight > 0, "positive", "negative")
-
-# remove new column for PCSF
-edge_list <- edge_list[, -4]
-
-# subset string interactions from WGCNA
-gene_list <- edge_list$node_1
-gene_list <- as.list(levels(gene_list))
-gene_list <- unlist(gene_list)
-write.table(gene_list, "~/Desktop/gene_list.txt", quote = F, row.names = F, col.names = F)
-
-string_edge_data <- read.table("STRING network default edge.csv", header = T, sep = ",", stringsAsFactors = F)
-ppi_list <- subset(string_edge_data, select = c("name", "stringdb..score"))
-ppi_list <- ppi_list %>% 
-  separate(name, sep = " ", into = c("node_1", "del", "node_2"))
-ppi_list <- subset(ppi_list, select = c("node_1", "node_2", "stringdb..score"))
-ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
-ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
-
-string_node_data <- read.table("STRING network default node.csv", header = T, sep = ",", stringsAsFactors = F)
-node_list <- subset(string_node_data, select = c("name", "query.term"))
-node_list$name <- gsub(".*.\\.", "", node_list$name)
-ppi_list$original_order <- seq_len(nrow(ppi_list))
-merged_df <- merge(ppi_list, node_list, by.x = "node_1", by.y = "name", all.x = TRUE)
-merged_df <- merge(merged_df, node_list, by.x = "node_2", by.y = "name", all.x = TRUE)
-merged_df <- merged_df[order(merged_df$original_order), ]
-
-final_df <- merged_df[, c("query.term.x", "query.term.y")]
-colnames(final_df) <- c("node_1", "node_2")
-
-subset_edge_list <- edge_list[edge_list$node_1 %in% final$node_1 & edge_list$node_2 %in% unique_interactions$node_2, ]
+colnames(edge_list) <- c("node_1", "node_2", "score")
 
 
 # any negative values will be >1. closer to 0 means more significant co-expression 
