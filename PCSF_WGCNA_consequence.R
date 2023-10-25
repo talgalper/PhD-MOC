@@ -35,6 +35,34 @@ edge_list$correlation <- ifelse(edge_list$weight > 0, "positive", "negative")
 # remove new column for PCSF
 edge_list <- edge_list[, -4]
 
+# subset string interactions from WGCNA
+gene_list <- edge_list$node_1
+gene_list <- as.list(levels(gene_list))
+gene_list <- unlist(gene_list)
+write.table(gene_list, "~/Desktop/gene_list.txt", quote = F, row.names = F, col.names = F)
+
+string_edge_data <- read.table("STRING network default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+ppi_list <- subset(string_edge_data, select = c("name", "stringdb..score"))
+ppi_list <- ppi_list %>% 
+  separate(name, sep = " ", into = c("node_1", "del", "node_2"))
+ppi_list <- subset(ppi_list, select = c("node_1", "node_2", "stringdb..score"))
+ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
+ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
+
+string_node_data <- read.table("STRING network default node.csv", header = T, sep = ",", stringsAsFactors = F)
+node_list <- subset(string_node_data, select = c("name", "query.term"))
+node_list$name <- gsub(".*.\\.", "", node_list$name)
+ppi_list$original_order <- seq_len(nrow(ppi_list))
+merged_df <- merge(ppi_list, node_list, by.x = "node_1", by.y = "name", all.x = TRUE)
+merged_df <- merge(merged_df, node_list, by.x = "node_2", by.y = "name", all.x = TRUE)
+merged_df <- merged_df[order(merged_df$original_order), ]
+
+final_df <- merged_df[, c("query.term.x", "query.term.y")]
+colnames(final_df) <- c("node_1", "node_2")
+
+subset_edge_list <- edge_list[edge_list$node_1 %in% final$node_1 & edge_list$node_2 %in% unique_interactions$node_2, ]
+
+
 # any negative values will be >1. closer to 0 means more significant co-expression 
 edge_list$weight <- 1 - edge_list$weight
 
