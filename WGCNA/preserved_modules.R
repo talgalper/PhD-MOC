@@ -187,7 +187,7 @@ grid.arrange(a1, a2, nrow = 2)
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
                           TOMType = "signed",
-                          power = 9,
+                          power = 10,
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
@@ -204,8 +204,8 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
 
 
 # create adjacency matrix
-disease_adj <- adjacency(wgcna_disease, power = 9, type = "signed")
-benign_adj <- adjacency(wgcna_benign, power = 9, type = "signed")
+disease_adj <- adjacency(wgcna_disease, power = 10, type = "signed")
+benign_adj <- adjacency(wgcna_benign, power = 10, type = "signed")
 
 
 multidata <- multiData(Reference = benign_adj, 

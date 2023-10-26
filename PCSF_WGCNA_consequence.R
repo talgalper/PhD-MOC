@@ -10,6 +10,8 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mocCNVData <- read.table("~/Downloads/mocCNVData.txt", sep = "\t", header = T)
 allCNVDataIDConverted <- read.table("~/Downloads/allCNVDataIDConverted.txt", sep = "\t", header = T)
 
+allCNsegments <- read.csv("~/Downloads/Source data_All CN segments_with IDs.csv", header = T)
+
 
 mocVariantData <- read.csv("~/Downloads/mocVariantData.csv", header = T, na.strings = ".")
 mean_rank_by_gene <- aggregate(Consequence_Rank ~ SYMBOL, data = mocVariantData, FUN = mean)
@@ -23,9 +25,9 @@ mean_consequence <- merge(gene_ensembl, mean_rank_by_gene, by.x = "external_gene
 mean_consequence <- mean_consequence[, -1]
 
 # mac
-load("~/Desktop/WGCNA_RData_large/differential_weights(full).RData")
+load()
 # ubuntu
-load("~/Desktop/large_WGCNA_git_files/differential_weights.RData")
+load("~/Desktop/large_git_files/WGCNA/differential_weights_matrix.RData")
 
 
 graph <- graph_from_data_frame(differential_weigthts)
