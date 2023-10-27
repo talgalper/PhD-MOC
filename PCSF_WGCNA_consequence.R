@@ -30,15 +30,12 @@ load()
 load("~/Desktop/large_git_files/WGCNA/differential_weights_matrix.RData")
 
 
-graph <- graph_from_data_frame(differential_weigthts)
-edge_list <- as_edgelist(graph)
-
-edge_list <- melt(differential_weigthts)
+edge_list <- melt(differential_weights)
 colnames(edge_list) <- c("node_1", "node_2", "score")
 
 
 # any negative values will be >1. closer to 0 means more significant co-expression 
-edge_list$weight <- 1 - edge_list$weight
+edge_list$score <- 1 - edge_list$score
 
 
 start_time <- Sys.time()
@@ -50,11 +47,11 @@ terminals <- setNames(as.numeric(mean_consequence$Consequence_Rank), mean_conseq
 
 start_time <- Sys.time()
 set.seed(1234)
-subnet <- PCSF_rand(interactome, terminals, n = 50, r = 0.1, w = 2, b = 1, mu = 0.0005)
+subnet <- PCSF_rand(interactome, terminals, n = 1, r = 0.1, w = 2, b = 1, mu = 0.0005)
 elapsed_time <- Sys.time() - start_time
 print(elapsed_time)
 
-plot.PCSF(kylie_subnet, node_label_cex = 15)
+plot.PCSF(subnet, node_label_cex = 15)
 
 
 
