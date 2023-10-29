@@ -24,12 +24,6 @@ gene_ensembl <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"),
 mean_consequence <- merge(gene_ensembl, mean_rank_by_gene, by.x = "external_gene_name", by.y = "SYMBOL")
 mean_consequence <- mean_consequence[, -1]
 
-# mac
-load()
-# ubuntu
-load("~/Desktop/large_git_files/WGCNA/differential_weights_matrix.RData")
-
-
 edge_list <- melt(differential_weights)
 colnames(edge_list) <- c("node_1", "node_2", "score")
 
@@ -38,16 +32,16 @@ colnames(edge_list) <- c("node_1", "node_2", "score")
 edge_list$score <- 1 - edge_list$score
 
 
-start_time <- Sys.time()
 interactome <- construct_interactome(edge_list)
-elapsed_time <- Sys.time() - start_time
-print(elapsed_time)
 
 terminals <- setNames(as.numeric(mean_consequence$Consequence_Rank), mean_consequence$ensembl_gene_id)
 
+# ubuntu
+load("~/Desktop/large_git_files/WGCNA/PCSF_data.RData")
+
 start_time <- Sys.time()
 set.seed(1234)
-subnet <- PCSF_rand(interactome, terminals, n = 1, r = 0.1, w = 2, b = 1, mu = 0.0005)
+subnet <- PCSF_rand(interactome, terminals, n = 10, r = 0.1, w = 2, b = 1, mu = 0.0005)
 elapsed_time <- Sys.time() - start_time
 print(elapsed_time)
 
