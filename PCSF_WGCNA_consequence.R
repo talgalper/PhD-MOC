@@ -3,6 +3,7 @@ library(igraph)
 library(tidyverse)
 library(reshape2)
 library(biomaRt)
+library(RobustRankAggreg)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
@@ -46,6 +47,214 @@ elapsed_time <- Sys.time() - start_time
 print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
+
+# extract cluster data
+clust <- clusters(subnet)
+df <- data.frame(gene_id = names(clust$membership), cluster = factor(clust$membership))
+betweenness <- betweenness(subnet) 
+centrality <- degree(subnet) 
+df$betweenness <- betweenness[as.character(df$gene_id)]
+df$degree_centrality <- centrality[as.character(df$gene_id)]
+df$betweenness <- as.integer(df$betweenness)
+df$degree_centrality <- as.integer(df$degree_centrality)
+
+rownames(df) <- 1:nrow(df)
+
+df <- df[order(-df$degree_centrality), ]
+
+
+df <- merge(gene_ensembl, df, by.x = "ensembl_gene_id", by.y = "gene_id")
+
+# convert ensembl to uniprot
+uniprot_ids <- getBM(attributes = c("ensembl_gene_id", "uniprot_gn_id"), 
+                      filters = "ensembl_gene_id", 
+                      values = df$ensembl_gene_id, 
+                      mart = ensembl)
+
+# convert external gene name to uniprot
+uniprot_ids2 <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
+                     filters = "external_gene_name", 
+                     values = df$external_gene_name, 
+                     mart = ensembl)
+
+PCSF_master <- merge(uniprot_ids, df, by = "ensembl_gene_id")
+PCSF_master2 <- merge(uniprot_ids2, df, by = "external_gene_name")
+
+
+af_drugability <- read.csv("~/Documents/GitHub/PhD-MOC/druggability_results/fpocket_druggability.csv")
+
+# chose PCSF_master2, external gene name converted to uniprot id
+PCSF_results <- merge(PCSF_master2, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
+
+
+# save results for citation scoring
+write.csv(PCSF_results, "PCSF_results.csv")
+
+
+citation_scores <- read.csv("citation_scores.csv")
+
+PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
+PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
+
+
+
+# sensitivity test + rank sensitivity test
+betweenness <- subset(PCSF_results, select = c("external_gene_name", "betweenness"))
+betweenness <- distinct(betweenness)
+betweenness$betweenness <- (betweenness$betweenness - min(betweenness$betweenness)) / (max(betweenness$betweenness) - min(betweenness$betweenness))
+betweenness <- betweenness[order(betweenness$betweenness, decreasing = T), ]
+betweenness <- betweenness$external_gene_name
+
+centrality <- subset(PCSF_results, select = c("external_gene_name", "degree_centrality"))
+centrality <- distinct(centrality)
+centrality$degree_centrality <- (centrality$degree_centrality - min(centrality$degree_centrality)) / (max(centrality$degree_centrality) - min(centrality$degree_centrality))
+centrality <- centrality[order(centrality$degree_centrality, decreasing = T), ]
+centrality <- centrality$external_gene_name
+
+# log transformation of citation scores
+citation <- subset(PCSF_results, select = c("external_gene_name", "citation_score"))
+citation <- distinct(citation)
+citation$citation_score <- log(citation$citation_score + 1)
+citation$citation_score <- (citation$citation_score - min(citation$citation_score)) / (max(citation$citation_score) - min(citation$citation_score))
+citation <- citation[order(citation$citation_score, decreasing = F), ]
+citation <- citation$external_gene_name
+
+druggability <- subset(PCSF_results, select = c("external_gene_name", "druggability"))
+druggability <- distinct(druggability)
+druggability <- druggability[order(druggability$druggability, decreasing = T), ]
+druggability <- druggability$external_gene_name
+
+rankings <- list(betweenness, centrality, citation, druggability)
+
+
+aggregate_ranks <- aggregateRanks(glist = rankings)
+rownames(aggregate_ranks) <- NULL
+
+
+
+
+
+betweeness_norm <- (PCSF_results$betweenness - min(PCSF_results$betweenness)) / (max(PCSF_results$betweenness) - min(PCSF_results$betweenness))
+
+centrality_norm <- (PCSF_results$degree_centrality - min(PCSF_results$degree_centrality)) / (max(PCSF_results$degree_centrality) - min(PCSF_results$degree_centrality))
+
+# log transformation
+citation_norm <- log(PCSF_results$citation_score + 1)
+citation_norm <- (citation_norm - min(citation_norm)) / (max(citation_norm) - min(citation_norm))
+
+
+# Load the progress package
+library(progress)
+
+# Define the number of weight values to test
+num_weights <- 11
+
+# Create weight value sequences that sum up to 1
+betweeness_w_values <- seq(0, 1, length.out = num_weights)
+citation_w_values <- seq(0, 1, length.out = num_weights)
+centrality_w_values <- seq(0, 1, length.out = num_weights)
+druggability_w_values <- seq(0, 1, length.out = num_weights)
+
+# Calculate the total number of iterations
+total_iterations <- num_weights ^ 4
+
+# Create a progress bar
+pb <- progress_bar$new(total = total_iterations)
+
+# Create an empty data frame with proper column names
+sensitivity_results <- data.frame(
+  betweeness_weight = numeric(),
+  citation_weight = numeric(),
+  centrality_weight = numeric(),
+  druggability_weight = numeric(),
+  top_genes = character(),
+  stringsAsFactors = FALSE
+)
+
+# Perform sensitivity test
+for (betweeness_w in betweeness_w_values) {
+  for (citation_w in citation_w_values) {
+    for (centrality_w in centrality_w_values) {
+      for (druggability_w in druggability_w_values) {
+        # Check if the weights sum up to 1
+        if (betweeness_w + citation_w + centrality_w + druggability_w == 1) {
+          # Combine scores using current weights
+          combined_score <- betweeness_w * betweeness_norm +
+            centrality_w * centrality_norm +
+            druggability_w * PCSF_results$druggability -
+            citation_w * citation_norm
+          
+          # Rank the genes based on the combined score
+          PCSF_results_edit <- PCSF_results
+          PCSF_results_edit$combined_score <- combined_score
+          PCSF_results_edit <- PCSF_results_edit[order(-PCSF_results_edit$combined_score), ]
+          
+          # Select the top 10 genes
+          top_genes <- head(PCSF_results_edit$external_gene_name, 10)
+          
+          # Add results to the sensitivity_results data frame
+          sensitivity_results <- rbind(sensitivity_results, list(
+            betweeness_weight = betweeness_w,
+            citation_weight = citation_w,
+            centrality_weight = centrality_w,
+            druggability_weight = druggability_w,
+            top_genes = paste(top_genes, collapse = ', ')
+          ))
+        }
+        
+        # Increment the progress bar
+        pb$tick()
+      }
+    }
+  }
+}
+
+
+# Split the "top_genes" column into a list of genes
+sensitivity_results$top_genes_list <- strsplit(sensitivity_results$top_genes, ', ')
+
+# Count the occurrences of each gene
+all_genes <- unlist(sensitivity_results$top_genes_list)
+all_genes_unique <- unique(all_genes)
+count <- sapply(all_genes_unique, function(g) sum(sapply(sensitivity_results$top_genes_list, function(lst) g %in% lst)))
+
+# Create an empty data frame to store gene counts
+gene_counts <- data.frame(
+  gene = all_genes_unique,
+  count = count,
+  stringsAsFactors = FALSE
+)
+
+# Sort the gene counts by count
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+
+
+counts_when_betweeness_0 <- sensitivity_results[sensitivity_results$betweeness_weight == 0, ]
+counts_when_betweeness_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_betweeness_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_betweeness_0)
+
+counts_when_centrality_0 <- sensitivity_results[sensitivity_results$centrality_weight == 0, ]
+counts_when_centrality_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_centrality_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_centrality_0)
+
+counts_when_citation_0 <- sensitivity_results[sensitivity_results$citation_weight == 0, ]
+counts_when_citation_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_citation_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_citation_0)
+
+counts_when_druggability_0 <- sensitivity_results[sensitivity_results$druggability_weight == 0, ]
+counts_when_druggability_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_druggability_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_druggability_0)
+
+rownames(gene_counts) <- NULL
+
+
+
+
 
 
 

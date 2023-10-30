@@ -1,7 +1,7 @@
 # Load the progress package
 library(progress)
 
-# Define the number of weight values to test (including 0)
+# Define the number of weight values to test
 num_weights <- 11
 
 # Create weight value sequences that sum up to 1
