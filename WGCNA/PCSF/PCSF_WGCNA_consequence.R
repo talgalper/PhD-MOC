@@ -88,21 +88,17 @@ gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"),
 PCSF_master <- merge(ensembl_to_uniprot, df, by = "ensembl_gene_id")
 PCSF_master2 <- merge(gn_to_uniprot, df, by = "external_gene_name")
 
+
 # load Fpocket data
 af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
 
-# load pocketminer data
-pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
-
-
-# chose PCSF_master2, external gene name converted to uniprot id
+# merge PCSF data with AF
 PCSF_results <- merge(PCSF_master2, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
 
-
 # save results for citation scoring
-write.csv(PCSF_results, "PCSF_results.csv")
+write.csv(PCSF_results, "PCSF/PCSF_results.csv")
 
-
+# run citation scoring tool and read in
 citation_scores <- read.csv("citation_scores.csv")
 
 PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
@@ -110,17 +106,7 @@ PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty 
 
 
 
-
-
-
-
-
-
-
-
-
-
-# sensitivity test + rank sensitivity test
+# Robust Rank Agrregation
 betweenness <- subset(PCSF_results, select = c("external_gene_name", "betweenness"))
 betweenness <- distinct(betweenness)
 betweenness$betweenness <- (betweenness$betweenness - min(betweenness$betweenness)) / (max(betweenness$betweenness) - min(betweenness$betweenness))
@@ -141,16 +127,53 @@ citation$citation_score <- (citation$citation_score - min(citation$citation_scor
 citation <- citation[order(citation$citation_score, decreasing = F), ]
 citation <- citation$external_gene_name
 
-druggability <- subset(PCSF_results, select = c("external_gene_name", "druggability"))
-druggability <- distinct(druggability)
+druggability_data <- subset(PCSF_results, select = c("external_gene_name", "druggability", "num_drug_pockets"))
+druggability_data <- distinct(druggability_data)
 druggability <- druggability[order(druggability$druggability, decreasing = T), ]
 druggability <- druggability$external_gene_name
 
-rankings <- list(betweenness, centrality, citation, druggability)
+num_drug_pockets <- druggability_data[order(druggability_data$num_drug_pockets, decreasing = T), ]
+num_drug_pockets <- num_drug_pockets$external_gene_name
+
+# add the pocketminer data as another ranking
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
+
+pocketminer_gn_id <- getBM(attributes = c("uniprot_gn_id", "external_gene_name"), 
+                           filters = "uniprot_gn_id", 
+                           values = pocketminer_data$uniprot_id, 
+                           mart = ensembl)
+
+pocketminer_data <- merge(pocketminer_gn_id, pocketminer_data, by.x = "uniprot_gn_id", by.y = "uniprot_id")
+pocketminer_data[pocketminer_data == ""] <- NA
+pocketminer_data <- na.omit(pocketminer_data)
+pocketminer_data <- pocketminer_data[order(pocketminer_data$max_hit, decreasing = T), ]
+cryptic_pockets <- pocketminer_data$external_gene_name
+
+# reorder for num_hits
+pocketminer_data <- pocketminer_data[order(pocketminer_data$num_hits, decreasing = T), ]
+num_cryp_pockets <- pocketminer_data$external_gene_name
+
+rankings <- list(betweenness, centrality, citation, druggability, num_drug_pockets, cryptic_pockets, num_cryp_pockets)
 
 
 aggregate_ranks <- aggregateRanks(glist = rankings)
 rownames(aggregate_ranks) <- NULL
+
+# remove scientific notation
+options(scipen=999)
+
+
+
+plot_data <- pocketminer_data[pocketminer_data$external_gene_name %in% PCSF_results$external_gene_name, ]
+plot_data <- 
+
+plot_data <- data.frame(num_cryp = plot_data$num_hits,
+                        cryp = plot_data$max_hit,
+                        num_drug = PCSF_results$num_drug_pockets,
+                        drug = PCSF_results$druggability)
+
+ggplot(plot_data, aes(x = num_drug_pockets, y = num_cryp_pockets)) +
+  geom_point()
 
 
 

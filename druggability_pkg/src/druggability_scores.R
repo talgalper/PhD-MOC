@@ -5,9 +5,6 @@ if (!require("readr")) {
 
 library(readr)
 
-args <- commandArgs(trailingOnly = TRUE)
-input_dir <- args[1] # path to scores
-
 fpocket_format <- function(txt_file){
   # read in .txt file
   df <- read.delim(txt_file, sep = ",", header = F)
@@ -62,6 +59,7 @@ files <- list.files("results/scores/")
 # Create a data frame to store the results
 results <- data.frame(file_id = character(),
                       uniprot_id = character(),
+                      ID = character(),
                       pocket = logical(),
                       druggability = logical(),
                       stringsAsFactors = FALSE)
@@ -75,13 +73,18 @@ for (i in seq_along(files)) {
     next
   }
   
+  print(paste0("Formatting file ", i, " of ", length(files), ": ", file))
+  
+  #
+  split_name <- strsplit(file, split = "-")
+  split_name <- unlist(split_name)
+  id <- paste0(split_name[2], "-", split_name[3])
+  
   # Extract the UniProt ID from the filename
   uniprot_id <- sub("^[^-]+-([^-]+)-.*", "\\1", file)
   
   # file id identifier
   file_id <- gsub("_info.txt", "", file)
-  
-  print(paste0("Formatting file ", i, " of ", length(files), ": ", file))
   
   # Read in the data using the function
   data <- fpocket_format(paste0("results/scores/", file))
@@ -98,6 +101,7 @@ for (i in seq_along(files)) {
   # Add the results to the data frame
   results <- rbind(results, data.frame(file_id = file_id,
                                        uniprot_id = uniprot_id,
+                                       ID = id,
                                        pocket = pocket_max,
                                        druggability = druggability_max,
                                        num_drug_pockets = num_drug_pockets))
