@@ -51,6 +51,11 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
+
+
+
+load("PCSF/data/PCSF_subnet(n=10).RData")
+
 # extract cluster data
 clust <- clusters(subnet)
 df <- data.frame(gene_id = names(clust$membership), cluster = factor(clust$membership))
@@ -69,22 +74,22 @@ df <- df[order(-df$degree_centrality), ]
 df <- merge(gene_ensembl, df, by.x = "ensembl_gene_id", by.y = "gene_id")
 
 # convert ensembl to uniprot
-uniprot_ids <- getBM(attributes = c("ensembl_gene_id", "uniprot_gn_id"), 
+ensembl_to_uniprot <- getBM(attributes = c("ensembl_gene_id", "uniprot_gn_id"), 
                       filters = "ensembl_gene_id", 
                       values = df$ensembl_gene_id, 
                       mart = ensembl)
 
 # convert external gene name to uniprot
-uniprot_ids2 <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
+gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
                      filters = "external_gene_name", 
                      values = df$external_gene_name, 
                      mart = ensembl)
 
-PCSF_master <- merge(uniprot_ids, df, by = "ensembl_gene_id")
-PCSF_master2 <- merge(uniprot_ids2, df, by = "external_gene_name")
+PCSF_master <- merge(ensembl_to_uniprot, df, by = "ensembl_gene_id")
+PCSF_master2 <- merge(gn_to_uniprot, df, by = "external_gene_name")
 
 # load Fpocket data
-af_drugability <- read.csv("~/Documents/GitHub/PhD-MOC/druggability_results/fpocket_druggability.csv")
+af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
 
 # load pocketminer data
 pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
@@ -102,6 +107,16 @@ citation_scores <- read.csv("citation_scores.csv")
 
 PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
 PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
+
+
+
+
+
+
+
+
+
+
 
 
 
