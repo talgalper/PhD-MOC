@@ -8,13 +8,13 @@ library(RobustRankAggreg)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
-mocCNVData <- read.table("~/Downloads/mocCNVData.txt", sep = "\t", header = T)
-allCNVDataIDConverted <- read.table("~/Downloads/allCNVDataIDConverted.txt", sep = "\t", header = T)
+#mocCNVData <- read.table("~/Downloads/mocCNVData.txt", sep = "\t", header = T)
+#allCNVDataIDConverted <- read.table("~/Downloads/allCNVDataIDConverted.txt", sep = "\t", header = T)
+#
+#allCNsegments <- read.csv("~/Downloads/Source data_All CN segments_with IDs.csv", header = T)
 
-allCNsegments <- read.csv("~/Downloads/Source data_All CN segments_with IDs.csv", header = T)
 
-
-mocVariantData <- read.csv("~/Downloads/mocVariantData.csv", header = T, na.strings = ".")
+mocVariantData <- read.csv("PCSF/data/mocVariantData.csv", header = T, na.strings = ".")
 mean_rank_by_gene <- aggregate(Consequence_Rank ~ SYMBOL, data = mocVariantData, FUN = mean)
 
 gene_ensembl <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"), 
@@ -39,6 +39,9 @@ terminals <- setNames(as.numeric(mean_consequence$Consequence_Rank), mean_conseq
 
 # ubuntu
 load("~/Desktop/large_git_files/WGCNA/PCSF_data.RData")
+# mac
+load("~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/PCSF_data.RData")
+
 
 start_time <- Sys.time()
 set.seed(1234)
@@ -80,8 +83,12 @@ uniprot_ids2 <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"),
 PCSF_master <- merge(uniprot_ids, df, by = "ensembl_gene_id")
 PCSF_master2 <- merge(uniprot_ids2, df, by = "external_gene_name")
 
-
+# load Fpocket data
 af_drugability <- read.csv("~/Documents/GitHub/PhD-MOC/druggability_results/fpocket_druggability.csv")
+
+# load pocketminer data
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
+
 
 # chose PCSF_master2, external gene name converted to uniprot id
 PCSF_results <- merge(PCSF_master2, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
