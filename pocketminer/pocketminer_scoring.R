@@ -32,12 +32,12 @@ for (i in seq_along(pocketminer_results)) {
   
   # Create an empty vector to store the calculated averages
   averages <- numeric(nrow(data))
-
+  
   # Calculate the averages for each residue and store them in the 'averages' vector
   for (x in 1:nrow(data)) {
     averages[x] <- calculate_average(data, x)
   }
-
+  
   # Add the calculated averages to the original data frame
   data$averages <- averages
   
@@ -52,6 +52,8 @@ pocketminer_averages <- list.files("results/pocket_results/")
 IDs <- list()
 largest_averages <- list()
 number_of_hits <- list()
+uniprot_IDs <- list()
+
 
 # create list of IDs and count scores
 for (i in seq_along(pocketminer_averages)) {
@@ -59,10 +61,13 @@ for (i in seq_along(pocketminer_averages)) {
   file <- pocketminer_averages[i]
   
   # Get uniprot/subunit ID
-  id <- strsplit(file, split = "-")
-  id <- id[[1]]
-  id <- paste0(id[1], "-", id[2])
+  split_id <- strsplit(file, split = "-")
+  split_id <- unlist(split_id)
+  id <- paste0(split_id[1], "-", split_id[2])
   IDs <- append(IDs, id)
+  
+  uniprot_id <- split_id[1]
+  uniprot_IDs <- append(uniprot_IDs, uniprot_id)
   
   # read in the data
   data <- read.table(file.path("results/pocket_results", file), header = T)
@@ -82,11 +87,13 @@ structures <- list.files("structures/")
 # combine data into data frame
 pocketminer_master <- data.frame(file_id = unlist(structures),
                                  ID = unlist(IDs),
+                                 uniprot_id = unlist(uniprot_IDs),
                                  max_hit = unlist(largest_averages),
                                  num_hits = unlist(number_of_hits))
 
 # save results
 write.csv(pocketminer_master, "results/pocketminer_results.csv", row.names = F)
+
 
 
 
