@@ -469,7 +469,7 @@ kylie_pcsf <- merge(ref_list, kylie_pcsf, by.x = "external_gene_name", by.y = "g
 
 # merge AF data with PCSF data by uniprot ID
 kylie_pcsf_master <- merge(kylie_pcsf, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
-kylie_pcsf_master <- subset(kylie_pcsf_master, select = c("external_gene_name", "uniprot_gn_id", "cluster", 
+kylie_pcsf_master <- subset(kylie_pcsf_master, select = c("external_gene_name", "uniprot_gn_id", "ID", "cluster", 
                                                           "betweenness", "degree_centrality", "pocket", 
                                                           "druggability", "num_drug_pockets", "struct_score"))
 
