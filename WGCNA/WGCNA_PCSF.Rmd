@@ -1,0 +1,255 @@
+---
+title: "PCSF WGCNA analysis"
+output: html_document
+date: "2023-11-07"
+---
+
+```{r load packages, echo=FALSE}
+library(PCSF)
+library(igraph)
+library(tidyverse)
+library(reshape2)
+library(biomaRt)
+library(RobustRankAggreg)
+library(gridExtra)
+library(enrichR)
+library(kableExtra)
+
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+```
+
+```{r setup, include=FALSE}
+# combine stages
+ben <- read.csv("rna_seq_data/ben_master_df.csv")
+stage_I <- read.csv("rna_seq_data/stage_I_master_df.csv")
+stage_II <- read.csv("rna_seq_data/stage_II_master_df.csv")
+stage_III <- read.csv("rna_seq_data/stage_III_master_df.csv")
+stage_IV <- read.csv("rna_seq_data/stage_IV_master_df.csv")
+
+kylie_data <- merge(ben, stage_I,)
+kylie_data <- merge(kylie_data, stage_II, by = "X")
+kylie_data <- merge(kylie_data, stage_III, by = "X")
+kylie_data <- merge(kylie_data, stage_IV, by = "X")
+
+colnames(kylie_data)[1] <- "gene_id"
+rownames(kylie_data) <- kylie_data$gene_id
+kylie_data <- kylie_data[, -1] # remove gene ids for calcs
+
+
+# create stage ID for each sample
+stage_info <- data.frame(
+  Sample = colnames(kylie_data),
+  Stage = character(length(colnames(kylie_data)))
+)
+
+stages <- c("ben", "stage_I", "stage_II", "stage_III", "stage_IV")
+
+for (stage in stages) {
+  stage_data <- get(stage)
+  stage_info$Stage[colnames(kylie_data) %in% colnames(stage_data)] <- stage
+}
+
+
+## removing 0 Variance and low activity genes
+
+# Identify outliers. Searches for 0 variance genes and missing entries
+gsg <- goodSamplesGenes(t(kylie_data))
+summary(gsg)
+gsg$allOK
+
+
+
+# top x% of samples
+num_genes <- nrow(kylie_data)
+top_threshold <- ceiling(num_genes * 0.50)
+
+# min required samples
+num_samples <- ncol(kylie_data)
+min_required_samples <- ceiling(num_samples * 0.10)
+
+
+
+# Extract the gene names and data columns
+gene_names <- rownames(kylie_data)
+data_columns <- kylie_data
+
+# Initialise an empty data frame
+results_df <- data.frame(gene_id = gene_names)
+
+# Iterate through each data column and perform the test
+for (col_id in seq_along(data_columns)) {
+  # Get the column name and the data
+  col_name <- colnames(data_columns)[col_id]
+  col_data <- data_columns[, col_id]
+  
+  # Sort the data and mark genes within the top_threshold rows as TRUE
+  sorted_indices <- order(col_data, decreasing = TRUE)
+  top_indices <- sorted_indices[1:top_threshold]
+  
+  # Create a logical vector for gene presence in top_threshold
+  gene_presence <- rep(FALSE, nrow(kylie_data))
+  gene_presence[top_indices] <- TRUE
+  
+  # Add to the results data frame
+  results_df <- cbind(results_df, gene_presence)
+}
+
+# Rename columns 
+colnames(results_df) <- c("gene_id", colnames(data_columns))
+
+
+# Calculate the number of TRUE values for each gene across columns
+gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
+failed_genes <- gene_counts < min_required_samples
+print(summary(failed_genes))
+
+wgcna_data <- subset(kylie_data, !(rownames(kylie_data) %in% gene_names[failed_genes]))
+```
+
+<br>
+
+## Description
+
+Prior to this pipeline, MOC RNA-Seq data was analysed using WGCNA to obtain two sepetarate co-expression networks for benign and disease groups. Several filtering steps were undertaken in order to reduce noise:
+
+-   Initial gene set consists of 14,889 genes
+-   The goodSamplesGenes function was run to check for "bad" samples and to check for 0 variance genes
+-   Low activity genes were then removed by creating a threshold whereby each gene must appear in the top 50% of genes within a sample in at least 10% of the samples
+-   Counts were converted to counts per million (CPM) to account for large differences library size
+
+<details>
+
+<summary>Library size bar plot</summary>
+
+```{r library size plot,  echo=FALSE, out.width='33%', fig.show='hold'}
+raw <- barplot(colSums(wgcna_data), 
+        xaxt = "n",
+        xlab = "Samples",
+        ylab = "Raw Counts")
+
+wgcna_data <- cpm(wgcna_data, log = T)
+cpm <- barplot(colSums(wgcna_data), 
+        xaxt = "n",
+        xlab = "Samples",
+        ylab = "CPM")
+
+```
+
+</details>
+
+-   Next a PCA was performed to observe the data dimensions. Initially, 3 outliers were removed but then decided to be kept in as there are not enough samples to make a definitive decision. Additionally, cancer samples and patients are inherently different and must be accounted for.
+
+<details>
+
+<summary>PCA plot</summary>
+
+```{r}
+pca <- prcomp(t(wgcna_data))
+pca_data <- pca$x
+pca_var <- pca$sdev^2
+
+pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+
+pca_data <- as.data.frame(pca_data)
+
+
+# Merge sample-stage mapping with PCA data
+pca_data <- merge(pca_data, stage_info, by.x = "row.names", by.y = "Sample")
+
+# Create a custom color palette for stages
+stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
+
+# Create the PCA plot with color mapping
+ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
+  geom_point() +
+  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+  scale_color_manual(values = stage_colors) + # Use the custom color palette
+  theme_bw() +
+  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+       y = paste0('PC2: ', pca_var_perc[2], ' %'))
+```
+
+</details>
+
+-   prior to WGCNA analysis, the gene set consists of 9,934 genes
+
+<br>
+
+A differential network was then generated using the two groups by performing the diff_i method (calculation attached below). This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. The run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
+
+subnet \<- PCSF_rand(interactome, terminals, n = 10, r = 0.1, w = 2, b = 1, mu = 0.0005)
+
+<details>
+
+<summary>Diff_i method</summary>
+
+```{r diff_i, eval=False}
+sum_matrix <- disease_adj + benign_adj
+normalised_scores <- apply(sum_matrix, 2, max)
+normalised_scores <- sum_matrix / normalised_scores
+median <- rowMedians(normalised_scores)
+differential_weights <- normalised_scores - median
+```
+
+</details>
+
+<details>
+
+<summary>Kylie consequence data</summary>
+
+```{r echo=FALSE}
+mocVariantData <- read.csv("PCSF/data/mocVariantData.csv", header = T, na.strings = ".")
+mean_rank_by_gene <- aggregate(Consequence_Rank ~ SYMBOL, data = mocVariantData, FUN = mean)
+
+gene_ensembl <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"), 
+                      filters = "external_gene_name", 
+                      values = mean_rank_by_gene$SYMBOL, 
+                      mart = ensembl)
+
+mean_consequence <- merge(gene_ensembl, mean_rank_by_gene, by.x = "external_gene_name", by.y = "SYMBOL")
+mean_consequence <- mean_consequence[, -1]
+
+kable(mocVariantData, format = "html", caption = "MOC Vairant Data") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+<br>
+
+The resulting subnetwork consisted of 5,101 genes which are in gene ensembles and are required to be converted to "classic" gene names
+
+```{r PCSF data table and name conversion, echo=FALSE}
+load("PCSF/data/PCSF_subnet(n=10).RData")
+
+# extract cluster data
+clust <- clusters(subnet)
+df <- data.frame(gene_id = names(clust$membership), cluster = factor(clust$membership))
+betweenness <- betweenness(subnet) 
+centrality <- degree(subnet) 
+df$betweenness <- betweenness[as.character(df$gene_id)]
+df$degree_centrality <- centrality[as.character(df$gene_id)]
+df$betweenness <- as.integer(df$betweenness)
+df$degree_centrality <- as.integer(df$degree_centrality)
+
+rownames(df) <- 1:nrow(df)
+
+df <- df[order(-df$degree_centrality), ]
+
+
+df <- merge(gene_ensembl, df, by.x = "ensembl_gene_id", by.y = "gene_id")
+
+# convert ensembl to uniprot
+ensembl_to_uniprot <- getBM(attributes = c("ensembl_gene_id", "uniprot_gn_id"), 
+                      filters = "ensembl_gene_id", 
+                      values = df$ensembl_gene_id, 
+                      mart = ensembl)
+
+# convert external gene name to uniprot
+gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
+                     filters = "external_gene_name", 
+                     values = df$external_gene_name, 
+                     mart = ensembl)
+
+PCSF_master <- merge(ensembl_to_uniprot, df, by = "ensembl_gene_id")
+PCSF_master2 <- merge(gn_to_uniprot, df, by = "external_gene_name")
+```

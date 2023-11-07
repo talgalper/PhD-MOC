@@ -176,30 +176,67 @@ options(scipen=999)
 write.csv(aggregate_ranks, "PCSF/aggregate_ranks.csv")
 
 
+
+
+## enrichment analysis
 aggregate_ranks <- read.csv("PCSF/aggregate_ranks.csv", row.names = 1)
 temp_genes <- aggregate_ranks$external_gene_name
 temp_genes <- temp_genes[1:10]
 
-GO_enrichment <- enrichr(temp_genes, databases = c("GO_Cellular_Component_2023", 
+GO_enrichment <- enrichr(aggregate_ranks$external_gene_name, databases = c("GO_Cellular_Component_2023", 
                                                    "GO_Biological_Process_2023",
                                                    "GO_Molecular_Function_2023",
                                                    "KEGG_2021_Human",
                                                    "Proteomics_Drug_Atlas_2023",
                                                    "IDG_Drug_Targets_2022"))
 
-
-CC <- GO_enrichment$GO_Cellular_Component_2023
-BP <- GO_enrichment$GO_Biological_Process_2023
-MF <- GO_enrichment$GO_Molecular_Function_2023
-KEGG <- GO_enrichment$KEGG_2021_Human
 PDA <- GO_enrichment$Proteomics_Drug_Atlas_2023
 IDG <- GO_enrichment$IDG_Drug_Targets_2022
 
-data <- list(CC, BP, MF, KEGG, PDA, IDG)
+CC <- GO_enrichment$GO_Cellular_Component_2023
+CC$Category <- "Cellular Component"
+CC$Count <- str_count(CC$Genes, ";") + 1
+CC <- CC[order(-CC$Count), ]
 
-for (table in data) {
-  
-}
+BP <- GO_enrichment$GO_Biological_Process_2023
+BP$Category <- "Biological Process"
+BP$Count <- str_count(BP$Genes, ";") + 1
+BP <- BP[order(-BP$Count), ]
+
+MF <- GO_enrichment$GO_Molecular_Function_2023
+MF$Category <- "Molecular Function"
+MF$Count <- str_count(MF$Genes, ";") + 1
+MF <- MF[order(-MF$Count), ]
+
+
+top_terms <- rbind(CC[1:5, ], BP[1:5, ], MF[1:5, ])
+top_terms$Term <- gsub("\\s*\\([^)]+\\)", "", top_terms$Term)
+
+# Create a vertical bar plot with grouped x-axis
+ggplot(top_terms, aes(x = reorder(Term, Category, FUN = identity), y = Count, fill = Category)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(x = "Terms", y = "Counts", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), plot.margin = margin(l = 150, r = 10, t = 10, b = 10))
+
+
+
+KEGG <- GO_enrichment$KEGG_2021_Human
+KEGG$Count <- str_count(KEGG$Genes, ";") + 1
+KEGG <- KEGG[order(-KEGG$Count), ]
+
+KEGG <- KEGG[order(-KEGG$Count), ]
+top_kegg <- KEGG[1:15, ]
+
+ggplot(top_kegg, aes(x = reorder(Term, -Count, FUN = identity), y = Count)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(x = "Terms", y = "Counts", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
 
 
 
