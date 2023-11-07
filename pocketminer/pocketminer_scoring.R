@@ -45,7 +45,7 @@ for (i in seq_along(pocketminer_results)) {
 }
 
 
-# create code that will identify the highest scoring pocket and the number of pockets above 0.7
+# identify the highest scoring pocket and the number of pockets above 0.7
 pocketminer_averages <- list.files("results/pocket_results/")
 
 # initialise lists
@@ -81,12 +81,9 @@ for (i in seq_along(pocketminer_averages)) {
   number_of_hits <- append(number_of_hits, above_0.7_count)
 }
 
-# get original file_ids
-structures <- list.files("structures/")
 
 # combine data into data frame
-pocketminer_master <- data.frame(file_id = unlist(structures),
-                                 ID = unlist(IDs),
+pocketminer_master <- data.frame(ID = unlist(IDs),
                                  uniprot_id = unlist(uniprot_IDs),
                                  max_hit = unlist(largest_averages),
                                  num_hits = unlist(number_of_hits))
