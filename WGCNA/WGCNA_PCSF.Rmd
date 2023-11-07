@@ -121,7 +121,7 @@ Prior to this pipeline, MOC RNA-Seq data was analysed using WGCNA to obtain two 
 
 <summary>Library size bar plot</summary>
 
-```{r library size plot,  echo=FALSE, out.width='33%', fig.show='hold'}
+```{r library size plot,  echo=FALSE, out.width='50%', fig.show='hold'}
 raw <- barplot(colSums(wgcna_data), 
         xaxt = "n",
         xlab = "Samples",
@@ -143,7 +143,7 @@ cpm <- barplot(colSums(wgcna_data),
 
 <summary>PCA plot</summary>
 
-```{r}
+```{r PCA analysis, echo=FALSE}
 pca <- prcomp(t(wgcna_data))
 pca_data <- pca$x
 pca_var <- pca$sdev^2
@@ -175,9 +175,7 @@ ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
 
 <br>
 
-A differential network was then generated using the two groups by performing the diff_i method (calculation attached below). This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. The run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
-
-subnet \<- PCSF_rand(interactome, terminals, n = 10, r = 0.1, w = 2, b = 1, mu = 0.0005)
+A differential network was then generated using the two groups by performing the diff_i method (calculation attached below). This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. Some genes had several mutations of varying consequence rank, therefore, a mean rank was taken per gene which resulted in 11,731 unique genes. Of these genes, 11,503 had a corresponding ensembl gene ID.
 
 <details>
 
@@ -193,11 +191,13 @@ differential_weights <- normalised_scores - median
 
 </details>
 
+<br>
+
 <details>
 
 <summary>Kylie consequence data</summary>
 
-```{r echo=FALSE}
+```{r kylie's variant data}
 mocVariantData <- read.csv("PCSF/data/mocVariantData.csv", header = T, na.strings = ".")
 mean_rank_by_gene <- aggregate(Consequence_Rank ~ SYMBOL, data = mocVariantData, FUN = mean)
 
@@ -214,9 +214,21 @@ kable_styling(full_width = FALSE) %>%
 scroll_box(height = "400px")
 ```
 
+</details>
+
+The run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
+
+```{r PCSF run function, eval=FALSE}
+subnet <- PCSF_rand(interactome, terminals, n = 10, r = 0.1, w = 2, b = 1, mu = 0.0005)
+```
+
 <br>
 
-The resulting subnetwork consisted of 5,101 genes which are in gene ensembles and are required to be converted to "classic" gene names
+The resulting subnetwork consisted of 5,101 genes which are in gene ensembles and are required to be converted to Uniprot IDs in order to be cross referenced with proteomic data. 36 genes did not have a corresponding uniprot ID and many genes had mulitple associated uniprot IDs, resulting in a list of 26,780 uniprot IDs.
+
+<br>
+
+The data was then merged with the Fpocket and citation scoring data to create the same data table as done in previous pipelines.
 
 ```{r PCSF data table and name conversion, echo=FALSE}
 load("PCSF/data/PCSF_subnet(n=10).RData")
@@ -252,4 +264,252 @@ gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"),
 
 PCSF_master <- merge(ensembl_to_uniprot, df, by = "ensembl_gene_id")
 PCSF_master2 <- merge(gn_to_uniprot, df, by = "external_gene_name")
+
+
+# load Fpocket data
+af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
+
+# merge PCSF data with AF
+PCSF_results <- merge(PCSF_master2, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
+
+# run citation scoring tool and read in
+citation_scores <- read.csv("citation_scores.csv")
+
+PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
+PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
+PCSF_results <- PCSF_results[order(-PCSF_results$druggability), ]
+
+
+kable(PCSF_results, format = "html", caption = "PCSF results") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
 ```
+
+<br>
+
+<br>
+
+### Ranking
+
+The next section of this document is dedicated to the raning of genes based on a combination of scoring methods. This ranking system can be easily interchangeable with other/new data types. Here we also include the addition of cryptic pocket scores which were analysed in python using the same AlphaFold structures as done with Fpocket. Any structures less than 80 amino acids in length were removed per the PocketMiner methodology. Using a 10 amino acid "window" average, pockets are calculated per amino acid.
+
+<br>
+
+## Results {.tabset .tabset-pills}
+
+### Robust Rank Aggregation
+
+```{r Robust Rank Aggregation, echo=FALSE}
+# Robust Rank Agrregation
+betweenness <- subset(PCSF_results, select = c("ID", "betweenness"))
+betweenness <- distinct(betweenness)
+betweenness$betweenness <- (betweenness$betweenness - min(betweenness$betweenness)) / (max(betweenness$betweenness) - min(betweenness$betweenness))
+betweenness <- betweenness[order(betweenness$betweenness, decreasing = T), ]
+betweenness <- betweenness$ID
+
+centrality <- subset(PCSF_results, select = c("ID", "degree_centrality"))
+centrality <- distinct(centrality)
+centrality$degree_centrality <- (centrality$degree_centrality - min(centrality$degree_centrality)) / (max(centrality$degree_centrality) - min(centrality$degree_centrality))
+centrality <- centrality[order(centrality$degree_centrality, decreasing = T), ]
+centrality <- centrality$ID
+
+# log transformation of citation scores
+citation <- subset(PCSF_results, select = c("ID", "citation_score"))
+citation <- distinct(citation)
+citation$citation_score <- log(citation$citation_score + 1)
+citation$citation_score <- (citation$citation_score - min(citation$citation_score)) / (max(citation$citation_score) - min(citation$citation_score))
+citation <- citation[order(citation$citation_score, decreasing = F), ]
+citation <- citation$ID
+
+druggability_data <- subset(PCSF_results, select = c("ID", "druggability", "num_drug_pockets"))
+druggability_data <- distinct(druggability_data)
+druggability <- druggability_data[order(druggability_data$druggability, decreasing = T), ]
+druggability <- druggability$ID
+
+num_drug_pockets <- druggability_data[order(druggability_data$num_drug_pockets, decreasing = T), ]
+num_drug_pockets <- num_drug_pockets$ID
+
+# add the pocketminer data as another ranking
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
+pocketminer_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
+
+pocketminer_data <- pocketminer_data[order(pocketminer_data$max_hit, decreasing = T), ]
+cryptic_pockets <- pocketminer_data$ID
+
+# reorder for num_hits
+pocketminer_data <- pocketminer_data[order(pocketminer_data$num_hits, decreasing = T), ]
+num_cryp_pockets <- pocketminer_data$ID
+
+rankings <- list(betweenness, centrality, citation, druggability, num_drug_pockets, cryptic_pockets, num_cryp_pockets)
+
+
+aggregate_ranks <- aggregateRanks(glist = rankings)
+
+# merge gene names back in
+temp <- subset(PCSF_results, select = c("external_gene_name", "ID"))
+aggregate_ranks <- merge(temp, aggregate_ranks, by.x = "ID", by.y = "Name")
+rm(temp)
+
+aggregate_ranks <- aggregate_ranks[order(aggregate_ranks$Score), ]
+rownames(aggregate_ranks) <- NULL
+
+# remove scientific notation
+options(scipen=999)
+
+kable(aggregate_ranks, format = "html", caption = "Robust Rank Aggregation") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+### Rank Sensitivity
+
+```{r Rank Sensitivity, echo=FALSE}
+
+betweeness_norm <- (PCSF_results$betweenness - min(PCSF_results$betweenness)) / (max(PCSF_results$betweenness) - min(PCSF_results$betweenness))
+
+centrality_norm <- (PCSF_results$degree_centrality - min(PCSF_results$degree_centrality)) / (max(PCSF_results$degree_centrality) - min(PCSF_results$degree_centrality))
+
+# log transformation
+citation_norm <- log(PCSF_results$citation_score + 1)
+citation_norm <- (citation_norm - min(citation_norm)) / (max(citation_norm) - min(citation_norm))
+
+
+# Load the progress package
+library(progress)
+
+# Define the number of weight values to test
+num_weights <- 11
+
+# Create weight value sequences that sum up to 1
+betweeness_w_values <- seq(0, 1, length.out = num_weights)
+citation_w_values <- seq(0, 1, length.out = num_weights)
+centrality_w_values <- seq(0, 1, length.out = num_weights)
+druggability_w_values <- seq(0, 1, length.out = num_weights)
+
+# Calculate the total number of iterations
+total_iterations <- num_weights ^ 4
+
+# Create a progress bar
+pb <- progress_bar$new(total = total_iterations)
+
+# Create an empty data frame with proper column names
+sensitivity_results <- data.frame(
+  betweeness_weight = numeric(),
+  citation_weight = numeric(),
+  centrality_weight = numeric(),
+  druggability_weight = numeric(),
+  top_genes = character(),
+  stringsAsFactors = FALSE
+)
+
+# Perform sensitivity test
+for (betweeness_w in betweeness_w_values) {
+  for (citation_w in citation_w_values) {
+    for (centrality_w in centrality_w_values) {
+      for (druggability_w in druggability_w_values) {
+        # Check if the weights sum up to 1
+        if (betweeness_w + citation_w + centrality_w + druggability_w == 1) {
+          # Combine scores using current weights
+          combined_score <- betweeness_w * betweeness_norm +
+            centrality_w * centrality_norm +
+            druggability_w * PCSF_results$druggability -
+            citation_w * citation_norm
+          
+          # Rank the genes based on the combined score
+          PCSF_results_edit <- PCSF_results
+          PCSF_results_edit$combined_score <- combined_score
+          PCSF_results_edit <- PCSF_results_edit[order(-PCSF_results_edit$combined_score), ]
+          
+          # Select the top 10 genes
+          top_genes <- head(PCSF_results_edit$external_gene_name, 10)
+          
+          # Add results to the sensitivity_results data frame
+          sensitivity_results <- rbind(sensitivity_results, list(
+            betweeness_weight = betweeness_w,
+            citation_weight = citation_w,
+            centrality_weight = centrality_w,
+            druggability_weight = druggability_w,
+            top_genes = paste(top_genes, collapse = ', ')
+          ))
+        }
+        
+        # Increment the progress bar
+        pb$tick()
+      }
+    }
+  }
+}
+
+
+# Split the "top_genes" column into a list of genes
+sensitivity_results$top_genes_list <- strsplit(sensitivity_results$top_genes, ', ')
+
+# Count the occurrences of each gene
+all_genes <- unlist(sensitivity_results$top_genes_list)
+all_genes_unique <- unique(all_genes)
+count <- sapply(all_genes_unique, function(g) sum(sapply(sensitivity_results$top_genes_list, function(lst) g %in% lst)))
+
+# Create an empty data frame to store gene counts
+gene_counts <- data.frame(
+  gene = all_genes_unique,
+  count = count,
+  stringsAsFactors = FALSE
+)
+
+# Sort the gene counts by count
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+
+
+counts_when_betweeness_0 <- sensitivity_results[sensitivity_results$betweeness_weight == 0, ]
+counts_when_betweeness_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_betweeness_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_betweeness_0)
+
+counts_when_centrality_0 <- sensitivity_results[sensitivity_results$centrality_weight == 0, ]
+counts_when_centrality_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_centrality_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_centrality_0)
+
+counts_when_citation_0 <- sensitivity_results[sensitivity_results$citation_weight == 0, ]
+counts_when_citation_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_citation_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_citation_0)
+
+counts_when_druggability_0 <- sensitivity_results[sensitivity_results$druggability_weight == 0, ]
+counts_when_druggability_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_druggability_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_druggability_0)
+
+rownames(gene_counts) <- NULL
+
+kable(gene_counts, format = "html", caption = "Gene Score Sensitivity Analysis") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+##  {.unnumbered}
+
+<br>
+
+If interested can view correlation plots between druggability and cryptic pockets can be viewed here:
+
+<details>
+<summary>Druggability VS Cryptic Pockets</summary>
+```{r correlation plot, echo=FALSE, out.width='50%', fig.show='hold'}
+plot_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
+
+plot_data <- data.frame(num_cryp = plot_data$num_hits,
+                        cryp = plot_data$max_hit,
+                        num_drug = PCSF_results$num_drug_pockets,
+                        drug = PCSF_results$druggability)
+
+ggplot(plot_data, aes(x = num_drug, y = num_cryp)) +
+  geom_point()
+
+ggplot(plot_data, aes(x = drug, y = cryp)) +
+  geom_point()
+```
+</details>
+
+<br>

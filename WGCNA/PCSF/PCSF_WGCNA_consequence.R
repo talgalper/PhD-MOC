@@ -238,6 +238,11 @@ ggplot(top_kegg, aes(x = reorder(Term, -Count, FUN = identity), y = Count)) +
 
 
 
+# because you removed small structures from pocketminer pipeline, you need to remove them from druggability pipeline.
+# this code will temporarily fix this but will eventually need to go back and rerun druggabulity package and removing small structures
+
+# need to run on ubuntu
+small_structs <- list.files("../pocketminer/results/")
 
 
 plot_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
