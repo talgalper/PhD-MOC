@@ -5,6 +5,7 @@ library(reshape2)
 library(biomaRt)
 library(RobustRankAggreg)
 library(gridExtra)
+library(enrichR)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
@@ -171,8 +172,34 @@ rownames(aggregate_ranks) <- NULL
 # remove scientific notation
 options(scipen=999)
 
+
 write.csv(aggregate_ranks, "PCSF/aggregate_ranks.csv")
 
+
+aggregate_ranks <- read.csv("PCSF/aggregate_ranks.csv", row.names = 1)
+temp_genes <- aggregate_ranks$external_gene_name
+temp_genes <- temp_genes[1:10]
+
+GO_enrichment <- enrichr(temp_genes, databases = c("GO_Cellular_Component_2023", 
+                                                   "GO_Biological_Process_2023",
+                                                   "GO_Molecular_Function_2023",
+                                                   "KEGG_2021_Human",
+                                                   "Proteomics_Drug_Atlas_2023",
+                                                   "IDG_Drug_Targets_2022"))
+
+
+CC <- GO_enrichment$GO_Cellular_Component_2023
+BP <- GO_enrichment$GO_Biological_Process_2023
+MF <- GO_enrichment$GO_Molecular_Function_2023
+KEGG <- GO_enrichment$KEGG_2021_Human
+PDA <- GO_enrichment$Proteomics_Drug_Atlas_2023
+IDG <- GO_enrichment$IDG_Drug_Targets_2022
+
+data <- list(CC, BP, MF, KEGG, PDA, IDG)
+
+for (table in data) {
+  
+}
 
 
 
