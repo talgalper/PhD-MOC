@@ -23,10 +23,25 @@ def make_predictions(pdb_paths, model, nn_path, debug=False, output_basename=Non
     predictions = predict_on_xtals(model, nn_path, X, S, mask)
     return predictions
 
+# create required direcotries
+required_directories = ["results/txt_results", "results/npy_results", "results/pocket_results"]
+
+check = 0
+
+for dir in required_directories:
+    if os.path.isdir(dir):
+        check = check + 1
+    else:
+        os.mkdir(dir)
+
+if check != 3:
+    print("Created missing direcotries (first time setup), starting PocketMiner...")
+else:
+    print("All directories accounted for, starting PocketMiner...")
+
 
 # get list of files to be run from structures directory
 structure_list = os.listdir("../structures/")
-
 
 # loop pocketminer over all files in the structures directory. Uses tqdm to track progress
 # output saved after each iteration to results directory
