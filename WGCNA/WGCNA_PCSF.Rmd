@@ -113,7 +113,7 @@ wgcna_data <- subset(kylie_data, !(rownames(kylie_data) %in% gene_names[failed_g
 
 ## Description
 
-Prior to this pipeline, MOC RNA-Seq data was analysed using WGCNA to obtain two sepetarate co-expression networks for benign and disease groups. Several filtering steps were undertaken in order to reduce noise:
+In this pipeline MOC RNA-Seq data is analysed using WGCNA to obtain two sepetarate co-expression networks for benign and disease groups. Several filtering steps were undertaken in order to reduce noise:
 
 -   Initial gene set consists of 14,889 genes
 -   The goodSamplesGenes function was run to check for "bad" samples and to check for 0 variance genes
@@ -122,7 +122,7 @@ Prior to this pipeline, MOC RNA-Seq data was analysed using WGCNA to obtain two 
 
 <details>
 
-<summary>Library size bar plot</summary>
+<summary>Library size comparison of CPM vs Raw counts</summary>
 
 ```{r library size plot,  echo=FALSE, out.width='50%', fig.show='hold'}
 raw <- barplot(colSums(wgcna_data), 
@@ -139,6 +139,8 @@ cpm <- barplot(colSums(wgcna_data),
 ```
 
 </details>
+
+<br>
 
 -   Next a PCA was performed to observe the data dimensions. Initially, 3 outliers were removed but then decided to be kept in as there are not enough samples to make a definitive decision. Additionally, cancer samples and patients are inherently different and must be accounted for.
 
@@ -174,11 +176,14 @@ ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
 
 </details>
 
--   prior to WGCNA analysis, the gene set consists of 9,934 genes
-
 <br>
 
-A differential network was then generated using the two groups by performing the diff_i method (calculation attached below). This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. Some genes had several mutations of varying consequence rank, therefore, a mean rank was taken per gene which resulted in 11,731 unique genes. Of these genes, 11,503 had a corresponding ensembl gene ID.
+-   prior to WGCNA analysis, the gene set consists of 9,934 genes.
+
+<br>
+*   The adjacency function was then utlised from the WGCNA which calculates (correlation or distance) network adjacency from given expression data
+
+*   A differential network was then generated using the two groups (benign & disease) by performing the diff_i method.
 
 <details>
 
@@ -195,6 +200,8 @@ differential_weights <- normalised_scores - median
 </details>
 
 <br>
+
+*   This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. Some genes had several mutations of varying consequence rank, therefore, a mean rank was taken per gene which resulted in 11,731 unique genes. Of these genes, 11,503 had a corresponding ensembl gene ID.
 
 <details>
 
@@ -217,7 +224,7 @@ head(mocVariantData, n=20)
 
 </details>
 
-The run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
+*   The PCSF run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
 
 ```{r PCSF run function, eval=FALSE}
 subnet <- PCSF_rand(interactome, terminals, n = 10, r = 0.1, w = 2, b = 1, mu = 0.0005)
@@ -230,6 +237,8 @@ The resulting subnetwork consisted of 5,101 genes which are in gene ensembles an
 <br>
 
 The data was then merged with the Fpocket and citation scoring data to create the same data table as done in previous pipelines.
+
+<br>
 
 ```{r PCSF data table and name conversion, echo=FALSE}
 load("PCSF/data/PCSF_subnet(n=10).RData")
@@ -263,6 +272,10 @@ gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"),
                      values = df$external_gene_name, 
                      mart = ensembl)
 
+# get list of missing genes
+missing_genes <- gn_to_uniprot[gn_to_uniprot$uniprot_gn_id == "", ]
+missing_genes <- missing_genes$external_gene_name
+
 PCSF_master <- merge(ensembl_to_uniprot, df, by = "ensembl_gene_id")
 PCSF_master2 <- merge(gn_to_uniprot, df, by = "external_gene_name")
 
@@ -279,7 +292,7 @@ citation_scores <- read.csv("citation_scores.csv")
 PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
 PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
 PCSF_results <- PCSF_results[order(-PCSF_results$druggability), ]
-
+rownames(PCSF_results) <- NULL
 
 kable(PCSF_results, format = "html", caption = "PCSF results") %>%
 kable_styling(full_width = FALSE) %>%
@@ -288,15 +301,26 @@ scroll_box(height = "400px")
 
 <br>
 
+<details>
+<summary>Show missing genes</summary>
+```{r missing genes, echo=FALSE}
+missing_genes
+```
+</details>
+
+<br>
+
 <br>
 
 ### Ranking
 
-The next section of this document is dedicated to the raning of genes based on a combination of scoring methods. This ranking system can be easily interchangeable with other/new data types. Here we also include the addition of cryptic pocket scores which were analysed in python using the same AlphaFold structures as done with Fpocket. Any structures less than 80 amino acids in length were removed per the PocketMiner methodology. Using a 10 amino acid "window" average, pockets are calculated per amino acid.
+The next section of this document is dedicated to the ranking of genes based on a combination of scoring methods. This ranking system can be easily interchangeable with other/new data types. Include here is the addition of cryptic pocket scores which were analysed in python using the same AlphaFold structures as done with Fpocket. Any structures less than 80 amino acids in length were removed per the PocketMiner methodology. Using a 10 amino acid "window" average, pockets are calculated per amino acid (also as per PocketMiner methodology).
+
+The rank sensitivity test was not performed with the PocketMiner data becasue its not very easy to include new data types like the rank aggregation. Can be done if required but the first comparison shows they return similar results anyway so not much value in running again if rank aggregation method is far better. It also has the benefit of being accompanied by a comprehensive study for the method.
 
 <br>
 
-## Results {.tabset .tabset-pills}
+## {.tabset .tabset-pills}
 
 ### Robust Rank Aggregation
 
