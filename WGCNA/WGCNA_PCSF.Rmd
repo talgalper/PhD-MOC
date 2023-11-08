@@ -14,6 +14,9 @@ library(RobustRankAggreg)
 library(gridExtra)
 library(enrichR)
 library(kableExtra)
+library(WGCNA)
+library(edgeR)
+library(ggrepel)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 ```
@@ -181,7 +184,7 @@ A differential network was then generated using the two groups by performing the
 
 <summary>Diff_i method</summary>
 
-```{r diff_i, eval=False}
+```{r diff_i, eval=FALSE}
 sum_matrix <- disease_adj + benign_adj
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
@@ -197,7 +200,7 @@ differential_weights <- normalised_scores - median
 
 <summary>Kylie consequence data</summary>
 
-```{r kylie's variant data}
+```{r kylies variant data, echo=FALSE}
 mocVariantData <- read.csv("PCSF/data/mocVariantData.csv", header = T, na.strings = ".")
 mean_rank_by_gene <- aggregate(Consequence_Rank ~ SYMBOL, data = mocVariantData, FUN = mean)
 
@@ -329,19 +332,7 @@ druggability <- druggability$ID
 num_drug_pockets <- druggability_data[order(druggability_data$num_drug_pockets, decreasing = T), ]
 num_drug_pockets <- num_drug_pockets$ID
 
-# add the pocketminer data as another ranking
-pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
-pocketminer_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
-
-pocketminer_data <- pocketminer_data[order(pocketminer_data$max_hit, decreasing = T), ]
-cryptic_pockets <- pocketminer_data$ID
-
-# reorder for num_hits
-pocketminer_data <- pocketminer_data[order(pocketminer_data$num_hits, decreasing = T), ]
-num_cryp_pockets <- pocketminer_data$ID
-
-rankings <- list(betweenness, centrality, citation, druggability, num_drug_pockets, cryptic_pockets, num_cryp_pockets)
-
+rankings <- list(betweenness, centrality, citation, druggability, num_drug_pockets)
 
 aggregate_ranks <- aggregateRanks(glist = rankings)
 
@@ -488,21 +479,98 @@ kable_styling(full_width = FALSE) %>%
 scroll_box(height = "400px")
 ```
 
-##  {.unnumbered}
+### Robust Rank Aggregation w Cryptic Pockets
+```{r}
+# Robust Rank Aggregation
+betweenness <- subset(PCSF_results, select = c("ID", "betweenness"))
+betweenness <- distinct(betweenness)
+betweenness$betweenness <- (betweenness$betweenness - min(betweenness$betweenness)) / (max(betweenness$betweenness) - min(betweenness$betweenness))
+betweenness <- betweenness[order(betweenness$betweenness, decreasing = T), ]
+betweenness <- betweenness$ID
+
+centrality <- subset(PCSF_results, select = c("ID", "degree_centrality"))
+centrality <- distinct(centrality)
+centrality$degree_centrality <- (centrality$degree_centrality - min(centrality$degree_centrality)) / (max(centrality$degree_centrality) - min(centrality$degree_centrality))
+centrality <- centrality[order(centrality$degree_centrality, decreasing = T), ]
+centrality <- centrality$ID
+
+# log transformation of citation scores
+citation <- subset(PCSF_results, select = c("ID", "citation_score"))
+citation <- distinct(citation)
+citation$citation_score <- log(citation$citation_score + 1)
+citation$citation_score <- (citation$citation_score - min(citation$citation_score)) / (max(citation$citation_score) - min(citation$citation_score))
+citation <- citation[order(citation$citation_score, decreasing = F), ]
+citation <- citation$ID
+
+druggability_data <- subset(PCSF_results, select = c("ID", "druggability", "num_drug_pockets"))
+druggability_data <- distinct(druggability_data)
+druggability <- druggability_data[order(druggability_data$druggability, decreasing = T), ]
+druggability <- druggability$ID
+
+num_drug_pockets <- druggability_data[order(druggability_data$num_drug_pockets, decreasing = T), ]
+num_drug_pockets <- num_drug_pockets$ID
+
+# add the PocketMiner data as another ranking
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
+pocketminer_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
+
+pocketminer_data <- pocketminer_data[order(pocketminer_data$max_hit, decreasing = T), ]
+cryptic_pockets <- pocketminer_data$ID
+
+# reorder for num_hits
+pocketminer_data <- pocketminer_data[order(pocketminer_data$num_hits, decreasing = T), ]
+num_cryp_pockets <- pocketminer_data$ID
+
+rankings <- list(betweenness, centrality, citation, druggability, num_drug_pockets, cryptic_pockets, num_cryp_pockets)
+
+
+aggregate_ranks <- aggregateRanks(glist = rankings)
+
+# merge gene names back in
+temp <- subset(PCSF_results, select = c("external_gene_name", "ID"))
+aggregate_ranks <- merge(temp, aggregate_ranks, by.x = "ID", by.y = "Name")
+rm(temp)
+
+aggregate_ranks <- aggregate_ranks[order(aggregate_ranks$Score), ]
+rownames(aggregate_ranks) <- NULL
+
+# remove scientific notation
+options(scipen=999)
+
+kable(aggregate_ranks, format = "html", caption = "Robust Rank Aggregation") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+##
 
 <br>
 
-If interested can view correlation plots between druggability and cryptic pockets can be viewed here:
+If interested can view correlation plots between druggability and cryptic pockets here:
 
 <details>
 <summary>Druggability VS Cryptic Pockets</summary>
 ```{r correlation plot, echo=FALSE, out.width='50%', fig.show='hold'}
-plot_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
+# this code chunk is required to be run on Ubuntu. removes small structures (<80aa) from PCSF_results
+load("RData/correlation_plot_data.RData")
+
+IDs <- c()
+
+for (id in small_structs){
+  id <- strsplit(id, "-")
+  id <- unlist(id)
+  id <- paste0(id[1], "-", id[2])
+  IDs <- append(IDs, id)
+}
+
+PCSF_results_updated <- PCSF_results[!(PCSF_results$ID %in% IDs), ]
+
+plot_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results_updated$ID, ]
 
 plot_data <- data.frame(num_cryp = plot_data$num_hits,
                         cryp = plot_data$max_hit,
-                        num_drug = PCSF_results$num_drug_pockets,
-                        drug = PCSF_results$druggability)
+                        num_drug = PCSF_results_updated$num_drug_pockets,
+                        drug = PCSF_results_updated$druggability)
 
 ggplot(plot_data, aes(x = num_drug, y = num_cryp)) +
   geom_point()
@@ -513,3 +581,7 @@ ggplot(plot_data, aes(x = drug, y = cryp)) +
 </details>
 
 <br>
+
+<br>
+
+end

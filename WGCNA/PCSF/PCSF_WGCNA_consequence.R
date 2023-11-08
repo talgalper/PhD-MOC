@@ -242,15 +242,28 @@ ggplot(top_kegg, aes(x = reorder(Term, -Count, FUN = identity), y = Count)) +
 # this code will temporarily fix this but will eventually need to go back and rerun druggabulity package and removing small structures
 
 # need to run on ubuntu
-small_structs <- list.files("../pocketminer/results/")
+small_structs <- list.files("~/Desktop/pocketminer/results/small_structures/")
+
+PCSF_results <- read.csv("PCSF/PCSF_results.csv", row.names = 1)
+
+IDs <- c()
+
+for (id in small_structs){
+  id <- strsplit(id, "-")
+  id <- unlist(id)
+  id <- paste0(id[1], "-", id[2])
+  IDs <- append(IDs, id)
+}
+
+PCSF_results_updated <- PCSF_results[!(PCSF_results$ID %in% IDs), ]
 
 
 plot_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
 
 plot_data <- data.frame(num_cryp = plot_data$num_hits,
                         cryp = plot_data$max_hit,
-                        num_drug = PCSF_results$num_drug_pockets,
-                        drug = PCSF_results$druggability)
+                        num_drug = PCSF_results_updated$num_drug_pockets,
+                        drug = PCSF_results_updated$druggability)
 
 num_pockets <- ggplot(plot_data, aes(x = num_drug, y = num_cryp)) +
   geom_point()
