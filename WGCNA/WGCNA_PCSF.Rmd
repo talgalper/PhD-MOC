@@ -4,7 +4,7 @@ output: html_document
 date: "2023-11-07"
 ---
 
-```{r load packages, echo=FALSE}
+```{r load packages, include=FALSE}
 library(PCSF)
 library(igraph)
 library(tidyverse)
@@ -212,9 +212,7 @@ gene_ensembl <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"),
 mean_consequence <- merge(gene_ensembl, mean_rank_by_gene, by.x = "external_gene_name", by.y = "SYMBOL")
 mean_consequence <- mean_consequence[, -1]
 
-kable(mocVariantData, format = "html", caption = "MOC Vairant Data") %>%
-kable_styling(full_width = FALSE) %>%
-scroll_box(height = "400px")
+head(mocVariantData, n=20)
 ```
 
 </details>
@@ -480,7 +478,7 @@ scroll_box(height = "400px")
 ```
 
 ### Robust Rank Aggregation w Cryptic Pockets
-```{r}
+```{r Robust Rank Aggregation w Cryptic Pockets, echo=FALSE}
 # Robust Rank Aggregation
 betweenness <- subset(PCSF_results, select = c("ID", "betweenness"))
 betweenness <- distinct(betweenness)
@@ -546,7 +544,7 @@ scroll_box(height = "400px")
 
 <br>
 
-If interested can view correlation plots between druggability and cryptic pockets here:
+If interested, can view correlation plots between druggability and cryptic pockets here:
 
 <details>
 <summary>Druggability VS Cryptic Pockets</summary>
