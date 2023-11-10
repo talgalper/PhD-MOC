@@ -154,8 +154,12 @@ final_df <- do.call(rbind, results)
 
 return(final_df)
 
-
-
+# apparently how you get copy number scores from segment means
+copy_number <- c()
+for (i in final_df$seg_mean) {
+  x <- 2*(2^i)
+  copy_number <- append(copy_number, x)
+}
 
 
 
