@@ -17,11 +17,12 @@ library(kableExtra)
 library(WGCNA)
 library(edgeR)
 library(ggrepel)
+library(enrichR)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 ```
 
-```{r setup, include=FALSE}
+```{r load data and remove low activity genes, include=FALSE}
 # combine stages
 ben <- read.csv("rna_seq_data/ben_master_df.csv")
 stage_I <- read.csv("rna_seq_data/stage_I_master_df.csv")
@@ -125,13 +126,13 @@ In this pipeline MOC RNA-Seq data is analysed using WGCNA to obtain two sepetara
 <summary>Library size comparison of CPM vs Raw counts</summary>
 
 ```{r library size plot,  echo=FALSE, out.width='50%', fig.show='hold'}
-raw <- barplot(colSums(wgcna_data), 
+barplot(colSums(wgcna_data), 
         xaxt = "n",
         xlab = "Samples",
         ylab = "Raw Counts")
 
 wgcna_data <- cpm(wgcna_data, log = T)
-cpm <- barplot(colSums(wgcna_data), 
+barplot(colSums(wgcna_data), 
         xaxt = "n",
         xlab = "Samples",
         ylab = "CPM")
@@ -180,10 +181,9 @@ ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
 
 -   prior to WGCNA analysis, the gene set consists of 9,934 genes.
 
-<br>
-*   The adjacency function was then utlised from the WGCNA which calculates (correlation or distance) network adjacency from given expression data
+-   The adjacency function was then utilised from the WGCNA which calculates (correlation or distance) network adjacency from given expression data
 
-*   A differential network was then generated using the two groups (benign & disease) by performing the diff_i method.
+-   A differential network was then generated using the two groups (benign & disease) by performing the diff_i method.
 
 <details>
 
@@ -201,7 +201,7 @@ differential_weights <- normalised_scores - median
 
 <br>
 
-*   This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. Some genes had several mutations of varying consequence rank, therefore, a mean rank was taken per gene which resulted in 11,731 unique genes. Of these genes, 11,503 had a corresponding ensembl gene ID.
+-   This differential network (large) was then fed into PCSF as the reference interactome and weighted with consequence rank scores from SNP data from Kylie's files. Some genes had several mutations of varying consequence rank, therefore, a mean rank was taken per gene which resulted in 11,731 unique genes. Of these genes, 11,503 had a corresponding ensembl gene ID.
 
 <details>
 
@@ -224,10 +224,19 @@ head(mocVariantData, n=20)
 
 </details>
 
-*   The PCSF run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
+<br>
+
+-   The PCSF run took approximately 30hrs with 10 iterations, adding random noise each time. PCSF was run with the following parameters/function:
 
 ```{r PCSF run function, eval=FALSE}
 subnet <- PCSF_rand(interactome, terminals, n = 10, r = 0.1, w = 2, b = 1, mu = 0.0005)
+```
+
+```{r plot PCSF subnet, echo=FALSE}
+load("PCSF/data/PCSF_subnet(n=10).RData")
+
+set.seed(1234)
+plot.PCSF(subnet, node_label_cex = 15)
 ```
 
 <br>
@@ -302,10 +311,13 @@ scroll_box(height = "400px")
 <br>
 
 <details>
+
 <summary>Show missing genes</summary>
+
 ```{r missing genes, echo=FALSE}
 missing_genes
 ```
+
 </details>
 
 <br>
@@ -320,7 +332,7 @@ The rank sensitivity test was not performed with the PocketMiner data becasue it
 
 <br>
 
-## {.tabset .tabset-pills}
+##  {.tabset .tabset-pills}
 
 ### Robust Rank Aggregation
 
@@ -502,6 +514,7 @@ scroll_box(height = "400px")
 ```
 
 ### Robust Rank Aggregation w Cryptic Pockets
+
 ```{r Robust Rank Aggregation w Cryptic Pockets, echo=FALSE}
 # Robust Rank Aggregation
 betweenness <- subset(PCSF_results, select = c("ID", "betweenness"))
@@ -564,14 +577,16 @@ kable_styling(full_width = FALSE) %>%
 scroll_box(height = "400px")
 ```
 
-##
+## 
 
 <br>
 
 If interested, can view correlation plots between druggability and cryptic pockets here:
 
 <details>
+
 <summary>Druggability VS Cryptic Pockets</summary>
+
 ```{r correlation plot, echo=FALSE, out.width='50%', fig.show='hold'}
 # this code chunk is required to be run on Ubuntu. removes small structures (<80aa) from PCSF_results
 load("RData/correlation_plot_data.RData")
@@ -600,7 +615,144 @@ ggplot(plot_data, aes(x = num_drug, y = num_cryp)) +
 ggplot(plot_data, aes(x = drug, y = cryp)) +
   geom_point()
 ```
+
 </details>
+
+<br>
+
+<br>
+
+### Gene Set Enrichment
+
+Enrichment is performed using the enrichR package. The plots here show the highest returning terms for the genes present in the set.
+
+<br>
+
+```{r Gene Set Enrichment, include=FALSE}
+aggregate_ranks <- read.csv("PCSF/aggregate_ranks.csv", row.names = 1)
+
+
+GO_enrichment <- enrichr(aggregate_ranks$external_gene_name, databases = c("GO_Cellular_Component_2023", 
+                                                   "GO_Biological_Process_2023",
+                                                   "GO_Molecular_Function_2023",
+                                                   "KEGG_2021_Human",
+                                                   "Proteomics_Drug_Atlas_2023",
+                                                   "IDG_Drug_Targets_2022"))
+
+PDA <- GO_enrichment$Proteomics_Drug_Atlas_2023
+IDG <- GO_enrichment$IDG_Drug_Targets_2022
+
+CC <- GO_enrichment$GO_Cellular_Component_2023
+CC$Category <- "Cellular Component"
+CC$Count <- str_count(CC$Genes, ";") + 1
+CC <- CC[order(-CC$Count), ]
+
+BP <- GO_enrichment$GO_Biological_Process_2023
+BP$Category <- "Biological Process"
+BP$Count <- str_count(BP$Genes, ";") + 1
+BP <- BP[order(-BP$Count), ]
+
+MF <- GO_enrichment$GO_Molecular_Function_2023
+MF$Category <- "Molecular Function"
+MF$Count <- str_count(MF$Genes, ";") + 1
+MF <- MF[order(-MF$Count), ]
+
+
+top_terms <- rbind(CC[1:5, ], BP[1:5, ], MF[1:5, ])
+top_terms$Term <- gsub("\\s*\\([^)]+\\)", "", top_terms$Term)
+
+
+KEGG <- GO_enrichment$KEGG_2021_Human
+KEGG$Count <- str_count(KEGG$Genes, ";") + 1
+KEGG <- KEGG[order(-KEGG$Count), ]
+
+KEGG <- KEGG[order(-KEGG$Count), ]
+top_kegg <- KEGG[1:15, ]
+```
+
+##  {.tabset .tabset-pills}
+
+### GO Enrichment
+```{r plot GO, echo=FALSE}
+# Create a vertical bar plot with grouped x-axis
+ggplot(top_terms, aes(x = reorder(Term, Category, FUN = identity), y = Count, fill = Category)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(x = "Terms", y = "Counts", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), plot.margin = margin(l = 150, r = 10, t = 10, b = 10))
+```
+
+### KEGG Pathway
+```{r plot KEGG, echo=FALSE}
+ggplot(top_kegg, aes(x = reorder(Term, -Count, FUN = identity), y = Count)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(x = "Terms", y = "Counts", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r top 20 enrichment, echo=FALSE}
+aggregate_ranks_subset <- aggregate_ranks[1:20, ]
+
+
+GO_enrichment <- enrichr(aggregate_ranks_subset$external_gene_name, databases = c("GO_Cellular_Component_2023", 
+                                                   "GO_Biological_Process_2023",
+                                                   "GO_Molecular_Function_2023",
+                                                   "KEGG_2021_Human",
+                                                   "Proteomics_Drug_Atlas_2023",
+                                                   "IDG_Drug_Targets_2022"))
+
+PDA <- GO_enrichment$Proteomics_Drug_Atlas_2023
+IDG <- GO_enrichment$IDG_Drug_Targets_2022
+
+CC <- GO_enrichment$GO_Cellular_Component_2023
+CC$Category <- "Cellular Component"
+CC$Count <- str_count(CC$Genes, ";") + 1
+CC <- CC[order(-CC$Count), ]
+
+BP <- GO_enrichment$GO_Biological_Process_2023
+BP$Category <- "Biological Process"
+BP$Count <- str_count(BP$Genes, ";") + 1
+BP <- BP[order(-BP$Count), ]
+
+MF <- GO_enrichment$GO_Molecular_Function_2023
+MF$Category <- "Molecular Function"
+MF$Count <- str_count(MF$Genes, ";") + 1
+MF <- MF[order(-MF$Count), ]
+
+
+top_terms <- rbind(CC[1:5, ], BP[1:5, ], MF[1:5, ])
+top_terms$Term <- gsub("\\s*\\([^)]+\\)", "", top_terms$Term)
+
+
+KEGG <- GO_enrichment$KEGG_2021_Human
+KEGG$Count <- str_count(KEGG$Genes, ";") + 1
+KEGG <- KEGG[order(-KEGG$Count), ]
+
+KEGG <- KEGG[order(-KEGG$Count), ]
+top_kegg <- KEGG[1:15, ]
+```
+
+### Top 20 GO
+```{r top 20 plot GO, echo=FALSE}
+# Create a vertical bar plot with grouped x-axis
+ggplot(top_terms, aes(x = reorder(Term, Category, FUN = identity), y = Count, fill = Category)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(x = "Terms", y = "Counts", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), plot.margin = margin(l = 150, r = 10, t = 10, b = 10))
+```
+
+### Top 20 KEGG
+```{r top 20 plot KEGG, echo=FALSE}
+ggplot(top_kegg, aes(x = reorder(Term, -Count, FUN = identity), y = Count)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(x = "Terms", y = "Counts", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+##
 
 <br>
 

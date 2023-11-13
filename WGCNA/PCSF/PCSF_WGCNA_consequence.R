@@ -180,8 +180,6 @@ write.csv(aggregate_ranks, "PCSF/aggregate_ranks.csv")
 
 ## enrichment analysis
 aggregate_ranks <- read.csv("PCSF/aggregate_ranks.csv", row.names = 1)
-temp_genes <- aggregate_ranks$external_gene_name
-temp_genes <- temp_genes[1:10]
 
 GO_enrichment <- enrichr(aggregate_ranks$external_gene_name, databases = c("GO_Cellular_Component_2023", 
                                                    "GO_Biological_Process_2023",
