@@ -27,12 +27,13 @@ gene_ensembl <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"),
 mean_consequence <- merge(gene_ensembl, mean_rank_by_gene, by.x = "external_gene_name", by.y = "SYMBOL")
 mean_consequence <- mean_consequence[, -1]
 
-edge_list <- melt(differential_weights)
-colnames(edge_list) <- c("node_1", "node_2", "score")
+
+#edge_list <- melt(differential_weights)
+#colnames(edge_list) <- c("node_1", "node_2", "score")
 
 
 # any negative values will be >1. closer to 0 means more significant co-expression 
-edge_list$score <- 1 - edge_list$score
+#edge_list$score <- 1 - edge_list$score
 
 
 interactome <- construct_interactome(edge_list)

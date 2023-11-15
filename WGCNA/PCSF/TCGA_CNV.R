@@ -16,7 +16,7 @@ load("~/Desktop/large_git_files/WGCNA/PCSF_data.RData")
 load("~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/PCSF_data.RData")
 
 
-cn_data <- read.csv("")
+cn_data <- read.csv("../tcga_cnv/ASCAT3_mean_CN.csv")
 
 
 

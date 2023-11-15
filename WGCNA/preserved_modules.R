@@ -326,7 +326,7 @@ module_eigengenes <- bwnet$MEs
 
 
 # clean up sample_info and filter for samples in wgcna_data
-sample_info <- read.csv("~/Desktop/final_copy/pcsf_kylie/raw_data/All survival_CN_Aug18.csv")
+sample_info <- read.csv("../RNA-Seq_pipeline/pcsf_kylie/raw_data/All survival_CN_Aug18.csv")
 sample_info <- subset(sample_info, select = c("GAMUT_ID", "Grade", "Stage"))
 
 sample_info$GAMUT_ID <- paste0("GAMuT_", sample_info$GAMUT_ID)
@@ -355,9 +355,9 @@ rownames(sample_info_filtered) <- sample_info_filtered$GAMUT_ID
 
 
 traits <- sample_info_filtered %>% 
-  mutate(BEN.vs.all = ifelse(Stage == 'BEN', 1, 0)) %>% 
-  select(3)
+  mutate(BEN.vs.all = ifelse(Stage == 'BEN', 1, 0))
 
+traits <- subset(traits, select = c("BEN.vs.all"))
 
 sample_info_filtered$Stage <- factor(sample_info_filtered$Stage, levels = c("BEN", "I", "II", "III", "IV"))
 
@@ -387,8 +387,8 @@ heatmap_data <- heatmap_data %>%
 names(heatmap_data)
 
 CorLevelPlot(heatmap_data,
-             x = names(heatmap_data)[24:28],
-             y = names(heatmap_data)[1:23],
+             x = names(heatmap_data)[31:35],
+             y = names(heatmap_data)[1:30],
              col = c("blue1", "skyblue", "white", "pink", "red"))
 
 
