@@ -1,0 +1,510 @@
+---
+title: "PCSF: GEPIA data"
+output: html_document
+date: "2023-06-02"
+---
+
+```{r include=FALSE}
+library(PCSF)
+library(plyr)
+library(biomaRt)
+library(dplyr)
+library(tidyr)
+library(kableExtra)
+library(grid)
+library(edgeR)
+library(ggplot2)
+library(reshape2)
+
+
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+```
+
+## Description
+
+The genes in this pipeline are differentially expressed, determined by the web tool GEPIA2. log2Fold change values are used.
+
+<br>
+
+## Step 1: PCSF file prep - Create score file and format STRING interaction data
+
+-   Create score file from log2FC values
+
+-   Feed list of proteins into STRING/Cytoscape
+
+-   Format output and create interaction file
+
+<br>
+
+
+```{r echo=FALSE}
+DEdata <- read.table("table_degenes.txt", sep = "\t", header = T)
+
+# subset the gene_id and logFC columns
+DEdata <- subset(DEdata, select = c("Gene.Symbol", "Log2.Fold.Change."))
+
+## create ensemble protein list for interaction db
+write.table(DEdata$Gene.Symbol, "tcga_gene_list.txt", row.names = F, col.names = F, quote = F)
+
+# score file
+write.csv(DEdata, "pcsf_data.csv")
+```
+
+
+```{r echo=FALSE}
+string_edge_data <- read.table("STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+ppi_list <- subset(string_edge_data, select = c("name", "stringdb..score"))
+ppi_list <- ppi_list %>% 
+  separate(name, sep = " ", into = c("node_1", "del", "node_2"))
+ppi_list <- subset(ppi_list, select = c("node_1", "node_2", "stringdb..score"))
+ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
+ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
+
+string_node_data <- read.table("STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
+node_list <- subset(string_node_data, select = c("name", "query.term"))
+node_list$name <- gsub(".*.\\.", "", node_list$name)
+ppi_list$original_order <- seq_len(nrow(ppi_list))
+merged_df <- merge(ppi_list, node_list, by.x = "node_1", by.y = "name", all.x = TRUE)
+merged_df <- merge(merged_df, node_list, by.x = "node_2", by.y = "name", all.x = TRUE)
+merged_df <- merged_df[order(merged_df$original_order), ]
+
+final_df <- merged_df[, c("query.term.x", "query.term.y", "stringdb..score")]
+colnames(final_df) <- c("node_1", "node_2", "score")
+
+write.csv(final_df, "interaction_score.csv")
+
+
+# create gene_id uniprot_id ref list.
+ref_list <- getBM(attributes = c("external_gene_name","uniprot_gn_id"),
+                  filters = "external_gene_name", 
+                  values = node_list$query.term, 
+                  mart = ensembl)
+
+write.table(ref_list$external_gene_name, "string_gene_names.csv", quote = F, row.names = F, col.names = F)
+```
+
+<br>
+
+## Step 3: Run PCSF and create cross reference results with AF structures for durggability
+
+```{r echo=FALSE}
+# set seed for reproducibility 
+set.seed(1234)
+
+# read in STRING data
+string_data <- read.csv("interaction_score.csv", row.names = 1)
+
+# construct interactome
+ppi <- construct_interactome(string_data)
+
+# read in score file
+data <- read.csv("pcsf_data.csv", row.names = 1)
+
+# set terminals
+terminals <- setNames(as.numeric(data$Log2.Fold.Change.), data$Gene.Symbol)
+
+# run PCSF with random noise
+
+# time a pcsf run
+start_time <- Sys.time()
+subnet <- PCSF_rand(ppi, terminals, n = 50, r = 0.1, w = 2, b = 1, mu = 0.0005)
+elapsed_time <- Sys.time() - start_time
+print(elapsed_time)
+
+plot.PCSF(subnet, node_label_cex = 15)
+```
+
+<br>
+
+```{r include=FALSE}
+# extract cluster data
+clust <- clusters(subnet)
+df <- data.frame(gene_id = names(clust$membership), cluster = factor(clust$membership))
+betweenness <- betweenness(subnet) 
+centrality <- degree(subnet) 
+df$betweenness <- betweenness[as.character(df$gene_id)]
+df$degree_centrality <- centrality[as.character(df$gene_id)]
+df$betweenness <- as.integer(df$betweenness)
+df$degree_centrality <- as.integer(df$degree_centrality)
+
+rownames(df) <- 1:nrow(df)
+
+df <- df[order(df$cluster), ]
+
+write.csv(df, "pcsf_results.csv", row.names = F)
+```
+
+```{r, include=FALSE}
+# read in data
+af_drugability <- read.csv("~/Desktop/final_copy/pcsf_kylie/fpocket_druggability.csv")
+pcsf_result <- read.csv("pcsf_results.csv")
+pcsf_result <- merge(ref_list, pcsf_result, by.x = "external_gene_name", by.y = "gene_id")
+
+# merge AF data with PCSF data by uniprot ID
+pcsf_master <- merge(pcsf_result, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
+pcsf_master <- subset(pcsf_master, select = c("external_gene_name", "uniprot_gn_id", "cluster", 
+                                                          "betweenness", "degree_centrality", "pocket", 
+                                                          "druggability", "num_drug_pockets", "struct_score"))
+
+pcsf_master <- pcsf_master[order(-pcsf_master$druggability), ]
+
+druggability_crossref <- nrow(pcsf_master)
+
+pcsf_master_unique <- distinct(pcsf_master)
+
+write.csv(pcsf_master, "PCSF_drugability.csv")
+```
+
+Note: The citation scores for this data were generated outside this R script using PubMed API
+
+```{r echo=FALSE}
+# add up and down regulaiton tags to table
+up_or_down <- read.csv("pcsf_data.csv", row.names = 1)
+up_or_down$regulation <- ifelse(up_or_down$Log2.Fold.Change. > 0, "up_reg", "dn_reg")
+colnames(up_or_down)[1] <- "gene_id"
+pcsf_master <- read.csv("PCSF_drugability.csv", row.names = 1)
+pcsf_master <- merge(pcsf_master, up_or_down, by.x = "external_gene_name", by.y = "gene_id")
+
+# run the citation score script now using kylie_PCSF_drugability.csv
+
+# add citation scores
+cit_scores <- read.csv("citation_scores.csv")
+pcsf_master <- merge(pcsf_master, cit_scores, by.x = "external_gene_name", by.y = "gene_id")
+
+# keeping logFC now
+#kylie_pcsf_master <- subset(kylie_pcsf_master, select = c("ensembl_gene_id", "external_gene_name", 
+#                                                          "uniprot_id", "cluster", "betweenness",
+#                                                          "degree_centrality", "pocket", "druggability",
+#                                                          "num_drug_pockets", "struct_score", "regulation",
+#                                                          "citation_score"))
+
+
+pcsf_master <- distinct(pcsf_master)
+pcsf_master <- pcsf_master[order(-pcsf_master$druggability), ]
+rownames(pcsf_master) <- NULL
+
+# remove duplicates
+master_unique <- pcsf_master[!duplicated(pcsf_master$external_gene_name), ]
+rownames(master_unique) <- NULL
+
+write.csv(pcsf_master, "pcsf_master.csv")
+```
+
+<details>
+
+<summary>Show raw table</summary>
+
+```{r echo=FALSE}
+kable(pcsf_master, format = "html", caption = "PCSF Druggability Results") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+</details>
+
+Note: Duplicates removed here
+
+```{r echo=FALSE}
+kable(master_unique, format = "html", caption = "PCSF Druggability Results") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+<br>
+
+<details>
+
+```{r eval=FALSE}
+# dont need it, doenst work
+
+subset_genes <- as.data.frame(kylie_pcsf_master$gene_id)
+colnames(subset_genes)[1] <- "gene_id"
+
+network_out_genes <- anti_join(kylie_uniprot_id, subset_genes, by = "gene_id")
+
+kable(network_out_genes, format = "html", caption = "Removed genes from cytoscape + network + druggability filters") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+<br>
+
+## Step 4: Functional Enrichment Analysis
+
+<details>
+
+<summary>Show code</summary>
+
+```{r echo=FALSE}
+enrichment_analysis_edit <-function(subnet, mode=NULL, gene_universe){
+  
+  # Checking function arguments
+  if (missing(subnet))
+    stop("Need to specify the subnetwork obtained from the PCSF algorithm.")
+  if (class(subnet)[1] != "PCSF" || class(subnet)[2] != "igraph")
+    stop("The subnetwork must be a \"PCSF\" object derived from an \"igraph\" class.")
+  if (!is.null(mode)){
+    if(mode==1 && missing(gene_universe))
+      stop("Need to specify a list of genes (vector of gene symbols) used as background in enrichment analysis by topGO package")
+  }
+  
+  
+  cat("  Performing enrichment analysis...\n\n")
+  
+  # Obtain clusters in the subnet using edge betweenness clustering algorithm from igraph package.
+  clusters = cluster_edge_betweenness(subnet)
+  
+  # Perform ebrichment analysis for each cluster using EnrichR through its API or topGO.
+  #print("Performing enrichment analysis...")
+  #print(paste("Number of clusters:", length(clusters$membership)))
+  
+  havingInternet <- function() {
+    if (.Platform$OS.type == "windows") {
+      ipmessage <- system("ipconfig", intern = TRUE)
+    } else {
+      ipmessage <- system("ifconfig", intern = TRUE)
+    }
+    validIP <- "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
+    any(grep(validIP, ipmessage))
+  }
+  
+  internet_connection <- havingInternet()
+  
+  if(!is.null(mode)){
+    if(mode==0){
+      if(internet_connection){
+        cat("  Enrichment is being performed by EnrichR (http://amp.pharm.mssm.edu/Enrichr) API ...\n")
+        enrich = call_enr(clusters, mode = 0, gene_universe)
+      }
+      else{
+        stop("There is no working Internet connection, perform your enrichment with topGO package with mode=1 by providing background gene list ...\n")
+      }
+    }
+    else{
+      cat("  Enrichment is being performed by topGO package ...\n")
+      enrich = call_enr(clusters, mode = mode, gene_universe)
+    }
+  }
+  else
+  {
+    if(internet_connection){
+      cat("  Enrichment is being performed by EnrichR (http://amp.pharm.mssm.edu/Enrichr) API ...\n")
+      enrich = call_enr(clusters, mode = 0, gene_universe)
+    }
+    else{
+      stop("There is no working Internet connection, perform your enrichment with topGO package with mode=1 by providing background gene list ...\n")
+    }
+  }
+  
+  if('Compound'%in% V(subnet)$type){##then we have drugs!
+    require(dplyr)
+    comps=data.frame(Drug=V(subnet)$name[which(V(subnet)$type=='Compound')],
+                     Cluster=clusters$membership[which(V(subnet)$type=='Compound')])%>%
+      dplyr::group_by(Cluster)%>%
+      dplyr::summarise(DrugsByBetweenness=paste(Drug,collapse=';'))
+    
+  }
+  else{
+    comps <-NULL
+  }
+  enrichment = enrich[[1]]
+  enrichment_complete = enrich[[2]]
+  print(paste("Number of enrichment results:", length(enrichment_complete)))
+  
+  #for (x in 1:length(enrichment_complete)) {
+  #  print(paste("Cluster", x, "enrichment complete:", enrichment_complete[[x]]))
+  #}
+  
+  novals<-which(unlist(sapply(enrich[[2]],function(x) is.null(dim(x)))))
+  if(length(novals)>0)
+    enrichment_complete <- enrichment_complete[-novals]
+  
+  enrichment_tab <- do.call(rbind, lapply(seq_along(enrichment_complete), function(x) {
+    if (!is.null(dim(enrichment_complete[[x]]))) {
+      data.frame(Cluster = x, enrichment_complete[[x]])
+    } else {
+      NULL
+    }
+  }))
+  
+  more.than.two <- which(sapply(enrichment_tab$Genes, function(x) length(unlist(strsplit(x, split = ';')))) > 2)
+  if (length(more.than.two) > 0)
+    enrichment_tab <- enrichment_tab[more.than.two, ]
+  
+  if(!is.null(comps))
+    enrichment_tab = enrichment_tab%>%dplyr::left_join(comps,by='Cluster')
+  
+  # Add 'group" and 'title' attributes to subnet
+  V(subnet)$group = clusters$membership
+  V(subnet)$title = paste0("Cluster ",clusters$membership,": Enrichment analysis")
+  for( i in 1:length(V(subnet))){
+    V(subnet)$title[i] = paste0( V(subnet)$title[i], enrichment[[V(subnet)$group[i]]])
+  }
+  
+  # Derive a "PCSFe" object from an "igraph" class.
+  class(subnet) <- c("PCSFe", "igraph")
+  # Combine the subnetwork and colplete enrichment analysis tables.
+  output = list(subnet, enrichment_tab)
+  names(output) = c("subnet", "enrichment")
+  
+  return (output)
+}
+
+# functional enrichment using enrichR
+res <- enrichment_analysis_edit(subnet)
+```
+
+</details>
+
+<br>
+
+#### Tip: Hover over nodes for details!
+
+```{r echo=FALSE}
+plot.PCSFe(res$subnet, edge_width = 8, node_size = 30, node_label_cex = 1)
+```
+
+<br>
+
+Note: P-value represents likelihood of observing that pathway by random chance. The top 15 functional enrichment terms for each cluster are ranked according to the adjusted p-value. This is what you observe when you hover your mouse over a node in that cluster.
+
+<br>
+
+```{r include=FALSE}
+enrichment_results <- res$enrichment
+
+# Create a data frame with the enrichment results
+enrichment_table <- data.frame(
+  Cluster = enrichment_results$Cluster,
+  Term = enrichment_results$Term,
+  PValue = enrichment_results$P.value,
+  Adjusted_Pvalue = enrichment_results$Adjusted.P.value,
+  Genes = enrichment_results$Genes)
+
+write.csv(enrichment_table, "enrichment_results.csv")
+```
+
+#### Tabulated format
+
+```{r echo=FALSE}
+enrichment_table <- read.csv("enrichment_results.csv", row.names = 1)
+  
+kable(enrichment_table, format = "html", caption = "Enrichment Results") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+<br>
+
+<br>
+
+In this table the genes are ordered by their combined rank score which is a normalised score with the following contributions.
+
+<br>
+
+-   Betweeness: 10%
+-   Citation score: 20%
+-   Degree centrality: 30%
+-   Druggability: 40%
+
+<br>
+
+```{r echo=FALSE}
+# normalize scores for overall rank
+
+pcsf_master <- read.csv("pcsf_master.csv", row.names = 1)
+
+betweeness_norm <- (pcsf_master$betweenness - min(pcsf_master$betweenness)) / (max(pcsf_master$betweenness) - min(pcsf_master$betweenness))
+
+centrality_norm <- (pcsf_master$degree_centrality - min(pcsf_master$degree_centrality)) / (max(pcsf_master$degree_centrality) - min(pcsf_master$degree_centrality))
+
+# log transformation
+citation_norm <- log(pcsf_master$citation_score + 1)
+citation_norm <- (citation_norm - min(citation_norm)) / (max(citation_norm) - min(citation_norm))
+
+# Custom weights
+betweeness_w <- 0.10
+citation_w <- 0.20
+centrality_w <- 0.30
+druggability_w <- 0.40
+
+
+# Combine scores using custom weights
+combined_score <- betweeness_w * betweeness_norm +
+  centrality_w * centrality_norm +
+  druggability_w * pcsf_master$druggability -
+  citation_w * citation_norm
+
+pcsf_master_edit <- cbind(pcsf_master, combined_score)
+
+pcsf_master_edit <- pcsf_master_edit[order(-pcsf_master_edit$combined_score), ]
+
+pcsf_master_edit_unique <- pcsf_master_edit[!duplicated(pcsf_master_edit$external_gene_name), ]
+
+rownames(pcsf_master_edit) <- NULL
+
+kable(pcsf_master_edit, format = "html", caption = "Ordered by Combined Rank Score") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+<br>
+
+<details>
+
+<summary>Show unique genes only</summary>
+
+```{r}
+kable(pcsf_master_edit_unique, format = "html", caption = "Ordered by Combined Rank Score") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+</details>
+
+<br>
+
+```{r echo=FALSE, eval=FALSE}
+# all this is wrong, figure out how to compare enrichment to the original network to see which genes are different
+
+network_genes <- as.data.frame(V(kylie_subnet)$name)
+colnames(network_genes)[1] <- "external_gene_name"
+
+enrichment_genes <- res$enrichment$Genes
+enrichment_genes <- strsplit(enrichment_genes, ";")
+enrichment_genes <- unlist(enrichment_genes)
+enrichment_genes <- as.data.frame(trimws(enrichment_genes))
+colnames(enrichment_genes)[1] <- "external_gene_name"
+
+network_out_genes <- anti_join(network_genes, enrichment_genes, by = "external_gene_name")
+
+kable(network_out_genes, format = "html", caption = "Removed genes from cytoscape + network + druggability filters") %>%
+kable_styling(full_width = FALSE) %>%
+scroll_box(height = "400px")
+```
+
+<br>
+
+### Gene subset progression
+
+<br>
+
+```{r echo=FALSE}
+GEPIA2_genes <- nrow(DEdata)
+cytoscape_string <- nrow(node_list)
+pcsf_subnet <- length(subnet)
+unique_ids <- nrow(pcsf_master_edit_unique)
+
+# create summary
+cat(paste("GEPIA2 genes =", GEPIA2_genes))
+cat(paste("GEPIA2 genes =", GEPIA2_genes, "--> Cytoscape/STRING =", cytoscape_string))
+cat(paste("Cytoscape/STRING =", cytoscape_string, "--> PCSF subnet =", pcsf_subnet))
+cat(paste("PCSF subnet =", pcsf_subnet, "--> Druggability CrossRef =", druggability_crossref))
+cat(paste("Druggability CrossRef =", druggability_crossref, "--> Unique IDs =", unique_ids))
+```
+
+<br>
+
+<br>
+
+end of doc
