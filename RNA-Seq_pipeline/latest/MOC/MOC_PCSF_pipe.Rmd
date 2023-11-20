@@ -128,30 +128,45 @@ stage_II <- read.csv("data/stage_II_master_df.csv")
 stage_III <- read.csv("data/stage_III_master_df.csv")
 stage_IV <- read.csv("data/stage_IV_master_df.csv")
 
+# merge disease groups together
 kylie_data <- merge(stage_I, stage_II, by = "X")
 kylie_data <- merge(kylie_data, stage_III, by = "X")
 kylie_data <- merge(kylie_data, stage_IV, by = "X")
 
+colnames(kylie_data)[1] <- "gene_id"
+
+benign_data <- read.csv("data/ben_master_df.csv")
+colnames(benign_data)[1] <- "gene_id"
+# Get the current column names
+current_names <- colnames(benign_data)
+# Create new column names by replacing "GAMuT_" with "BEN_"
+new_names <- sub("GAMuT_", "BEN_", current_names)
+# Assign the new column names to the data frame
+colnames(benign_data) <- new_names
+
+# combine into single df
+df <- inner_join(kylie_data, benign_data, by = c("gene_id"))
+rownames(df) <- df$gene_id
+df <- df[, -1]
 raw_gene_list <- nrow(kylie_data)
 
-colnames(kylie_data)[1] <- "gene_id"
-gene_id <- kylie_data$gene_id
-kylie_data <- kylie_data[, -1] # remove gene ids for rowSums calc
+gene_id <- rownames(df)
+#kylie_data <- kylie_data[, -1] # remove gene ids for rowSums calc
 
 # subset genes that have a cpm of greater than one in more than 50% of the samples
-keepTheseGenes <- (rowSums(cpm(kylie_data) > 1) >= ncol(kylie_data)/2)
+keepTheseGenes <- (rowSums(cpm(df) > 1) >= ncol(df)/2)
 print(summary(keepTheseGenes))
 
 # add gene ids back into df
-kylie_data <- cbind(gene_id, kylie_data)
+#df <- cbind(gene_id, df)
 
-removedGenes <- kylie_data$gene_id[!keepTheseGenes]
+removedGenes <- rownames(df)[!keepTheseGenes]
 removedGenes <- as.data.frame(removedGenes)
 colnames(removedGenes)[1] <- "gene_id"
 
-kylie_data <- kylie_data[keepTheseGenes, ]
+df <- df[keepTheseGenes, ]
 
-initial_subset <- nrow(kylie_data)
+initial_subset <- nrow(df)
 ```
 
 <details>
@@ -176,22 +191,7 @@ scroll_box(height = "800px")
 
 ## Step 1: Differential expression analysis using edgeR
 
-```{r differential expression, echo=FALSE}
-benign_data <- read.csv("data/ben_master_df.csv")
-colnames(benign_data)[1] <- "gene_id"
-# Get the current column names
-current_names <- colnames(benign_data)
-# Create new column names by replacing "GAMuT_" with "BEN_"
-new_names <- sub("GAMuT_", "BEN_", current_names)
-# Assign the new column names to the data frame
-colnames(benign_data) <- new_names
-
-# combine into single df
-df <- inner_join(kylie_data, benign_data, by = c("gene_id"))
-rownames(df) <- df$gene_id
-df <- df[, -1]
-
-
+```{r differential expression, echo=FALSE, warning=FALSE}
 # Select the columns that start with "GAMuT"
 cols <- grep("^GAMuT", colnames(df))
 
@@ -246,22 +246,22 @@ dif_exp <- hits[dif_exp_genes, ]
 
 non_dif_exp_genes <- hits[hits$gene_id != dif_exp_genes, ]
 
-#write.csv(hits, "intermediate/edgeR/edgeR_hits.csv")
-#write.csv(dif_exp, "intermediate/edgeR/edgeR_dif_exp_genes.csv")
-#write.csv(non_dif_exp_genes, "intermediate/edgeR/non_dif_exp_genes.csv")
+write.csv(hits, "intermediate/edgeR/edgeR_hits.csv")
+write.csv(dif_exp, "intermediate/edgeR/edgeR_dif_exp_genes.csv")
+write.csv(non_dif_exp_genes, "intermediate/edgeR/non_dif_exp_genes.csv")
 ```
 <br>
 
 ```{r plot DE data, echo=FALSE, out.width='33%', fig.show='hold'}
 # Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
-plotBCV(tagwise, main = "Stage_III_IV: biological coefficient of variation")
+plotBCV(tagwise, main = "Biological coefficient of variation")
 
 # Make a mean-difference plot of two libraries of count data with smearing of points with very low counts, 
 # especially those that are zero for one of the columns.
-plotSmear(lrt, de.tags = dif_exp_genes, main = "Stage_III_IV: Mean-difference plot")
+plotSmear(lrt, de.tags = dif_exp_genes, main = "Mean-difference plot")
 
 # plot Pvalues of different logFC scores
-ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Stage_III_IV: Adjusted logFC")
+ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted logFC")
 ```
 
 ```{r include=FALSE, eval=FALSE}
