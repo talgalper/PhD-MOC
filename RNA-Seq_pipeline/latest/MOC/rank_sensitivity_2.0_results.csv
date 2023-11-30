@@ -1,0 +1,105 @@
+"","external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_citation_0","counts_when_druggability_0","counts_when_num_drug_pockets_0","counts_when_cryptic_pockets_0","counts_when_num_cryp_pockets_0"
+"1","H2BC13","H2B clustered histone 13",4807,832,809,880,1075,942,672,0
+"2","H2BC6","H2B clustered histone 6",3356,704,823,746,802,670,626,0
+"3","NR5A2","nuclear receptor subfamily 5 group A member 2",3247,1177,1332,1224,1107,1076,998,0
+"4","ORC1","origin recognition complex subunit 1",3135,1315,1538,1353,1303,1084,1079,77
+"5","SPTBN2","spectrin beta, non-erythrocytic 2",3109,904,1071,521,1102,989,715,72
+"6","WDR62","WD repeat domain 62",2742,798,820,846,944,800,592,0
+"7","H2BC7","H2B clustered histone 7",2501,718,875,722,413,525,512,0
+"8","H2BC15","H2B clustered histone 15",2255,314,342,178,384,265,195,0
+"9","UBE2S","ubiquitin conjugating enzyme E2 S",2071,744,918,207,743,501,450,48
+"10","PCDHGA5","protocadherin gamma subfamily A, 5",2042,460,365,512,168,283,361,0
+"11","CLSPN","claspin",1991,108,86,132,116,100,0,0
+"12","H2BC10","H2B clustered histone 10",1951,30,30,15,9,24,0,0
+"13","CDK1","cyclin dependent kinase 1",1869,38,50,21,44,34,0,3
+"14","KIF14","kinesin family member 14",1832,135,162,201,154,200,0,291
+"15","MUC17","mucin 17, cell surface associated",1743,16,22,33,31,21,0,30
+"16","JAG2","jagged canonical Notch ligand 2",1612,239,266,336,183,202,0,437
+"17","CENPE","centromere protein E",1589,80,80,82,110,95,0,168
+"18","HMMR","hyaluronan mediated motility receptor",1424,140,164,192,32,161,0,217
+"19","H2BC14","H2B clustered histone 14",1402,20,25,5,31,21,0,31
+"20","PCDHGB1","protocadherin gamma subfamily B, 1",1402,19,21,31,12,26,0,31
+"21","H2BC8","H2B clustered histone 8",1395,7,5,11,11,7,0,11
+"22","ASPM","assembly factor for spindle microtubules",1288,24,29,31,45,5,0,44
+"23","CCNA2","cyclin A2",1138,24,2,27,40,36,0,40
+"24","H2BC3","H2B clustered histone 3",1090,64,81,91,96,0,0,102
+"25","ABCA2","ATP binding cassette subfamily A member 2",1073,735,942,847,440,76,488,803
+"26","H2BC4","H2B clustered histone 4",947,604,692,775,330,85,260,769
+"27","RARA","retinoic acid receptor alpha",934,1966,1204,1482,1712,1911,1672,2303
+"28","BUB1B","BUB1 mitotic checkpoint serine/threonine kinase B",795,319,376,414,90,103,25,437
+"29","ABCC2","ATP binding cassette subfamily C member 2",788,56,72,69,43,0,31,0
+"30","H2AC14","H2A clustered histone 14",755,748,913,765,572,14,818,856
+"31","H2BC17","H2B clustered histone 17",749,131,58,152,89,0,2,101
+"32","H2BC18","H2B clustered histone 18",652,343,399,434,285,0,477,395
+"33","DNAH3","dynein axonemal heavy chain 3",628,3,3,1,3,0,0,0
+"34","FZD7","frizzled class receptor 7",620,76,100,108,71,0,65,99
+"35","POLD1","DNA polymerase delta 1, catalytic subunit",573,348,621,512,304,25,658,560
+"36","BRAT1","BRCA1 associated ATM activator 1",552,310,447,193,162,0,329,380
+"37","ATP1A1","ATPase Na+/K+ transporting subunit alpha 1",481,50,71,49,47,0,84,66
+"38","H2AX","H2A.X variant histone",457,222,296,184,89,0,275,263
+"39","KIF20B","kinesin family member 20B",435,199,293,86,48,216,0,298
+"40","SPTBN5","spectrin beta, non-erythrocytic 5",383,6,8,2,0,9,0,9
+"41","H2AC12","H2A clustered histone 12",372,9,12,1,3,12,0,14
+"42","ANLN","anillin, actin binding protein",370,39,66,44,0,7,55,52
+"43","H3C12","H3 clustered histone 12",334,55,354,369,98,302,98,48
+"44","H2AC8","H2A clustered histone 8",295,50,71,66,0,54,2,65
+"45","CDC45","cell division cycle 45",281,25,26,26,0,8,0,14
+"46","CENPI","centromere protein I",230,947,569,1842,1059,1289,1089,1390
+"47","H2BC21","H2B clustered histone 21",223,79,114,100,0,58,38,30
+"48","KIF20A","kinesin family member 20A",197,10,12,18,0,16,0,17
+"49","H3C13","H3 clustered histone 13",185,7,9,9,0,10,4,0
+"50","H1-5","H1.5 linker histone, cluster member",183,4,7,7,0,0,7,6
+"51","NOTCH1","notch receptor 1",174,1,1,1,0,1,1,0
+"52","EXO1","exonuclease 1",164,40,58,20,0,51,10,23
+"53","LGR5","leucine rich repeat containing G protein-coupled receptor 5",143,18,21,32,0,28,15,15
+"54","CCNB1","cyclin B1",138,6,9,9,0,8,7,5
+"55","PCDHGA4","protocadherin gamma subfamily A, 4",137,3,4,4,0,4,4,2
+"56","MCM2","minichromosome maintenance complex component 2",124,2,3,3,0,3,3,2
+"57","TEAD4","TEA domain transcription factor 4",123,4,0,6,2,6,0,0
+"58","CDC25A","cell division cycle 25A",115,128,1204,1545,1284,1395,1088,1021
+"59","PPFIA3","PTPRF interacting protein alpha 3",115,130,10,140,71,0,162,158
+"60","FZD2","frizzled class receptor 2",99,57,0,89,27,28,0,81
+"61","CENPA","centromere protein A",93,699,149,139,209,387,379,742
+"62","BCAM","basal cell adhesion molecule (Lutheran blood group)",86,1167,781,765,1054,1591,1397,1755
+"63","FABP1","fatty acid binding protein 1",83,260,49,685,252,430,626,443
+"64","H2BC11","H2B clustered histone 11",81,960,170,599,734,1022,1313,1069
+"65","CDH24","cadherin 24",77,1070,442,223,484,978,770,1063
+"66","XPR1","xenotropic and polytropic retrovirus receptor 1",68,1001,617,381,638,1245,1022,1376
+"67","SPAG4","sperm associated antigen 4",58,715,197,224,233,779,515,834
+"68","ERCC6L","ERCC excision repair 6 like, spindle assembly checkpoint helicase",57,528,383,8,147,549,340,558
+"69","WDR76","WD repeat domain 76",52,4,3,1,4,0,2,0
+"70","NDC80","NDC80 kinetochore complex component",46,712,56,319,473,488,931,726
+"71","OIP5","Opa interacting protein 5",44,1,4,39,0,20,34,27
+"72","PLK1","polo like kinase 1",39,102,23,364,382,250,91,245
+"73","GAPDH","glyceraldehyde-3-phosphate dehydrogenase",35,9,0,5,5,7,0,2
+"74","CHEK1","checkpoint kinase 1",34,75,0,138,89,61,44,77
+"75","KIF18B","kinesin family member 18B",33,198,143,1,329,242,28,187
+"76","CD9","CD9 molecule",32,143,449,1028,926,794,906,840
+"77","RAD54L","RAD54 like",31,155,99,133,591,417,525,352
+"78","CDC6","cell division cycle 6",27,76,110,0,133,88,6,35
+"79","H3C10","H3 clustered histone 10",25,37,58,0,67,39,0,62
+"80","H3C1","H3 clustered histone 1",23,68,113,0,67,0,56,50
+"81","FBXL19","F-box and leucine rich repeat protein 19",22,10,10,0,0,9,0,3
+"82","TTK","TTK protein kinase",18,1,1,0,0,0,0,1
+"83","SKA3","spindle and kinetochore associated complex subunit 3",14,399,327,0,140,241,563,423
+"84","BUB1","BUB1 mitotic checkpoint serine/threonine kinase",11,2,0,0,2,2,0,2
+"85","CENPF","centromere protein F",10,5,7,0,0,9,8,7
+"86","SLC27A2","solute carrier family 27 member 2",10,133,132,0,149,54,0,175
+"87","H2BC12","H2B clustered histone 12",9,7,127,19,269,199,72,210
+"88","MELK","maternal embryonic leucine zipper kinase",9,16,18,0,21,18,12,0
+"89","PHF19","PHD finger protein 19",9,365,385,0,274,191,170,421
+"90","POLQ","DNA polymerase theta",9,54,17,0,41,0,81,60
+"91","H4C13","H4 clustered histone 13",7,29,199,0,215,164,167,213
+"92","PDE3A","phosphodiesterase 3A",7,13,0,0,22,17,12,11
+"93","FOXM1","forkhead box M1",6,7,7,0,7,1,7,5
+"94","H2AC21","H2A clustered histone 21",5,4,4,0,4,4,4,1
+"95","H2AC15","H2A clustered histone 15",4,0,790,917,990,889,808,958
+"96","KIF11","kinesin family member 11",4,13,25,0,19,12,15,23
+"97","MCM10","minichromosome maintenance 10 replication initiation factor",4,2,2,0,2,2,2,1
+"98","PTGS2","prostaglandin-endoperoxide synthase 2",3,0,481,599,568,420,524,573
+"99","RARRES1","retinoic acid receptor responder 1",3,0,5,0,5,5,5,4
+"100","H2AC16","H2A clustered histone 16",2,0,82,85,96,73,23,47
+"101","TONSL","tonsoku like, DNA repair protein",2,0,111,31,147,108,132,102
+"102","CIT","citron rho-interacting serine/threonine kinase",1,0,1,1,0,1,1,1
+"103","MTTP","microsomal triglyceride transfer protein",1,0,95,158,103,57,73,76
+"104","RAC3","Rac family small GTPase 3",1,0,47,17,5,31,49,36
