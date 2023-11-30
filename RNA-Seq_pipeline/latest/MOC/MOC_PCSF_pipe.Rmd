@@ -174,7 +174,7 @@ initial_subset <- nrow(df)
 <details>
 
 <summary>Show low acitivty genes</summary>
-```{r echo=FALSE}
+```{r low activity genes, echo=FALSE}
 removed_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
                        filters = "ensembl_gene_id", 
                        values = removedGenes$gene_id, 
@@ -1400,8 +1400,6 @@ kable(final_gene_counts, format = "html", caption = "Rank Sensitivity") %>%
   scroll_box(height = "1000px")
 ```
 
-
-
 ### RRA w/ all factors
 ```{r RRA all, echo=FALSE}
 # RRA all
@@ -1438,5 +1436,11 @@ kable(aggregate_ranks, format = "html", caption = "Robust Rank Aggregation") %>%
   scroll_box(height = "1000px")
 ```
 
+##
 
+<br>
+
+<br>
+
+end of doc
 
