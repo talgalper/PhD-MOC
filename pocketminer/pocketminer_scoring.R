@@ -1,4 +1,6 @@
 ### Takes pocketminer results as input and converts into a formatted data frame ###
+library(progress)
+
 
 pocketminer_results <- list.files("results/txt_results/")
 
@@ -55,11 +57,11 @@ number_of_hits <- list()
 uniprot_IDs <- list()
 
 
+
+pb <- progress_bar$new(total = length(pocketminer_averages))
+
 # create list of IDs and count scores
-for (i in seq_along(pocketminer_averages)) {
-  print(paste0("Progress: ", i, "/", length(pocketminer_averages)))
-  file <- pocketminer_averages[i]
-  
+for (file in pocketminer_averages) {
   # Get uniprot/subunit ID
   split_id <- strsplit(file, split = "-")
   split_id <- unlist(split_id)
@@ -76,9 +78,29 @@ for (i in seq_along(pocketminer_averages)) {
   largest_average <- max(data$averages)
   largest_averages <- append(largest_averages, largest_average)
   
-  # Count the number of values above 0.7 in the "averages" column
-  above_0.7_count <- sum(data$averages > 0.7)
-  number_of_hits <- append(number_of_hits, above_0.7_count)
+  # count the number of consecutive values >= 0.7 i.e. count clusers/pockets
+  count_clusters <- function(data, threshold) {
+    above_threshold <- data$scores >= threshold
+    in_cluster <- FALSE
+    cluster_count <- 0
+    
+    for (i in seq_along(above_threshold)) {
+      if (above_threshold[i] && !in_cluster) {
+        in_cluster <- TRUE
+        cluster_count <- cluster_count + 1
+      } else if (!above_threshold[i]) {
+        in_cluster <- FALSE
+      }
+    }
+    
+    return(cluster_count)
+  }
+  
+  cluster_count <- count_clusters(data, 0.7)
+  
+  number_of_hits <- append(number_of_hits, cluster_count)
+  
+  pb$tick()
 }
 
 
@@ -89,10 +111,6 @@ pocketminer_master <- data.frame(ID = unlist(IDs),
                                  num_hits = unlist(number_of_hits))
 
 # save results
-write.csv(pocketminer_master, "results/pocketminer_results.csv", row.names = F)
-
-
-
-
+write.csv(pocketminer_master, "results/pocketminer_results_2.0.csv", row.names = F)
 
 
