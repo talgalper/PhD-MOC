@@ -1,5 +1,10 @@
 library(tidyverse)
 
+kylie_pcsf_master <- read.csv("results/MOC_PCSF_master_unique.csv", row.names = 1)
+pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results_2.0.csv")
+kylie_pcsf_master <- merge(kylie_pcsf_master, pocketminer_data, by = "ID")
+
+
 # checkpoint 1 is the top 100 differentially expressed genes
 checkpoint_1 <- data.frame(up_reg = kylie_pcsf_master$external_gene_name[order(-kylie_pcsf_master$logFC)])
 checkpoint_1 <- checkpoint_1[1:100, ]
@@ -13,7 +18,7 @@ checkpoint_1 <- kylie_pcsf_master$external_gene_name[kylie_pcsf_master$logFC >= 
 rankings <- list(kylie_pcsf_master$external_gene_name[order(-kylie_pcsf_master$betweenness)],
                  kylie_pcsf_master$external_gene_name[order(-kylie_pcsf_master$degree_centrality)])
 aggregate_ranks <- aggregateRanks(glist = rankings)
-checheckpoint_2 <- aggregate_ranks[aggregate_ranks$Name %in% checkpoint_1, ]
+checkpoint_2 <- aggregate_ranks[aggregate_ranks$Name %in% checkpoint_1, ]
 
 #checkpoint_2 <- intersect(checkpoint_1, aggregate_ranks$Name)
 
@@ -22,10 +27,10 @@ checheckpoint_2 <- aggregate_ranks[aggregate_ranks$Name %in% checkpoint_1, ]
 drug_subset <- subset(kylie_pcsf_master, select = c("external_gene_name", "druggability", 
                                                     "num_drug_pockets", "max_hit", "num_hits"))
 
-checkpoint_3 <- drug_subset[drug_subset$external_gene_name %in% checkpoint_2, ]
+checkpoint_3 <- drug_subset[drug_subset$external_gene_name %in% checkpoint_2$Name, ]
 
 
-citation_scores <- read.csv("intermediate/MeSH_citation_scores.csv")
+citation_scores <- read.csv("intermediate/citation_scores_3.0.csv")
 citation_subset <- citation_scores[citation_scores$gene_id %in% checkpoint_3$external_gene_name, ]
 
 # citaiton scores are added in checkpoint 4
