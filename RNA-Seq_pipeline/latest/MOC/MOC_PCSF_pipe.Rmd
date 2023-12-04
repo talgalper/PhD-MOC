@@ -440,16 +440,17 @@ write.csv(kylie_pcsf_master, "results/MOC_PCSF_drugability.csv")
 
 Note: The citation scores for this data were generated using PubMed API
 
-```{r add up/down reg + citation scores, echo=FALSE}
+```{r add up/down reg, echo=FALSE}
 # add up and down regulaiton tags to table
 up_or_down <- read.csv("intermediate/PCSF_data/pcsf_kylie_score.csv", row.names = 1)
 up_or_down$regulation <- ifelse(up_or_down$logFC > 0, "up_reg", "dn_reg")
 colnames(up_or_down)[1] <- "gene_id"
 kylie_pcsf_master <- read.csv("results/MOC_PCSF_drugability.csv", row.names = 1)
 kylie_pcsf_master <- merge(kylie_pcsf_master, up_or_down, by.x = "external_gene_name", by.y = "gene_id")
+```
 
-
-# run the citation score script now using kylie_PCSF_drugability.csv
+```{r add citation scores, echo=FALSE}
+# run the citation score script now using kylie_PCSF_druggability.csv
 
 # add citation scores
 cit_scores <- read.csv("intermediate/citation_scores.csv")
