@@ -78,9 +78,9 @@ for (file in pocketminer_averages) {
   largest_average <- max(data$averages)
   largest_averages <- append(largest_averages, largest_average)
   
-  # count the number of consecutive values >= 0.7 i.e. count clusters/pockets
+  # count the number of consecutive values >= 0.7 i.e. count clusers/pockets
   count_clusters <- function(data, threshold) {
-    above_threshold <- data$scores >= threshold
+    above_threshold <- data$averages >= threshold
     in_cluster <- FALSE
     cluster_count <- 0
     
@@ -99,7 +99,7 @@ for (file in pocketminer_averages) {
   cluster_count <- count_clusters(data, 0.7)
   
   number_of_hits <- append(number_of_hits, cluster_count)
-  
+
   pb$tick()
 }
 
@@ -111,6 +111,10 @@ pocketminer_master <- data.frame(ID = unlist(IDs),
                                  num_hits = unlist(number_of_hits))
 
 # save results
-write.csv(pocketminer_master, "results/pocketminer_results_2.0.csv", row.names = F)
+write.csv(pocketminer_master, "results/pocketminer_results_3.0.csv", row.names = F)
+
+
+
+
 
 
