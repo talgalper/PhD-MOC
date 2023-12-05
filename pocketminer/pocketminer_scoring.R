@@ -78,7 +78,7 @@ for (file in pocketminer_averages) {
   largest_average <- max(data$averages)
   largest_averages <- append(largest_averages, largest_average)
   
-  # count the number of consecutive values >= 0.7 i.e. count clusers/pockets
+  # count the number of consecutive values >= 0.7 i.e. count clusters/pockets
   count_clusters <- function(data, threshold) {
     above_threshold <- data$scores >= threshold
     in_cluster <- FALSE

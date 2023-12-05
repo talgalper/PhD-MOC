@@ -739,7 +739,7 @@ cat(paste("Druggability CrossRef =", druggability_crossref, "--> Unique IDs =", 
 <summary>Score correlations</summary>
 ```{r PocketMiner correlation, echo=FALSE, out.width='50%', fig.show='hold'}
 kylie_pcsf_master <- read.csv("results/MOC_PCSF_master_unique.csv", row.names = 1)
-pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results.csv")
+pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results_2.0.csv")
 kylie_pcsf_master <- merge(kylie_pcsf_master, pocketminer_data, by = "ID")
 
 plot_data <- subset(kylie_pcsf_master, select = c("max_hit", "num_hits"))
@@ -1086,7 +1086,7 @@ kylie_pcsf_master <- read.csv("results/MOC_PCSF_master_unique.csv", row.names = 
 
 # add the PocketMiner data first becasue missmatch genes that are probably from when small structures were removed
 # 300 genes in instead of 302
-pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results.csv")
+pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results_2.0.csv")
 #pocketminer_data <- pocketminer_data[pocketminer_data$ID %in% kylie_pcsf_master$ID, ]
 kylie_pcsf_master <- merge(kylie_pcsf_master, pocketminer_data, by = "ID")
 
@@ -1203,7 +1203,7 @@ kable(aggregate_ranks, format = "html", caption = "Robust Rank Aggregation") %>%
 ```{r Rank Sensitivity w/ all factors, echo=FALSE}
 kylie_pcsf_master <- read.csv("results/MOC_PCSF_master_unique.csv", row.names = 1)
 
-pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results.csv")
+pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results_2.0.csv")
 kylie_pcsf_master <- merge(kylie_pcsf_master, pocketminer_data, by = "ID")
 
 
