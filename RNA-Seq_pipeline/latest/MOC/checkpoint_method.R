@@ -3,8 +3,11 @@ library(RobustRankAggreg)
 library(biomaRt)
 library(rDGIdb)
 
-
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+
+
+### Version 2 ###
 
 kylie_pcsf_master <- read.csv("results/MOC_PCSF_master_unique.csv", row.names = 1)
 pocketminer_data <- read.csv("../../../pocketminer/results/pocketminer_results_3.0.csv")
@@ -96,7 +99,12 @@ detailed_results <- detailedResults(queryDGIdb(top_hits$external_gene_name))
 
 
 
-### old version ###
+
+
+
+
+
+### Version 1 ###
 
 library(tidyverse)
 library(RobustRankAggreg)
@@ -161,3 +169,18 @@ checkpoint_4 <- merge(description, checkpoint_4, by = "external_gene_name")
 top_hits <- checkpoint_4[checkpoint_4$druggability >= 0.7 & checkpoint_4$cryp_pocket >= 0.7, ]
 
 
+
+
+
+network <- subset(top_hits, select = c("external_gene_name", "description", "logFC", 
+                                       "betweenness", "degree_centrality", "network_rank", "DistinctDrugCount"))
+
+druggability <- subset(top_hits, select = c("external_gene_name", "description", "logFC",
+                                       "druggability", "num_drug_pockets", "druggability_rank", "DistinctDrugCount"))
+
+cryptic <- subset(top_hits, select = c("external_gene_name", "description", "logFC",
+                                       "cryp_pocket", "num_cryp_pockets", "cryptic_rank", "DistinctDrugCount"))
+
+write.csv(network, "~/Desktop/network.csv")
+write.csv(druggability, "~/Desktop/druggability.csv")
+write.csv(cryptic, "~/Desktop/cryptic.csv")

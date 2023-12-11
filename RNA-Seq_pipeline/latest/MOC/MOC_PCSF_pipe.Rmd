@@ -239,6 +239,8 @@ print(summary(dif_exp))
 dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
 
 # create a results df
+hits_raw <- toptags$table
+
 hits <- toptags$table[toptags$table$FDR < 0.1, ]
 colnames <- colnames(hits)
 hits$gene_id <- rownames(hits)
@@ -251,6 +253,7 @@ non_dif_exp_genes <- hits[hits$gene_id != dif_exp_genes, ]
 write.csv(hits, "intermediate/edgeR/edgeR_hits.csv")
 write.csv(dif_exp, "intermediate/edgeR/edgeR_dif_exp_genes.csv")
 write.csv(non_dif_exp_genes, "intermediate/edgeR/non_dif_exp_genes.csv")
+write.csv(hits_raw, "intermediate/edgeR/raw_hits.csv")
 ```
 <br>
 
