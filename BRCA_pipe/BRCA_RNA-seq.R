@@ -15,7 +15,7 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
 
-# query TCGA for TCGA-OV project data
+#### query TCGA for TCGA-OV project data ####
 getProjectSummary('TCGA-BRCA')
 
 query_TCGA <- GDCquery(project = "TCGA-BRCA",
@@ -70,6 +70,9 @@ save(LumB_unstranded, GTEx_data, file = "RData/BRCA_DE_data.RData")
 
 
 
+
+
+#### Remove low activity genes ####
 merged_df <- merge(LumB_unstranded, GTEx_data, by = "row.names")
 
 merged_df <- column_to_rownames(merged_df, "Row.names")
@@ -77,38 +80,89 @@ merged_df <- column_to_rownames(merged_df, "Row.names")
 gene_id <- rownames(merged_df)
 
 # subset genes that have a cpm of greater than one, in more than 50% of the samples
-keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
-print(summary(keepTheseGenes))
+#keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
+#print(summary(keepTheseGenes))
+
+
+
+# top x% of samples
+num_genes <- nrow(merged_df)
+top_threshold <- ceiling(num_genes * 0.50)
+
+# min required samples
+num_samples <- ncol(merged_df)
+min_required_samples <- ceiling(num_samples * 0.10)
+
+
+
+# Extract the gene names and data columns
+gene_names <- rownames(merged_df)
+data_columns <- merged_df[, 2:ncol(merged_df)]
+
+# Initialise an empty data frame
+results_df <- data.frame(gene_id = gene_names)
+
+# Iterate through each data column and perform the test
+for (col_id in seq_along(data_columns)) {
+  # Get the column name and the data
+  col_name <- colnames(data_columns)[col_id]
+  col_data <- data_columns[, col_id]
+  
+  # Sort the data and mark genes within the top_threshold rows as TRUE
+  sorted_indices <- order(col_data, decreasing = TRUE)
+  top_indices <- sorted_indices[1:top_threshold]
+  
+  # Create a logical vector for gene presence in top_threshold
+  gene_presence <- rep(FALSE, nrow(merged_df))
+  gene_presence[top_indices] <- TRUE
+  
+  # Add to the results data frame
+  results_df <- cbind(results_df, gene_presence)
+}
+
+# Rename columns 
+colnames(results_df) <- c("gene_id", colnames(data_columns))
+
+
+# Calculate the number of TRUE values for each gene across columns
+gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
+failed_genes <- gene_counts < min_required_samples
+print(summary(failed_genes))
+
+BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_genes]))
+
 
 # add gene ids back into df
-merged_df <- cbind(gene_id, merged_df)
-
-removedGenes <- merged_df$gene_id[!keepTheseGenes]
-removedGenes <- as.data.frame(removedGenes)
-colnames(removedGenes)[1] <- "gene_id"
-
-merged_df <- merged_df[keepTheseGenes, ]
-
-merged_df <- merged_df[, -1]
-
-
+#merged_df <- cbind(gene_id, merged_df)
+#
+#removedGenes <- merged_df$gene_id[!keepTheseGenes]
+#removedGenes <- as.data.frame(removedGenes)
+#colnames(removedGenes)[1] <- "gene_id"
+#
+#merged_df <- merged_df[keepTheseGenes, ]
+#
+#merged_df <- merged_df[, -1]
 
 
 
+
+#### Differential expression analysis ####
+
+BRCA_data <- BRCA_data[, -1]
 
 # Select the columns that start with "TCGA"
-cols <- grep("^TCGA", colnames(merged_df))
+cols <- grep("^TCGA", colnames(BRCA_data))
 
 # Assign the unstranded columns to the cancer group
-cancer <- colnames(merged_df)[cols]
+cancer <- colnames(BRCA_data)[cols]
 
 # Assign the rest of the columns to the healty group
-benign <- setdiff(colnames(merged_df), cancer)
+benign <- setdiff(colnames(BRCA_data), cancer)
 
 # Create the group variable
 group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
 
-data <- DGEList(counts = merged_df, group = group)
+data <- DGEList(counts = BRCA_data, group = group)
 
 design <- model.matrix(~group)
 
@@ -161,7 +215,7 @@ ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted 
 
 
 
-
+#### Convert to Gene IDs and get interaction data ####
 
 
 data <- subset(dif_exp, select = c("gene_id", "logFC"))
@@ -189,7 +243,6 @@ uniprot_data <- subset(uniprot_data, select = c("external_gene_name", "logFC"))
 missing_genes <- anti_join(data, uniprot_id, by = "gene_id")
 
 #write.table(uniprot_data$external_gene_name, "~/Desktop/gene_list.txt", quote = F, row.names = F, col.names = F)
-
 
 
 
