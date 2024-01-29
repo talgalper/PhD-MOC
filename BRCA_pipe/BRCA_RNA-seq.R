@@ -6,9 +6,14 @@ library(ggplot2)
 library(reshape2)
 library(TCGAbiolinks)
 library(SummarizedExperiment)
-library(tidyverse)
+library(dplyr) #need to install tidy packages separately because of biomart thing
+library(tidyr)
+#library(tidyverse)
 library(GEOquery)
 library(RobustRankAggreg)
+library(progress)
+library(rDGIdb)
+
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
@@ -148,8 +153,6 @@ BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_gene
 
 #### Differential expression analysis ####
 
-BRCA_data <- BRCA_data[, -1]
-
 # Select the columns that start with "TCGA"
 cols <- grep("^TCGA", colnames(BRCA_data))
 
@@ -221,32 +224,33 @@ ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted 
 data <- subset(dif_exp, select = c("gene_id", "logFC"))
 
 # convert to gene symbol
-uniprot_id <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+gene_id <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
                     filters = "ensembl_gene_id", 
                     values = data$gene_id, 
                     mart = ensembl)
 
 # remove empty rows
-uniprot_id <- subset(uniprot_id, external_gene_name != "")
+gene_id <- subset(gene_id, external_gene_name != "")
 
 # check for duplicate uniprot ids
-uniprot_id <- distinct(uniprot_id)
+gene_id <- distinct(gene_id)
 
 # merge back with original data
-colnames(uniprot_id)[1] <- "gene_id"
+colnames(gene_id)[1] <- "gene_id"
 
-uniprot_data <- merge(uniprot_id, data, by = "gene_id")
+gene_data <- merge(gene_id, data, by = "gene_id")
 
-uniprot_data <- subset(uniprot_data, select = c("external_gene_name", "logFC"))
+gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
 
 # check to see if genes that at all genes were converted at least once
-missing_genes <- anti_join(data, uniprot_id, by = "gene_id")
+missing_genes <- anti_join(data, gene_id, by = "gene_id")
 
-#write.table(uniprot_data$external_gene_name, "~/Desktop/gene_list.txt", quote = F, row.names = F, col.names = F)
+write.table(gene_data$external_gene_name, "intermediate/gene_list.txt", quote = F, row.names = F, col.names = F)
 
 
+#### get interaction data ####
 
-string_edge_data <- read.table("STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+string_edge_data <- read.table("intermediate/STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
 ppi_list <- subset(string_edge_data, select = c("name", "stringdb..score"))
 ppi_list <- ppi_list %>% 
   separate(name, sep = " ", into = c("node_1", "del", "node_2"))
@@ -254,7 +258,7 @@ ppi_list <- subset(ppi_list, select = c("node_1", "node_2", "stringdb..score"))
 ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
 ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
 
-string_node_data <- read.table("STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
+string_node_data <- read.table("intermediate/STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
 node_list <- subset(string_node_data, select = c("name", "query.term"))
 node_list$name <- gsub(".*.\\.", "", node_list$name)
 ppi_list$original_order <- seq_len(nrow(ppi_list))
@@ -265,17 +269,7 @@ merged_df <- merged_df[order(merged_df$original_order), ]
 final_df <- merged_df[, c("query.term.x", "query.term.y", "stringdb..score")]
 colnames(final_df) <- c("node_1", "node_2", "score")
 
-#write.csv(final_df, "no_gepia/interaction_score.csv")
-
-
-# create gene_id uniprot_id ref list.
-ref_list <- getBM(attributes = c("external_gene_name","uniprot_gn_id"),
-                  filters = "external_gene_name", 
-                  values = node_list$query.term, 
-                  mart = ensembl)
-
-
-save(final_df, uniprot_data, file = "RData/PCSF_input.RData")
+save(final_df, gene_data, file = "RData/PCSF_input.RData")
 
 
 # set seed for reproducibility 
@@ -285,7 +279,7 @@ set.seed(1234)
 ppi <- construct_interactome(final_df)
 
 # set terminals
-terminals <- setNames(as.numeric(uniprot_data$logFC), uniprot_data$external_gene_name)
+terminals <- setNames(as.numeric(gene_data$logFC), gene_data$external_gene_name)
 
 # run PCSF with random noise
 
@@ -297,6 +291,7 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
+save(subnet, file = "RData/PCSF_subnet.RData")
 
 
 
@@ -337,8 +332,11 @@ af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
 # merge PCSF data with AF
 PCSF_results <- merge(PCSF_master, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
 
+write.csv(PCSF_results, "intermediate/PCSF_druggability.csv")
+
+
 # run citation scoring tool and read in
-citation_scores <- read.csv("citation_scores.csv")
+citation_scores <- read.csv("intermediate/citation_scores.csv")
 
 PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
 PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
@@ -350,6 +348,511 @@ rownames(PCSF_results) <- NULL
 filtered_results <- PCSF_results %>%
   group_by(external_gene_name) %>%
   filter(druggability == max(druggability))
+
+write.csv(filtered_results, "intermediate/PCSF_master_unique.csv")
+
+
+
+#### PocketMiner data ####
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
+
+
+#### Rank sensitivity ####
+PCSF_master <- read.csv("intermediate/PCSF_master_unique.csv", row.names = 1)
+PCSF_master <- merge(PCSF_master, pocketminer_data, by = "ID")
+
+betweeness_norm <- (PCSF_master$betweenness - min(PCSF_master$betweenness)) / (max(PCSF_master$betweenness) - min(PCSF_master$betweenness))
+
+centrality_norm <- (PCSF_master$degree_centrality - min(PCSF_master$degree_centrality)) / (max(PCSF_master$degree_centrality) - min(PCSF_master$degree_centrality))
+
+# log transformation
+citation_norm <- log(PCSF_master$MeSH_count + 1)
+citation_norm <- (citation_norm - min(citation_norm)) / (max(citation_norm) - min(citation_norm))
+
+
+
+
+# Define the number of weight values (genes in top x) to test (including 0)
+# i.e. 0, 0.1, 0.2, 0.3, ..., 1
+num_weights <- 11
+
+# Create weight value sequences that sum up to 1
+betweeness_w_values <- seq(0, 1, length.out = num_weights)
+citation_w_values <- seq(0, 1, length.out = num_weights)
+centrality_w_values <- seq(0, 1, length.out = num_weights)
+druggability_w_values <- seq(0, 1, length.out = num_weights)
+cryptic_pocket_w_values <- seq(0, 1, length.out = num_weights)
+
+
+# Calculate the total number of iterations a.k.a number of variables
+total_iterations <- num_weights ^ 5
+
+# Create a progress bar
+pb <- progress_bar$new(total = total_iterations)
+
+# Create an empty data frame with proper column names
+sensitivity_results <- data.frame(
+  betweeness_weight = numeric(),
+  citation_weight = numeric(),
+  centrality_weight = numeric(),
+  druggability_weight = numeric(),
+  cryptic_pocket_weight = numeric(),
+  top_genes = character(),
+  stringsAsFactors = FALSE
+)
+
+# Perform sensitivity test
+for (betweeness_w in betweeness_w_values) {
+  for (citation_w in citation_w_values) {
+    for (centrality_w in centrality_w_values) {
+      for (druggability_w in druggability_w_values) {
+          for (cryptic_pocket_w in cryptic_pocket_w_values) {
+              # Check if the weights sum up to 1
+              if (betweeness_w + citation_w + centrality_w + druggability_w + cryptic_pocket_w  == 1) {
+                # Combine scores using current weights
+                combined_score <- (betweeness_w * betweeness_norm) +
+                  (centrality_w * centrality_norm) +
+                  (druggability_w * PCSF_master$druggability) +
+                  (cryptic_pocket_w * PCSF_master$max_hit) -
+                  (citation_w * citation_norm)
+                
+                # Rank the genes based on the combined score
+                PCSF_master_ranked <- PCSF_master
+                PCSF_master_ranked$combined_score <- combined_score
+                PCSF_master_ranked <- PCSF_master_ranked[order(-PCSF_master_ranked$combined_score), ]
+                
+                # Select the top 10 genes
+                top_genes <- head(PCSF_master_ranked$external_gene_name, 10)
+                
+                # Add results to the sensitivity_results data frame
+                sensitivity_results <- rbind(sensitivity_results, list(
+                  betweeness_weight = betweeness_w,
+                  citation_weight = citation_w,
+                  centrality_weight = centrality_w,
+                  druggability_weight = druggability_w,
+                  cryptic_pocket_weight = cryptic_pocket_w,
+                  top_genes = paste(top_genes, collapse = ', ')
+                ))
+              }
+              
+              # Increment the progress bar
+              pb$tick()
+        }
+      }
+    }
+  }
+}
+
+
+# Split the "top_genes" column into a list of genes
+sensitivity_results$top_genes_list <- strsplit(sensitivity_results$top_genes, ', ')
+
+# Count the occurrences of each gene
+all_genes <- unlist(sensitivity_results$top_genes_list)
+all_genes_unique <- unique(all_genes)
+count <- sapply(all_genes_unique, function(g) sum(sapply(sensitivity_results$top_genes_list, function(lst) g %in% lst)))
+
+# Create an empty data frame to store gene counts
+gene_counts <- data.frame(
+  gene = all_genes_unique,
+  count = count,
+  stringsAsFactors = FALSE
+)
+
+# Sort the gene counts by count
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+
+# add scores when variable = 0
+counts_when_betweeness_0 <- sensitivity_results[
+  sensitivity_results$betweeness_weight == 0 &
+    rowSums(sensitivity_results[, c("citation_weight", "centrality_weight", "druggability_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_betweeness_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_betweeness_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_betweeness_0)
+
+
+counts_when_centrality_0 <- sensitivity_results[
+  sensitivity_results$centrality_weight == 0 &
+    rowSums(sensitivity_results[, c("citation_weight", "betweeness_weight", "druggability_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_centrality_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_centrality_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_centrality_0)
+
+
+counts_when_citation_0 <- sensitivity_results[
+  sensitivity_results$citation_weight == 0 &
+    rowSums(sensitivity_results[, c("betweeness_weight", "centrality_weight", "druggability_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_citation_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_citation_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_citation_0)
+
+
+counts_when_druggability_0 <- sensitivity_results[
+  sensitivity_results$druggability_weight == 0 &
+    rowSums(sensitivity_results[, c("citation_weight", "centrality_weight", "betweeness_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_druggability_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_druggability_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_druggability_0)
+
+
+counts_when_cryptic_pockets_0 <- sensitivity_results[
+  sensitivity_results$cryptic_pocket_weight == 0 &
+    rowSums(sensitivity_results[, c("citation_weight", "centrality_weight", "betweeness_weight", "druggability_weight")]) != 0, ]
+counts_when_cryptic_pockets_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_cryptic_pockets_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_cryptic_pockets_0)
+
+
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = gene_counts$gene, 
+                          mart = ensembl)
+
+final_gene_counts <- merge(gene_description, gene_counts, by.x = "external_gene_name", by.y = "gene")
+
+final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
+
+final_gene_counts$description <- gsub("\\s*\\[.*?\\]", "", final_gene_counts$description)
+
+rownames(final_gene_counts) <- NULL
+
+DGIdb <- queryDGIdb(final_gene_counts$external_gene_name)
+results <- byGene(DGIdb)
+results <- subset(results, select = c("Gene", "DistinctDrugCount"))
+final_gene_counts <- merge(final_gene_counts, results, by.x = "external_gene_name", by.y = "Gene")
+final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
+rownames(final_gene_counts) <- NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Druggability rank ####
+
+data <- read.csv("intermediate/PCSF_master_unique.csv", row.names = 1)
+rownames(data) <- NULL
+master <- merge(data, pocketminer_data, by = "ID")
+master <- subset(master, select = c("external_gene_name", "druggability", "struct_score", "max_hit"))
+
+# normalise pocketminer scores
+pocketminer_norm <- (master$max_hit - min(master$max_hit)) / 
+  (max(master$max_hit) - min(master$max_hit))
+
+# convert structure scores to decimal values from percentages
+structure_norm <- master$struct_score / 100
+
+
+
+# Define the number of weight values (genes in top x) to test (including 0)
+# i.e. 0, 0.1, 0.2, 0.3, ..., 1
+num_weights <- 11
+
+# Create weight value sequences that sum up to 1
+fpocket_w_values <- seq(0, 1, length.out = num_weights)
+pocketminer_w_values <- seq(0, 1, length.out = num_weights)
+structure_w_values <- seq(0, 1, length.out = num_weights)
+
+
+# Calculate the total number of iterations
+total_iterations <- num_weights ^ 3
+
+# Create a progress bar
+pb <- progress_bar$new(total = total_iterations)
+
+# Create an empty data frame with proper column names
+sensitivity_results <- data.frame(
+  fpocket_weight = numeric(),
+  pocketminer_weight = numeric(),
+  structure_weight = numeric(),
+  top_genes = character(),
+  stringsAsFactors = FALSE
+)
+
+# Perform sensitivity test
+for (fpocket_w in fpocket_w_values) {
+  for (pocketminer_w in pocketminer_w_values) {
+    for (structure_w in structure_w_values) {
+      # Check if the weights sum up to 1
+      if (fpocket_w + pocketminer_w + structure_w == 1) {
+        # Combine scores using current weights
+        combined_score <- fpocket_w * master$druggability +
+          pocketminer_w * pocketminer_norm +
+          structure_w * structure_norm
+        
+        # Rank the genes based on the combined score
+        master_ranked <- master
+        master_ranked$combined_score <- combined_score
+        master_ranked <- master_ranked[order(-master_ranked$combined_score), ]
+        
+        # Select the top 10 genes
+        top_genes <- head(master_ranked$external_gene_name, 10)
+        
+        # Add results to the sensitivity_results data frame
+        sensitivity_results <- rbind(sensitivity_results, list(
+          fpocket_weight = fpocket_w,
+          pocketminer_weight = pocketminer_w,
+          structure_weight = structure_w,
+          top_genes = paste(top_genes, collapse = ', ')
+        ))
+      }
+      
+      # Increment the progress bar
+      pb$tick()
+    }
+  }
+}
+
+# Split the "top_genes" column into a list of genes
+sensitivity_results$top_genes_list <- strsplit(sensitivity_results$top_genes, ', ')
+
+# Count the occurrences of each gene
+all_genes <- unlist(sensitivity_results$top_genes_list)
+all_genes_unique <- unique(all_genes)
+count <- sapply(all_genes_unique, function(g) sum(sapply(sensitivity_results$top_genes_list, function(lst) g %in% lst)))
+
+# Create an empty data frame to store gene counts
+gene_counts <- data.frame(
+  gene = all_genes_unique,
+  count = count,
+  stringsAsFactors = FALSE
+)
+
+# Sort the gene counts by count
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+counts_when_fpocket_0 <- sensitivity_results[
+  sensitivity_results$fpocket_weight == 0 &
+    rowSums(sensitivity_results[, c("fpocket_weight", "pocketminer_weight", "structure_weight")]) != 0, 
+]
+counts_when_fpocket_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_fpocket_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_fpocket_0)
+
+counts_when_pocketminer_0 <- sensitivity_results[
+  sensitivity_results$pocketminer_weight == 0 &
+    rowSums(sensitivity_results[, c("fpocket_weight", "fpocket_weight", "structure_weight")]) != 0, 
+]
+counts_when_pocketminer_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_pocketminer_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_pocketminer_0)
+
+counts_when_structure_0 <- sensitivity_results[
+  sensitivity_results$structure_weight == 0 &
+    rowSums(sensitivity_results[, c("fpocket_weight", "pocketminer_weight", "structure_weight")]) != 0, 
+]
+counts_when_structure_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_structure_0$top_genes_list, function(lst) g %in% lst)))
+
+final_gene_counts <- cbind(gene_counts, counts_when_structure_0)
+
+
+
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = final_gene_counts$gene, 
+                          mart = ensembl)
+
+final_gene_counts <- merge(gene_description, final_gene_counts, by.x = "external_gene_name", by.y = "gene")
+
+final_gene_counts$description <- gsub("\\s*\\[.*?\\]", "", final_gene_counts$description)
+
+
+DGIdb <- queryDGIdb(final_gene_counts$external_gene_name)
+results <- byGene(DGIdb)
+results <- subset(results, select = c("Gene", "DistinctDrugCount"))
+final_gene_counts <- merge(final_gene_counts, results, by.x = "external_gene_name", by.y = "Gene")
+final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
+rownames(final_gene_counts) <- NULL
+
+
+
+
+
+
+
+
+cit_scores <- read.csv("intermediate/citation_scores.csv")
+master <- merge(master, cit_scores, by.x = "external_gene_name", by.y = "gene_id")
+
+citation_norm <- log(master$MeSH_count + 1)
+citation_norm <- (citation_norm - min(citation_norm)) / (max(citation_norm) - min(citation_norm))
+
+# Create weight value sequences that sum up to 1
+fpocket_w_values <- seq(0, 1, length.out = num_weights)
+pocketminer_w_values <- seq(0, 1, length.out = num_weights)
+structure_w_values <- seq(0, 1, length.out = num_weights)
+citation_w_values <- seq(0, 1, length.out = num_weights)
+
+
+# Calculate the total number of iterations
+total_iterations <- num_weights ^ 4
+
+# Create a progress bar
+pb <- progress_bar$new(total = total_iterations)
+
+# Create an empty data frame with proper column names
+sensitivity_results <- data.frame(
+  fpocket_weight = numeric(),
+  pocketminer_weight = numeric(),
+  structure_weight = numeric(),
+  citation_weight = numeric(),
+  top_genes = character(),
+  stringsAsFactors = FALSE
+)
+
+# Perform sensitivity test
+for (fpocket_w in fpocket_w_values) {
+  for (pocketminer_w in pocketminer_w_values) {
+    for (structure_w in structure_w_values) {
+      for (citation_w in citation_w_values) {
+        # Check if the weights sum up to 1
+        if (fpocket_w + pocketminer_w + structure_w + citation_w == 1) {
+          # Combine scores using current weights
+          combined_score <- fpocket_w * master$druggability +
+            pocketminer_w * pocketminer_norm +
+            structure_w * structure_norm -
+            citation_w * citation_norm
+          
+          
+          # Rank the genes based on the combined score
+          master_ranked <- master
+          master_ranked$combined_score <- combined_score
+          master_ranked <- master_ranked[order(-master_ranked$combined_score), ]
+          
+          # Select the top 10 genes
+          top_genes <- head(master_ranked$external_gene_name, 10)
+          
+          # Add results to the sensitivity_results data frame
+          sensitivity_results <- rbind(sensitivity_results, list(
+            fpocket_weight = fpocket_w,
+            pocketminer_weight = pocketminer_w,
+            structure_weight = structure_w,
+            citation_weight = citation_w,
+            top_genes = paste(top_genes, collapse = ', ')
+          ))
+        }
+        
+        # Increment the progress bar
+        pb$tick()
+      }
+    }
+  }
+}
+
+# Split the "top_genes" column into a list of genes
+sensitivity_results$top_genes_list <- strsplit(sensitivity_results$top_genes, ', ')
+
+# Count the occurrences of each gene
+all_genes <- unlist(sensitivity_results$top_genes_list)
+all_genes_unique <- unique(all_genes)
+count <- sapply(all_genes_unique, function(g) sum(sapply(sensitivity_results$top_genes_list, function(lst) g %in% lst)))
+
+# Create an empty data frame to store gene counts
+gene_counts <- data.frame(
+  gene = all_genes_unique,
+  count = count,
+  stringsAsFactors = FALSE
+)
+
+# Sort the gene counts by count
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+
+
+counts_when_fpocket_0 <- sensitivity_results[
+  sensitivity_results$fpocket_weight == 0 &
+    rowSums(sensitivity_results[, c("citation_weight", "pocketminer_weight", "structure_weight")]) != 0, 
+]
+counts_when_fpocket_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_fpocket_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_fpocket_0)
+
+
+counts_when_pocketminer_0 <- sensitivity_results[
+  sensitivity_results$pocketminer_weight == 0 &
+    rowSums(sensitivity_results[, c("fpocket_weight", "citation_weight", "structure_weight")]) != 0, 
+]
+counts_when_pocketminer_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_pocketminer_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_pocketminer_0)
+
+
+counts_when_structure_0 <- sensitivity_results[
+  sensitivity_results$structure_weight == 0 &
+    rowSums(sensitivity_results[, c("fpocket_weight", "pocketminer_weight", "citation_weight")]) != 0, 
+]
+counts_when_structure_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_structure_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts <- cbind(gene_counts, counts_when_structure_0)
+
+
+counts_when_citation_0 <- sensitivity_results[
+  sensitivity_results$citation_weight == 0 &
+    rowSums(sensitivity_results[, c("fpocket_weight", "pocketminer_weight", "structure_weight")]) != 0, 
+]
+counts_when_citation_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_citation_0$top_genes_list, function(lst) g %in% lst)))
+
+gene_counts_citation <- cbind(gene_counts, counts_when_citation_0)
+
+
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = gene_counts_citation$gene, 
+                          mart = ensembl)
+
+gene_counts_citation <- merge(gene_description, gene_counts_citation, by.x = "external_gene_name", by.y = "gene")
+
+gene_counts_citation$description <- gsub("\\s*\\[.*?\\]", "", gene_counts_citation$description)
+
+
+DGIdb <- queryDGIdb(gene_counts_citation$external_gene_name)
+results <- byGene(DGIdb)
+results <- subset(results, select = c("Gene", "DistinctDrugCount"))
+gene_counts_citation <- merge(gene_counts_citation, results, by.x = "external_gene_name", by.y = "Gene")
+gene_counts_citation <- gene_counts_citation[order(-gene_counts_citation$count), ]
+rownames(gene_counts_citation) <- NULL
+
+
+
+save(final_gene_counts, gene_counts_citation, file = "RData/druggability_rank.RData")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Robust Rank Agrregation
