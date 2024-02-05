@@ -325,6 +325,8 @@ missing_genes <- missing_genes$external_gene_name
 
 PCSF_master <- merge(gn_to_uniprot, df, by.x = "external_gene_name", by.y = "gene_id")
 
+PCSF_master <- merge(PCSF_master, gene_data, by = "external_gene_name")
+
 
 # load Fpocket data
 af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
