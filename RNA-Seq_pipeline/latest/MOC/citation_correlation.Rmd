@@ -30,7 +30,7 @@ hist(centrality_norm)
 
 ```{r}
 # pearson correlation
-centralitry_cor_result <- cor.test(centrality_norm, citation_norm)
+centralitry_cor_result <- cor.test(centrality_norm, citation_norm, method = "spearman")
 centralitry_cor_result
 ```
 
@@ -40,7 +40,7 @@ hist(PCSF_master$betweenness)
 betweenness_norm <- log(PCSF_master$betweenness + 1)
 hist(betweenness_norm)
 
-betweenness_cor_result <- cor.test(betweenness_norm, citation_norm)
+betweenness_cor_result <- cor.test(betweenness_norm, citation_norm, method = "spearman")
 betweenness_cor_result
 ```
 
