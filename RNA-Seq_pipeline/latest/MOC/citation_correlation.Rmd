@@ -1,0 +1,47 @@
+---
+title: "Correlation Test"
+output: html_document
+date: "2024-02-05"
+---
+
+```{r}
+PCSF_master <- read.csv("results/MOC_PCSF_master_unique.csv", row.names = 1)
+citation_data <- read.csv("intermediate/citation_scores_3.0.csv")
+```
+
+```{r}
+# inspect data
+hist(PCSF_master$degree_centrality)
+hist(citation_data$MeSH_count)
+
+plot(PCSF_master$degree_centrality, citation_data$MeSH_count, 
+     xlab = "Degree Centrality", ylab = "MeSH Count",
+     main = "Scatter Plot of Degree Centrality vs. MeSH Citation Count")
+```
+
+```{r}
+# normalise data
+citation_norm <- log(citation_data$MeSH_count + 1)
+hist(citation_norm)
+
+centrality_norm <- log(PCSF_master$degree_centrality + 1)
+hist(centrality_norm)
+```
+
+```{r}
+# pearson correlation
+centralitry_cor_result <- cor.test(centrality_norm, citation_norm)
+centralitry_cor_result
+```
+
+```{r}
+# run on betweenness data
+hist(PCSF_master$betweenness)
+betweenness_norm <- log(PCSF_master$betweenness + 1)
+hist(betweenness_norm)
+
+betweenness_cor_result <- cor.test(betweenness_norm, citation_norm)
+betweenness_cor_result
+```
+
+
