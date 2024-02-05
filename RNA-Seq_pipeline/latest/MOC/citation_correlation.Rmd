@@ -26,6 +26,10 @@ hist(citation_norm)
 
 centrality_norm <- log(PCSF_master$degree_centrality + 1)
 hist(centrality_norm)
+
+plot(centrality_norm, citation_norm, 
+     xlab = "Degree Centrality", ylab = "MeSH Count",
+     main = "Scatter Plot of Degree Centrality vs. MeSH Citation Count")
 ```
 
 ```{r}
