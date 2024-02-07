@@ -8,7 +8,7 @@ library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(dplyr) #need to install tidy packages separately because of biomart thing
 library(tidyr)
-#library(tidyverse)
+library(tidyverse)
 library(GEOquery)
 library(RobustRankAggreg)
 library(progress)
@@ -73,9 +73,11 @@ rownames(GTEx_data) <- gsub("\\.\\d+", "", rownames(GTEx_data))
 
 save(LumB_unstranded, GTEx_data, file = "RData/BRCA_DE_data.RData")
 
+barplot(colSums(LumB_unstranded),
+        xaxt = "n")
 
-
-
+barplot(colSums(GTEx_data),
+        xaxt = "n")
 
 #### Remove low activity genes ####
 merged_df <- merge(LumB_unstranded, GTEx_data, by = "row.names")
