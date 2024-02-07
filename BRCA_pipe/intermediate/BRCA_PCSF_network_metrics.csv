@@ -1,800 +1,802 @@
-"","gene_id","cluster","betweenness","degree_centrality"
-"57","BRCA1","3",22167,26
-"362","H2BC13","3",7073,20
-"258","ESR1","3",55583,16
-"296","FN1","3",27713,16
-"316","GATA3","3",40579,15
-"368","H2BC6","3",22518,15
-"359","H2AX","3",23216,14
-"691","SMC1B","3",27597,14
-"79","CALML5","3",19329,13
-"85","CBX2","3",32565,13
-"364","H2BC15","3",4413,13
-"367","H2BC5","3",31489,13
-"543","NEIL3","3",13872,13
-"599","POLR2F","3",45589,13
-"354","H2AC14","3",17681,12
-"361","H2BC12","3",136,12
-"377","H4C11","3",14396,12
-"382","H4C8","3",11017,12
-"452","KIF26B","3",7340,12
-"455","KIF5C","3",2502,12
-"697","SOX2","3",10591,12
-"86","CBX4","3",1,11
-"171","CLTC","3",12671,11
-"264","EZH2","3",5027,11
-"265","EZR","3",9043,11
-"332","GNG13","3",9495,11
-"360","H2BC11","3",22319,11
-"378","H4C12","3",296,11
-"380","H4C15","3",1183,11
-"381","H4C4","3",52,11
-"592","PLK1","3",22076,11
-"104","CCR4","3",6818,10
-"107","CCT3","3",7453,10
-"129","CDK1","3",4953,10
-"142","CENPI","3",3203,10
-"253","ERBB2","3",15327,10
-"363","H2BC14","3",2317,10
-"447","KIF18B","3",2856,10
-"463","KRT18","3",18316,10
-"125","CDH1","3",12346,9
-"144","CENPL","3",0,9
-"145","CENPM","3",2242,9
-"365","H2BC17","3",2006,9
-"369","H2BC9","3",37867,9
-"408","IGKV2D-40","3",5587,9
-"449","KIF20A","3",8473,9
-"510","MED1","3",2111,9
-"583","PCNA","3",6044,9
-"664","SDC1","3",3707,9
-"95","CCNB1","3",32128,8
-"141","CENPH","3",1193,8
-"143","CENPK","3",0,8
-"146","CENPU","3",641,8
-"297","FOXA1","3",8741,8
-"341","GRIK3","3",6217,8
-"366","H2BC4","3",3084,8
-"562","OIP5","3",625,8
-"61","BRIP1","3",4490,7
-"64","BUB1B","3",1345,7
-"94","CCNA2","3",25707,7
-"98","CCNE1","3",2343,7
-"231","E2F1","3",4164,7
-"313","GABRR3","36",1,7
-"334","GNGT1","3",9990,7
-"357","H2AC6","3",26555,7
-"444","KIF14","3",7609,7
-"459","KNL1","3",0,7
-"464","KRT19","3",0,7
-"465","KRT24","3",0,7
-"466","KRT28","3",0,7
-"467","KRT31","3",197,7
-"468","KRT32","3",0,7
-"469","KRT33A","3",197,7
-"470","KRT37","3",197,7
-"504","MARVELD2","3",3171,7
-"509","MCM4","3",12169,7
-"568","ORC1","3",47627,7
-"574","PARP1","3",12969,7
-"597","POLE2","3",14726,7
-"604","POTEF","3",1249,7
-"629","RAD51AP1","3",2629,7
-"710","STAT1","3",8205,7
-"756","TOP2A","3",6519,7
-"788","WDR76","3",3472,7
-"18","ANK1","3",4383,6
-"33","ATAD2","3",625,6
-"39","AURKA","3",2136,6
-"127","CDH2","3",6273,6
-"138","CENPA","3",3915,6
-"180","COL1A2","3",7138,6
-"207","DCAF12L1","3",22,6
-"209","DCAF4L2","3",1,6
-"210","DCAF8L2","3",6579,6
-"300","FOXM1","3",4065,6
-"310","GABRD","36",11,6
-"312","GABRQ","36",5,6
-"333","GNG4","3",673,6
-"358","H2AC8","3",8664,6
-"443","KIF11","3",3107,6
-"461","KPNA2","3",2686,6
-"561","OCLN","3",6498,6
-"587","PIK3CG","3",8687,6
-"648","RMI1","3",630,6
-"649","RMI2","3",1374,6
-"696","SOX11","3",571,6
-"717","SYT1","3",3734,6
-"733","TERT","3",2446,6
-"742","TIMELESS","3",17205,6
-"785","VWC2L","3",693,6
-"13","AGR2","3",4761,5
-"20","AP1M2","3",1,5
-"21","AP1S3","3",3718,5
-"58","BRCA2","3",966,5
-"96","CCNB2","3",2174,5
-"106","CCR8","3",1386,5
-"113","CD3G","3",2841,5
-"123","CDCA8","3",625,5
-"170","CLSPN","3",2088,5
-"196","CXCL10","3",7739,5
-"206","DCAF10","3",4960,5
-"230","DTL","3",8698,5
-"263","EYA1","3",6531,5
-"283","FCGR3A","3",8437,5
-"292","FGL1","3",2517,5
-"294","FLRT3","3",4954,5
-"305","FZD2","3",1249,5
-"331","GNAT3","3",4318,5
-"370","H3C10","3",8984,5
-"393","HSPA2","3",3064,5
-"404","IGF1R","3",1952,5
-"441","KCNQ5","3",1869,5
-"453","KIF2C","3",450,5
-"456","KIFC1","3",723,5
-"507","MCM10","3",8023,5
-"517","MMP9","3",3543,5
-"524","MUC1","3",8911,5
-"526","MUC5B","3",2873,5
-"577","PAX2","3",5449,5
-"586","PIERCE1","3",1203,5
-"605","PPP2R2C","3",4348,5
-"626","RACGAP1","3",7733,5
-"628","RAD51","3",3849,5
-"636","RECQL4","3",0,5
-"638","RET","3",2409,5
-"644","RIBC2","3",1349,5
-"730","TEKT1","3",0,5
-"731","TEKT4","3",964,5
-"761","TRIM36","3",2494,5
-"792","XRCC2","3",0,5
-"15","ALB","3",1646,4
-"19","ANLN","3",1249,4
-"30","ASPM","3",14052,4
-"49","BMP7","3",3112,4
-"52","BPIFA1","13",0,4
-"53","BPIFA2","13",0,4
-"56","BPIFB6","13",1,4
-"63","BUB1","3",1249,4
-"80","CAMP","3",3145,4
-"92","CCL5","3",11655,4
-"97","CCND1","3",992,4
-"108","CD1A","3",1540,4
-"114","CD80","3",3112,4
-"130","CDK5","3",1871,4
-"139","CENPE","3",1249,4
-"150","CFAP77","3",816,4
-"155","CHRNA1","22",3,4
-"178","COL11A1","3",1245,4
-"182","COL2A1","3",0,4
-"197","CXCL11","3",2700,4
-"198","CXCL13","3",1323,4
-"199","CXCL17","3",6562,4
-"236","ECT2","3",374,4
-"244","ENKUR","3",2952,4
-"245","ENTHD1","3",0,4
-"250","EPN3","3",0,4
-"254","ERBB3","3",6480,4
-"262","EXO1","3",0,4
-"289","FGF4","3",0,4
-"307","GABRA3","36",5,4
-"374","H3C7","3",0,4
-"375","H3C8","3",2445,4
-"386","HJURP","3",1247,4
-"436","KCNK15","49",0,4
-"437","KCNK16","49",1,4
-"438","KCNK6","49",0,4
-"445","KIF15","3",7,4
-"446","KIF18A","3",0,4
-"448","KIF1A","3",3211,4
-"450","KIF20B","3",0,4
-"485","LIN9","3",1872,4
-"491","MAD2L1","3",497,4
-"531","MYCNOS","3",2492,4
-"588","PKMYT1","3",16433,4
-"593","PLK4","3",1794,4
-"608","PROC","27",3,4
-"668","SELL","3",2164,4
-"669","SERPINA1","3",755,4
-"676","SHH","3",2493,4
-"700","SPAG5","3",3764,4
-"744","TJP3","3",646,4
-"751","TNFRSF9","3",9609,4
-"757","TPD52","3",625,4
-"776","UHRF1","3",1345,4
-"784","VAV3","3",0,4
-"17","AMBP","3",96,3
-"27","ASF1B","3",94,3
-"40","AURKB","3",1878,3
-"43","BCRP2","3",0,3
-"46","BIRC5","3",625,3
-"47","BLM","3",240,3
-"54","BPIFB1","13",0,3
-"55","BPIFB2","13",0,3
-"73","CACNA1B","3",4374,3
-"75","CACNG4","3",1869,3
-"90","CCL3L3","3",1483,3
-"99","CCNE2","3",596,3
-"101","CCNO","3",1248,3
-"103","CCR3","3",0,3
-"111","CD3D","3",0,3
-"112","CD3E","3",72,3
-"115","CDC20","3",1555,3
-"116","CDC20B","3",1109,3
-"140","CENPF","3",0,3
-"147","CEP55","3",700,3
-"153","CHEK1","3",0,3
-"157","CHRNA9","22",5,3
-"167","CLDN25","3",0,3
-"168","CLDN6","3",0,3
-"179","COL1A1","3",0,3
-"183","COL3A1","3",0,3
-"185","COLEC10","27",0,3
-"200","CXCL9","3",0,3
-"208","DCAF13","3",0,3
-"212","DCLRE1A","3",705,3
-"220","DLGAP5","3",1032,3
-"233","E2F7","3",1249,3
-"237","EEF1A2","3",3109,3
-"251","EPO","3",1112,3
-"266","F12","27",0,3
-"267","F2RL2","3",0,3
-"268","F7","27",0,3
-"275","FANCI","3",240,3
-"276","FASLG","3",4339,3
-"282","FCGR1A","3",340,3
-"285","FEN1","3",625,3
-"288","FGF3","3",5535,3
-"290","FGF5","3",0,3
-"298","FOXA2","3",1248,3
-"306","GABRA1","36",0,3
-"308","GABRB1","36",0,3
-"311","GABRG2","36",0,3
-"319","GDNF","3",625,3
-"325","GINS4","3",7600,3
-"328","GJB2","3",1248,3
-"340","GRIA2","3",625,3
-"352","H2AC11","3",0,3
-"355","H2AC16","3",0,3
-"371","H3C12","3",0,3
-"387","HMMR","3",4343,3
-"401","IFNL1","3",1248,3
-"423","ISG15","3",1871,3
-"433","KCNJ3","3",7,3
-"435","KCNK1","49",0,3
-"439","KCNK9","49",0,3
-"440","KCNQ2","3",743,3
-"451","KIF23","3",0,3
-"454","KIF4A","3",9840,3
-"472","KRT8","3",625,3
-"477","LGALS9B","3",10504,3
-"512","MISP","3",171,3
-"513","MKI67","3",0,3
-"527","MUC6","3",689,3
-"532","MYO3B","3",1249,3
-"558","OAS2","3",1393,3
-"579","PBK","3",10972,3
-"580","PBX1","3",1249,3
-"602","POSTN","3",625,3
-"615","PTTG1","3",932,3
-"647","RIMS2","3",1871,3
-"650","ROBO2","3",3111,3
-"692","SMC4","3",634,3
-"707","SPTBN2","3",1439,3
-"722","TACC3","3",1906,3
-"736","TFF1","3",1249,3
-"743","TINCR","3",1871,3
-"745","TK1","3",1256,3
-"750","TNFRSF18","3",1249,3
-"760","TRDV1","3",741,3
-"764","TRPA1","3",1871,3
-"766","TTK","3",625,3
-"767","TUBA3D","3",1228,3
-"772","U4","3",1249,3
-"773","UBE2C","3",628,3
-"794","ZFP42","3",0,3
-"1","5S_rRNA","1",0,2
-"14","AKAP5","3",1248,2
-"24","APOBR","11",0,2
-"25","APOF","11",0,2
-"26","APOO","11",0,2
-"28","ASIC2","3",625,2
-"32","ASZ1","3",625,2
-"34","ATP12A","3",625,2
-"51","BMPR1B","3",1248,2
-"62","BTLA","3",0,2
-"65","C15orf48","15",1,2
-"67","C4A","3",625,2
-"69","CA12","16",0,2
-"70","CA14","16",0,2
-"72","CA9","16",0,2
-"74","CACNG1","3",616,2
-"76","CACNG5","3",0,2
-"77","CACNG6","3",48,2
-"83","CASP14","3",625,2
-"87","CCL1","3",625,2
-"88","CCL11","3",0,2
-"89","CCL17","3",0,2
-"91","CCL4L2","3",0,2
-"93","CCL7","3",0,2
-"102","CCNP","3",1857,2
-"105","CCR5","3",628,2
-"109","CD2","3",77,2
-"118","CDC25C","3",625,2
-"119","CDC45","3",36,2
-"120","CDC6","3",625,2
-"121","CDCA2","3",768,2
-"126","CDH18","3",0,2
-"128","CDH7","3",624,2
-"134","CDT1","3",0,2
-"156","CHRNA6","22",0,2
-"159","CHRNB3","22",0,2
-"166","CKS2","3",625,2
-"174","CNIH2","3",81,2
-"176","CNTNAP2","3",625,2
-"181","COL22A1","26",1,2
-"186","COMP","3",625,2
-"191","CRB3","3",625,2
-"193","CST4","3",625,2
-"194","CTNNA2","3",1,2
-"195","CTNND2","3",1625,2
-"204","CYP2A6","30",3,2
-"205","CYP2B7P","30",4,2
-"224","DNAJC5B","3",625,2
-"225","DPYSL5","3",625,2
-"228","DSN1","3",41,2
-"229","DSP","3",625,2
-"235","ECM1","3",625,2
-"238","EFNA2","33",0,2
-"239","EIF4E1B","29",1,2
-"243","EME1","3",0,2
-"246","EPCAM","3",900,2
-"247","EPGN","3",0,2
-"248","EPHA10","33",0,2
-"249","EPHA8","33",0,2
-"252","EPPK1","3",0,2
-"271","FAM83D","3",60,2
-"279","FBXO45","3",3105,2
-"280","FBXO5","3",837,2
-"287","FGB","3",124,2
-"309","GABRB3","36",0,2
-"317","GATA4","3",625,2
-"320","GFRA1","3",0,2
-"323","GINS1","3",0,2
-"324","GINS2","3",0,2
-"327","GJA3","3",0,2
-"330","GJD3","3",0,2
-"350","H1-2","3",625,2
-"353","H2AC13","3",0,2
-"356","H2AC17","3",0,2
-"372","H3C14","3",833,2
-"373","H3C6","3",0,2
-"376","H3Y1","3",0,2
-"383","H4C9","3",0,2
-"400","IFNB1","3",0,2
-"402","IFNL2","3",0,2
-"403","IFNL3","3",0,2
-"406","IGHV1-3","3",0,2
-"407","IGHV3-15","3",0,2
-"410","IKZF3","3",625,2
-"412","IL1B","3",22213,2
-"419","INSM1","3",625,2
-"429","KCNE4","3",1248,2
-"431","KCNH2","3",625,2
-"434","KCNJ6","3",0,2
-"442","KIAA0319","3",0,2
-"476","LEF1","3",3,2
-"478","LGALS9C","3",0,2
-"479","LGI1","3",1248,2
-"486","LMNB1","3",218,2
-"487","LMX1B","3",1869,2
-"488","LRP2","3",625,2
-"495","MAGEA11","3",625,2
-"497","MAGEA4","3",625,2
-"514","MMP1","3",0,2
-"515","MMP10","3",625,2
-"518","MRPL13","1",0,2
-"519","MRPS30","1",0,2
-"528","MX1","3",1987,2
-"537","NCAPG","3",542,2
-"538","NCAPG2","3",0,2
-"540","NDC80","3",570,2
-"546","NELL2","3",625,2
-"547","NHERF1","3",5211,2
-"548","NKX2-2","3",625,2
-"550","NLRP5","56",1,2
-"552","NOX5","3",625,2
-"553","NPNT","30",3,2
-"557","OAS1","3",166,2
-"559","OAS3","3",312,2
-"560","OASL","3",625,2
-"569","ORC6","3",0,2
-"578","PAX6","3",625,2
-"595","PMAIP1","3",625,2
-"596","PODXL2","3",640,2
-"603","POTEC","3",625,2
-"606","PRAME","3",625,2
-"607","PRLR","3",496,2
-"609","PRODH2","60",0,2
-"611","PSG9","3",625,2
-"613","PTK6","3",435,2
-"617","PYCR1","60",0,2
-"618","PYCR3","60",0,2
-"632","RALYL","3",1248,2
-"637","REPS2","3",0,2
-"639","RGS4","3",2865,2
-"640","RGS7","3",625,2
-"645","RIMBP3","3",625,2
-"651","RRM2","3",216,2
-"656","SAG","3",625,2
-"657","SAGE1","3",625,2
-"660","SCG3","3",625,2
-"662","SCN1A","3",118,2
-"674","SGO2","3",8,2
-"677","SHISA9","3",0,2
-"682","SKA2","3",1869,2
-"688","SLC7A11","3",625,2
-"690","SLIT1","3",3720,2
-"699","SPAG1","3",625,2
-"712","STMN1","47",1,2
-"714","SYCE3","3",0,2
-"723","TAS2R1","3",0,2
-"726","TCL1B","3",625,2
-"738","TFR2","3",625,2
-"740","TIGD3","3",625,2
-"755","TONSL","3",0,2
-"759","TPX2","3",2,2
-"768","TUBA3E","3",0,2
-"770","TUBAL3","3",0,2
-"771","TYRP1","3",625,2
-"777","UNC13A","3",2488,2
-"778","UNC5B","3",625,2
-"780","UPK1A","71",0,2
-"781","UPK1B","71",0,2
-"782","UPK3A","71",0,2
-"786","WDHD1","3",624,2
-"791","WT1","3",0,2
-"796","ZNF281","3",1248,2
-"2","ABAT","2",0,1
-"3","ABCA12","3",0,1
-"4","ACMSD","3",0,1
-"5","ACTL6B","3",0,1
-"6","ADAM2","4",0,1
-"7","ADAM7","3",0,1
-"8","ADCY1","3",0,1
-"9","ADGRB2","5",0,1
-"10","ADGRG7","6",0,1
-"11","AFF3","7",0,1
-"12","AFP","3",0,1
-"16","ALCAM","8",0,1
-"22","APLP1","9",0,1
-"23","APOBEC3B","10",0,1
-"29","ASIC5","3",0,1
-"31","ASPN","3",0,1
-"35","ATP1A4","3",0,1
-"36","ATP6V0A4","12",0,1
-"37","ATP6V0D2","12",0,1
-"38","AUNIP","3",0,1
-"41","AZIN1","3",0,1
-"42","BAMBI","3",0,1
-"44","BEX1","3",0,1
-"45","BIK","3",0,1
-"48","BLNK","3",0,1
-"50","BMP8A","3",0,1
-"59","BRINP2","14",0,1
-"60","BRINP3","14",0,1
-"66","C1orf127","3",0,1
-"68","C4B","3",0,1
-"71","CA2","17",0,1
-"78","CALCR","18",0,1
-"81","CAPSL","3",0,1
-"82","CARTPT","19",0,1
-"84","CASTOR2","20",0,1
-"100","CCNF","3",0,1
-"110","CD300LF","3",0,1
-"117","CDC25A","3",0,1
-"122","CDCA5","3",0,1
-"124","CDCP1","3",0,1
-"131","CDK5R1","3",0,1
-"132","CDK5R2","3",0,1
-"133","CDKN3","3",0,1
-"135","CEACAM5","3",0,1
-"136","CEACAM6","19",0,1
-"137","CELSR3","3",0,1
-"148","CERS6","21",0,1
-"149","CFAP221","3",0,1
-"151","CFAP90","3",0,1
-"152","CHAF1B","3",0,1
-"154","CHGA","3",0,1
-"158","CHRNB2","22",0,1
-"160","CIB3","23",0,1
-"161","CIP2A","3",0,1
-"162","CIT","3",0,1
-"163","CKAP2","3",0,1
-"164","CKMT1A","24",0,1
-"165","CKMT1B","24",0,1
-"169","CLEC4C","3",0,1
-"172","CNGA2","25",0,1
-"173","CNGA3","25",0,1
-"175","CNTN5","9",0,1
-"177","COL10A1","26",0,1
-"184","COL8A1","26",0,1
-"187","CORO2A","3",0,1
-"188","COX6C","15",0,1
-"189","COX7B2","15",0,1
-"190","CPLX2","28",0,1
-"192","CST1","3",0,1
-"201","CXCR3","3",0,1
-"202","CYFIP2","29",0,1
-"203","CYP2A13","30",0,1
-"211","DCD","3",0,1
-"213","DENND1B","31",0,1
-"214","DEPDC1","3",0,1
-"215","DHCR24","32",0,1
-"216","DHCR7","32",0,1
-"217","DIAPH3","3",0,1
-"218","DISP2","3",0,1
-"219","DISP3","3",0,1
-"221","DLX2","3",0,1
-"222","DMP1","3",0,1
-"223","DNAAF6","3",0,1
-"226","DQX1","3",0,1
-"227","DSCC1","3",0,1
-"232","E2F2","3",0,1
-"234","E2F8","3",0,1
-"240","ELAVL2","10",0,1
-"241","ELOVL2","34",0,1
-"242","ELP2","7",0,1
-"255","ERCC6L","3",0,1
-"256","ESCO2","3",0,1
-"257","ESPL1","3",0,1
-"259","ESRP1","3",0,1
-"260","ESRRG","3",0,1
-"261","EVPL","3",0,1
-"269","FAM167A","35",0,1
-"270","FAM83B","3",0,1
-"272","FAM83H","3",0,1
-"273","FANCA","3",0,1
-"274","FANCF","3",0,1
-"277","FBN2","3",0,1
-"278","FBXO43","3",0,1
-"281","FCAMR","3",0,1
-"284","FCRL4","3",0,1
-"286","FGA","3",0,1
-"291","FGG","3",0,1
-"293","FKBP4","3",0,1
-"295","FLT3","3",0,1
-"299","FOXA3","3",0,1
-"301","FOXP3","3",0,1
-"302","FPR3","3",0,1
-"303","FREM2","30",0,1
-"304","FSBP","3",0,1
-"314","GALNT6","37",0,1
-"315","GAS2L3","3",0,1
-"318","GATA5","3",0,1
-"321","GGH","38",0,1
-"322","GHSR","39",0,1
-"326","GIP","5",0,1
-"329","GJD2","3",0,1
-"335","GNL3L","3",0,1
-"336","GOLM1","3",0,1
-"337","GPR158","3",0,1
-"338","GRB14","3",0,1
-"339","GRHL2","3",0,1
-"342","GRM4","40",0,1
-"343","GRM8","40",0,1
-"344","GRP","41",0,1
-"345","GRPR","41",0,1
-"346","GSTA2","42",0,1
-"347","GSTA3","42",0,1
-"348","GTSE1","3",0,1
-"349","GZMA","3",0,1
-"351","H1-6","3",0,1
-"379","H4C14","3",0,1
-"384","HACD3","34",0,1
-"385","HELLS","3",0,1
-"388","HNF4G","3",0,1
-"389","HOOK1","3",0,1
-"390","HOXB1","3",0,1
-"391","HRH3","43",0,1
-"392","HSD17B6","44",0,1
-"394","HTR1D","45",0,1
-"395","HTR1E","45",0,1
-"396","HTR2C","39",0,1
-"397","IBSP","3",0,1
-"398","ICOS","3",0,1
-"399","IFIT1","3",0,1
-"405","IGF2BP1","3",0,1
-"409","IGSF5","3",0,1
-"411","IL19","46",0,1
-"413","IL20","46",0,1
-"414","IL21","3",0,1
-"415","IL21R","3",0,1
-"416","IL2RB","3",0,1
-"417","ILDR1","3",0,1
-"418","ILDR2","3",0,1
-"420","INTS7","3",0,1
-"421","IQGAP3","3",0,1
-"422","IRS4","3",0,1
-"424","ITGA11","3",0,1
-"425","JPT1","47",0,1
-"426","JPT2","47",0,1
-"427","KCNC1","48",0,1
-"428","KCNC2","48",0,1
-"430","KCNH1","3",0,1
-"432","KCNH6","3",0,1
-"457","KLF17","23",0,1
-"458","KLHL38","3",0,1
-"460","KNSTRN","3",0,1
-"462","KPNA7","3",0,1
-"471","KRT75","3",0,1
-"473","LACRT","3",0,1
-"474","LCN1","3",0,1
-"475","LDLRAD1","6",0,1
-"480","LHX2","50",0,1
-"481","LHX9","50",0,1
-"482","LILRA4","3",0,1
-"483","LILRB4","8",0,1
-"484","LIN28A","3",0,1
-"489","LRRC46","3",0,1
-"490","LYPD3","3",0,1
-"492","MAEL","51",0,1
-"493","MAGEA1","52",0,1
-"494","MAGEA10","3",0,1
-"496","MAGEA3","53",0,1
-"498","MAGEA6","53",0,1
-"499","MAGEB6","52",0,1
-"500","MAL2","3",0,1
-"501","MAP7","3",0,1
-"502","MAPK8IP2","3",0,1
-"503","MARCKSL1","3",0,1
-"505","MCHR1","54",0,1
-"506","MCHR2","54",0,1
-"508","MCM2","3",0,1
-"511","MELK","3",0,1
-"516","MMP11","3",0,1
-"520","MS4A1","3",0,1
-"521","MSI2","3",0,1
-"522","MSLN","3",0,1
-"523","MSMB","3",0,1
-"525","MUC2","3",0,1
-"529","MYBL1","3",0,1
-"530","MYBL2","3",0,1
-"533","MZB1","35",0,1
-"534","NAT1","55",0,1
-"535","NAT16","3",0,1
-"536","NAT2","55",0,1
-"539","NCAPH","3",0,1
-"541","NDST4","3",0,1
-"542","NDUFAF6","37",0,1
-"544","NEK2","3",0,1
-"545","NELL1","3",0,1
-"549","NLRP2","56",0,1
-"551","NOX1","3",0,1
-"554","NPY1R","57",0,1
-"555","NUCB2","58",0,1
-"556","NUF2","3",0,1
-"563","OLR1","3",0,1
-"564","ONECUT1","3",0,1
-"565","OR10H5","3",0,1
-"566","OR2AT4","3",0,1
-"567","OR7D4","3",0,1
-"570","OTUB2","3",0,1
-"571","OTX1","3",0,1
-"572","PADI6","56",0,1
-"573","PARD6B","3",0,1
-"575","PARPBP","3",0,1
-"576","PAX1","3",0,1
-"581","PCDH10","3",0,1
-"582","PCLAF","3",0,1
-"584","PCSK6","3",0,1
-"585","PDX1","3",0,1
-"589","PLA2G10","59",0,1
-"590","PLA2G2D","59",0,1
-"591","PLAAT4","20",0,1
-"594","PLS1","3",0,1
-"598","POLQ","3",0,1
-"600","POLR3K","3",0,1
-"601","POMK","21",0,1
-"610","PSG11","3",0,1
-"612","PSRC1","3",0,1
-"614","PTPRT","3",0,1
-"616","PYCARD","61",0,1
-"619","PYDC1","61",0,1
-"620","PYY","57",0,1
-"621","RAB11FIP1","62",0,1
-"622","RAB25","62",0,1
-"623","RAB27B","63",0,1
-"624","RAB3D","3",0,1
-"625","RABIF","3",0,1
-"627","RAD21L1","3",0,1
-"630","RAD54B","3",0,1
-"631","RAD54L","3",0,1
-"633","RAMACL","29",0,1
-"634","RAMP1","18",0,1
-"635","RCOR2","3",0,1
-"641","RGS8","3",0,1
-"642","RHCE","3",0,1
-"643","RHOH","64",0,1
-"646","RIMS1","3",0,1
-"652","RSAD2","3",0,1
-"653","S100A7","3",0,1
-"654","S100A7A","3",0,1
-"655","S100P","3",0,1
-"658","SALL4","3",0,1
-"659","SCAMP5","3",0,1
-"661","SCIN","3",0,1
-"663","SCUBE2","3",0,1
-"665","SDR16C5","44",0,1
-"666","SDS","65",0,1
-"667","SDSL","65",0,1
-"670","SERPINA12","31",0,1
-"671","SERPINA5","27",0,1
-"672","SERTAD4","3",0,1
-"673","SGO1","3",0,1
-"675","SHCBP1","3",0,1
-"678","SIDT1","3",0,1
-"679","SIGLEC15","3",0,1
-"680","SIX1","3",0,1
-"681","SKA1","3",0,1
-"683","SKA3","3",0,1
-"684","SLC1A1","66",0,1
-"685","SLC1A6","66",0,1
-"686","SLC44A4","3",0,1
-"687","SLC4A8","17",0,1
-"689","SLC7A5","3",0,1
-"693","SMIM22","67",0,1
-"694","SNTG1","68",0,1
-"695","SORD","2",0,1
-"698","SOX3","3",0,1
-"701","SPAG6","69",0,1
-"702","SPATA17","69",0,1
-"703","SPC24","3",0,1
-"704","SPC25","3",0,1
-"705","SPDYC","3",0,1
-"706","SPO11","3",0,1
-"708","SQLE","67",0,1
-"709","SSTR5","3",0,1
-"711","STIL","3",0,1
-"713","STXBP5L","28",0,1
-"715","SYNDIG1","3",0,1
-"716","SYNGR3","3",0,1
-"718","SYT5","3",0,1
-"719","SYT7","68",0,1
-"720","SYT9","3",0,1
-"721","SYTL5","63",0,1
-"724","TBX20","3",0,1
-"725","TCL1A","3",0,1
-"727","TDRD1","3",0,1
-"728","TDRKH","51",0,1
-"729","TEDC2","3",0,1
-"732","TENT5C","3",0,1
-"734","TESMIN","3",0,1
-"735","TEX14","3",0,1
-"737","TFF3","3",0,1
-"739","TH","3",0,1
-"741","TIGIT","3",0,1
-"746","TLR7","3",0,1
-"747","TLX1","3",0,1
-"748","TMEM97","43",0,1
-"749","TMPRSS6","3",0,1
-"752","TNFSF18","3",0,1
-"753","TNFSF4","3",0,1
-"754","TOM1L1","3",0,1
-"758","TPRN","3",0,1
-"762","TRIM59","70",0,1
-"763","TRIP13","3",0,1
-"765","TRPS1","3",0,1
-"769","TUBA4B","3",0,1
-"774","UBE2T","3",0,1
-"775","UGDH","38",0,1
-"779","UNC5D","3",0,1
-"783","VANGL1","64",0,1
-"787","WDR62","3",0,1
-"789","WNT3A","3",0,1
-"790","WNT7B","3",0,1
-"793","ZDHHC22","70",0,1
-"795","ZNF280A","58",0,1
-"797","ZP4","4",0,1
-"798","ZWINT","3",0,1
-"799","ZYG11A","3",0,1
+"","external_gene_name","description","cluster","betweenness","degree_centrality"
+"1","BRCA1","BRCA1 DNA repair associated","3",22167,26
+"2","H2BC13","H2B clustered histone 13","3",7073,20
+"3","ESR1","estrogen receptor 1","3",55583,16
+"4","FN1","fibronectin 1","3",27713,16
+"5","GATA3","GATA binding protein 3","3",40579,15
+"6","H2BC6","H2B clustered histone 6","3",22518,15
+"7","H2AX","H2A.X variant histone","3",23216,14
+"8","SMC1B","structural maintenance of chromosomes 1B","3",27597,14
+"9","CALML5","calmodulin like 5","3",19329,13
+"10","CBX2","chromobox 2","3",32565,13
+"11","H2BC15","H2B clustered histone 15","3",4413,13
+"12","H2BC5","H2B clustered histone 5","3",31489,13
+"13","NEIL3","nei like DNA glycosylase 3","3",13872,13
+"14","POLR2F","RNA polymerase II, I and III subunit F","3",45589,13
+"15","H2AC14","H2A clustered histone 14","3",17681,12
+"16","H2BC12","H2B clustered histone 12","3",136,12
+"17","H4C11","H4 clustered histone 11","3",14396,12
+"18","H4C8","H4 clustered histone 8","3",11017,12
+"19","KIF26B","kinesin family member 26B","3",7340,12
+"20","KIF5C","kinesin family member 5C","3",2502,12
+"21","SOX2","SRY-box transcription factor 2","3",10591,12
+"22","CBX4","chromobox 4","3",1,11
+"23","CLTC","clathrin heavy chain","3",12671,11
+"24","EZH2","enhancer of zeste 2 polycomb repressive complex 2 subunit","3",5027,11
+"25","EZR","ezrin","3",9043,11
+"26","GNG13","G protein subunit gamma 13","3",9495,11
+"27","H2BC11","H2B clustered histone 11","3",22319,11
+"28","H4C12","H4 clustered histone 12","3",296,11
+"29","H4C15","H4 clustered histone 15","3",1183,11
+"30","H4C4","H4 clustered histone 4","3",52,11
+"31","PLK1","polo like kinase 1","3",22076,11
+"32","CCR4","C-C motif chemokine receptor 4","3",6818,10
+"33","CCT3","chaperonin containing TCP1 subunit 3","3",7453,10
+"34","CDK1","cyclin dependent kinase 1","3",4953,10
+"35","CENPI","centromere protein I","3",3203,10
+"36","ERBB2","erb-b2 receptor tyrosine kinase 2","3",15327,10
+"37","H2BC14","H2B clustered histone 14","3",2317,10
+"38","KIF18B","kinesin family member 18B","3",2856,10
+"39","KRT18","keratin 18","3",18316,10
+"40","CDH1","cadherin 1","3",12346,9
+"41","CENPL","centromere protein L","3",0,9
+"42","CENPM","centromere protein M","3",2242,9
+"43","H2BC17","H2B clustered histone 17","3",2006,9
+"44","H2BC9","H2B clustered histone 9","3",37867,9
+"45","IGKV2D-40","immunoglobulin kappa variable 2D-40","3",5587,9
+"46","KIF20A","kinesin family member 20A","3",8473,9
+"47","MED1","mediator complex subunit 1","3",2111,9
+"48","PCNA","proliferating cell nuclear antigen","3",6044,9
+"49","SDC1","syndecan 1","3",3707,9
+"50","CCNB1","cyclin B1","3",32128,8
+"51","CENPH","centromere protein H","3",1193,8
+"52","CENPK","centromere protein K","3",0,8
+"53","CENPU","centromere protein U","3",641,8
+"54","FOXA1","forkhead box A1","3",8741,8
+"55","GRIK3","glutamate ionotropic receptor kainate type subunit 3","3",6217,8
+"56","H2BC4","H2B clustered histone 4","3",3084,8
+"57","OIP5","Opa interacting protein 5","3",625,8
+"58","BRIP1","BRCA1 interacting helicase 1","3",4490,7
+"59","BUB1B","BUB1 mitotic checkpoint serine/threonine kinase B","3",1345,7
+"60","CCNA2","cyclin A2","3",25707,7
+"61","CCNE1","cyclin E1","3",2343,7
+"62","E2F1","E2F transcription factor 1","3",4164,7
+"63","GABRR3","gamma-aminobutyric acid type A receptor subunit rho3","36",1,7
+"64","GNGT1","G protein subunit gamma transducin 1","3",9990,7
+"65","H2AC6","H2A clustered histone 6","3",26555,7
+"66","KIF14","kinesin family member 14","3",7609,7
+"67","KNL1","kinetochore scaffold 1","3",0,7
+"68","KRT19","keratin 19","3",0,7
+"69","KRT24","keratin 24","3",0,7
+"70","KRT28","keratin 28","3",0,7
+"71","KRT31","keratin 31","3",197,7
+"72","KRT32","keratin 32","3",0,7
+"73","KRT33A","keratin 33A","3",197,7
+"74","KRT37","keratin 37","3",197,7
+"75","MARVELD2","MARVEL domain containing 2","3",3171,7
+"76","MCM4","minichromosome maintenance complex component 4","3",12169,7
+"77","ORC1","origin recognition complex subunit 1","3",47627,7
+"78","PARP1","poly(ADP-ribose) polymerase 1","3",12969,7
+"79","POLE2","DNA polymerase epsilon 2, accessory subunit","3",14726,7
+"80","POTEF","POTE ankyrin domain family member F","3",1249,7
+"81","RAD51AP1","RAD51 associated protein 1","3",2629,7
+"82","STAT1","signal transducer and activator of transcription 1","3",8205,7
+"83","TOP2A","DNA topoisomerase II alpha","3",6519,7
+"84","WDR76","WD repeat domain 76","3",3472,7
+"85","ANK1","ankyrin 1","3",4383,6
+"86","ATAD2","ATPase family AAA domain containing 2","3",625,6
+"87","AURKA","aurora kinase A","3",2136,6
+"88","CDH2","cadherin 2","3",6273,6
+"89","CENPA","centromere protein A","3",3915,6
+"90","COL1A2","collagen type I alpha 2 chain","3",7138,6
+"91","DCAF12L1","DDB1 and CUL4 associated factor 12 like 1","3",22,6
+"92","DCAF4L2","DDB1 and CUL4 associated factor 4 like 2","3",1,6
+"93","DCAF8L2","DDB1 and CUL4 associated factor 8 like 2","3",6579,6
+"94","FOXM1","forkhead box M1","3",4065,6
+"95","GABRD","gamma-aminobutyric acid type A receptor subunit delta","36",11,6
+"96","GABRQ","gamma-aminobutyric acid type A receptor subunit theta","36",5,6
+"97","GNG4","G protein subunit gamma 4","3",673,6
+"98","H2AC8","H2A clustered histone 8","3",8664,6
+"99","KIF11","kinesin family member 11","3",3107,6
+"100","KPNA2","karyopherin subunit alpha 2","3",2686,6
+"101","OCLN","occludin","3",6498,6
+"102","PIK3CG","phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit gamma","3",8687,6
+"103","RMI1","RecQ mediated genome instability 1","3",630,6
+"104","RMI2","RecQ mediated genome instability 2","3",1374,6
+"105","SOX11","SRY-box transcription factor 11","3",571,6
+"106","SYT1","synaptotagmin 1","3",3734,6
+"107","TERT","telomerase reverse transcriptase","3",2446,6
+"108","TIMELESS","timeless circadian regulator","3",17205,6
+"109","VWC2L","von Willebrand factor C domain containing 2 like","3",693,6
+"110","AGR2","anterior gradient 2, protein disulphide isomerase family member","3",4761,5
+"111","AP1M2","adaptor related protein complex 1 subunit mu 2","3",1,5
+"112","AP1S3","adaptor related protein complex 1 subunit sigma 3","3",3718,5
+"113","BRCA2","BRCA2 DNA repair associated","3",966,5
+"114","CCNB2","cyclin B2","3",2174,5
+"115","CCR8","C-C motif chemokine receptor 8","3",1386,5
+"116","CD3G","CD3 gamma subunit of T-cell receptor complex","3",2841,5
+"117","CDCA8","cell division cycle associated 8","3",625,5
+"118","CLSPN","claspin","3",2088,5
+"119","CXCL10","C-X-C motif chemokine ligand 10","3",7739,5
+"120","DCAF10","DDB1 and CUL4 associated factor 10","3",4960,5
+"121","DTL","denticleless E3 ubiquitin protein ligase homolog","3",8698,5
+"122","EYA1","EYA transcriptional coactivator and phosphatase 1","3",6531,5
+"123","FCGR3A","Fc gamma receptor IIIa","3",8437,5
+"124","FGL1","fibrinogen like 1","3",2517,5
+"125","FLRT3","fibronectin leucine rich transmembrane protein 3","3",4954,5
+"126","FZD2","frizzled class receptor 2","3",1249,5
+"127","GNAT3","G protein subunit alpha transducin 3","3",4318,5
+"128","H3C10","H3 clustered histone 10","3",8984,5
+"129","HSPA2","heat shock protein family A (Hsp70) member 2","3",3064,5
+"130","IGF1R","insulin like growth factor 1 receptor","3",1952,5
+"131","KCNQ5","potassium voltage-gated channel subfamily Q member 5","3",1869,5
+"132","KIF2C","kinesin family member 2C","3",450,5
+"133","KIFC1","kinesin family member C1","3",723,5
+"134","MCM10","minichromosome maintenance 10 replication initiation factor","3",8023,5
+"135","MMP9","matrix metallopeptidase 9","3",3543,5
+"136","MUC1","mucin 1, cell surface associated","3",8911,5
+"137","MUC5B","mucin 5B, oligomeric mucus/gel-forming","3",2873,5
+"138","PAX2","paired box 2","3",5449,5
+"139","PIERCE1","piercer of microtubule wall 1","3",1203,5
+"140","PPP2R2C","protein phosphatase 2 regulatory subunit Bgamma","3",4348,5
+"141","RACGAP1","Rac GTPase activating protein 1","3",7733,5
+"142","RAD51","RAD51 recombinase","3",3849,5
+"143","RECQL4","RecQ like helicase 4","3",0,5
+"144","RET","ret proto-oncogene","3",2409,5
+"145","RIBC2","RIB43A domain with coiled-coils 2","3",1349,5
+"146","TEKT1","tektin 1","3",0,5
+"147","TEKT4","tektin 4","3",964,5
+"148","TRIM36","tripartite motif containing 36","3",2494,5
+"149","XRCC2","X-ray repair cross complementing 2","3",0,5
+"150","ALB","albumin","3",1646,4
+"151","ANLN","anillin, actin binding protein","3",1249,4
+"152","ASPM","assembly factor for spindle microtubules","3",14052,4
+"153","BMP7","bone morphogenetic protein 7","3",3112,4
+"154","BPIFA1","BPI fold containing family A member 1","13",0,4
+"155","BPIFA2","BPI fold containing family A member 2","13",0,4
+"156","BPIFB6","BPI fold containing family B member 6","13",1,4
+"157","BUB1","BUB1 mitotic checkpoint serine/threonine kinase","3",1249,4
+"158","CAMP","cathelicidin antimicrobial peptide","3",3145,4
+"159","CCL5","C-C motif chemokine ligand 5","3",11655,4
+"160","CCND1","cyclin D1","3",992,4
+"161","CD1A","CD1a molecule","3",1540,4
+"162","CD80","CD80 molecule","3",3112,4
+"163","CDK5","cyclin dependent kinase 5","3",1871,4
+"164","CENPE","centromere protein E","3",1249,4
+"165","CFAP77","cilia and flagella associated protein 77","3",816,4
+"166","CHRNA1","cholinergic receptor nicotinic alpha 1 subunit","22",3,4
+"167","COL11A1","collagen type XI alpha 1 chain","3",1245,4
+"168","COL2A1","collagen type II alpha 1 chain","3",0,4
+"169","CXCL11","C-X-C motif chemokine ligand 11","3",2700,4
+"170","CXCL13","C-X-C motif chemokine ligand 13","3",1323,4
+"171","CXCL17","C-X-C motif chemokine ligand 17","3",6562,4
+"172","ECT2","epithelial cell transforming 2","3",374,4
+"173","ENKUR","enkurin, TRPC channel interacting protein","3",2952,4
+"174","ENTHD1","ENTH domain containing 1","3",0,4
+"175","EPN3","epsin 3","3",0,4
+"176","ERBB3","erb-b2 receptor tyrosine kinase 3","3",6480,4
+"177","EXO1","exonuclease 1","3",0,4
+"178","FGF4","fibroblast growth factor 4","3",0,4
+"179","GABRA3","gamma-aminobutyric acid type A receptor subunit alpha3","36",5,4
+"180","H3C7","H3 clustered histone 7","3",0,4
+"181","H3C8","H3 clustered histone 8","3",2445,4
+"182","HJURP","Holliday junction recognition protein","3",1247,4
+"183","KCNK15","potassium two pore domain channel subfamily K member 15","49",0,4
+"184","KCNK16","potassium two pore domain channel subfamily K member 16","49",1,4
+"185","KCNK6","potassium two pore domain channel subfamily K member 6","49",0,4
+"186","KIF15","kinesin family member 15","3",7,4
+"187","KIF18A","kinesin family member 18A","3",0,4
+"188","KIF1A","kinesin family member 1A","3",3211,4
+"189","KIF20B","kinesin family member 20B","3",0,4
+"190","LIN9","lin-9 DREAM MuvB core complex component","3",1872,4
+"191","MAD2L1","mitotic arrest deficient 2 like 1","3",497,4
+"192","MYCNOS","MYCN opposite strand","3",2492,4
+"193","PKMYT1","protein kinase, membrane associated tyrosine/threonine 1","3",16433,4
+"194","PLK4","polo like kinase 4","3",1794,4
+"195","PROC","protein C, inactivator of coagulation factors Va and VIIIa","27",3,4
+"196","SELL","selectin L","3",2164,4
+"197","SERPINA1","serpin family A member 1","3",755,4
+"198","SHH","sonic hedgehog signaling molecule","3",2493,4
+"199","SPAG5","sperm associated antigen 5","3",3764,4
+"200","TJP3","tight junction protein 3","3",646,4
+"201","TNFRSF9","TNF receptor superfamily member 9","3",9609,4
+"202","TPD52","tumor protein D52","3",625,4
+"203","UHRF1","ubiquitin like with PHD and ring finger domains 1","3",1345,4
+"204","VAV3","vav guanine nucleotide exchange factor 3","3",0,4
+"205","AMBP","alpha-1-microglobulin/bikunin precursor","3",96,3
+"206","ASF1B","anti-silencing function 1B histone chaperone","3",94,3
+"207","AURKB","aurora kinase B","3",1878,3
+"208","BCRP2","BCR pseudogene 2","3",0,3
+"209","BIRC5","baculoviral IAP repeat containing 5","3",625,3
+"210","BLM","BLM RecQ like helicase","3",240,3
+"211","BPIFB1","BPI fold containing family B member 1","13",0,3
+"212","BPIFB2","BPI fold containing family B member 2","13",0,3
+"213","CACNA1B","calcium voltage-gated channel subunit alpha1 B","3",4374,3
+"214","CACNG4","calcium voltage-gated channel auxiliary subunit gamma 4","3",1869,3
+"215","CCL3L3","C-C motif chemokine ligand 3 like 3","3",1483,3
+"216","CCNE2","cyclin E2","3",596,3
+"217","CCNO","cyclin O","3",1248,3
+"218","CCR3","C-C motif chemokine receptor 3","3",0,3
+"219","CD3D","CD3 delta subunit of T-cell receptor complex","3",0,3
+"220","CD3E","CD3 epsilon subunit of T-cell receptor complex","3",72,3
+"221","CDC20","cell division cycle 20","3",1555,3
+"222","CDC20B","cell division cycle 20B","3",1109,3
+"223","CENPF","centromere protein F","3",0,3
+"224","CEP55","centrosomal protein 55","3",700,3
+"225","CHEK1","checkpoint kinase 1","3",0,3
+"226","CHRNA9","cholinergic receptor nicotinic alpha 9 subunit","22",5,3
+"227","CLDN25","claudin 25","3",0,3
+"228","CLDN6","claudin 6","3",0,3
+"229","COL1A1","collagen type I alpha 1 chain","3",0,3
+"230","COL3A1","collagen type III alpha 1 chain","3",0,3
+"231","COLEC10","collectin subfamily member 10","27",0,3
+"232","CXCL9","C-X-C motif chemokine ligand 9","3",0,3
+"233","DCAF13","DDB1 and CUL4 associated factor 13","3",0,3
+"234","DCLRE1A","DNA cross-link repair 1A","3",705,3
+"235","DLGAP5","DLG associated protein 5","3",1032,3
+"236","E2F7","E2F transcription factor 7","3",1249,3
+"237","EEF1A2","eukaryotic translation elongation factor 1 alpha 2","3",3109,3
+"238","EPO","erythropoietin","3",1112,3
+"239","F12","coagulation factor XII","27",0,3
+"240","F2RL2","coagulation factor II thrombin receptor like 2","3",0,3
+"241","F7","coagulation factor VII","27",0,3
+"242","FANCI","FA complementation group I","3",240,3
+"243","FASLG","Fas ligand","3",4339,3
+"244","FCGR1A","Fc gamma receptor Ia","3",340,3
+"245","FEN1","flap structure-specific endonuclease 1","3",625,3
+"246","FGF3","fibroblast growth factor 3","3",5535,3
+"247","FGF5","fibroblast growth factor 5","3",0,3
+"248","FOXA2","forkhead box A2","3",1248,3
+"249","GABRA1","gamma-aminobutyric acid type A receptor subunit alpha1","36",0,3
+"250","GABRB1","gamma-aminobutyric acid type A receptor subunit beta1","36",0,3
+"251","GABRG2","gamma-aminobutyric acid type A receptor subunit gamma2","36",0,3
+"252","GDNF","glial cell derived neurotrophic factor","3",625,3
+"253","GINS4","GINS complex subunit 4","3",7600,3
+"254","GJB2","gap junction protein beta 2","3",1248,3
+"255","GRIA2","glutamate ionotropic receptor AMPA type subunit 2","3",625,3
+"256","H2AC11","H2A clustered histone 11","3",0,3
+"257","H2AC16","H2A clustered histone 16","3",0,3
+"258","H3C12","H3 clustered histone 12","3",0,3
+"259","HMMR","hyaluronan mediated motility receptor","3",4343,3
+"260","IFNL1","interferon lambda 1","3",1248,3
+"261","ISG15","ISG15 ubiquitin like modifier","3",1871,3
+"262","KCNJ3","potassium inwardly rectifying channel subfamily J member 3","3",7,3
+"263","KCNK1","potassium two pore domain channel subfamily K member 1","49",0,3
+"264","KCNK9","potassium two pore domain channel subfamily K member 9","49",0,3
+"265","KCNQ2","potassium voltage-gated channel subfamily Q member 2","3",743,3
+"266","KIF23","kinesin family member 23","3",0,3
+"267","KIF4A","kinesin family member 4A","3",9840,3
+"268","KRT8","keratin 8","3",625,3
+"269","LGALS9B","galectin 9B","3",10504,3
+"270","MISP","mitotic spindle positioning","3",171,3
+"271","MKI67","marker of proliferation Ki-67","3",0,3
+"272","MUC6","mucin 6, oligomeric mucus/gel-forming","3",689,3
+"273","MYO3B","myosin IIIB","3",1249,3
+"274","OAS2","2'-5'-oligoadenylate synthetase 2","3",1393,3
+"275","PBK","PDZ binding kinase","3",10972,3
+"276","PBX1","PBX homeobox 1","3",1249,3
+"277","POSTN","periostin","3",625,3
+"278","PTTG1","PTTG1 regulator of sister chromatid separation, securin","3",932,3
+"279","RIMS2","regulating synaptic membrane exocytosis 2","3",1871,3
+"280","ROBO2","roundabout guidance receptor 2","3",3111,3
+"281","SMC4","structural maintenance of chromosomes 4","3",634,3
+"282","SPTBN2","spectrin beta, non-erythrocytic 2","3",1439,3
+"283","TACC3","transforming acidic coiled-coil containing protein 3","3",1906,3
+"284","TFF1","trefoil factor 1","3",1249,3
+"285","TINCR","TINCR ubiquitin domain containing","3",1871,3
+"286","TK1","thymidine kinase 1","3",1256,3
+"287","TNFRSF18","TNF receptor superfamily member 18","3",1249,3
+"288","TRDV1","T cell receptor delta variable 1","3",741,3
+"289","TRPA1","transient receptor potential cation channel subfamily A member 1","3",1871,3
+"290","TTK","TTK protein kinase","3",625,3
+"291","TUBA3D","tubulin alpha 3d","3",1228,3
+"292","U4","U4 spliceosomal RNA","3",1249,3
+"293","UBE2C","ubiquitin conjugating enzyme E2 C","3",628,3
+"294","ZFP42","ZFP42 zinc finger protein","3",0,3
+"295","5S_rRNA","5S ribosomal RNA","1",0,2
+"296","AKAP5","A-kinase anchoring protein 5","3",1248,2
+"297","APOBR","apolipoprotein B receptor","11",0,2
+"298","APOF","apolipoprotein F","11",0,2
+"299","APOO","apolipoprotein O","11",0,2
+"300","ASIC2","acid sensing ion channel subunit 2","3",625,2
+"301","ASZ1","ankyrin repeat, SAM and basic leucine zipper domain containing 1","3",625,2
+"302","ATP12A","ATPase H+/K+ transporting non-gastric alpha2 subunit","3",625,2
+"303","BMPR1B","bone morphogenetic protein receptor type 1B","3",1248,2
+"304","BTLA","B and T lymphocyte associated","3",0,2
+"305","C15orf48","chromosome 15 open reading frame 48","15",1,2
+"306","C4A","complement C4A (Rodgers blood group)","3",625,2
+"307","CA12","carbonic anhydrase 12","16",0,2
+"308","CA14","carbonic anhydrase 14","16",0,2
+"309","CA9","carbonic anhydrase 9","16",0,2
+"310","CACNG1","calcium voltage-gated channel auxiliary subunit gamma 1","3",616,2
+"311","CACNG5","calcium voltage-gated channel auxiliary subunit gamma 5","3",0,2
+"312","CACNG6","calcium voltage-gated channel auxiliary subunit gamma 6","3",48,2
+"313","CASP14","caspase 14","3",625,2
+"314","CCL1","C-C motif chemokine ligand 1","3",625,2
+"315","CCL11","C-C motif chemokine ligand 11","3",0,2
+"316","CCL17","C-C motif chemokine ligand 17","3",0,2
+"317","CCL4L2","C-C motif chemokine ligand 4 like 2","3",0,2
+"318","CCL7","C-C motif chemokine ligand 7","3",0,2
+"319","CCNP","cyclin P","3",1857,2
+"320","CCR5","C-C motif chemokine receptor 5","3",628,2
+"321","CD2","CD2 molecule","3",77,2
+"322","CDC25C","cell division cycle 25C","3",625,2
+"323","CDC45","cell division cycle 45","3",36,2
+"324","CDC6","cell division cycle 6","3",625,2
+"325","CDCA2","cell division cycle associated 2","3",768,2
+"326","CDH18","cadherin 18","3",0,2
+"327","CDH7","cadherin 7","3",624,2
+"328","CDT1","chromatin licensing and DNA replication factor 1","3",0,2
+"329","CHRNA6","cholinergic receptor nicotinic alpha 6 subunit","22",0,2
+"330","CHRNB3","cholinergic receptor nicotinic beta 3 subunit","22",0,2
+"331","CKS2","CDC28 protein kinase regulatory subunit 2","3",625,2
+"332","CNIH2","cornichon family AMPA receptor auxiliary protein 2","3",81,2
+"333","CNTNAP2","contactin associated protein 2","3",625,2
+"334","COL22A1","collagen type XXII alpha 1 chain","26",1,2
+"335","COMP","cartilage oligomeric matrix protein","3",625,2
+"336","CRB3","crumbs cell polarity complex component 3","3",625,2
+"337","CST4","cystatin S","3",625,2
+"338","CTNNA2","catenin alpha 2","3",1,2
+"339","CTNND2","catenin delta 2","3",1625,2
+"340","CYP2A6","cytochrome P450 family 2 subfamily A member 6","30",3,2
+"341","CYP2B7P","cytochrome P450 family 2 subfamily B member 7, pseudogene","30",4,2
+"342","CYP2B7P","cytochrome P450 family 2 subfamily B member 7, pseudogene","30",4,2
+"343","DNAJC5B","DnaJ heat shock protein family (Hsp40) member C5 beta","3",625,2
+"344","DPYSL5","dihydropyrimidinase like 5","3",625,2
+"345","DSN1","DSN1 component of MIS12 kinetochore complex","3",41,2
+"346","DSP","desmoplakin","3",625,2
+"347","ECM1","extracellular matrix protein 1","3",625,2
+"348","EFNA2","ephrin A2","33",0,2
+"349","EIF4E1B","eukaryotic translation initiation factor 4E family member 1B","29",1,2
+"350","EME1","essential meiotic structure-specific endonuclease 1","3",0,2
+"351","EPCAM","epithelial cell adhesion molecule","3",900,2
+"352","EPGN","epithelial mitogen","3",0,2
+"353","EPHA10","EPH receptor A10","33",0,2
+"354","EPHA8","EPH receptor A8","33",0,2
+"355","EPPK1","epiplakin 1","3",0,2
+"356","FAM83D","family with sequence similarity 83 member D","3",60,2
+"357","FBXO45","F-box protein 45","3",3105,2
+"358","FBXO5","F-box protein 5","3",837,2
+"359","FGB","fibrinogen beta chain","3",124,2
+"360","GABRB3","gamma-aminobutyric acid type A receptor subunit beta3","36",0,2
+"361","GATA4","GATA binding protein 4","3",625,2
+"362","GFRA1","GDNF family receptor alpha 1","3",0,2
+"363","GINS1","GINS complex subunit 1","3",0,2
+"364","GINS2","GINS complex subunit 2","3",0,2
+"365","GJA3","gap junction protein alpha 3","3",0,2
+"366","GJD3","gap junction protein delta 3","3",0,2
+"367","H1-2","H1.2 linker histone, cluster member","3",625,2
+"368","H2AC13","H2A clustered histone 13","3",0,2
+"369","H2AC17","H2A clustered histone 17","3",0,2
+"370","H3C14","H3 clustered histone 14","3",833,2
+"371","H3C6","H3 clustered histone 6","3",0,2
+"372","H3Y1","H3.Y histone 1","3",0,2
+"373","H4C9","H4 clustered histone 9","3",0,2
+"374","IFNB1","interferon beta 1","3",0,2
+"375","IFNL2","interferon lambda 2","3",0,2
+"376","IFNL3","interferon lambda 3","3",0,2
+"377","IGHV1-3","immunoglobulin heavy variable 1-3","3",0,2
+"378","IGHV3-15","immunoglobulin heavy variable 3-15","3",0,2
+"379","IKZF3","IKAROS family zinc finger 3","3",625,2
+"380","IL1B","interleukin 1 beta","3",22213,2
+"381","INSM1","INSM transcriptional repressor 1","3",625,2
+"382","KCNE4","potassium voltage-gated channel subfamily E regulatory subunit 4","3",1248,2
+"383","KCNH2","potassium voltage-gated channel subfamily H member 2","3",625,2
+"384","KCNJ6","potassium inwardly rectifying channel subfamily J member 6","3",0,2
+"385","KIAA0319","KIAA0319","3",0,2
+"386","LEF1","lymphoid enhancer binding factor 1","3",3,2
+"387","LGALS9C","galectin 9C","3",0,2
+"388","LGI1","leucine rich glioma inactivated 1","3",1248,2
+"389","LMNB1","lamin B1","3",218,2
+"390","LMX1B","LIM homeobox transcription factor 1 beta","3",1869,2
+"391","LRP2","LDL receptor related protein 2","3",625,2
+"392","MAGEA11","MAGE family member A11","3",625,2
+"393","MAGEA4","MAGE family member A4","3",625,2
+"394","MMP1","matrix metallopeptidase 1","3",0,2
+"395","MMP10","matrix metallopeptidase 10","3",625,2
+"396","MRPL13","mitochondrial ribosomal protein L13","1",0,2
+"397","MRPS30","mitochondrial ribosomal protein S30","1",0,2
+"398","MX1","MX dynamin like GTPase 1","3",1987,2
+"399","NCAPG","non-SMC condensin I complex subunit G","3",542,2
+"400","NCAPG2","non-SMC condensin II complex subunit G2","3",0,2
+"401","NDC80","NDC80 kinetochore complex component","3",570,2
+"402","NELL2","neural EGFL like 2","3",625,2
+"403","NHERF1","NHERF family PDZ scaffold protein 1","3",5211,2
+"404","NKX2-2","NK2 homeobox 2","3",625,2
+"405","NLRP5","NLR family pyrin domain containing 5","56",1,2
+"406","NOX5","NADPH oxidase 5","3",625,2
+"407","NOX5","NADPH oxidase 5","3",625,2
+"408","NPNT","nephronectin","30",3,2
+"409","OAS1","2'-5'-oligoadenylate synthetase 1","3",166,2
+"410","OAS3","2'-5'-oligoadenylate synthetase 3","3",312,2
+"411","OASL","2'-5'-oligoadenylate synthetase like","3",625,2
+"412","ORC6","origin recognition complex subunit 6","3",0,2
+"413","PAX6","paired box 6","3",625,2
+"414","PMAIP1","phorbol-12-myristate-13-acetate-induced protein 1","3",625,2
+"415","PODXL2","podocalyxin like 2","3",640,2
+"416","POTEC","POTE ankyrin domain family member C","3",625,2
+"417","PRAME","PRAME nuclear receptor transcriptional regulator","3",625,2
+"418","PRLR","prolactin receptor","3",496,2
+"419","PRODH2","proline dehydrogenase 2","60",0,2
+"420","PSG9","pregnancy specific beta-1-glycoprotein 9","3",625,2
+"421","PTK6","protein tyrosine kinase 6","3",435,2
+"422","PYCR1","pyrroline-5-carboxylate reductase 1","60",0,2
+"423","PYCR3","pyrroline-5-carboxylate reductase 3","60",0,2
+"424","RALYL","RALY RNA binding protein like","3",1248,2
+"425","REPS2","RALBP1 associated Eps domain containing 2","3",0,2
+"426","RGS4","regulator of G protein signaling 4","3",2865,2
+"427","RGS7","regulator of G protein signaling 7","3",625,2
+"428","RIMBP3","RIMS binding protein 3","3",625,2
+"429","RRM2","ribonucleotide reductase regulatory subunit M2","3",216,2
+"430","SAG","S-antigen visual arrestin","3",625,2
+"431","SAGE1","sarcoma antigen 1","3",625,2
+"432","SCG3","secretogranin III","3",625,2
+"433","SCN1A","sodium voltage-gated channel alpha subunit 1","3",118,2
+"434","SGO2","shugoshin 2","3",8,2
+"435","SHISA9","shisa family member 9","3",0,2
+"436","SKA2","spindle and kinetochore associated complex subunit 2","3",1869,2
+"437","SLC7A11","solute carrier family 7 member 11","3",625,2
+"438","SLIT1","slit guidance ligand 1","3",3720,2
+"439","SPAG1","sperm associated antigen 1","3",625,2
+"440","STMN1","stathmin 1","47",1,2
+"441","SYCE3","synaptonemal complex central element protein 3","3",0,2
+"442","TAS2R1","taste 2 receptor member 1","3",0,2
+"443","TCL1B","TCL1 family AKT coactivator B","3",625,2
+"444","TFR2","transferrin receptor 2","3",625,2
+"445","TIGD3","tigger transposable element derived 3","3",625,2
+"446","TONSL","tonsoku like, DNA repair protein","3",0,2
+"447","TPX2","TPX2 microtubule nucleation factor","3",2,2
+"448","TUBA3E","tubulin alpha 3e","3",0,2
+"449","TUBAL3","tubulin alpha like 3","3",0,2
+"450","TYRP1","tyrosinase related protein 1","3",625,2
+"451","UNC13A","unc-13 homolog A","3",2488,2
+"452","UNC5B","unc-5 netrin receptor B","3",625,2
+"453","UPK1A","uroplakin 1A","71",0,2
+"454","UPK1B","uroplakin 1B","71",0,2
+"455","UPK3A","uroplakin 3A","71",0,2
+"456","WDHD1","WD repeat and HMG-box DNA binding protein 1","3",624,2
+"457","WT1","WT1 transcription factor","3",0,2
+"458","ZNF281","zinc finger protein 281","3",1248,2
+"459","ABAT","4-aminobutyrate aminotransferase","2",0,1
+"460","ABCA12","ATP binding cassette subfamily A member 12","3",0,1
+"461","ACMSD","aminocarboxymuconate semialdehyde decarboxylase","3",0,1
+"462","ACTL6B","actin like 6B","3",0,1
+"463","ADAM2","ADAM metallopeptidase domain 2","4",0,1
+"464","ADAM7","ADAM metallopeptidase domain 7","3",0,1
+"465","ADCY1","adenylate cyclase 1","3",0,1
+"466","ADGRB2","adhesion G protein-coupled receptor B2","5",0,1
+"467","ADGRG7","adhesion G protein-coupled receptor G7","6",0,1
+"468","AFF3","ALF transcription elongation factor 3","7",0,1
+"469","AFP","alpha fetoprotein","3",0,1
+"470","ALCAM","activated leukocyte cell adhesion molecule","8",0,1
+"471","APLP1","amyloid beta precursor like protein 1","9",0,1
+"472","APOBEC3B","apolipoprotein B mRNA editing enzyme catalytic subunit 3B","10",0,1
+"473","ASIC5","acid sensing ion channel subunit family member 5","3",0,1
+"474","ASPN","asporin","3",0,1
+"475","ATP1A4","ATPase Na+/K+ transporting subunit alpha 4","3",0,1
+"476","ATP6V0A4","ATPase H+ transporting V0 subunit a4","12",0,1
+"477","ATP6V0D2","ATPase H+ transporting V0 subunit d2","12",0,1
+"478","AUNIP","aurora kinase A and ninein interacting protein","3",0,1
+"479","AZIN1","antizyme inhibitor 1","3",0,1
+"480","BAMBI","BMP and activin membrane bound inhibitor","3",0,1
+"481","BEX1","brain expressed X-linked 1","3",0,1
+"482","BIK","BCL2 interacting killer","3",0,1
+"483","BLNK","B cell linker","3",0,1
+"484","BMP8A","bone morphogenetic protein 8a","3",0,1
+"485","BRINP2","BMP/retinoic acid inducible neural specific 2","14",0,1
+"486","BRINP3","BMP/retinoic acid inducible neural specific 3","14",0,1
+"487","C1orf127","chromosome 1 open reading frame 127","3",0,1
+"488","C4B","complement C4B (Chido blood group)","3",0,1
+"489","CA2","carbonic anhydrase 2","17",0,1
+"490","CALCR","calcitonin receptor","18",0,1
+"491","CAPSL","calcyphosine like","3",0,1
+"492","CARTPT","CART prepropeptide","19",0,1
+"493","CASTOR2","cytosolic arginine sensor for mTORC1 subunit 2","20",0,1
+"494","CCNF","cyclin F","3",0,1
+"495","CD300LF","CD300 molecule like family member f","3",0,1
+"496","CDC25A","cell division cycle 25A","3",0,1
+"497","CDCA5","cell division cycle associated 5","3",0,1
+"498","CDCP1","CUB domain containing protein 1","3",0,1
+"499","CDK5R1","cyclin dependent kinase 5 regulatory subunit 1","3",0,1
+"500","CDK5R2","cyclin dependent kinase 5 regulatory subunit 2","3",0,1
+"501","CDKN3","cyclin dependent kinase inhibitor 3","3",0,1
+"502","CEACAM5","CEA cell adhesion molecule 5","3",0,1
+"503","CEACAM6","CEA cell adhesion molecule 6","19",0,1
+"504","CELSR3","cadherin EGF LAG seven-pass G-type receptor 3","3",0,1
+"505","CERS6","ceramide synthase 6","21",0,1
+"506","CFAP221","cilia and flagella associated protein 221","3",0,1
+"507","CFAP90","cilia and flagella associated protein 90","3",0,1
+"508","CHAF1B","chromatin assembly factor 1 subunit B","3",0,1
+"509","CHGA","chromogranin A","3",0,1
+"510","CHRNB2","cholinergic receptor nicotinic beta 2 subunit","22",0,1
+"511","CIB3","calcium and integrin binding family member 3","23",0,1
+"512","CIP2A","cellular inhibitor of PP2A","3",0,1
+"513","CIT","citron rho-interacting serine/threonine kinase","3",0,1
+"514","CKAP2","cytoskeleton associated protein 2","3",0,1
+"515","CKMT1A","creatine kinase, mitochondrial 1A","24",0,1
+"516","CKMT1B","creatine kinase, mitochondrial 1B","24",0,1
+"517","CLEC4C","C-type lectin domain family 4 member C","3",0,1
+"518","CNGA2","cyclic nucleotide gated channel subunit alpha 2","25",0,1
+"519","CNGA3","cyclic nucleotide gated channel subunit alpha 3","25",0,1
+"520","CNTN5","contactin 5","9",0,1
+"521","COL10A1","collagen type X alpha 1 chain","26",0,1
+"522","COL8A1","collagen type VIII alpha 1 chain","26",0,1
+"523","CORO2A","coronin 2A","3",0,1
+"524","COX6C","cytochrome c oxidase subunit 6C","15",0,1
+"525","COX7B2","cytochrome c oxidase subunit 7B2","15",0,1
+"526","CPLX2","complexin 2","28",0,1
+"527","CST1","cystatin SN","3",0,1
+"528","CXCR3","C-X-C motif chemokine receptor 3","3",0,1
+"529","CYFIP2","cytoplasmic FMR1 interacting protein 2","29",0,1
+"530","CYP2A13","cytochrome P450 family 2 subfamily A member 13","30",0,1
+"531","DCD","dermcidin","3",0,1
+"532","DENND1B","DENN domain containing 1B","31",0,1
+"533","DEPDC1","DEP domain containing 1","3",0,1
+"534","DHCR24","24-dehydrocholesterol reductase","32",0,1
+"535","DHCR7","7-dehydrocholesterol reductase","32",0,1
+"536","DIAPH3","diaphanous related formin 3","3",0,1
+"537","DISP2","dispatched RND transporter family member 2","3",0,1
+"538","DISP3","dispatched RND transporter family member 3","3",0,1
+"539","DLX2","distal-less homeobox 2","3",0,1
+"540","DMP1","dentin matrix acidic phosphoprotein 1","3",0,1
+"541","DNAAF6","dynein axonemal assembly factor 6","3",0,1
+"542","DQX1","DEAQ-box RNA dependent ATPase 1","3",0,1
+"543","DSCC1","DNA replication and sister chromatid cohesion 1","3",0,1
+"544","E2F2","E2F transcription factor 2","3",0,1
+"545","E2F8","E2F transcription factor 8","3",0,1
+"546","ELAVL2","ELAV like RNA binding protein 2","10",0,1
+"547","ELOVL2","ELOVL fatty acid elongase 2","34",0,1
+"548","ELP2","elongator acetyltransferase complex subunit 2","7",0,1
+"549","ERCC6L","ERCC excision repair 6 like, spindle assembly checkpoint helicase","3",0,1
+"550","ESCO2","establishment of sister chromatid cohesion N-acetyltransferase 2","3",0,1
+"551","ESPL1","extra spindle pole bodies like 1, separase","3",0,1
+"552","ESRP1","epithelial splicing regulatory protein 1","3",0,1
+"553","ESRRG","estrogen related receptor gamma","3",0,1
+"554","EVPL","envoplakin","3",0,1
+"555","FAM167A","family with sequence similarity 167 member A","35",0,1
+"556","FAM83B","family with sequence similarity 83 member B","3",0,1
+"557","FAM83H","family with sequence similarity 83 member H","3",0,1
+"558","FANCA","FA complementation group A","3",0,1
+"559","FANCF","FA complementation group F","3",0,1
+"560","FBN2","fibrillin 2","3",0,1
+"561","FBXO43","F-box protein 43","3",0,1
+"562","FCAMR","Fc alpha and mu receptor","3",0,1
+"563","FCRL4","Fc receptor like 4","3",0,1
+"564","FGA","fibrinogen alpha chain","3",0,1
+"565","FGG","fibrinogen gamma chain","3",0,1
+"566","FKBP4","FKBP prolyl isomerase 4","3",0,1
+"567","FLT3","fms related receptor tyrosine kinase 3","3",0,1
+"568","FOXA3","forkhead box A3","3",0,1
+"569","FOXP3","forkhead box P3","3",0,1
+"570","FPR3","formyl peptide receptor 3","3",0,1
+"571","FREM2","FRAS1 related extracellular matrix 2","30",0,1
+"572","FSBP","fibrinogen silencer binding protein","3",0,1
+"573","GALNT6","polypeptide N-acetylgalactosaminyltransferase 6","37",0,1
+"574","GAS2L3","growth arrest specific 2 like 3","3",0,1
+"575","GATA5","GATA binding protein 5","3",0,1
+"576","GGH","gamma-glutamyl hydrolase","38",0,1
+"577","GHSR","growth hormone secretagogue receptor","39",0,1
+"578","GIP","gastric inhibitory polypeptide","5",0,1
+"579","GJD2","gap junction protein delta 2","3",0,1
+"580","GNL3L","G protein nucleolar 3 like","3",0,1
+"581","GOLM1","golgi membrane protein 1","3",0,1
+"582","GPR158","G protein-coupled receptor 158","3",0,1
+"583","GRB14","growth factor receptor bound protein 14","3",0,1
+"584","GRHL2","grainyhead like transcription factor 2","3",0,1
+"585","GRM4","glutamate metabotropic receptor 4","40",0,1
+"586","GRM8","glutamate metabotropic receptor 8","40",0,1
+"587","GRP","gastrin releasing peptide","41",0,1
+"588","GRPR","gastrin releasing peptide receptor","41",0,1
+"589","GSTA2","glutathione S-transferase alpha 2","42",0,1
+"590","GSTA3","glutathione S-transferase alpha 3","42",0,1
+"591","GTSE1","G2 and S-phase expressed 1","3",0,1
+"592","GZMA","granzyme A","3",0,1
+"593","H1-6","H1.6 linker histone, cluster member","3",0,1
+"594","H4C14","H4 clustered histone 14","3",0,1
+"595","HACD3","3-hydroxyacyl-CoA dehydratase 3","34",0,1
+"596","HELLS","helicase, lymphoid specific","3",0,1
+"597","HNF4G","hepatocyte nuclear factor 4 gamma","3",0,1
+"598","HOOK1","hook microtubule tethering protein 1","3",0,1
+"599","HOXB1","homeobox B1","3",0,1
+"600","HRH3","histamine receptor H3","43",0,1
+"601","HSD17B6","hydroxysteroid 17-beta dehydrogenase 6","44",0,1
+"602","HTR1D","5-hydroxytryptamine receptor 1D","45",0,1
+"603","HTR1E","5-hydroxytryptamine receptor 1E","45",0,1
+"604","HTR2C","5-hydroxytryptamine receptor 2C","39",0,1
+"605","IBSP","integrin binding sialoprotein","3",0,1
+"606","ICOS","inducible T cell costimulator","3",0,1
+"607","IFIT1","interferon induced protein with tetratricopeptide repeats 1","3",0,1
+"608","IGF2BP1","insulin like growth factor 2 mRNA binding protein 1","3",0,1
+"609","IGSF5","immunoglobulin superfamily member 5","3",0,1
+"610","IL19","interleukin 19","46",0,1
+"611","IL20","interleukin 20","46",0,1
+"612","IL21","interleukin 21","3",0,1
+"613","IL21R","interleukin 21 receptor","3",0,1
+"614","IL2RB","interleukin 2 receptor subunit beta","3",0,1
+"615","ILDR1","immunoglobulin like domain containing receptor 1","3",0,1
+"616","ILDR2","immunoglobulin like domain containing receptor 2","3",0,1
+"617","INTS7","integrator complex subunit 7","3",0,1
+"618","IQGAP3","IQ motif containing GTPase activating protein 3","3",0,1
+"619","IRS4","insulin receptor substrate 4","3",0,1
+"620","ITGA11","integrin subunit alpha 11","3",0,1
+"621","JPT1","Jupiter microtubule associated homolog 1","47",0,1
+"622","JPT2","Jupiter microtubule associated homolog 2","47",0,1
+"623","KCNC1","potassium voltage-gated channel subfamily C member 1","48",0,1
+"624","KCNC2","potassium voltage-gated channel subfamily C member 2","48",0,1
+"625","KCNH1","potassium voltage-gated channel subfamily H member 1","3",0,1
+"626","KCNH6","potassium voltage-gated channel subfamily H member 6","3",0,1
+"627","KLF17","KLF transcription factor 17","23",0,1
+"628","KLHL38","kelch like family member 38","3",0,1
+"629","KNSTRN","kinetochore localized astrin (SPAG5) binding protein","3",0,1
+"630","KPNA7","karyopherin subunit alpha 7","3",0,1
+"631","KRT75","keratin 75","3",0,1
+"632","LACRT","lacritin","3",0,1
+"633","LCN1","lipocalin 1","3",0,1
+"634","LDLRAD1","low density lipoprotein receptor class A domain containing 1","6",0,1
+"635","LHX2","LIM homeobox 2","50",0,1
+"636","LHX9","LIM homeobox 9","50",0,1
+"637","LILRA4","leukocyte immunoglobulin like receptor A4","3",0,1
+"638","LILRB4","leukocyte immunoglobulin like receptor B4","8",0,1
+"639","LIN28A","lin-28 homolog A","3",0,1
+"640","LRRC46","leucine rich repeat containing 46","3",0,1
+"641","LYPD3","LY6/PLAUR domain containing 3","3",0,1
+"642","MAEL","maelstrom spermatogenic transposon silencer","51",0,1
+"643","MAGEA1","MAGE family member A1","52",0,1
+"644","MAGEA10","MAGE family member A10","3",0,1
+"645","MAGEA3","MAGE family member A3","53",0,1
+"646","MAGEA6","MAGE family member A6","53",0,1
+"647","MAGEB6","MAGE family member B6","52",0,1
+"648","MAL2","mal, T cell differentiation protein 2","3",0,1
+"649","MAP7","microtubule associated protein 7","3",0,1
+"650","MAPK8IP2","mitogen-activated protein kinase 8 interacting protein 2","3",0,1
+"651","MARCKSL1","MARCKS like 1","3",0,1
+"652","MCHR1","melanin concentrating hormone receptor 1","54",0,1
+"653","MCHR2","melanin concentrating hormone receptor 2","54",0,1
+"654","MCM2","minichromosome maintenance complex component 2","3",0,1
+"655","MELK","maternal embryonic leucine zipper kinase","3",0,1
+"656","MMP11","matrix metallopeptidase 11","3",0,1
+"657","MS4A1","membrane spanning 4-domains A1","3",0,1
+"658","MSI2","musashi RNA binding protein 2","3",0,1
+"659","MSLN","mesothelin","3",0,1
+"660","MSMB","microseminoprotein beta","3",0,1
+"661","MUC2","mucin 2, oligomeric mucus/gel-forming","3",0,1
+"662","MYBL1","MYB proto-oncogene like 1","3",0,1
+"663","MYBL2","MYB proto-oncogene like 2","3",0,1
+"664","MZB1","marginal zone B and B1 cell specific protein","35",0,1
+"665","NAT1","N-acetyltransferase 1","55",0,1
+"666","NAT16","N-acetyltransferase 16 (putative)","3",0,1
+"667","NAT2","N-acetyltransferase 2","55",0,1
+"668","NCAPH","non-SMC condensin I complex subunit H","3",0,1
+"669","NDST4","N-deacetylase and N-sulfotransferase 4","3",0,1
+"670","NDUFAF6","NADH:ubiquinone oxidoreductase complex assembly factor 6","37",0,1
+"671","NEK2","NIMA related kinase 2","3",0,1
+"672","NELL1","neural EGFL like 1","3",0,1
+"673","NLRP2","NLR family pyrin domain containing 2","56",0,1
+"674","NOX1","NADPH oxidase 1","3",0,1
+"675","NPY1R","neuropeptide Y receptor Y1","57",0,1
+"676","NUCB2","nucleobindin 2","58",0,1
+"677","NUF2","NUF2 component of NDC80 kinetochore complex","3",0,1
+"678","OLR1","oxidized low density lipoprotein receptor 1","3",0,1
+"679","ONECUT1","one cut homeobox 1","3",0,1
+"680","OR10H5","olfactory receptor family 10 subfamily H member 5","3",0,1
+"681","OR2AT4","olfactory receptor family 2 subfamily AT member 4","3",0,1
+"682","OR7D4","olfactory receptor family 7 subfamily D member 4","3",0,1
+"683","OTUB2","OTU deubiquitinase, ubiquitin aldehyde binding 2","3",0,1
+"684","OTX1","orthodenticle homeobox 1","3",0,1
+"685","PADI6","peptidyl arginine deiminase 6","56",0,1
+"686","PARD6B","par-6 family cell polarity regulator beta","3",0,1
+"687","PARPBP","PARP1 binding protein","3",0,1
+"688","PAX1","paired box 1","3",0,1
+"689","PCDH10","protocadherin 10","3",0,1
+"690","PCLAF","PCNA clamp associated factor","3",0,1
+"691","PCSK6","proprotein convertase subtilisin/kexin type 6","3",0,1
+"692","PDX1","pancreatic and duodenal homeobox 1","3",0,1
+"693","PLA2G10","phospholipase A2 group X","59",0,1
+"694","PLA2G2D","phospholipase A2 group IID","59",0,1
+"695","PLAAT4","phospholipase A and acyltransferase 4","20",0,1
+"696","PLS1","plastin 1","3",0,1
+"697","POLQ","DNA polymerase theta","3",0,1
+"698","POLR3K","RNA polymerase III subunit K","3",0,1
+"699","POMK","protein O-mannose kinase","21",0,1
+"700","PSG11","pregnancy specific beta-1-glycoprotein 11","3",0,1
+"701","PSRC1","proline and serine rich coiled-coil 1","3",0,1
+"702","PTPRT","protein tyrosine phosphatase receptor type T","3",0,1
+"703","PYCARD","PYD and CARD domain containing","61",0,1
+"704","PYDC1","pyrin domain containing 1","61",0,1
+"705","PYY","peptide YY","57",0,1
+"706","RAB11FIP1","RAB11 family interacting protein 1","62",0,1
+"707","RAB25","RAB25, member RAS oncogene family","62",0,1
+"708","RAB27B","RAB27B, member RAS oncogene family","63",0,1
+"709","RAB3D","RAB3D, member RAS oncogene family","3",0,1
+"710","RABIF","RAB interacting factor","3",0,1
+"711","RAD21L1","RAD21 cohesin complex component like 1","3",0,1
+"712","RAD54B","RAD54 homolog B","3",0,1
+"713","RAD54L","RAD54 like","3",0,1
+"714","RAMACL","RNA guanine-7 methyltransferase activating subunit like","29",0,1
+"715","RAMP1","receptor activity modifying protein 1","18",0,1
+"716","RCOR2","REST corepressor 2","3",0,1
+"717","RGS8","regulator of G protein signaling 8","3",0,1
+"718","RHCE","Rh blood group CcEe antigens","3",0,1
+"719","RHOH","ras homolog family member H","64",0,1
+"720","RIMS1","regulating synaptic membrane exocytosis 1","3",0,1
+"721","RSAD2","radical S-adenosyl methionine domain containing 2","3",0,1
+"722","S100A7","S100 calcium binding protein A7","3",0,1
+"723","S100A7A","S100 calcium binding protein A7A","3",0,1
+"724","S100P","S100 calcium binding protein P","3",0,1
+"725","SALL4","spalt like transcription factor 4","3",0,1
+"726","SCAMP5","secretory carrier membrane protein 5","3",0,1
+"727","SCIN","scinderin","3",0,1
+"728","SCUBE2","signal peptide, CUB domain and EGF like domain containing 2","3",0,1
+"729","SDR16C5","short chain dehydrogenase/reductase family 16C member 5","44",0,1
+"730","SDS","serine dehydratase","65",0,1
+"731","SDSL","serine dehydratase like","65",0,1
+"732","SERPINA12","serpin family A member 12","31",0,1
+"733","SERPINA5","serpin family A member 5","27",0,1
+"734","SERTAD4","SERTA domain containing 4","3",0,1
+"735","SGO1","shugoshin 1","3",0,1
+"736","SHCBP1","SHC binding and spindle associated 1","3",0,1
+"737","SIDT1","SID1 transmembrane family member 1","3",0,1
+"738","SIGLEC15","sialic acid binding Ig like lectin 15","3",0,1
+"739","SIX1","SIX homeobox 1","3",0,1
+"740","SKA1","spindle and kinetochore associated complex subunit 1","3",0,1
+"741","SKA3","spindle and kinetochore associated complex subunit 3","3",0,1
+"742","SLC1A1","solute carrier family 1 member 1","66",0,1
+"743","SLC1A6","solute carrier family 1 member 6","66",0,1
+"744","SLC44A4","solute carrier family 44 member 4","3",0,1
+"745","SLC4A8","solute carrier family 4 member 8","17",0,1
+"746","SLC7A5","solute carrier family 7 member 5","3",0,1
+"747","SMIM22","small integral membrane protein 22","67",0,1
+"748","SNTG1","syntrophin gamma 1","68",0,1
+"749","SORD","sorbitol dehydrogenase","2",0,1
+"750","SOX3","SRY-box transcription factor 3","3",0,1
+"751","SPAG6","sperm associated antigen 6","69",0,1
+"752","SPATA17","spermatogenesis associated 17","69",0,1
+"753","SPC24","SPC24 component of NDC80 kinetochore complex","3",0,1
+"754","SPC25","SPC25 component of NDC80 kinetochore complex","3",0,1
+"755","SPDYC","speedy/RINGO cell cycle regulator family member C","3",0,1
+"756","SPO11","SPO11 initiator of meiotic double stranded breaks","3",0,1
+"757","SQLE","squalene epoxidase","67",0,1
+"758","SSTR5","somatostatin receptor 5","3",0,1
+"759","STIL","STIL centriolar assembly protein","3",0,1
+"760","STXBP5L","syntaxin binding protein 5L","28",0,1
+"761","SYNDIG1","synapse differentiation inducing 1","3",0,1
+"762","SYNGR3","synaptogyrin 3","3",0,1
+"763","SYT5","synaptotagmin 5","3",0,1
+"764","SYT7","synaptotagmin 7","68",0,1
+"765","SYT9","synaptotagmin 9","3",0,1
+"766","SYTL5","synaptotagmin like 5","63",0,1
+"767","TBX20","T-box transcription factor 20","3",0,1
+"768","TCL1A","TCL1 family AKT coactivator A","3",0,1
+"769","TDRD1","tudor domain containing 1","3",0,1
+"770","TDRKH","tudor and KH domain containing","51",0,1
+"771","TEDC2","tubulin epsilon and delta complex 2","3",0,1
+"772","TENT5C","terminal nucleotidyltransferase 5C","3",0,1
+"773","TESMIN","testis expressed metallothionein like protein","3",0,1
+"774","TEX14","testis expressed 14, intercellular bridge forming factor","3",0,1
+"775","TFF3","trefoil factor 3","3",0,1
+"776","TH","tyrosine hydroxylase","3",0,1
+"777","TIGIT","T cell immunoreceptor with Ig and ITIM domains","3",0,1
+"778","TLR7","toll like receptor 7","3",0,1
+"779","TLX1","T cell leukemia homeobox 1","3",0,1
+"780","TMEM97","transmembrane protein 97","43",0,1
+"781","TMPRSS6","transmembrane serine protease 6","3",0,1
+"782","TNFSF18","TNF superfamily member 18","3",0,1
+"783","TNFSF4","TNF superfamily member 4","3",0,1
+"784","TOM1L1","target of myb1 like 1 membrane trafficking protein","3",0,1
+"785","TPRN","taperin","3",0,1
+"786","TRIM59","tripartite motif containing 59","70",0,1
+"787","TRIP13","thyroid hormone receptor interactor 13","3",0,1
+"788","TRPS1","transcriptional repressor GATA binding 1","3",0,1
+"789","TUBA4B","tubulin alpha 4b","3",0,1
+"790","UBE2T","ubiquitin conjugating enzyme E2 T","3",0,1
+"791","UGDH","UDP-glucose 6-dehydrogenase","38",0,1
+"792","UNC5D","unc-5 netrin receptor D","3",0,1
+"793","VANGL1","VANGL planar cell polarity protein 1","64",0,1
+"794","WDR62","WD repeat domain 62","3",0,1
+"795","WNT3A","Wnt family member 3A","3",0,1
+"796","WNT7B","Wnt family member 7B","3",0,1
+"797","ZDHHC22","zinc finger DHHC-type palmitoyltransferase 22","70",0,1
+"798","ZNF280A","zinc finger protein 280A","58",0,1
+"799","ZP4","zona pellucida glycoprotein 4","4",0,1
+"800","ZWINT","ZW10 interacting kinetochore protein","3",0,1
+"801","ZYG11A","zyg-11 family member A, cell cycle regulator","3",0,1
