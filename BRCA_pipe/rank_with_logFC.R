@@ -2,7 +2,7 @@ library(plyr)
 library(biomaRt)
 library(dplyr) #need to install tidy packages separately because of biomart thing
 library(tidyr)
-#library(tidyverse)
+library(tidyverse)
 library(progress)
 library(rDGIdb)
 
@@ -170,3 +170,4 @@ final_gene_counts <- merge(final_gene_counts, results, by.x = "external_gene_nam
 final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
 rownames(final_gene_counts) <- NULL
 
+save(final_gene_counts, file = "RData/rank_sensitivity_with_logFC.RData")
