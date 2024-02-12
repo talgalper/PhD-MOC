@@ -7,6 +7,8 @@ library(tidyverse)
 library(progress)
 library(rDGIdb)
 
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
 
 PCSF_master <- read.csv("intermediate/PCSF_master_unique.csv", row.names = 1)
 

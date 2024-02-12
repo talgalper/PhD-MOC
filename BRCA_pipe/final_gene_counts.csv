@@ -1,0 +1,98 @@
+"","external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0","counts_when_logFC_0","DistinctDrugCount"
+"1","ESR1","estrogen receptor 1",1799,3,6,6,0,8,194
+"2","KCNJ3","potassium inwardly rectifying channel subfamily J member 3",1523,65,75,11,0,35,3
+"3","MAGEA1","MAGE family member A1",1433,96,71,68,0,24,0
+"4","CNGA2","cyclic nucleotide gated channel subunit alpha 2",1334,1,2,2,0,2,1
+"5","MAGEA6","MAGE family member A6",1323,397,463,233,72,10,0
+"6","H2BC6","H2B clustered histone 6",1273,1,1,1,0,1,0
+"7","H2BC13","H2B clustered histone 13",1235,5,1,3,0,5,0
+"8","ASPM","assembly factor for spindle microtubules",1108,5,7,8,0,2,0
+"9","TRPA1","transient receptor potential cation channel subfamily A member 1",1077,1,9,13,0,9,10
+"10","MAGEA3","MAGE family member A3",1040,50,54,89,0,1,2
+"11","GATA3","GATA binding protein 3",965,169,198,343,0,0,13
+"12","ORC1","origin recognition complex subunit 1",897,9,11,13,0,0,0
+"13","CHRNA9","cholinergic receptor nicotinic alpha 9 subunit",807,1,5,6,0,2,2
+"14","H2BC9","H2B clustered histone 9",730,19,25,44,0,0,0
+"15","POLR2F","RNA polymerase II, I and III subunit F",724,60,63,1,0,23,0
+"16","COL10A1","collagen type X alpha 1 chain",711,85,89,140,0,0,0
+"17","H2BC5","H2B clustered histone 5",598,83,88,186,0,0,0
+"18","BPIFB1","BPI fold containing family B member 1",592,104,125,218,0,0,0
+"19","CARTPT","CART prepropeptide",481,132,158,1,0,26,4
+"20","FN1","fibronectin 1",480,164,211,21,0,0,4
+"21","CCNB1","cyclin B1",427,217,268,238,134,0,3
+"22","CNTNAP2","contactin associated protein 2",427,308,353,253,207,0,0
+"23","CST1","cystatin SN",420,369,408,132,312,0,0
+"24","KIF20A","kinesin family member 20A",416,407,367,183,330,0,0
+"25","IL19","interleukin 19",404,52,50,0,2,64,0
+"26","MMP11","matrix metallopeptidase 11",398,34,41,0,0,47,0
+"27","CBX2","chromobox 2",372,24,30,0,0,37,0
+"28","PLK1","polo like kinase 1",352,276,258,1,37,48,176
+"29","GJD3","gap junction protein delta 3",308,2,2,0,0,0,0
+"30","GABRQ","gamma-aminobutyric acid type A receptor subunit theta",298,10,5,0,0,11,55
+"31","ABCA12","ATP binding cassette subfamily A member 12",294,221,434,85,117,55,0
+"32","PLA2G2D","phospholipase A2 group IID",278,149,171,0,43,13,0
+"33","BMPR1B","bone morphogenetic protein receptor type 1B",275,13,16,0,0,21,0
+"34","CALML5","calmodulin like 5",239,54,67,0,12,3,0
+"35","NEIL3","nei like DNA glycosylase 3",233,120,126,0,20,0,0
+"36","H2AX","H2A.X variant histone",231,404,37,313,291,196,4
+"37","POTEC","POTE ankyrin domain family member C",231,21,13,17,0,0,0
+"38","ANLN","anillin, actin binding protein",198,251,253,47,418,0,0
+"39","KIF18B","kinesin family member 18B",190,4,3,0,0,4,0
+"40","TOP2A","DNA topoisomerase II alpha",176,43,33,0,7,17,80
+"41","CCT3","chaperonin containing TCP1 subunit 3",152,4,4,0,0,3,0
+"42","EZR","ezrin",142,109,122,0,259,0,0
+"43","IFNL2","interferon lambda 2",136,67,56,0,99,2,0
+"44","CLTC","clathrin heavy chain",134,50,85,59,191,0,0
+"45","CDC20B","cell division cycle 20B",132,7,9,0,8,1,0
+"46","GABRA3","gamma-aminobutyric acid type A receptor subunit alpha3",132,1,1,0,0,1,76
+"47","H3Y1","H3.Y histone 1",116,2,2,0,1,0,0
+"48","CDC45","cell division cycle 45",104,1,3,0,3,3,0
+"49","F2RL2","coagulation factor II thrombin receptor like 2",100,2,2,0,3,3,2
+"50","ACTL6B","actin like 6B",93,13,17,0,22,2,0
+"51","H2BC15","H2B clustered histone 15",84,14,1,0,23,9,0
+"52","CENPE","centromere protein E",72,9,6,0,18,5,0
+"53","H2BC11","H2B clustered histone 11",70,57,18,0,165,0,0
+"54","NOX1","NADPH oxidase 1",65,237,331,596,450,215,2
+"55","PRAME","PRAME nuclear receptor transcriptional regulator",58,99,0,118,0,24,0
+"56","H2BC12","H2B clustered histone 12",54,5,3,14,0,13,0
+"57","POMK","protein O-mannose kinase",44,11,1,21,0,8,0
+"58","ATP6V0A4","ATPase H+ transporting V0 subunit a4",43,69,4,37,0,77,0
+"59","IL1B","interleukin 1 beta",30,136,113,210,228,0,37
+"60","H2BC17","H2B clustered histone 17",27,268,114,288,449,190,0
+"61","CENPU","centromere protein U",23,66,98,113,376,113,0
+"62","DHCR7","7-dehydrocholesterol reductase",23,65,4,0,55,62,0
+"63","ZDHHC22","zinc finger DHHC-type palmitoyltransferase 22",22,60,48,0,223,69,0
+"64","CCNA2","cyclin A2",21,4,4,9,0,17,4
+"65","SYT1","synaptotagmin 1",21,10,0,13,0,8,1
+"66","KIF11","kinesin family member 11",18,174,1,87,25,5,10
+"67","PIK3CG","phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit gamma",17,60,2,11,1,67,87
+"68","COL1A2","collagen type I alpha 2 chain",14,13,205,165,212,172,2
+"69","OIP5","Opa interacting protein 5",14,4,0,0,2,4,0
+"70","PSG11","pregnancy specific beta-1-glycoprotein 11",14,47,83,130,156,0,0
+"71","LGALS9B","galectin 9B",13,43,0,1,67,31,0
+"72","KCNK1","potassium two pore domain channel subfamily K member 1",11,39,0,0,35,23,0
+"73","MELK","maternal embryonic leucine zipper kinase",9,21,0,0,25,4,17
+"74","FBXO45","F-box protein 45",8,57,10,182,32,69,0
+"75","TCL1B","TCL1 family AKT coactivator B",8,1,0,1,0,0,0
+"76","PBK","PDZ binding kinase",7,123,0,51,124,0,5
+"77","ROBO2","roundabout guidance receptor 2",6,112,145,414,280,155,0
+"78","KCNK6","potassium two pore domain channel subfamily K member 6",5,4,0,1,0,4,0
+"79","EZH2","enhancer of zeste 2 polycomb repressive complex 2 subunit",4,3,14,0,60,31,7
+"80","H2BC4","H2B clustered histone 4",4,2,0,2,0,0,0
+"81","NOX5","NADPH oxidase 5",4,88,0,40,74,70,0
+"82","NOX5","NADPH oxidase 5",4,88,0,40,74,70,0
+"83","NOX5","NADPH oxidase 5",4,88,0,40,74,70,0
+"84","NOX5","NADPH oxidase 5",4,88,0,40,74,70,0
+"85","SSTR5","somatostatin receptor 5",4,3,0,0,3,1,10
+"86","BPIFA2","BPI fold containing family A member 2",3,37,135,375,247,93,0
+"87","CENPI","centromere protein I",3,72,0,116,143,1,0
+"88","H2AC6","H2A clustered histone 6",3,18,62,227,121,76,0
+"89","SIDT1","SID1 transmembrane family member 1",3,86,27,287,186,63,0
+"90","ASIC5","acid sensing ion channel subunit family member 5",2,1,0,1,1,0,0
+"91","KIF14","kinesin family member 14",2,0,279,286,236,144,0
+"92","MSLN","mesothelin",2,17,7,106,56,0,1
+"93","SCN1A","sodium voltage-gated channel alpha subunit 1",2,0,1,0,0,0,60
+"94","BUB1","BUB1 mitotic checkpoint serine/threonine kinase",1,0,152,145,142,60,0
+"95","H4C8","H4 clustered histone 8",1,0,20,13,7,4,0
+"96","OR10H5","olfactory receptor family 10 subfamily H member 5",1,0,7,0,7,0,0
+"97","TTK","TTK protein kinase",1,0,2,3,3,2,3

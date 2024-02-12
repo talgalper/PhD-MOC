@@ -170,4 +170,28 @@ final_gene_counts <- merge(final_gene_counts, results, by.x = "external_gene_nam
 final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
 rownames(final_gene_counts) <- NULL
 
+
+
+# DGIdb query one by one
+results <- data.frame()
+
+for (i in seq_along(final_gene_counts$external_gene_name)) {
+  gene <- final_gene_counts$external_gene_name[i]
+  cat(paste0("Querying ", gene, ": ", i, " of ", length(final_gene_counts$description), "\n"))
+  
+  DGIdb <- queryDGIdb(gene)
+  DGIresults <- byGene(DGIdb)
+  results <- rbind(results, DGIresults)
+}
+
+results <- subset(results, select = c("Gene", "DistinctDrugCount"))
+final_gene_counts <- merge(final_gene_counts, results, by.x = "external_gene_name", by.y = "Gene")
+final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
+rownames(final_gene_counts) <- NULL
+
+
+
+
 save(final_gene_counts, file = "RData/rank_sensitivity_with_logFC.RData")
+
+
