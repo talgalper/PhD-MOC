@@ -1,10 +1,8 @@
-library(TCGAbiolinks)
-library(SummarizedExperiment)
 
 ## Note: Only extracts "open" source samples. Downloads may be large depending on project size.
 ## Data will be downloaded into a new directory called GDCdata
 
-projects <- getGDCprojects() # view projects, use project name from "id" column
+#projects <- getGDCprojects() # view projects, use project name from "id" column
 
 
 
