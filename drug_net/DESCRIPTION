@@ -1,0 +1,5 @@
+Package: drug_net
+Type: Package
+Title: RNA-seq Network Analysis Package
+Version: 0.0.1.0
+RoxygenNote: 7.3.1

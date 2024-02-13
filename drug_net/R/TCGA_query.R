@@ -1,21 +1,28 @@
 library(TCGAbiolinks)
+library(SummarizedExperiment)
 
+## Note: Only extracts "open" source samples. Downloads may be large depending on project size.
+## Data will be downloaded into a new directory called GDCdata
 
-### Retreive transcriptoimic data from TCGA ###
-## project name: TCGA project name i.e. "TCGA-BRCA"
-## subtype: cancer subtype input using correct TCGA notaiton i.e. "BRCA.Her2"
-## get projects: boolean input to check current project details
-## view_clinical: boolean input to check figo stage of selected samples
-
-## note: only extracts "open" source samples
+projects <- getGDCprojects() # view projects, use project name from "id" column
 
 
 
-get_TCGA_RNAseq_data <- function(project_name, subtype, get_projects = FALSE, view_clinical = FALSE) {
+#' Retreive transcriptomic data from TCGA
+#' 
+#' @param project_name The TCGA project name
+#' @param subtype The cancer subtype
+#' @param view_clincal Boolean value to view clinical figo stage of samples
+#' @param manifest_file Opt to keep manifest file that comes with downloaded GDC data
+#' @return Data frame with unstranded counts
+#' @examples
+#' data <- get_TCGA_RNAseq_data(TCGA-BRCA, LumB)
+#' @export
+get_TCGA_RNAseq_data <- function(project_name, subtype, view_clinical = FALSE, manifest_file = FALSE) {
   
   query_TCGA <- GDCquery(project = project_name,
-                           access = "open", 
-                           data.category = "Transcriptome Profiling")
+                         access = "open", 
+                         data.category = "Transcriptome Profiling")
   
   query_output <- getResults(query_TCGA) # make initial query
   
@@ -34,6 +41,10 @@ get_TCGA_RNAseq_data <- function(project_name, subtype, get_projects = FALSE, vi
     if (tolower(readline("No subtype input, get all project data? (y/n): ") == "y")) {
       GDCdownload(query_TCGA)
       
+      if (manifest_file == FALSE) {
+        file.remove("MANIFEST.txt")
+      }
+      
       data <- GDCprepare(query_TCGA, summarizedExperiment = T)
       
       unstranded <- assay(data, "unstranded")  
@@ -47,11 +58,11 @@ get_TCGA_RNAseq_data <- function(project_name, subtype, get_projects = FALSE, vi
     
   } else {
     subtypes <- PanCancerAtlas_subtypes()
-    if (subtype %in% subtypes$Subtype_Selected) {
+    if (subtype %in% subtypes$Subtype_mRNA) {
       common <- query_output[query_output$cases %in% subtypes$pan.samplesID, ]
       common <- merge(query_output, subtypes, by.x = "cases", by.y = "pan.samplesID")
-      selected_barcodes <- subset(common, select = c("cases", "Subtype_Selected", "sample_type"))
-      selected_barcodes <- selected_barcodes[selected_barcodes$Subtype_Selected == subtype, ]
+      selected_barcodes <- subset(common, select = c("cases", "Subtype_mRNA", "sample_type"))
+      selected_barcodes <- selected_barcodes[selected_barcodes$Subtype_mRNA == subtype, ]
       
       subtype_query <- GDCquery(project = "TCGA-BRCA",
                                 access = "open",
@@ -59,6 +70,10 @@ get_TCGA_RNAseq_data <- function(project_name, subtype, get_projects = FALSE, vi
                                 barcode = selected_barcodes$cases)
       
       GDCdownload(subtype_query)
+      
+      if (manifest_file == FALSE) {
+        file.remove("MANIFEST.txt")
+      }
       
       data <- GDCprepare(subtype_query, summarizedExperiment = T)
       
@@ -74,12 +89,22 @@ get_TCGA_RNAseq_data <- function(project_name, subtype, get_projects = FALSE, vi
   }
 }
 
+
+#' Show subtypes for a TCGA project
+#' 
+#' @param project Name of TCGA project
+#' @return List of subtypes associated with TCGA project
+#' @examples
+#' subtypes <- get_subtypes(BRCA)
+#' @export
 get_subtypes <- function(project) {
   subtypes <- PanCancerAtlas_subtypes()
-  subtypes <- subset(subtypes, select = c("cancer.type", "Subtype_Selected"))
-  project_subtypes <- 
+  subtypes <- subset(subtypes, select = c("cancer.type", "Subtype_mRNA"))
+  project_subtypes <- subtypes[subtypes$cancer.type == project, ]
+  
+  if (nrow(project_subtypes) == 0){
+    cat("No subtypes found for project name: ", project)
+  } else {
+    cat(project, " subtypes include: ", paste(unique(project_subtypes$Subtype_mRNA), collapse = ", "))
+  }
 }
-
-
-
-get_TCGA_RNAseq_data(project_name = "TCGA-BRCA", subtype = "BRCA.")
