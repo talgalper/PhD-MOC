@@ -250,7 +250,7 @@ marker_genes <- subset(gene_data, external_gene_name %in% c("ERBB2", "MKI67", "P
 # check to see if genes that at all genes were converted at least once
 missing_genes <- anti_join(data, gene_id, by = "gene_id")
 
-write.table(gene_data$external_gene_name, "intermediate/gene_list.txt", quote = F, row.names = F, col.names = F)
+write.table(gene_data$external_gene_name, "intermediate/Her2/gene_list.txt", quote = F, row.names = F, col.names = F)
 
 
 #### get interaction data ####
