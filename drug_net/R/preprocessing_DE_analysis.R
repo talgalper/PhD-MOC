@@ -92,6 +92,9 @@ remove_low_activity_genes <- function(data, top_x_samples, min_samples) {
 #' @return Dataframe of significantly differentially expressed genes as well as plots.
 #' @export
 TCGA_DE_analysis <- function(data, show_plots = TRUE) {
+  
+  cat("Make take a moment...")
+  
   # Select the columns that start with "TCGA"
   cols <- grep("^TCGA", colnames(data))
   
@@ -104,7 +107,7 @@ TCGA_DE_analysis <- function(data, show_plots = TRUE) {
   # Create the group variable
   group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
   
-  data <- DGEList(counts = BRCA_data, group = group)
+  data <- DGEList(counts = data, group = group)
   
   design <- model.matrix(~group)
   

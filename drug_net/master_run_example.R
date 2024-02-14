@@ -3,6 +3,7 @@ library(tidyverse)
 library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(edgeR)
+library(biomaRt)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
@@ -20,4 +21,4 @@ data <- TCGA_GTEx_combine(TCGA_data, GTEx_data = GTEx_raw)
 data_processed <- remove_low_activity_genes(data, top_x_samples = 0.50, min_samples = 0.10)
 
 # differential expression analysis
-DE_data <- TCGA_DE_analysis(data_processed) # test this and make sure plots come up
+DE_data <- TCGA_DE_analysis(data_processed)
