@@ -9,4 +9,5 @@ Imports:
   SummarizedExperiment,
   edgeR,
   tidyverse,
-  tibble
+  tibble,
+  biomaRt

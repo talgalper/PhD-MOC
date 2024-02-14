@@ -94,6 +94,7 @@ get_TCGA_RNAseq_data <- function(project_name, subtype, view_clinical = FALSE, m
 #' @return List of subtypes associated with TCGA project
 #' @examples
 #' subtypes <- get_subtypes(BRCA)
+#' @return Returns the availiable subtypes for a given TCGA project
 #' @export
 get_subtypes <- function(project) {
   subtypes <- PanCancerAtlas_subtypes()

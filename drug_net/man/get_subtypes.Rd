@@ -11,6 +11,8 @@ get_subtypes(project)
 }
 \value{
 List of subtypes associated with TCGA project
+
+Returns the availiable subtypes for a given TCGA project
 }
 \description{
 Show subtypes for a TCGA project

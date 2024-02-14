@@ -14,7 +14,7 @@ remove_low_activity_genes(data, top_x_samples, min_samples)
 \item{min_sample}{Percentage value indicating the number of samples the trasncript must appear within the range specified in `top_x_samples`}
 }
 \value{
-data frame with low activity genes removed
+data frame with low activity genes remove.
 }
 \description{
 Removes low activity transcripts from data. Requires a file containing all samples including healthy/control and disease groups.

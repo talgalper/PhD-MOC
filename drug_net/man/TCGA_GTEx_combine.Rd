@@ -11,6 +11,9 @@ TCGA_GTEx_combine(TCGA_data, GTEx_data)
 
 \item{GTEx_data}{Data downloaded from the GTEx portal}
 }
+\value{
+Returns a dataframe with the two input datas combined, ready for differential expression analysis
+}
 \description{
 combines TCGA and GTEx data for preprocessing
 }

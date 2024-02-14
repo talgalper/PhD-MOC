@@ -4,6 +4,9 @@ library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(edgeR)
 
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+
 # get TCGA data
 TCGA_data <- get_TCGA_RNAseq_data(project_name = "TCGA-BRCA", subtype = "Basal")
 
@@ -15,3 +18,6 @@ data <- TCGA_GTEx_combine(TCGA_data, GTEx_data = GTEx_raw)
 
 # remove low activity genes
 data_processed <- remove_low_activity_genes(data, top_x_samples = 0.50, min_samples = 0.10)
+
+# differential expression analysis
+DE_data <- TCGA_DE_analysis(data_processed) # test this and make sure plots come up

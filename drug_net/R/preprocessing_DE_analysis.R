@@ -8,6 +8,7 @@
 #' @examples
 #' GTEx_data <- read.table("bulk-gex_v8_rna-seq_counts-by-tissue_gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2, header = T)
 #' data <- TCGA_GTEx_combine(TCGA_data, GTEx_data)
+#' @return Returns a dataframe with the two input datas combined, ready for differential expression analysis
 #' @export
 TCGA_GTEx_combine <- function(TCGA_data, GTEx_data) {
   GTEx_raw <- GTEx_data
@@ -29,9 +30,9 @@ TCGA_GTEx_combine <- function(TCGA_data, GTEx_data) {
 #' @param data data contianing healthy/control and disease groups
 #' @param top_x_samples percentile range that a trasncript must appear in
 #' @param min_sample Percentage value indicating the number of samples the trasncript must appear within the range specified in `top_x_samples`
-#' @return data frame with low activity genes removed
 #' @examples
 #' treated_data <- remove_low_activity_genes(data, top_x_samples = 0.50, min_samples = 0.10)
+#' @return data frame with low activity genes remove.
 #' @export
 remove_low_activity_genes <- function(data, top_x_samples, min_samples) {
   
@@ -88,6 +89,7 @@ remove_low_activity_genes <- function(data, top_x_samples, min_samples) {
 #' @examples
 #' # example code
 #' DE_results <- TCGA_DE_analysis(data)
+#' @return Dataframe of significantly differentially expressed genes as well as plots.
 #' @export
 TCGA_DE_analysis <- function(data, show_plots = TRUE) {
   # Select the columns that start with "TCGA"
@@ -158,36 +160,64 @@ TCGA_DE_analysis <- function(data, show_plots = TRUE) {
 }
 
 
-
-
-
-#### Convert to Gene IDs and get interaction data ####
-
-data <- subset(dif_exp, select = c("gene_id", "logFC"))
-
-# convert to gene symbol
-gene_id <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
-                 filters = "ensembl_gene_id", 
-                 values = data$gene_id, 
-                 mart = ensembl)
-
-# remove empty rows
-gene_id <- subset(gene_id, external_gene_name != "")
-
-# check for duplicate uniprot ids
-gene_id <- distinct(gene_id)
-
-# merge back with original data
-colnames(gene_id)[1] <- "gene_id"
-
-gene_data <- merge(gene_id, data, by = "gene_id")
-
-gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
-
-marker_genes <- subset(gene_data, external_gene_name %in% c("ERBB2", "MKI67", "PGR", "ESR2"))
-
-
-# check to see if genes that at all genes were converted at least once
-missing_genes <- anti_join(data, gene_id, by = "gene_id")
-
-write.table(gene_data$external_gene_name, "intermediate/Her2/gene_list.txt", quote = F, row.names = F, col.names = F)
+#' Convert IDs using biomaRt human ensembl database
+#' 
+#' @param gene_list A vector containing the terms to be converted
+#' @param from The format of the input data
+#' @param to The format of the desired output
+#' @param description If changed to TRUE will include an addtional column with description of term
+#' @examples
+#' ID_converted <- convert_ID(gene_list, from = "ensembl_gene_id", to = "external_gene_name")
+#' @return description
+#' @export
+convert_ID <- function(gene_list, from, to, description = FALSE) {
+  
+  if (!exists("ensembl")) {
+    ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+  }
+  
+  attributes <- listAttributes(ensembl)
+  
+  if (from %in% attributes$name) {
+    
+    id_convert <- getBM(attributes = c(from, to), 
+                        filters = from, 
+                        values = gene_list, 
+                        mart = ensembl)
+    
+    id_convert <- subset(id_convert, to != "")
+    
+    # check for duplicate uniprot ids
+    id_convert <- distinct(id_convert)
+    
+    missing_terms <- setdiff(gene_list, id_convert[[from]])
+    
+    if (description == TRUE) {
+      # add gene description
+      gene_description <- getBM(attributes = c(to, "description"), 
+                                filters = to, 
+                                values = id_convert[[to]], 
+                                mart = ensembl)
+      
+      id_description <- merge(id_convert, gene_description, by = to)
+      id_description$description <- gsub("\\s*\\[.*?\\]", "", id_description$description)
+      
+      if (length(missing_terms != 0)){
+        cat("Could not be converted:", paste(missing_terms, collapse = ", "))
+      }
+      
+      return(id_description)
+    }
+    
+    if (length(missing_terms != 0)){
+      cat("Could not be converted:", paste(missing_terms, collapse = ", "))
+    }
+    
+    return(id_convert)
+    
+  } else {
+    cat("ID name not found. Run following code for attribute list: ", "\n")
+    cat("ensembl <- useMart('ensembl', dataset = 'hsapiens_gene_ensembl')", "\n")
+    cat("attributes <- listAttributes(ensembl)")
+  }
+}
