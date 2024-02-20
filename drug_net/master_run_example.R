@@ -1,9 +1,10 @@
-library(drug_net)
 library(tidyverse)
 library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(edgeR)
 library(biomaRt)
+library(roxygen2)
+library(drug_net)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 

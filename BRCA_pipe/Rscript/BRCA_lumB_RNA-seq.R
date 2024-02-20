@@ -665,18 +665,8 @@ save(final_gene_counts, gene_counts_citation, file = "RData/druggability_rank.RD
 
 
 
-#### normalise counts for druggability score ####
-
-norm_scores <- data.frame(gene = final_gene_counts$external_gene_name,
-                          description = final_gene_counts$description,
-                          counts_norm = (final_gene_counts$count - min(final_gene_counts$count)) / (max(final_gene_counts$count) - min(final_gene_counts$count)),
-                          DistinctDrugCount = final_gene_counts$DistinctDrugCount)
 
 
-norm_scores_cit <- data.frame(gene = gene_counts_citation$external_gene_name,
-                              description = gene_counts_citation$description,
-                              counts_norm = (gene_counts_citation$count - min(gene_counts_citation$count)) / (max(gene_counts_citation$count) - min(gene_counts_citation$count)),
-                              DistinctDrugCount = gene_counts_citation$DistinctDrugCount)
 
 
 
