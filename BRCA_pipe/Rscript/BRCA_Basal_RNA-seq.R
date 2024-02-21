@@ -245,7 +245,7 @@ gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
 # check to see if genes that at all genes were converted at least once
 missing_genes <- anti_join(data, gene_id, by = "gene_id")
 
-write.table(gene_data$external_gene_name, "intermediate/gene_list.txt", quote = F, row.names = F, col.names = F)
+write.table(gene_data$external_gene_name, "intermediate/basal/gene_list.txt", quote = F, row.names = F, col.names = F)
 
 
 #### get interaction data ####
