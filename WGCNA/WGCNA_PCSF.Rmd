@@ -18,6 +18,7 @@ library(WGCNA)
 library(edgeR)
 library(ggrepel)
 library(enrichR)
+library(matrixStats)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 ```
@@ -114,7 +115,13 @@ wgcna_data <- subset(kylie_data, !(rownames(kylie_data) %in% gene_names[failed_g
 
 ## Description
 
-In this pipeline MOC RNA-Seq data is analysed using WGCNA to obtain two sepetarate co-expression networks for benign and disease groups. Several filtering steps were undertaken in order to reduce noise:
+In this pipeline MOC RNA-Seq data is analysed using WGCNA to obtain two separate co-expression networks for benign and disease groups. Several filtering steps were undertaken in order to reduce noise:
+
+*   Benign = 11
+*   Stage I = 36
+*   Stage II = 2
+*   Stage III = 5
+*   Stage IV = 1
 
 -   Initial gene set consists of 14,889 genes
 -   The goodSamplesGenes function was run to check for "bad" samples and to check for 0 variance genes
@@ -301,9 +308,24 @@ citation_scores <- read.csv("citation_scores.csv")
 PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
 PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
 PCSF_results <- PCSF_results[order(-PCSF_results$druggability), ]
-rownames(PCSF_results) <- NULL
+PCSF_results_unique <- PCSF_results[!duplicated(PCSF_results$external_gene_name), ]
 
-kable(PCSF_results, format = "html", caption = "PCSF results") %>%
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = PCSF_results_unique$external_gene_name, 
+                          mart = ensembl)
+gene_description <- gene_description[!duplicated(gene_description$external_gene_name), ]
+
+PCSF_results_unique <- merge(gene_description, PCSF_results_unique, by = "external_gene_name")
+
+PCSF_results_unique <- PCSF_results_unique[order(-PCSF_results_unique$druggability), ]
+
+PCSF_results_unique$description <- gsub("\\s*\\[.*?\\]", "", PCSF_results_unique$description)
+
+rownames(PCSF_results_unique) <- NULL
+
+kable(PCSF_results_unique, format = "html", caption = "PCSF results") %>%
 kable_styling(full_width = FALSE) %>%
 scroll_box(height = "400px")
 ```
@@ -328,7 +350,7 @@ missing_genes
 
 The next section of this document is dedicated to the ranking of genes based on a combination of scoring methods. This ranking system can be easily interchangeable with other/new data types. Include here is the addition of cryptic pocket scores which were analysed in python using the same AlphaFold structures as done with Fpocket. Any structures less than 80 amino acids in length were removed per the PocketMiner methodology. Using a 10 amino acid "window" average, pockets are calculated per amino acid (also as per PocketMiner methodology).
 
-The rank sensitivity test was not performed with the PocketMiner data becasue its not very easy to include new data types like the rank aggregation. Can be done if required but the first comparison shows they return similar results anyway so not much value in running again if rank aggregation method is far better. It also has the benefit of being accompanied by a comprehensive study for the method.
+The rank sensitivity test was not performed with the PocketMiner data because its not very easy to include new data types like the rank aggregation. Can be done if required but the first comparison shows they return similar results anyway so not much value in running again if rank aggregation method is far better. It also has the benefit of being accompanied by a comprehensive study for the method.
 
 <br>
 
@@ -338,7 +360,7 @@ The rank sensitivity test was not performed with the PocketMiner data becasue it
 
 ```{r Robust Rank Aggregation, echo=FALSE}
 # Robust Rank Agrregation
-betweenness <- subset(PCSF_results, select = c("ID", "betweenness"))
+betweenness <- subset(PCSF_results_unique, select = c("ID", "betweenness"))
 betweenness <- distinct(betweenness)
 betweenness$betweenness <- (betweenness$betweenness - min(betweenness$betweenness)) / (max(betweenness$betweenness) - min(betweenness$betweenness))
 betweenness <- betweenness[order(betweenness$betweenness, decreasing = T), ]
@@ -351,14 +373,14 @@ centrality <- centrality[order(centrality$degree_centrality, decreasing = T), ]
 centrality <- centrality$ID
 
 # log transformation of citation scores
-citation <- subset(PCSF_results, select = c("ID", "citation_score"))
+citation <- subset(PCSF_results_unique, select = c("ID", "citation_score"))
 citation <- distinct(citation)
 citation$citation_score <- log(citation$citation_score + 1)
 citation$citation_score <- (citation$citation_score - min(citation$citation_score)) / (max(citation$citation_score) - min(citation$citation_score))
 citation <- citation[order(citation$citation_score, decreasing = F), ]
 citation <- citation$ID
 
-druggability_data <- subset(PCSF_results, select = c("ID", "druggability", "num_drug_pockets"))
+druggability_data <- subset(PCSF_results_unique, select = c("ID", "druggability", "num_drug_pockets"))
 druggability_data <- distinct(druggability_data)
 druggability <- druggability_data[order(druggability_data$druggability, decreasing = T), ]
 druggability <- druggability$ID
@@ -371,7 +393,7 @@ rankings <- list(betweenness, centrality, citation, druggability, num_drug_pocke
 aggregate_ranks <- aggregateRanks(glist = rankings)
 
 # merge gene names back in
-temp <- subset(PCSF_results, select = c("external_gene_name", "ID"))
+temp <- subset(PCSF_results_unique, select = c("external_gene_name", "ID"))
 aggregate_ranks <- merge(temp, aggregate_ranks, by.x = "ID", by.y = "Name")
 rm(temp)
 
@@ -390,12 +412,12 @@ scroll_box(height = "400px")
 
 ```{r Rank Sensitivity, echo=FALSE}
 
-betweeness_norm <- (PCSF_results$betweenness - min(PCSF_results$betweenness)) / (max(PCSF_results$betweenness) - min(PCSF_results$betweenness))
+betweeness_norm <- (PCSF_results_unique$betweenness - min(PCSF_results_unique$betweenness)) / (max(PCSF_results_unique$betweenness) - min(PCSF_results_unique$betweenness))
 
-centrality_norm <- (PCSF_results$degree_centrality - min(PCSF_results$degree_centrality)) / (max(PCSF_results$degree_centrality) - min(PCSF_results$degree_centrality))
+centrality_norm <- (PCSF_results_unique$degree_centrality - min(PCSF_results_unique$degree_centrality)) / (max(PCSF_results_unique$degree_centrality) - min(PCSF_results_unique$degree_centrality))
 
 # log transformation
-citation_norm <- log(PCSF_results$citation_score + 1)
+citation_norm <- log(PCSF_results_unique$citation_score + 1)
 citation_norm <- (citation_norm - min(citation_norm)) / (max(citation_norm) - min(citation_norm))
 
 
@@ -437,11 +459,11 @@ for (betweeness_w in betweeness_w_values) {
           # Combine scores using current weights
           combined_score <- betweeness_w * betweeness_norm +
             centrality_w * centrality_norm +
-            druggability_w * PCSF_results$druggability -
+            druggability_w * PCSF_results_unique$druggability -
             citation_w * citation_norm
           
           # Rank the genes based on the combined score
-          PCSF_results_edit <- PCSF_results
+          PCSF_results_edit <- PCSF_results_unique
           PCSF_results_edit$combined_score <- combined_score
           PCSF_results_edit <- PCSF_results_edit[order(-PCSF_results_edit$combined_score), ]
           
@@ -517,27 +539,27 @@ scroll_box(height = "400px")
 
 ```{r Robust Rank Aggregation w Cryptic Pockets, echo=FALSE}
 # Robust Rank Aggregation
-betweenness <- subset(PCSF_results, select = c("ID", "betweenness"))
+betweenness <- subset(PCSF_results_unique, select = c("ID", "betweenness"))
 betweenness <- distinct(betweenness)
 betweenness$betweenness <- (betweenness$betweenness - min(betweenness$betweenness)) / (max(betweenness$betweenness) - min(betweenness$betweenness))
 betweenness <- betweenness[order(betweenness$betweenness, decreasing = T), ]
 betweenness <- betweenness$ID
 
-centrality <- subset(PCSF_results, select = c("ID", "degree_centrality"))
+centrality <- subset(PCSF_results_unique, select = c("ID", "degree_centrality"))
 centrality <- distinct(centrality)
 centrality$degree_centrality <- (centrality$degree_centrality - min(centrality$degree_centrality)) / (max(centrality$degree_centrality) - min(centrality$degree_centrality))
 centrality <- centrality[order(centrality$degree_centrality, decreasing = T), ]
 centrality <- centrality$ID
 
 # log transformation of citation scores
-citation <- subset(PCSF_results, select = c("ID", "citation_score"))
+citation <- subset(PCSF_results_unique, select = c("ID", "citation_score"))
 citation <- distinct(citation)
 citation$citation_score <- log(citation$citation_score + 1)
 citation$citation_score <- (citation$citation_score - min(citation$citation_score)) / (max(citation$citation_score) - min(citation$citation_score))
 citation <- citation[order(citation$citation_score, decreasing = F), ]
 citation <- citation$ID
 
-druggability_data <- subset(PCSF_results, select = c("ID", "druggability", "num_drug_pockets"))
+druggability_data <- subset(PCSF_results_unique, select = c("ID", "druggability", "num_drug_pockets"))
 druggability_data <- distinct(druggability_data)
 druggability <- druggability_data[order(druggability_data$druggability, decreasing = T), ]
 druggability <- druggability$ID
@@ -547,7 +569,7 @@ num_drug_pockets <- num_drug_pockets$ID
 
 # add the PocketMiner data as another ranking
 pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results.csv")
-pocketminer_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results$ID, ]
+pocketminer_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results_unique$ID, ]
 
 pocketminer_data <- pocketminer_data[order(pocketminer_data$max_hit, decreasing = T), ]
 cryptic_pockets <- pocketminer_data$ID
@@ -562,7 +584,7 @@ rankings <- list(betweenness, centrality, citation, druggability, num_drug_pocke
 aggregate_ranks <- aggregateRanks(glist = rankings)
 
 # merge gene names back in
-temp <- subset(PCSF_results, select = c("external_gene_name", "ID"))
+temp <- subset(PCSF_results_unique, select = c("external_gene_name", "ID"))
 aggregate_ranks <- merge(temp, aggregate_ranks, by.x = "ID", by.y = "Name")
 rm(temp)
 
@@ -600,7 +622,7 @@ for (id in small_structs){
   IDs <- append(IDs, id)
 }
 
-PCSF_results_updated <- PCSF_results[!(PCSF_results$ID %in% IDs), ]
+PCSF_results_updated <- PCSF_results_unique[!(PCSF_results_unique$ID %in% IDs), ]
 
 plot_data <- pocketminer_data[pocketminer_data$ID %in% PCSF_results_updated$ID, ]
 
