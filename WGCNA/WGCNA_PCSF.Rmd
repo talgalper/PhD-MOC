@@ -398,6 +398,20 @@ aggregate_ranks <- merge(temp, aggregate_ranks, by.x = "ID", by.y = "Name")
 rm(temp)
 
 aggregate_ranks <- aggregate_ranks[order(aggregate_ranks$Score), ]
+
+
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = aggregate_ranks$external_gene_name, 
+                          mart = ensembl)
+
+aggregate_ranks <- merge(gene_description, aggregate_ranks, by = "external_gene_name")
+
+aggregate_ranks <- aggregate_ranks[order(aggregate_ranks$Score), ]
+
+aggregate_ranks$description <- gsub("\\s*\\[.*?\\]", "", aggregate_ranks$description)
+
 rownames(aggregate_ranks) <- NULL
 
 # remove scientific notation
