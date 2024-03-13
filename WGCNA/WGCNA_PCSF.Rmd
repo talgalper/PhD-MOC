@@ -528,6 +528,18 @@ counts_when_druggability_0 <- sapply(all_genes_unique, function(g) sum(sapply(co
 
 gene_counts <- cbind(gene_counts, counts_when_druggability_0)
 
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = gene_counts$gene, 
+                          mart = ensembl)
+
+gene_counts <- merge(gene_description, gene_counts, by.x = "external_gene_name", by.y = "gene")
+
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+gene_counts$description <- gsub("\\s*\\[.*?\\]", "", gene_counts$description)
+
 rownames(gene_counts) <- NULL
 
 kable(gene_counts, format = "html", caption = "Gene Score Sensitivity Analysis") %>%
