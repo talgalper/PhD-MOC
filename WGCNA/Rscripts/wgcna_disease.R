@@ -3,6 +3,7 @@ library(edgeR)
 library(tidyverse)
 library(gridExtra)
 library(CorLevelPlot)
+library(biomaRt)
 
 # combine stages
 stage_I <- read.csv("rna_seq_data/stage_I_master_df.csv")
@@ -53,10 +54,23 @@ outliers <- c("GAMuT_IC257",
 
 kylie_data_subset <- kylie_data[, !colnames(kylie_data) %in% outliers]
 
+
 ## Normalisation
+hist(colSums(kylie_data_subset),
+     main = "raw data hist")
+
+barplot(colSums(kylie_data_subset),
+        main = "raw data library size")
 
 # log transformation normalisation
 data_log_norm <- log(kylie_data_subset + 1)
+
+hist(colSums(data_log_norm),
+     main = "log transformed hist")
+
+barplot(colSums(data_log_norm),
+        main = "log transformed library size")
+
 
 # top x% of samples
 num_genes <- nrow(data_log_norm)
@@ -177,7 +191,7 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
 ## relate module traits
 
 # clean up sample_info and filter for samples in wgcna_data
-sample_info <- read.csv("~/Desktop/final_copy/pcsf_kylie/raw_data/All survival_CN_Aug18.csv")
+sample_info <- read.csv("rna_seq_data/All survival_CN_Aug18.csv")
 sample_info <- subset(sample_info, select = c("GAMUT_ID", "Grade", "Stage"))
 
 sample_info$GAMUT_ID <- paste0("GAMuT_", sample_info$GAMUT_ID)
@@ -263,9 +277,25 @@ module_membership_measure_pvals <- as.data.frame(t(module_membership_measure_pva
 
 
 # Calculate the gene significance and associated p-values 
-
 gene_signf_corr <- cor(wgcna_data, traits$data.IV.vs.all, use = 'p')
 gene_signf_corr_pvals <- corPvalueStudent(gene_signf_corr, nSamples)
+gene_signf_corr_pvals <- as.data.frame(gene_signf_corr_pvals)
+gene_signf_corr_pvals <- rownames_to_column(gene_signf_corr_pvals)
+gene_signf_corr_pvals <- gene_signf_corr_pvals[order(gene_signf_corr_pvals$V1), ]
+rownames(gene_signf_corr_pvals) <- NULL
+
+
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+stage_IV_hub_genes <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                            filters = "ensembl_gene_id", 
+                            values = gene_signf_corr_pvals$rowname, 
+                            mart = ensembl)
+
+stage_IV_hub_genes <- merge(stage_IV_hub_genes, gene_signf_corr_pvals, by.x = "ensembl_gene_id", by.y = "rowname")
+
+stage_IV_hub_genes <- stage_IV_hub_genes[order(stage_IV_hub_genes$V1), ]
+
 
 
 

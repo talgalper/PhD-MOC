@@ -1,0 +1,294 @@
+---
+title: "Diff_exp_comparison"
+output: html_document
+date: "2024-03-14"
+---
+
+```{r include=FALSE}
+library(edgeR)
+library(tidyverse)
+library(kableExtra)
+library(ggplot2)
+library(biomaRt)
+
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+```
+
+## Current edgeR RNA-seq pipeline
+
+### Read in data and filter low activity genes
+
+Uses the following code to filter genes: `keepTheseGenes <- (rowSums(cpm(df) > 1) >= ncol(df)/2)`
+
+<br>
+
+```{r}
+# combine stage I, II, III and IV
+stage_I <- read.csv("data/stage_I_master_df.csv")
+stage_II <- read.csv("data/stage_II_master_df.csv")
+stage_III <- read.csv("data/stage_III_master_df.csv")
+stage_IV <- read.csv("data/stage_IV_master_df.csv")
+
+# merge disease groups together
+kylie_data <- merge(stage_I, stage_II, by = "X")
+kylie_data <- merge(kylie_data, stage_III, by = "X")
+kylie_data <- merge(kylie_data, stage_IV, by = "X")
+
+colnames(kylie_data)[1] <- "gene_id"
+
+benign_data <- read.csv("data/ben_master_df.csv")
+colnames(benign_data)[1] <- "gene_id"
+# Get the current column names
+current_names <- colnames(benign_data)
+# Create new column names by replacing "GAMuT_" with "BEN_"
+new_names <- sub("GAMuT_", "BEN_", current_names)
+# Assign the new column names to the data frame
+colnames(benign_data) <- new_names
+
+# combine into single df
+df <- inner_join(kylie_data, benign_data, by = c("gene_id"))
+rownames(df) <- df$gene_id
+df <- df[, -1]
+raw_gene_list <- nrow(kylie_data)
+
+gene_id <- rownames(df)
+#kylie_data <- kylie_data[, -1] # remove gene ids for rowSums calc
+
+# subset genes that have a cpm of greater than one in more than 50% of the samples
+keepTheseGenes <- (rowSums(cpm(df) > 1) >= ncol(df)/2)
+
+# add gene ids back into df
+#df <- cbind(gene_id, df)
+
+removedGenes <- rownames(df)[!keepTheseGenes]
+removedGenes <- as.data.frame(removedGenes)
+colnames(removedGenes)[1] <- "gene_id"
+
+filtered_df <- df[keepTheseGenes, ]
+
+initial_subset <- nrow(df)
+```
+
+### Number of removed genes
+
+```{r}
+print(summary(keepTheseGenes))
+```
+
+<br>
+
+### Differential Expression
+
+```{r}
+# Select the columns that start with "GAMuT"
+cols <- grep("^GAMuT", colnames(filtered_df))
+
+# Assign the unstranded columns to the cancer group
+cancer <- colnames(filtered_df)[cols]
+
+# Assign the rest of the columns to the healty group
+benign <- setdiff(colnames(filtered_df), cancer)
+
+# Create the group variable
+group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
+
+data <- DGEList(counts = filtered_df, group = group)
+
+design <- model.matrix(~group)
+
+# Estimate a common negative binomial dispersion parameter for a DGE dataset with a general experimental design
+common <- estimateGLMCommonDisp(data, design, verbose = T)
+
+# Estimate the abundance-dispersion trend by Cox-Reid approximate profile likelihood.
+trend <- estimateGLMTrendedDisp(common, design)
+
+# Compute an empirical Bayes estimate of the negative binomial dispersion parameter for each tag, 
+# with expression levels specified by a log-linear model.
+tagwise <- estimateGLMTagwiseDisp(trend, design)
+
+# Fit a negative binomial generalized log-linear model to the read counts for each gene. 
+# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
+fit <- glmFit(tagwise, design)
+
+# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
+lrt <- glmLRT(fit, coef = 2)
+
+# Extract the most differentially expressed genes (or sequence tags) from a test object, 
+# ranked either by p-value or by absolute log-fold-change.
+toptags <- topTags(lrt, n = Inf)
+
+# Identify which genes are significantly differentially expressed from 
+# an edgeR fit object containing p-values and test statistics.
+dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 1)
+sum_filtered <- summary(dif_exp)
+
+dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
+
+# create a results df
+hits_raw <- toptags$table
+
+hits <- toptags$table[toptags$table$FDR < 0.1, ]
+colnames <- colnames(hits)
+hits$gene_id <- rownames(hits)
+hits <- hits[,c("gene_id", colnames)]
+
+dif_exp_filtered <- hits[dif_exp_genes, ]
+```
+
+<br>
+
+```{r echo=FALSE, out.width='33%', fig.show='hold'}
+# Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
+plotBCV(tagwise, main = "Biological coefficient of variation")
+
+# Make a mean-difference plot of two libraries of count data with smearing of points with very low counts, 
+# especially those that are zero for one of the columns.
+plotSmear(lrt, de.tags = dif_exp_genes, main = "Mean-difference plot")
+
+# plot Pvalues of different logFC scores
+ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted logFC")
+```
+
+<br>
+
+## Excluding low activity gene filtering (pre-edgeR)
+
+Instead uses the filterByExp() function followed by calcNormFactors()
+
+```{r}
+# Select the columns that start with "GAMuT"
+cols <- grep("^GAMuT", colnames(df))
+
+# Assign the unstranded columns to the cancer group
+cancer <- colnames(df)[cols]
+
+# Assign the rest of the columns to the healty group
+benign <- setdiff(colnames(df), cancer)
+
+# Create the group variable
+group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
+
+data <- DGEList(counts = df, group = group)
+
+keep <- filterByExpr(data)
+data <- data[keep,,keep.lib.sizes=FALSE] 
+data <- calcNormFactors(data)
+
+design <- model.matrix(~group)
+
+# Estimate a common negative binomial dispersion parameter for a DGE dataset with a general experimental design
+common <- estimateGLMCommonDisp(data, design, verbose = T)
+
+# Estimate the abundance-dispersion trend by Cox-Reid approximate profile likelihood.
+trend <- estimateGLMTrendedDisp(common, design)
+
+# Compute an empirical Bayes estimate of the negative binomial dispersion parameter for each tag, 
+# with expression levels specified by a log-linear model.
+tagwise <- estimateGLMTagwiseDisp(trend, design)
+
+# Fit a negative binomial generalized log-linear model to the read counts for each gene. 
+# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
+fit <- glmFit(tagwise, design)
+
+# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
+lrt <- glmLRT(fit, coef = 2)
+
+# Extract the most differentially expressed genes (or sequence tags) from a test object, 
+# ranked either by p-value or by absolute log-fold-change.
+toptags <- topTags(lrt, n = Inf)
+
+# Identify which genes are significantly differentially expressed from 
+# an edgeR fit object containing p-values and test statistics.
+dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 1)
+sum_unfiltered <- summary(dif_exp)
+
+dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
+
+# create a results df
+hits_raw <- toptags$table
+
+hits <- toptags$table[toptags$table$FDR < 0.1, ]
+colnames <- colnames(hits)
+hits$gene_id <- rownames(hits)
+hits <- hits[,c("gene_id", colnames)]
+
+dif_exp_unfiltered <- hits[dif_exp_genes, ]
+```
+
+```{r plot DE data, echo=FALSE, out.width='33%', fig.show='hold'}
+# Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
+plotBCV(tagwise, main = "Biological coefficient of variation")
+
+# Make a mean-difference plot of two libraries of count data with smearing of points with very low counts, 
+# especially those that are zero for one of the columns.
+plotSmear(lrt, de.tags = dif_exp_genes, main = "Mean-difference plot")
+
+# plot Pvalues of different logFC scores
+ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted logFC")
+```
+
+<br>
+
+## Comparison
+
+<br>
+
+#### Counts with pre-filtering
+
+```{r}
+sum_filtered
+```
+
+<br>
+
+#### Counts wihtout pre-filtering
+
+```{r}
+sum_unfiltered
+```
+
+<br>
+
+```{r echo=FALSE}
+filtered_unique <- setdiff(dif_exp_filtered$gene_id, dif_exp_unfiltered$gene_id)
+unfiltered_unique <- setdiff(dif_exp_unfiltered$gene_id, dif_exp_filtered$gene_id)
+
+filtered_gene_symbols <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description"), 
+                               filters = "ensembl_gene_id", 
+                               values = filtered_unique, 
+                               mart = ensembl)
+filtered_gene_symbols$description <- gsub("\\s*\\[.*?\\]", "", filtered_gene_symbols$description)
+filtered_gene_symbols <- merge(filtered_gene_symbols, dif_exp_filtered, by.x = "ensembl_gene_id", by.y = "gene_id")
+filtered_gene_symbols <- filtered_gene_symbols[order(filtered_gene_symbols$logFC, decreasing = T), ]
+rownames(filtered_gene_symbols) <- NULL
+
+
+unfiltered_gene_symbols <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description"), 
+                                 filters = "ensembl_gene_id", 
+                                 values = unfiltered_unique, 
+                                 mart = ensembl)
+unfiltered_gene_symbols$description <- gsub("\\s*\\[.*?\\]", "", unfiltered_gene_symbols$description)
+unfiltered_gene_symbols <- merge(unfiltered_gene_symbols, dif_exp_unfiltered, by.x = "ensembl_gene_id", by.y = "gene_id")
+unfiltered_gene_symbols <- unfiltered_gene_symbols[order(unfiltered_gene_symbols$logFC, decreasing = T), ]
+rownames(unfiltered_gene_symbols) <- NULL
+```
+
+## Unique genes when running both pipelines {.tabset .tabset-pills}
+
+### Pre-filtered
+
+```{r echo=FALSE}
+kable(filtered_gene_symbols, format = "html", caption = "Rank Sensitivity") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(height = "1000px")
+```
+
+### Filtered within edgeR
+
+```{r echo=FALSE}
+kable(unfiltered_gene_symbols, format = "html", caption = "Rank Sensitivity") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(height = "1000px")
+```
+
+## 

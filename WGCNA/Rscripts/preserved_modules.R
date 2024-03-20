@@ -8,8 +8,12 @@ library(biomaRt)
 library(matrixStats)
 library(reshape2)
 library(gridExtra)
+library(enrichR)
 
 rm(list = ls()[!ls() %in% c("ensembl")])
+
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
 
 # combine stages
 ben <- read.csv("rna_seq_data/ben_master_df.csv")
@@ -281,12 +285,11 @@ non_preserved_modules <- subset(plot_data, medianRank.pres <= 8 & Zsummary.pres 
 non_preserved_genes <- colours[colours$cluster %in% non_preserved_modules$cluster, ]
 
 
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 gene_names <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
-                           filters = "ensembl_gene_id", 
-                           values = non_preserved_genes$genes, 
-                           mart = ensembl)
+                    filters = "ensembl_gene_id", 
+                    values = non_preserved_genes$genes, 
+                    mart = ensembl)
 
 non_preserved_genes <- cbind(gene_names, non_preserved_genes)
 non_preserved_genes <- non_preserved_genes[, -3]
@@ -395,10 +398,10 @@ CorLevelPlot(heatmap_data,
 
 
 # pull out a module
-module_gene_mapping <- as.data.frame(bwnet$colors)
-module <- module_gene_mapping %>% 
-  filter(`bwnet$colors` == 'yellow') %>% 
-  rownames()
+#module_gene_mapping <- as.data.frame(bwnet$colors)
+#module <- module_gene_mapping %>% 
+#  filter(`bwnet$colors` == 'yellow') %>% 
+#  rownames()
 
 
 # Calculate the module membership and the associated p-values
@@ -408,14 +411,22 @@ module_membership_measure <- cor(module_eigengenes, wgcna_data, use = 'p')
 module_membership_measure_pvals <- corPvalueStudent(module_membership_measure, nSamples)
 module_membership_measure_pvals <- as.data.frame(t(module_membership_measure_pvals))
 
-
 # Calculate the gene significance and associated p-values 
-gene_signf_corr <- cor(wgcna_data, traits$data.IV.vs.all, use = 'p')
+gene_signf_corr <- cor(wgcna_data, traits$BEN.vs.all, use = 'p')
 gene_signf_corr_pvals <- corPvalueStudent(gene_signf_corr, nSamples)
 
+gene_signf_corr_pvals <- as.data.frame(gene_signf_corr_pvals)
+gene_signf_corr_pvals$V1 <- gene_signf_corr_pvals[order(gene_signf_corr_pvals$V1), ]
+gene_signf_corr_pvals <- rownames_to_column(gene_signf_corr_pvals)
 
+gene_signf_corr_pvals <- gene_signf_corr_pvals[gene_signf_corr_pvals$V1 < 0.05, ]
 
+gene_names <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                    filters = "ensembl_gene_id", 
+                    values = gene_signf_corr_pvals$rowname, 
+                    mart = ensembl)
 
-
+gene_signf_corr_pvals <- merge(gene_names, gene_signf_corr_pvals, by.x = "ensembl_gene_id", by.y = "rowname")
+colnames(gene_signf_corr_pvals)[3] <- "Pvalue"
 
 
