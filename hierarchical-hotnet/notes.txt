@@ -1,0 +1,2 @@
+- Attempting HHnet with HHnet ASCAT3 TCGA-OV data (gene level copy number/copy number estimate)
+- Using STRING network which is subset based on genes above a CNV threshold i guess
