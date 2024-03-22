@@ -8,7 +8,7 @@ library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
-#### Get TCGA-OV data from TCGA ####
+# broad query for TCGA-OV project (does not need to be run)
 query <- GDCquery(project = "TCGA-OV",
                   data.category = "Copy Number Variation")
 
@@ -31,7 +31,8 @@ ASCAT3_query_result <- subset(ASCAT3_query_result, select = c("submitter_id", "c
 
 # get clinical data
 clinical_data <- GDCquery_clinic("TCGA-OV", type = "clinical")
-clinical_data <- subset(clinical_data, select = c("project", "submitter_id", "figo_stage", "tissue_or_organ_of_origin"))
+# got rid of "project" as well because for some reason its different on mac and ubuntu
+clinical_data <- subset(clinical_data, select = c("submitter_id", "figo_stage", "tissue_or_organ_of_origin"))
 
 # get biospecimen data
 biospecimen_data <- GDCquery_clinic("TCGA-OV", type = "Biospecimen")
@@ -77,19 +78,38 @@ stage_IV_data <- stage_IV_data[complete.cases(stage_IV_data), ]
 rownames(stage_IV_data) <- sub("\\..*", "", rownames(stage_IV_data))
 
 # convert gene ensembl to gene symbol
-gene_symbols <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
+gene_symbols <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description"),
                       filters = "ensembl_gene_id",
                       values = rownames(stage_IV_data),
                       mart = ensembl)
+gene_symbols$description <- gsub("\\s*\\[.*?\\]", "", gene_symbols$description)
 
 # get terms that could not be converted
 unmatched_terms <- gene_symbols$ensembl_gene_id[gene_symbols$external_gene_name == ""]
+# subset successfully converted terms
+gene_symbols <- gene_symbols[gene_symbols$external_gene_name != "", ]
 
-
-hist(apply(ASCAT3_data_subset, 1, mean))
-hist(apply(ASCAT3_data_subset, 1, median))
-table(apply(ASCAT3_data_subset, 1, median))
-
+# examine data
+hist(apply(stage_IV_data, 1, mean))
 hist(apply(ASCAT3_data_subset, 1, sd))
+hist(apply(stage_IV_data, 1, max))
 
+table(apply(stage_IV_data, 1, mean))
+table(apply(stage_IV_data, 1, median))
+table(apply(stage_IV_data, 1, max))
+
+
+# get the genes with CNV score of 66
+CNV_66_genes <- subset(stage_IV_data, apply(stage_IV_data, 1, function(row) any(row == 45)))
+CNV_66_genes <- rownames_to_column(CNV_66_genes)
+CNV_66_genes <- merge(gene_symbols, CNV_66_genes, by.x = "ensembl_gene_id", by.y = "rowname")
+
+mean_CNV <- as.data.frame(apply(stage_IV_data,1 , mean))
+mean_CNV <- rownames_to_column(mean_CNV)
+mean_CNV <- merge(gene_symbols, mean_CNV, by.x = "ensembl_gene_id", by.y = "rowname")
+colnames(mean_CNV)[4] <- "mean_cnv"
+
+summary(mean_CNV$mean_cnv)
+
+write.table(mean_CNV$external_gene_name, "stage_IV_gene_symbols.txt",col.names = F, row.names = F, quote = F)
 
