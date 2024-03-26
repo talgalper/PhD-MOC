@@ -23,33 +23,38 @@ getProjectSummary('TCGA-BRCA')
 
 query_TCGA <- GDCquery(project = "TCGA-BRCA",
                        access = "open", 
-                       data.category = "Transcriptome Profiling")
+                       data.category = "Transcriptome Profiling",
+                       experimental.strategy = "RNA-Seq")
 
 query_output <- getResults(query_TCGA)
 
 clinical <- GDCquery_clinic(project = "TCGA-BRCA",
                             type = "clinical")
 
-clinical <- merge(query_output, clinical, by.x = "cases.submitter_id", by.y = "submitter_id")
-clinical <- subset(clinical, select = c("cases.submitter_id", "ajcc_pathologic_stage", "tissue_or_organ_of_origin"))
+clinical_query <- clinical[complete.cases(clinical$ajcc_pathologic_stage), ]
+clinical_query <- merge(query_output, clinical_query, by.x = "cases.submitter_id", by.y = "submitter_id")
+clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
+                                                    "tissue_or_organ_of_origin", "sample_type"))
 
-table(clinical$ajcc_pathologic_stage)
+table(clinical_query$ajcc_pathologic_stage)
 
 
 
 subtypes <- PanCancerAtlas_subtypes()
 
-common <- query_output[query_output$cases %in% subtypes$pan.samplesID, ]
+#common <- query_output[query_output$cases %in% subtypes$pan.samplesID, ]
 
-common <- merge(query_output, subtypes, by.x = "cases", by.y = "pan.samplesID")
-selected_barcodes <- subset(common, select = c("cases", "Subtype_Selected", "sample_type"))
-selected_barcodes <- selected_barcodes[selected_barcodes$Subtype_Selected == "BRCA.Basal", ]
+common <- merge(clinical_query, subtypes, by.x = "cases", by.y = "pan.samplesID")
+common <- subset(common, select = c("cases", "Subtype_Selected", "sample_type", "ajcc_pathologic_stage"))
 
+
+selected_barcodes <- common[common$Subtype_Selected == "BRCA.Basal", ]
 
 Basal_query <- GDCquery(project = "TCGA-BRCA",
-                       access = "open", 
-                       data.category = "Transcriptome Profiling",
-                       barcode = selected_barcodes$cases)
+                        access = "open", 
+                        data.category = "Transcriptome Profiling",
+                        experimental.strategy = "RNA-Seq",
+                        barcode = selected_barcodes$cases)
 
 GDCdownload(Basal_query)
 
@@ -62,89 +67,84 @@ Basal_unstranded <- as.data.frame(Basal_unstranded)
 
 
 
-GTEx_raw <- read.table("bulk-gex_v8_rna-seq_counts-by-tissue_gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2, header = T)
-
-GTEx_data <- GTEx_raw[, -c(1:3)]
-rownames(GTEx_data) <- GTEx_raw$Name
-rownames(GTEx_data) <- gsub("\\.\\d+", "", rownames(GTEx_data))
-
-
-save(Basal_unstranded, GTEx_data, file = "RData/BRCA_Basal_DE_data.RData")
-
 barplot(colSums(Basal_unstranded),
         xaxt = "n")
 
-barplot(colSums(GTEx_data),
+barplot(colSums(normal_unstranded),
         xaxt = "n")
 
+
 #### Remove low activity genes ####
-merged_df <- merge(Basal_unstranded, GTEx_data, by = "row.names")
+colnames(Basal_unstranded) <- paste("basal", 1:ncol(Basal_unstranded), sep = "_")
+colnames(normal_unstranded) <- paste("normal", 1:ncol(normal_unstranded), sep = "_")
+
+merged_df <- merge(Basal_unstranded, normal_unstranded, by = "row.names")
 
 merged_df <- column_to_rownames(merged_df, "Row.names")
 
-#gene_id <- rownames(merged_df)
-#
-## subset genes that have a cpm of greater than one, in more than 50% of the samples
-#keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
-#print(summary(keepTheseGenes))
-#
-## add gene ids back into df
-#merged_df <- cbind(gene_id, merged_df)
-#
-#removedGenes <- merged_df$gene_id[!keepTheseGenes]
-#removedGenes <- as.data.frame(removedGenes)
-#colnames(removedGenes)[1] <- "gene_id"
-#
-#merged_df <- merged_df[keepTheseGenes, ]
-#
-#merged_df <- merged_df[, -1]
+gene_id <- rownames(merged_df)
+
+# subset genes that have a cpm of greater than one, in more than 50% of the samples
+keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
+print(summary(keepTheseGenes))
+
+# add gene ids back into df
+merged_df <- cbind(gene_id, merged_df)
+
+removedGenes <- merged_df$gene_id[!keepTheseGenes]
+removedGenes <- as.data.frame(removedGenes)
+colnames(removedGenes)[1] <- "gene_id"
+
+merged_df <- merged_df[keepTheseGenes, ]
+
+merged_df <- merged_df[, -1]
 
 
 # top x% of samples
-num_genes <- nrow(merged_df)
-top_threshold <- ceiling(num_genes * 0.50)
-
-# min required samples
-num_samples <- ncol(merged_df)
-min_required_samples <- ceiling(num_samples * 0.10)
-
-
-
-# Extract the gene names and data columns
-gene_names <- rownames(merged_df)
-data_columns <- merged_df[, 2:ncol(merged_df)]
-
-# Initialise an empty data frame
-results_df <- data.frame(gene_id = gene_names)
-
-# Iterate through each data column and perform the test
-for (col_id in seq_along(data_columns)) {
-  # Get the column name and the data
-  col_name <- colnames(data_columns)[col_id]
-  col_data <- data_columns[, col_id]
-  
-  # Sort the data and mark genes within the top_threshold rows as TRUE
-  sorted_indices <- order(col_data, decreasing = TRUE)
-  top_indices <- sorted_indices[1:top_threshold]
-  
-  # Create a logical vector for gene presence in top_threshold
-  gene_presence <- rep(FALSE, nrow(merged_df))
-  gene_presence[top_indices] <- TRUE
-  
-  # Add to the results data frame
-  results_df <- cbind(results_df, gene_presence)
-}
-
-# Rename columns 
-colnames(results_df) <- c("gene_id", colnames(data_columns))
-
-
-# Calculate the number of TRUE values for each gene across columns
-gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
-failed_genes <- gene_counts < min_required_samples
-print(summary(failed_genes))
-
-BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_genes]))
+#num_genes <- nrow(merged_df)
+#top_threshold <- ceiling(num_genes * 0.50)
+#
+## min required samples
+#num_samples <- ncol(merged_df)
+#min_required_samples <- ceiling(num_samples * 0.10)
+#
+#
+#
+## Extract the gene names and data columns
+#gene_names <- rownames(merged_df)
+#data_columns <- merged_df[, 2:ncol(merged_df)]
+#
+## Initialise an empty data frame
+#results_df <- data.frame(gene_id = gene_names)
+#
+## Iterate through each data column and perform the test
+#for (col_id in seq_along(data_columns)) {
+#  # Get the column name and the data
+#  col_name <- colnames(data_columns)[col_id]
+#  col_data <- data_columns[, col_id]
+#  
+#  # Sort the data and mark genes within the top_threshold rows as TRUE
+#  sorted_indices <- order(col_data, decreasing = TRUE)
+#  top_indices <- sorted_indices[1:top_threshold]
+#  
+#  # Create a logical vector for gene presence in top_threshold
+#  gene_presence <- rep(FALSE, nrow(merged_df))
+#  gene_presence[top_indices] <- TRUE
+#  
+#  # Add to the results data frame
+#  results_df <- cbind(results_df, gene_presence)
+#}
+#
+## Rename columns 
+#colnames(results_df) <- c("gene_id", colnames(data_columns))
+#
+#
+## Calculate the number of TRUE values for each gene across columns
+#gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
+#failed_genes <- gene_counts < min_required_samples
+#print(summary(failed_genes))
+#
+#BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_genes]))
 
 
 
@@ -155,18 +155,18 @@ BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_gene
 #### Differential expression analysis ####
 
 # Select the columns that start with "TCGA"
-cols <- grep("^TCGA", colnames(BRCA_data))
+cols <- grep("^basal", colnames(merged_df))
 
 # Assign the unstranded columns to the cancer group
-cancer <- colnames(BRCA_data)[cols]
+cancer <- colnames(merged_df)[cols]
 
 # Assign the rest of the columns to the healty group
-benign <- setdiff(colnames(BRCA_data), cancer)
+benign <- setdiff(colnames(merged_df), cancer)
 
 # Create the group variable
 group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
 
-data <- DGEList(counts = BRCA_data, group = group)
+data <- DGEList(counts = merged_df, group = group)
 
 design <- model.matrix(~group)
 
@@ -193,7 +193,7 @@ toptags <- topTags(lrt, n = Inf)
 
 # Identify which genes are significantly differentially expressed from 
 # an edgeR fit object containing p-values and test statistics.
-dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 2)
+dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 1)
 print(summary(dif_exp))
 
 dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
