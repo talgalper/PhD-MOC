@@ -1,0 +1,71 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"PLK1","polo like kinase 1",200,3,6,6,0
+"H2AX","H2A.X variant histone",154,2,3,5,0
+"CCNB1","cyclin B1",148,16,13,11,0
+"H2BC12","H2B clustered histone 12",133,3,3,6,0
+"BRCA2","BRCA2 DNA repair associated",131,2,3,4,0
+"RARA","retinoic acid receptor alpha",127,1,2,2,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",116,2,3,2,0
+"PPP1CA","protein phosphatase 1 catalytic subunit alpha",111,1,1,1,0
+"FANCD2","FA complementation group D2",100,25,22,3,0
+"H2AC8","H2A clustered histone 8",94,18,19,1,0
+"KIF20A","kinesin family member 20A",78,22,25,0,0
+"ASPM","assembly factor for spindle microtubules",76,23,28,0,2
+"CENPX","centromere protein X",76,19,22,0,0
+"CLTC","clathrin heavy chain",61,5,3,1,0
+"AGR2","anterior gradient 2, protein disulphide isomerase family member",59,19,33,0,4
+"TRIM37","tripartite motif containing 37",59,8,4,0,0
+"CDC45","cell division cycle 45",51,8,12,0,0
+"NDC80","NDC80 kinetochore complex component",51,23,31,0,4
+"BPIFB1","BPI fold containing family B member 1",48,11,16,0,3
+"AIFM1","apoptosis inducing factor mitochondria associated 1",45,17,14,0,6
+"ATP6V0A4","ATPase H+ transporting V0 subunit a4",45,7,11,0,0
+"ANLN","anillin, actin binding protein",37,1,1,0,0
+"LBP","lipopolysaccharide binding protein",36,3,4,0,4
+"H2BC9","H2B clustered histone 9",35,1,2,0,0
+"HDAC9","histone deacetylase 9",34,3,3,0,3
+"RFC4","replication factor C subunit 4",34,1,1,0,0
+"CENPE","centromere protein E",32,1,1,0,1
+"SHMT2","serine hydroxymethyltransferase 2",32,2,2,0,4
+"CCT5","chaperonin containing TCP1 subunit 5",27,1,1,0,1
+"RFC2","replication factor C subunit 2",24,6,2,0,13
+"KIF18B","kinesin family member 18B",23,1,1,0,1
+"H4C9","H4 clustered histone 9",22,13,0,14,0
+"ABCA12","ATP binding cassette subfamily A member 12",21,19,0,18,0
+"H2BC5","H2B clustered histone 5",20,18,0,13,0
+"H2BC4","H2B clustered histone 4",19,1,0,1,0
+"RMI2","RecQ mediated genome instability 2",19,2,0,0,0
+"H4C8","H4 clustered histone 8",17,9,15,0,5
+"RMI1","RecQ mediated genome instability 1",16,22,0,0,7
+"DPP3","dipeptidyl peptidase 3",13,30,38,46,61
+"H2BC15","H2B clustered histone 15",13,18,22,24,61
+"KIF11","kinesin family member 11",13,12,0,0,9
+"CCT3","chaperonin containing TCP1 subunit 3",11,10,0,0,18
+"SKA3","spindle and kinetochore associated complex subunit 3",10,25,16,17,57
+"CDK1","cyclin dependent kinase 1",9,24,22,59,35
+"LASP1","LIM and SH3 protein 1",8,7,20,44,1
+"PARP1","poly(ADP-ribose) polymerase 1",8,2,0,3,0
+"TONSL","tonsoku like, DNA repair protein",8,16,0,8,0
+"CHEK1","checkpoint kinase 1",7,8,0,0,11
+"KIF22","kinesin family member 22",7,9,0,0,11
+"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",6,11,9,1,46
+"H2BC21","H2B clustered histone 21",6,6,0,6,0
+"MAPK15","mitogen-activated protein kinase 15",5,20,0,14,4
+"PCGF2","polycomb group ring finger 2",5,6,0,0,0
+"PPP1R1B","protein phosphatase 1 regulatory inhibitor subunit 1B",5,5,0,5,0
+"CENPU","centromere protein U",4,21,14,41,47
+"HOXB7","homeobox B7",4,7,14,0,7
+"MELK","maternal embryonic leucine zipper kinase",4,15,13,55,18
+"PCNA","proliferating cell nuclear antigen",4,4,0,1,0
+"BUB1","BUB1 mitotic checkpoint serine/threonine kinase",3,3,18,48,21
+"IL21R","interleukin 21 receptor",3,9,0,7,10
+"CSTB","cystatin B",2,8,0,8,12
+"SPAG4","sperm associated antigen 4",2,5,0,5,6
+"TRIM36","tripartite motif containing 36",2,0,24,24,0
+"AKR1B15","aldo-keto reductase family 1 member B15",1,0,30,38,31
+"CERS6","ceramide synthase 6",1,0,27,31,42
+"DONSON","DNA replication fork stabilization factor DONSON",1,0,5,7,0
+"FDPS","farnesyl diphosphate synthase",1,0,7,5,0
+"IDO1","indoleamine 2,3-dioxygenase 1",1,0,29,28,27
+"IGKV2D-29","immunoglobulin kappa variable 2D-29",1,0,3,7,19
+"TSPAN8","tetraspanin 8",1,0,2,0,8

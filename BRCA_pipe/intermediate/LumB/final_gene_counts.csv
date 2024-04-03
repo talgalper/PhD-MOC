@@ -1,0 +1,76 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"H2AX","H2A.X variant histone",171,5,7,8,0
+"ESR1","estrogen receptor 1",158,19,16,12,0
+"H2BC5","H2B clustered histone 5",151,3,5,6,0
+"ORC1","origin recognition complex subunit 1",139,2,3,5,0
+"DNA2","DNA replication helicase/nuclease 2",124,2,2,3,0
+"SYCP2","synaptonemal complex protein 2",122,4,5,2,0
+"PCNA","proliferating cell nuclear antigen",100,1,2,2,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",90,1,2,2,0
+"RFC4","replication factor C subunit 4",84,1,1,1,0
+"H2BC15","H2B clustered histone 15",83,1,1,1,0
+"KIFC2","kinesin family member C2",68,25,30,1,0
+"CCNA2","cyclin A2",66,20,24,0,0
+"CDC45","cell division cycle 45",66,25,34,0,3
+"BPIFB1","BPI fold containing family B member 1",64,11,4,5,0
+"H4C8","H4 clustered histone 8",61,16,16,5,0
+"PLK1","polo like kinase 1",60,9,4,0,0
+"CCT3","chaperonin containing TCP1 subunit 3",54,19,23,0,0
+"CENPE","centromere protein E",52,15,22,0,0
+"RBBP7","RB binding protein 7, chromatin remodeling factor",48,16,16,0,0
+"ANLN","anillin, actin binding protein",47,4,7,0,0
+"H2BC9","H2B clustered histone 9",47,4,6,0,0
+"KCNK1","potassium two pore domain channel subfamily K member 1",47,21,24,0,8
+"H2BC12","H2B clustered histone 12",46,7,11,0,0
+"GATA3","GATA binding protein 3",44,5,6,0,0
+"TRIM37","tripartite motif containing 37",44,4,4,0,0
+"EEF1A2","eukaryotic translation elongation factor 1 alpha 2",38,3,4,0,0
+"DPP3","dipeptidyl peptidase 3",34,1,2,0,0
+"ASPM","assembly factor for spindle microtubules",32,2,4,0,3
+"KIF18B","kinesin family member 18B",32,1,1,0,0
+"H2BC11","H2B clustered histone 11",29,1,3,0,3
+"EZR","ezrin",27,2,3,0,5
+"YWHAZ","tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein zeta",25,5,4,0,13
+"H2BC4","H2B clustered histone 4",24,1,2,0,2
+"RARA","retinoic acid receptor alpha",24,1,1,0,1
+"CHEK1","checkpoint kinase 1",20,1,1,0,1
+"KIF23","kinesin family member 23",18,1,1,0,1
+"PPP1CA","protein phosphatase 1 catalytic subunit alpha",17,36,16,53,21
+"PCGF2","polycomb group ring finger 2",16,17,0,17,0
+"TRIM36","tripartite motif containing 36",15,4,4,14,0
+"CERS6","ceramide synthase 6",14,18,10,38,0
+"H2BC21","H2B clustered histone 21",14,6,6,0,11
+"SYT1","synaptotagmin 1",14,26,0,0,8
+"KIF11","kinesin family member 11",13,13,0,0,11
+"KIF22","kinesin family member 22",13,3,0,0,5
+"FBXO45","F-box protein 45",12,25,0,1,23
+"PARP9","poly(ADP-ribose) polymerase family member 9",9,19,27,30,61
+"GABRB3","gamma-aminobutyric acid type A receptor subunit beta3",8,11,0,0,20
+"CECR2","CECR2 histone acetyl-lysine reader",7,22,6,9,46
+"COL12A1","collagen type XII alpha 1 chain",7,11,10,0,34
+"TTK","TTK protein kinase",7,25,28,59,40
+"AGR2","anterior gradient 2, protein disulphide isomerase family member",6,21,0,21,8
+"CENPX","centromere protein X",6,10,0,13,0
+"KCNK6","potassium two pore domain channel subfamily K member 6",6,4,0,6,0
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",6,23,0,4,22
+"CENPU","centromere protein U",5,1,0,0,0
+"H2AZ1","H2A.Z variant histone 1",5,16,0,3,17
+"SPAG4","sperm associated antigen 4",5,3,0,0,0
+"SPP1","secreted phosphoprotein 1",5,28,0,30,27
+"MELK","maternal embryonic leucine zipper kinase",4,8,0,9,0
+"C15orf48","chromosome 15 open reading frame 48",3,3,0,15,0
+"HSD17B7","hydroxysteroid 17-beta dehydrogenase 7",3,2,0,4,0
+"KIF20A","kinesin family member 20A",3,3,0,5,2
+"CDK1","cyclin dependent kinase 1",2,0,30,34,39
+"DNAH14","dynein axonemal heavy chain 14",2,0,0,1,0
+"DONSON","DNA replication fork stabilization factor DONSON",2,0,40,36,29
+"MTSS1","MTSS I-BAR domain containing 1",2,3,9,23,32
+"ROBO2","roundabout guidance receptor 2",2,0,22,12,0
+"ADIPOR1","adiponectin receptor 1",1,0,3,0,6
+"BUB1","BUB1 mitotic checkpoint serine/threonine kinase",1,0,9,7,12
+"CACNA1D","calcium voltage-gated channel subunit alpha1 D",1,0,24,32,23
+"CCDC74B","coiled-coil domain containing 74B",1,0,32,39,34
+"ELOVL2","ELOVL fatty acid elongase 2",1,0,10,0,18
+"EME2","essential meiotic structure-specific endonuclease subunit 2",1,0,20,23,25
+"IFITM1","interferon induced transmembrane protein 1",1,0,0,2,2
+"INTS7","integrator complex subunit 7",1,0,13,27,4

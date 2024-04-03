@@ -1,0 +1,71 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"POLD1","DNA polymerase delta 1, catalytic subunit",222,3,5,6,0
+"H2BC9","H2B clustered histone 9",192,5,9,6,0
+"H2AX","H2A.X variant histone",166,11,10,10,0
+"KIF20A","kinesin family member 20A",144,3,3,6,0
+"MCM5","minichromosome maintenance complex component 5",120,26,34,4,0
+"H4C9","H4 clustered histone 9",113,23,30,3,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",109,1,3,3,0
+"ORC1","origin recognition complex subunit 1",103,1,2,2,0
+"DNA2","DNA replication helicase/nuclease 2",89,1,1,1,0
+"PLK1","polo like kinase 1",86,38,54,53,43
+"RFC4","replication factor C subunit 4",79,22,25,0,0
+"PCNA","proliferating cell nuclear antigen",74,22,19,0,0
+"CCT5","chaperonin containing TCP1 subunit 5",73,16,18,0,0
+"KIFC2","kinesin family member C2",69,13,13,0,0
+"RYR2","ryanodine receptor 2",65,20,24,0,1
+"RECQL4","RecQ like helicase 4",56,9,8,0,0
+"NDRG1","N-myc downstream regulated 1",53,4,2,0,0
+"NUDCD1","NudC domain containing 1",49,9,12,0,3
+"RFC2","replication factor C subunit 2",48,1,1,0,0
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",46,15,13,0,6
+"CDC45","cell division cycle 45",45,3,4,0,4
+"MMP13","matrix metallopeptidase 13",45,2,3,0,0
+"CYP1B1","cytochrome P450 family 1 subfamily B member 1",42,2,4,0,3
+"YBX1","Y-box binding protein 1",40,1,1,0,0
+"SKP2","S-phase kinase associated protein 2",31,2,3,0,5
+"SHMT2","serine hydroxymethyltransferase 2",30,2,3,0,4
+"ASPM","assembly factor for spindle microtubules",29,1,2,0,2
+"CENPE","centromere protein E",29,4,1,0,5
+"ANLN","anillin, actin binding protein",25,1,1,0,1
+"KIF18B","kinesin family member 18B",23,28,0,33,8
+"KIF20B","kinesin family member 20B",21,11,0,16,0
+"CHEK1","checkpoint kinase 1",20,13,0,8,0
+"IL2RA","interleukin 2 receptor subunit alpha",19,2,2,5,0
+"H2BC4","H2B clustered histone 4",17,12,27,1,4
+"AQP9","aquaporin 9",16,5,11,0,1
+"H4C8","H4 clustered histone 8",16,9,0,0,9
+"RUVBL1","RuvB like AAA ATPase 1",14,11,0,0,14
+"KIF11","kinesin family member 11",13,7,11,0,26
+"SEPTIN3","septin 3",13,15,45,41,51
+"CENPX","centromere protein X",12,7,0,0,12
+"KCNK1","potassium two pore domain channel subfamily K member 1",11,13,12,2,50
+"H2BC15","H2B clustered histone 15",8,26,0,17,0
+"STAT1","signal transducer and activator of transcription 1",8,25,26,59,41
+"AGO2","argonaute RISC catalytic component 2",7,4,0,0,0
+"FBXO45","F-box protein 45",7,5,0,11,0
+"BRCA2","BRCA2 DNA repair associated",6,4,0,0,4
+"LSM2","LSM2 homolog, U6 small nuclear RNA and mRNA degradation associated",6,27,0,6,28
+"RAC3","Rac family small GTPase 3",6,5,0,0,8
+"ACAN","aggrecan",5,28,13,32,21
+"CENPU","centromere protein U",5,24,0,26,21
+"MAPK15","mitogen-activated protein kinase 15",5,19,0,13,0
+"RMI2","RecQ mediated genome instability 2",5,10,0,31,11
+"SPP1","secreted phosphoprotein 1",5,23,0,23,30
+"CCT3","chaperonin containing TCP1 subunit 3",4,2,0,4,5
+"H2BC12","H2B clustered histone 12",4,0,0,1,0
+"IFIH1","interferon induced with helicase C domain 1",4,10,17,36,45
+"IL4I1","interleukin 4 induced 1",4,7,0,7,11
+"RYR1","ryanodine receptor 1",4,7,0,7,8
+"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",3,0,2,0,6
+"TEAD4","TEA domain transcription factor 4",3,0,0,0,1
+"TNFSF13B","TNF superfamily member 13b",3,0,36,27,22
+"MELK","maternal embryonic leucine zipper kinase",2,0,28,37,29
+"MSLN","mesothelin",2,0,32,39,31
+"DONSON","DNA replication fork stabilization factor DONSON",1,0,1,1,0
+"ICOS","inducible T cell costimulator",1,0,3,3,0
+"IDO1","indoleamine 2,3-dioxygenase 1",1,0,6,0,4
+"IFI44L","interferon induced protein 44 like",1,0,4,6,0
+"VGLL1","vestigial like family member 1",1,0,20,11,29
+"WDHD1","WD repeat and HMG-box DNA binding protein 1",1,0,3,7,3
+"YWHAZ","tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein zeta",1,0,13,16,10

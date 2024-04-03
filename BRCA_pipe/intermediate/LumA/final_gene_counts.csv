@@ -1,0 +1,59 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"ESR1","estrogen receptor 1",221,18,21,16,0
+"PLK1","polo like kinase 1",211,20,31,10,0
+"H2BC11","H2B clustered histone 11",192,2,5,7,0
+"H2BC9","H2B clustered histone 9",175,8,10,9,0
+"H2BC4","H2B clustered histone 4",160,4,5,13,0
+"H2BC21","H2B clustered histone 21",147,2,5,4,0
+"H2BC12","H2B clustered histone 12",134,2,5,3,0
+"H2BC5","H2B clustered histone 5",112,8,12,26,0
+"PKMYT1","protein kinase, membrane associated tyrosine/threonine 1",79,21,33,1,0
+"ASPM","assembly factor for spindle microtubules",69,15,1,21,0
+"KIFC2","kinesin family member C2",67,22,37,0,3
+"UBE2S","ubiquitin conjugating enzyme E2 S",67,20,29,0,0
+"BPIFB1","BPI fold containing family B member 1",66,4,6,0,0
+"SLC7A8","solute carrier family 7 member 8",60,3,5,0,0
+"SPAG17","sperm associated antigen 17",58,23,30,0,0
+"KCNK1","potassium two pore domain channel subfamily K member 1",54,5,12,0,0
+"ANLN","anillin, actin binding protein",52,11,16,0,0
+"H2BC8","H2B clustered histone 8",48,16,25,0,5
+"CDK1","cyclin dependent kinase 1",45,9,14,0,0
+"FOXA1","forkhead box A1",43,7,8,0,0
+"HDAC11","histone deacetylase 11",40,7,10,0,6
+"CENPE","centromere protein E",39,2,12,0,1
+"SYT1","synaptotagmin 1",38,1,1,0,0
+"KIF18B","kinesin family member 18B",37,2,5,0,3
+"IGF1R","insulin like growth factor 1 receptor",35,2,4,0,7
+"H3C10","H3 clustered histone 10",34,5,10,0,25
+"KIF11","kinesin family member 11",28,1,2,0,2
+"COL12A1","collagen type XII alpha 1 chain",25,1,1,0,1
+"EPN3","epsin 3",19,36,20,17,50
+"KCNK6","potassium two pore domain channel subfamily K member 6",19,1,1,0,1
+"CERS6","ceramide synthase 6",17,41,40,61,49
+"GATA3","GATA binding protein 3",15,4,2,12,0
+"ABCC8","ATP binding cassette subfamily C member 8",13,48,1,39,44
+"CACNA1D","calcium voltage-gated channel subunit alpha1 D",13,15,5,0,21
+"ROBO2","roundabout guidance receptor 2",13,4,6,19,0
+"ATP2A1","ATPase sarcoplasmic/endoplasmic reticulum Ca2+ transporting 1",12,35,39,51,61
+"BUB1","BUB1 mitotic checkpoint serine/threonine kinase",12,35,4,27,50
+"CBLC","Cbl proto-oncogene C",10,29,5,20,52
+"H2AJ","H2A.J histone",10,19,0,0,10
+"KIF14","kinesin family member 14",10,1,0,0,0
+"TTK","TTK protein kinase",10,26,15,52,29
+"CCNA2","cyclin A2",9,31,31,47,59
+"LEF1","lymphoid enhancer binding factor 1",9,25,0,0,23
+"C15orf48","chromosome 15 open reading frame 48",7,5,0,7,0
+"CENPU","centromere protein U",7,2,0,0,0
+"KIF20A","kinesin family member 20A",6,7,0,11,0
+"CCDC74B","coiled-coil domain containing 74B",5,4,0,8,7
+"MELK","maternal embryonic leucine zipper kinase",5,0,0,0,1
+"MORN3","MORN repeat containing 3",5,2,0,4,3
+"TNNI1","troponin I1, slow skeletal type",5,9,0,23,22
+"H2AC6","H2A clustered histone 6",4,0,16,30,14
+"CCNB2","cyclin B2",2,0,25,22,25
+"TTN","titin",2,0,13,26,7
+"CERS2","ceramide synthase 2",1,0,9,4,3
+"CREB3L1","cAMP responsive element binding protein 3 like 1",1,0,16,14,11
+"GRIK4","glutamate ionotropic receptor kainate type subunit 4",1,0,3,5,4
+"RARA","retinoic acid receptor alpha",1,0,1,2,2
+"SLC19A2","solute carrier family 19 member 2",1,0,13,9,19

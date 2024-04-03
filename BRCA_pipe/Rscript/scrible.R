@@ -11,6 +11,15 @@ ggplot(stage_freq_df, aes(x = Var1, y = Freq)) +
   theme(panel.grid.minor = element_blank())
 
 
+stage_freq_df <- table(selected_barcodes$ajcc_pathologic_stage)
+stage_freq_df <- as.data.frame(stage_freq_df)
+
+ggplot(stage_freq_df, aes(x = Var1, y = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Stage", y = "No. of Samples") +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+
 
 gene_expression <- query_output[query_output$type == "gene_expression", ]
 mirna_expression <- query_output[query_output$type == "mirna_expression", ]
@@ -68,5 +77,109 @@ venn.diagram(
   output = TRUE,
   disable.logging = TRUE
 )
+
+
+gene_data <- gene_data[order(-gene_data$logFC), ]
+upreg <- gene_data[1:20, ]
+dnreg <- gene_data[(nrow(gene_data)-19):nrow(gene_data), ]
+top_dif_exp <- rbind(upreg, dnreg)
+
+
+
+
+
+# Luminal A Subtype
+luminal_a <- data.frame(
+  Gene_Target = c("ESR1", 
+                  "PGR", 
+                  "ERBB2", 
+                  "CDK4",
+                  "CDK6"),
+  Example_Drugs = c("Tamoxifen, Fulvestrant", 
+                    "Tamoxifen, Fulvestrant", 
+                    "Trastuzumab, Pertuzumab", 
+                    "Palbociclib, Ribociclib, Abemaciclib",
+                    "Palbociclib, Ribociclib, Abemaciclib")
+)
+
+LumA_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description"), 
+                       filters = "external_gene_name", 
+                       values = luminal_a$Gene_Target, 
+                       mart = ensembl)
+LumA_genes$description <- gsub("\\s*\\[.*?\\]", "", LumA_genes$description)
+
+luminal_a <- merge(LumA_genes, luminal_a, by.x = "external_gene_name", by.y = "Gene_Target")
+
+
+
+# Luminal B Subtype
+luminal_b <- data.frame(
+  Gene_Target = c("ESR1", 
+                  "PGR", 
+                  "ERBB2", 
+                  "CDK4",
+                  "CDK6",
+                  "MTOR"),
+  Example_Drugs = c("Tamoxifen, Fulvestrant", 
+                    "Tamoxifen, Fulvestrant", 
+                    "Trastuzumab, Pertuzumab", 
+                    "Palbociclib, Ribociclib, Abemaciclib",
+                    "Palbociclib, Ribociclib, Abemaciclib",
+                    "Everolimus")
+)
+
+LumB_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description"), 
+                    filters = "external_gene_name", 
+                    values = luminal_b$Gene_Target, 
+                    mart = ensembl)
+LumB_genes$description <- gsub("\\s*\\[.*?\\]", "", LumB_genes$description)
+
+luminal_b <- merge(LumB_genes, luminal_b, by.x = "external_gene_name", by.y = "Gene_Target")
+
+
+# HER2-Enriched Subtype
+her2 <- data.frame(
+  Gene_Target = c("ERBB2", 
+                  "PI3K", 
+                  "MTOR", 
+                  "CDK4",
+                  "CDK6"),
+  Example_Drugs = c("Trastuzumab, Pertuzumab, Lapatinib", 
+                    "Alpelisib, Buparlisib", 
+                    "Everolimus", 
+                    "Palbociclib, Ribociclib, Abemaciclib",
+                    "Palbociclib, Ribociclib, Abemaciclib")
+)
+
+her2_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description"), 
+                    filters = "external_gene_name", 
+                    values = her2$Gene_Target, 
+                    mart = ensembl)
+her2_genes$description <- gsub("\\s*\\[.*?\\]", "", her2_genes$description)
+
+her2 <- merge(her2_genes, her2, by.x = "external_gene_name", by.y = "Gene_Target")
+
+# Basal-like Subtype (Triple-negative Breast Cancer)
+basal_like <- data.frame(
+  Gene_Target = c("PARP1", 
+                  "EGFR", 
+                  "CD274", 
+                  "AR"),
+  Example_Drugs = c("Olaparib, Talazoparib", 
+                    "Cetuximab, Gefitinib, Erlotinib", 
+                    "Atezolizumab, Pembrolizumab, Durvalumab", 
+                    "Enzalutamide, Bicalutamide")
+)
+
+basal_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description"), 
+                    filters = "external_gene_name", 
+                    values = basal_like$Gene_Target, 
+                    mart = ensembl)
+basal_genes$description <- gsub("\\s*\\[.*?\\]", "", basal_genes$description)
+
+basal_like <- merge(basal_genes, basal_like, by.x = "external_gene_name", by.y = "Gene_Target")
+
+save(luminal_a, luminal_b, her2, basal_like, file = "RData/gene_targets.RData")
+
 
 
