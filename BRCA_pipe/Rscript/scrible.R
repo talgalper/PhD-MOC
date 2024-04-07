@@ -1,6 +1,6 @@
 
 
-
+# number of each stage in samples
 stage_freq_df <- table(common$ajcc_pathologic_stage)
 stage_freq_df <- as.data.frame(stage_freq_df)
 
@@ -11,6 +11,9 @@ ggplot(stage_freq_df, aes(x = Var1, y = Freq)) +
   theme(panel.grid.minor = element_blank())
 
 
+
+selected_barcodes <- common[common$Subtype_Selected == "BRCA.Her2", ]
+
 stage_freq_df <- table(selected_barcodes$ajcc_pathologic_stage)
 stage_freq_df <- as.data.frame(stage_freq_df)
 
@@ -19,6 +22,9 @@ ggplot(stage_freq_df, aes(x = Var1, y = Freq)) +
   labs(x = "Stage", y = "No. of Samples") +
   theme_minimal() +
   theme(panel.grid.minor = element_blank())
+
+
+
 
 
 gene_expression <- query_output[query_output$type == "gene_expression", ]
