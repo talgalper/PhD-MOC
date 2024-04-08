@@ -206,6 +206,7 @@ hits <- hits[,c("gene_id", colnames)]
 
 dif_exp <- hits[dif_exp_genes, ]
 
+write.csv(hits, "intermediate/LumB/DE_results.csv", row.names = F)
 
 # Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
 plotBCV(tagwise, main = "biological coefficient of variation")

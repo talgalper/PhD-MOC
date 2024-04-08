@@ -100,15 +100,31 @@ luminal_a <- data.frame(
                   "PGR", 
                   "ERBB2", 
                   "CDK4",
-                  "CDK6"),
+                  "CDK6",
+                  "MTOR",
+                  "AKT1",
+                  "ERK",
+                  "SRC",
+                  "FGFR1",
+                  "FGFR2",
+                  "FGFR3",
+                  "FGFR4"),
   Example_Drugs = c("Tamoxifen, Fulvestrant", 
                     "Tamoxifen, Fulvestrant", 
                     "Trastuzumab, Pertuzumab", 
                     "Palbociclib, Ribociclib, Abemaciclib",
-                    "Palbociclib, Ribociclib, Abemaciclib")
+                    "Palbociclib, Ribociclib, Abemaciclib",
+                    "Everolimus",
+                    "Capivasertib, Ipatasertib",
+                    "Trametinib, Cobimetinib",
+                    "Dasatinib, Bosutinib",
+                   "Erdafitinib, Infigratinib",
+                   "Erdafitinib, Infigratinib",
+                   "Erdafitinib, Infigratinib",
+                   "Erdafitinib, Infigratinib")
 )
 
-LumA_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description"), 
+LumA_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description", "uniprot_gn_id"), 
                        filters = "external_gene_name", 
                        values = luminal_a$Gene_Target, 
                        mart = ensembl)
@@ -125,13 +141,24 @@ luminal_b <- data.frame(
                   "ERBB2", 
                   "CDK4",
                   "CDK6",
-                  "MTOR"),
+                  "MTOR",
+                  "FGFR1",
+                  "FGFR2",
+                  "FGFR3",
+                  "FGFR4",
+                  "AKT1",
+                  "ERK"),
   Example_Drugs = c("Tamoxifen, Fulvestrant", 
                     "Tamoxifen, Fulvestrant", 
                     "Trastuzumab, Pertuzumab", 
                     "Palbociclib, Ribociclib, Abemaciclib",
                     "Palbociclib, Ribociclib, Abemaciclib",
-                    "Everolimus")
+                    "Everolimus",
+                    "Erdafitinib, Infigratinib",
+                    "Erdafitinib, Infigratinib",
+                    "Erdafitinib, Infigratinib",
+                    "Erdafitinib, Infigratinib",
+                    "Capivasertib, Ipatasertib")
 )
 
 LumB_genes <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description"), 
@@ -188,4 +215,46 @@ basal_like <- merge(basal_genes, basal_like, by.x = "external_gene_name", by.y =
 save(luminal_a, luminal_b, her2, basal_like, file = "RData/gene_targets.RData")
 
 
+
+library(geneSynonym)
+
+lumA_synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6", 
+                          "PI3K", "MTOR", "FGFR1", "FGFR2", "FGFR3", 
+                          "FGFR4", "AKT", "ERK", "SRC"))
+
+Basal_synon <- humanSyno(c("PARP", "EGFR", "PDL1", "AR", "PI3K", 
+                           "FGFR1", "FGFR2", "FGFR3", "FGFR4", "AKT",
+                           "SRC", "MEK", "MTOR"))
+
+
+# find gene synonyms in ranked gene list
+df <- final_gene_counts[0,]
+
+for (i in seq_along(lumA_synon)) {
+  i <- lumA_synon[i]
+  syno <- unlist(i)
+  syno_matched <- final_gene_counts[final_gene_counts$external_gene_name %in% syno, ]
+  df <- rbind(df, syno_matched)
+}
+
+
+df <- gene_data[0,]
+
+for (i in seq_along(lumA_synon)) {
+  i <- lumA_synon[i]
+  syno <- unlist(i)
+  syno_matched <- gene_data[gene_data$external_gene_name %in% syno, ]
+  df <- rbind(df, syno_matched)
+}
+
+
+
+
+synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6", 
+                     "PI3K", "MTOR", "FGFR1", "FGFR2", "FGFR3", 
+                     "FGFR4", "AKT", "ERK", "SRC", "PARP", 
+                     "PD-L1", "MEK", "ERBB3", "AR"))
+
+synon <- melt(synon)
+colnames(synon) <- c("synonym", "NCBI_gene", "input_term")
 
