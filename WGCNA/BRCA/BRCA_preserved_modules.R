@@ -14,13 +14,17 @@ gsg <- goodSamplesGenes(t(data))
 summary(gsg)
 gsg$allOK
 
-data <- normal_unstranded[gsg$goodGenes == TRUE, ]
+table(gsg$goodGenes)
+table(gsg$goodSamples)
+
+
+data <- data[gsg$goodGenes == TRUE, ]
 
 
 # plot samples for outlier detection
-#htree <- hclust(dist(t(data)))
-#sizeGrWindow(8, 6)
-#plot(htree, xlab = "", sub = "")
+htree <- hclust(dist(t(data)))
+sizeGrWindow(8, 6)
+plot(htree, xlab = "", sub = "")
 
 pca <- prcomp(t(data))
 pca_data <- pca$x
