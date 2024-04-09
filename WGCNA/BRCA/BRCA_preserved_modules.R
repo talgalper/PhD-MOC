@@ -117,8 +117,12 @@ disease_adj <- adjacency(wgcna_disease, power = 10, type = "signed")
 benign_adj <- adjacency(wgcna_benign, power = 10, type = "signed")
 
 
-
-
+# diff_i 
+sum_matrix <- disease_adj + benign_adj
+normalised_scores <- apply(sum_matrix, 2, max)
+normalised_scores <- sum_matrix / normalised_scores
+median <- rowMedians(normalised_scores)
+differential_weights <- normalised_scores - median
 
 
 
