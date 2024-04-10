@@ -6,6 +6,9 @@ library(biomaRt)
 library(tidyverse)
 library(reshape2)
 
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+
 # get all synonyms for target terms
 synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6", 
                      "PI3K", "MTOR", "FGFR1", "FGFR2", "FGFR3", 
