@@ -12,7 +12,7 @@ load("../BRCA_pipe/RData/LumA/lumA_data.RData")
 load("../BRCA_pipe/RData/TCGA_query.RData")
 
 data <- merge(LumA_unstranded, normal_unstranded, by = "row.names")
-data <- data[, -1]
+data <- column_to_rownames(data, var = "Row.names")
 
 
 subtypes <- PanCancerAtlas_subtypes()
@@ -38,6 +38,7 @@ print(summary(keepTheseGenes))
 
 # add gene ids back into df
 data <- rownames_to_column(data)
+rownames(data) <- data$rowname
 
 removedGenes <- data$rowname[!keepTheseGenes]
 removedGenes <- as.data.frame(removedGenes)
@@ -92,6 +93,7 @@ a2 <- ggplot(sft_data, aes(Power, mean.k., label = Power)) +
 grid.arrange(a1, a2, nrow = 2)
 
 
+start_time <- Sys.time()
 # identify modules. this includes both benign and disease groups.
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
@@ -101,6 +103,8 @@ bwnet <- blockwiseModules(wgcna_data,
                           numericLabels = FALSE,
                           randomSeed = 1234,
                           verbose = 3)
+elapsed_time <- Sys.time() - start_time
+print(elapsed_time)
 
 
 # Plot the dendrogram
