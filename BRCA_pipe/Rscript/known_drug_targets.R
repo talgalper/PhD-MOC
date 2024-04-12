@@ -13,7 +13,7 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6", 
                      "PI3K", "MTOR", "FGFR1", "FGFR2", "FGFR3", 
                      "FGFR4", "AKT", "ERK", "SRC", "PARP", 
-                     "PD-L1", "MEK", "ERBB3", "AR"))
+                     "PD-L1", "MEK", "ERBB3", "AR", "TP53"))
 
 synon <- melt(synon)
 colnames(synon) <- c("synonym", "NCBI_gene", "input_term")

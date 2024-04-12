@@ -258,3 +258,120 @@ synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6",
 synon <- melt(synon)
 colnames(synon) <- c("synonym", "NCBI_gene", "input_term")
 
+
+
+
+library(TCGAbiolinks)
+library(SummarizedExperiment)
+
+load("RData/TCGA_query.RData")
+
+clinical <- GDCquery_clinic(project = "TCGA-BRCA",
+                            type = "clinical")
+clinical_query <- merge(query_output, clinical, by.x = "cases.submitter_id", by.y = "submitter_id")
+clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
+                                                    "tissue_or_organ_of_origin", "sample_type", "bcr_patient_barcode"))
+
+subtypes <- PanCancerAtlas_subtypes()
+
+master <- merge(clinical_query, subtypes, by.x = "cases", by.y = "pan.samplesID")
+master <- subset(master, select = c("cases", "cases.submitter_id", "Subtype_Selected", "sample_type", 
+                                    "ajcc_pathologic_stage", "tissue_or_organ_of_origin", "bcr_patient_barcode"))
+
+
+
+table(duplicated(clinical_query$bcr_patient_barcode))
+table(is.na(clinical_query$ajcc_pathologic_stage))
+table(master$Subtype_Selected)
+
+normals <- master[master$Subtype_Selected == "BRCA.Normal", ]
+lumA <- master[master$Subtype_Selected == "BRCA.LumA", ]
+lumB <- master[master$Subtype_Selected == "BRCA.LumB", ]
+Basal <- master[master$Subtype_Selected == "BRCA.Basal", ]
+Her2 <- master[master$Subtype_Selected == "BRCA.Her2", ]
+
+
+paired_samples <- as.data.frame(subset(normals, select = c("bcr_patient_barcode")))
+colnames(paired_samples)[1] <- "normal"
+
+paired_samples <- merge(paired_samples, lumA, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+paired_samples <- subset(paired_samples, select = c("normal", "ajcc_pathologic_stage"))
+colnames(paired_samples)[2] <- "lumA"
+
+paired_samples <- merge(paired_samples, lumB, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+paired_samples <- subset(paired_samples, select = c("normal", "lumA", "ajcc_pathologic_stage"))
+colnames(paired_samples)[3] <- "lumB"
+
+paired_samples <- merge(paired_samples, Basal, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+paired_samples <- subset(paired_samples, select = c("normal", "lumA", "lumB", "ajcc_pathologic_stage"))
+colnames(paired_samples)[4] <- "basal"
+
+paired_samples <- merge(paired_samples, Her2, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+paired_samples <- subset(paired_samples, select = c("normal", "lumA", "lumB", "basal", "ajcc_pathologic_stage"))
+colnames(paired_samples)[5] <- "Her2"
+
+unparied <- paired_samples[is.na(paired_samples$lumA) & is.na(paired_samples$lumB) & is.na(paired_samples$basal) & is.na(paired_samples$Her2), ]
+paired_samples <- paired_samples[!paired_samples$normal %in% unparied$normal, ]
+
+
+
+library(edgeR)
+
+load("RData/TCGA_query.RData")
+
+table(is.na(common$Subtype_Selected))
+
+master_query <- GDCquery(project = "TCGA-BRCA",
+                         access = "open", 
+                         data.category = "Transcriptome Profiling",
+                         experimental.strategy = "RNA-Seq")
+GDCdownload(master_query)
+
+master_data <- GDCprepare(master_query, summarizedExperiment = T)
+
+master_unstranded <- assay(master_data, "unstranded")  
+rownames(master_unstranded) <- gsub("\\.\\d+", "", rownames(master_unstranded))
+master_unstranded <- as.data.frame(master_unstranded)
+
+
+
+group <- factor(master$Subtype_Selected)
+
+master_counts_filt <- filterByExpr(master_unstranded, group = group)
+master_counts_filt <- master_unstranded[master_counts_filt, ]
+
+
+
+
+plotMDS(master_counts_filt, top = 50)
+
+
+
+
+
+# PCA
+pca <- prcomp(t(master_counts_filt))
+pca_data <- pca$x
+pca_var <- pca$sdev^2
+
+pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+
+pca_data <- as.data.frame(pca_data)
+
+
+# Merge sample-stage mapping with PCA data
+pca_data <- merge(pca_data, stage_info, by.x = "row.names", by.y = "Sample")
+
+# Create a custom color palette for stages
+stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
+
+# Create the PCA plot with color mapping
+ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
+  geom_point() +
+  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+  scale_color_manual(values = stage_colors) + # Use the custom color palette
+  theme_bw() +
+  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+       y = paste0('PC2: ', pca_var_perc[2], ' %'))
+
+
