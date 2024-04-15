@@ -315,6 +315,7 @@ paired_samples <- paired_samples[!paired_samples$normal %in% unparied$normal, ]
 
 
 
+
 library(edgeR)
 
 load("RData/TCGA_query.RData")
@@ -333,9 +334,12 @@ master_unstranded <- assay(master_data, "unstranded")
 rownames(master_unstranded) <- gsub("\\.\\d+", "", rownames(master_unstranded))
 master_unstranded <- as.data.frame(master_unstranded)
 
+subtype_subset <- master[master$cases %in% colnames(master_unstranded), ]
+unstranded_subset <- master_unstranded[colnames(master_unstranded) %in% subtype_subset$cases]
 
+subtype_subset <- subtype_subset[match(colnames(unstranded_subset), subtype_subset$cases), ]
 
-group <- factor(master$Subtype_Selected)
+group <- factor(subtype_subset$Subtype_Selected)
 
 master_counts_filt <- filterByExpr(master_unstranded, group = group)
 master_counts_filt <- master_unstranded[master_counts_filt, ]
@@ -343,6 +347,7 @@ master_counts_filt <- master_unstranded[master_counts_filt, ]
 
 
 
+# takes too long
 plotMDS(master_counts_filt, top = 50)
 
 
@@ -360,10 +365,10 @@ pca_data <- as.data.frame(pca_data)
 
 
 # Merge sample-stage mapping with PCA data
-pca_data <- merge(pca_data, stage_info, by.x = "row.names", by.y = "Sample")
+pca_data <- merge(pca_data, subtype_subset$, by.x = "row.names", by.y = "Sample")
 
 # Create a custom color palette for stages
-stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
+stage_colors <- c("normal" = "blue", "LumA" = "green", "LumB" = "red", "Her2" = "purple", "Basal" = "orange")
 
 # Create the PCA plot with color mapping
 ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
