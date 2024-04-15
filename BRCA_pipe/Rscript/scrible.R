@@ -380,3 +380,35 @@ ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
        y = paste0('PC2: ', pca_var_perc[2], ' %'))
 
 
+
+library(VennDiagram)
+
+venn.diagram(
+  x = list(paired_hits = paired_dif_exp$gene_id, unpaired_hits = unpaired_dif_exp$gene_id),
+  category.names = c("paired genes", "unpaired genes"),
+  filename = "paired_vs_unpaired.png",
+  disable.logging = TRUE
+)
+
+
+venn.diagram(
+  x = list(paired_hits = paired_dif_exp$gene_id, unpaired_hits = unpaired_dif_exp$gene_id),
+  category.names = c("paired genes", "unpaired genes"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "paired_vs_unpaired.png",
+  disable.logging = TRUE
+)
+
+
+
+
+
+
