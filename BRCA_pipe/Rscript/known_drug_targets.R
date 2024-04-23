@@ -8,12 +8,19 @@ library(reshape2)
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
-
 # get all synonyms for target terms
 synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6", 
                      "PI3K", "MTOR", "FGFR1", "FGFR2", "FGFR3", 
                      "FGFR4", "AKT", "ERK", "SRC", "PARP", 
-                     "PD-L1", "MEK", "ERBB3", "AR", "TP53"))
+                     "PD-L1", "MEK", "ERBB3", "AR", "TP53",
+                     "MELK", "TOPK"))
+
+# get terms from open targets platform
+open_targets <- read.table("OT-MONDO_0007254-associated-targets-16_04_2024-v24_03.tsv", sep = "\t")
+colnames(open_targets) <- open_targets[1, ]
+open_targets <- open_targets[-1, ]
+synon <- humanSyno(open_targets$symbol[1:25])
+
 
 synon <- melt(synon)
 colnames(synon) <- c("synonym", "NCBI_gene", "input_term")
@@ -40,17 +47,17 @@ pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv
 targets <- merge(targets, pocketminer_data, by.x = "uniprot_gn_id", by.y = "uniprot_id", all.x = T)
 
 # add logFC scores
-lumA_hits <- read.csv("intermediate/LumA/DE_results.csv")
+lumA_hits <- read.csv("intermediate/paired/LumA/DE_results.csv")
 lumA_hits <- lumA_hits[lumA_hits$PValue <= 0.05, ]
-lumA_hits <- subset(lumA_hits, select = c("gene_id", "logFC"))
+lumA_hits <- subset(lumA_hits, select = c("X", "logFC"))
 colnames(lumA_hits)[2] <- "lumA_logFC"
-targets <- merge(targets, lumA_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
+targets <- merge(targets, lumA_hits, by.x = "ensembl_gene_id", by.y = "X", all.x = T)
 
-lumB_hits <- read.csv("intermediate/lumB/DE_results.csv")
+lumB_hits <- read.csv("intermediate/paired/LumB/DE_results.csv")
 lumB_hits <- lumB_hits[lumB_hits$PValue <= 0.05, ]
-lumB_hits <- subset(lumB_hits, select = c("gene_id", "logFC"))
+lumB_hits <- subset(lumB_hits, select = c("X", "logFC"))
 colnames(lumB_hits)[2] <- "lumB_logFC"
-targets <- merge(targets, lumB_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
+targets <- merge(targets, lumB_hits, by.x = "ensembl_gene_id", by.y = "X", all.x = T)
 
 Her2_hits <- read.csv("intermediate/Her2/DE_results.csv")
 Her2_hits <- Her2_hits[Her2_hits$PValue <= 0.05, ]
@@ -65,12 +72,12 @@ colnames(basal_hits)[2] <- "basal_logFC"
 targets <- merge(targets, basal_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
 
 # add centrality data
-LumA_centrality <- read.csv("intermediate/LumA/PCSF_output.csv")
+LumA_centrality <- read.csv("intermediate/paired/LumA/PCSF_output.csv")
 colnames(LumA_centrality)[4] <- "lumA_centrality"
 LumA_centrality <- subset(LumA_centrality, select = c("gene_id", "lumA_centrality"))
 targets <- merge(targets, LumA_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
 
-lumB_centrality <- read.csv("intermediate/lumB/PCSF_output.csv")
+lumB_centrality <- read.csv("intermediate/paired/lumB/PCSF_output.csv")
 colnames(lumB_centrality)[4] <- "lumB_centrality"
 lumB_centrality <- subset(lumB_centrality, select = c("gene_id", "lumB_centrality"))
 targets <- merge(targets, lumB_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
@@ -86,13 +93,13 @@ basal_centrality <- subset(basal_centrality, select = c("gene_id", "basal_centra
 targets <- merge(targets, basal_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
 
 # add rank data
-lumA_rank <- read.csv("intermediate/LumA/final_gene_counts.csv")
+lumA_rank <- read.csv("intermediate/paired/LumA/final_gene_counts.csv")
 lumA_rank <- rownames_to_column(lumA_rank)
 colnames(lumA_rank)[1] <- "lumA_rank"
 lumA_rank <- subset(lumA_rank, select = c("lumA_rank", "external_gene_name"))
 targets <- merge(targets, lumA_rank, by.x = "synonym", by.y = "external_gene_name", all.x = T)
 
-lumB_rank <- read.csv("intermediate/LumB/final_gene_counts.csv")
+lumB_rank <- read.csv("intermediate/paired/LumB/final_gene_counts.csv")
 lumB_rank <- rownames_to_column(lumB_rank)
 colnames(lumB_rank)[1] <- "lumB_rank"
 lumB_rank <- subset(lumB_rank, select = c("lumB_rank", "external_gene_name"))

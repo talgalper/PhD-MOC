@@ -53,6 +53,7 @@ Basal_paired <- subset(Basal_paired, select = c("bcr_patient_barcode", "cases.x"
 colnames(Basal_paired) <- c("bcr_patient_barcode", "normal", "Basal")
 
 
+save(lumA_paired, lumB_paired, Her2_paired, Basal_paired, master, file = "RData/paired/paired_subtypes.RData")
 
 
 
@@ -67,40 +68,39 @@ colnames(Basal_paired) <- c("bcr_patient_barcode", "normal", "Basal")
 
 
 
-
-lumA <- as.data.frame(subset(normals, select = c("bcr_patient_barcode")))
-colnames(lumA)[1] <- "normal"
-rownames(paired_samples) <- paired_samples$normal
-
-paired_samples <- merge(paired_samples, lumA, by.x = "normal", by.y = "bcr_patient_barcode")
-paired_samples <- subset(paired_samples, select = c("normal", "ajcc_pathologic_stage"))
-colnames(paired_samples)[2] <- "lumA"
-
-paired_samples <- merge(paired_samples, lumB, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
-paired_samples <- subset(paired_samples, select = c("normal", "lumA", "ajcc_pathologic_stage"))
-colnames(paired_samples)[3] <- "lumB"
-
-paired_samples <- merge(paired_samples, Basal, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
-paired_samples <- subset(paired_samples, select = c("normal", "lumA", "lumB", "ajcc_pathologic_stage"))
-colnames(paired_samples)[4] <- "basal"
-
-paired_samples <- merge(paired_samples, Her2, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
-paired_samples <- subset(paired_samples, select = c("normal", "lumA", "lumB", "basal", "ajcc_pathologic_stage"))
-colnames(paired_samples)[5] <- "Her2"
-
-# get unpaired samples
-unparied <- paired_samples[is.na(paired_samples$lumA) & is.na(paired_samples$lumB) & is.na(paired_samples$basal) & is.na(paired_samples$Her2), ]
-
-# remove unpaired samples from main df
-paired_samples <- paired_samples[!paired_samples$normal %in% unparied$normal, ]
-
-# get samples that have >2 pairings + remove them
-multi_paired <- paired_samples[rowSums(!is.na(paired_samples)) == 3, ]
-paired_samples <- paired_samples[!paired_samples$normal %in% multi_paired$normal, ]
-
-
-# subset clinical data with paired samples
-master_subet <- master[master$bcr_patient_barcode %in% paired_samples$normal, ]
+#lumA <- as.data.frame(subset(normals, select = c("bcr_patient_barcode")))
+#colnames(lumA)[1] <- "normal"
+#rownames(paired_samples) <- paired_samples$normal
+#
+#paired_samples <- merge(paired_samples, lumA, by.x = "normal", by.y = "bcr_patient_barcode")
+#paired_samples <- subset(paired_samples, select = c("normal", "ajcc_pathologic_stage"))
+#colnames(paired_samples)[2] <- "lumA"
+#
+#paired_samples <- merge(paired_samples, lumB, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+#paired_samples <- subset(paired_samples, select = c("normal", "lumA", "ajcc_pathologic_stage"))
+#colnames(paired_samples)[3] <- "lumB"
+#
+#paired_samples <- merge(paired_samples, Basal, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+#paired_samples <- subset(paired_samples, select = c("normal", "lumA", "lumB", "ajcc_pathologic_stage"))
+#colnames(paired_samples)[4] <- "basal"
+#
+#paired_samples <- merge(paired_samples, Her2, by.x = "normal", by.y = "bcr_patient_barcode", all = T)
+#paired_samples <- subset(paired_samples, select = c("normal", "lumA", "lumB", "basal", "ajcc_pathologic_stage"))
+#colnames(paired_samples)[5] <- "Her2"
+#
+## get unpaired samples
+#unparied <- paired_samples[is.na(paired_samples$lumA) & is.na(paired_samples$lumB) & is.na(paired_samples$basal) & is.na(paired_samples$Her2), ]
+#
+## remove unpaired samples from main df
+#paired_samples <- paired_samples[!paired_samples$normal %in% unparied$normal, ]
+#
+## get samples that have >2 pairings + remove them
+#multi_paired <- paired_samples[rowSums(!is.na(paired_samples)) == 3, ]
+#paired_samples <- paired_samples[!paired_samples$normal %in% multi_paired$normal, ]
+#
+#
+## subset clinical data with paired samples
+#master_subet <- master[master$bcr_patient_barcode %in% paired_samples$normal, ]
 
 
 

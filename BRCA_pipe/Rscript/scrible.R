@@ -384,16 +384,15 @@ ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
 library(VennDiagram)
 
 venn.diagram(
-  x = list(paired_hits = paired_dif_exp$gene_id, unpaired_hits = unpaired_dif_exp$gene_id),
-  category.names = c("paired genes", "unpaired genes"),
+  x = list(paired_hits = paired_dif_exp$gene_id, unpaired_hits = unpaired_dif_exp$gene_id, wrong_paired_dif_exp$gene_id),
+  category.names = c("paired genes", "unpaired genes", "paired F up"),
   filename = "paired_vs_unpaired.png",
   disable.logging = TRUE
 )
 
-
 venn.diagram(
-  x = list(paired_hits = paired_dif_exp$gene_id, unpaired_hits = unpaired_dif_exp$gene_id),
-  category.names = c("paired genes", "unpaired genes"),
+  x = list(unpaired_hits = unpaired_dif_exp$gene_id, paired_hits = paired_dif_exp$gene_id),
+  category.names = c("Unaired genes", "Paired genes"),
   col = "transparent",  # set the color of the intersections to transparent
   fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
   alpha = 0.5,  # set the transparency level of the circles
@@ -406,6 +405,49 @@ venn.diagram(
   filename = "paired_vs_unpaired.png",
   disable.logging = TRUE
 )
+
+
+venn.diagram(
+  x = list(paired_hits = paired_dif_exp$gene_id, unpaired_hits = unpaired_dif_exp$gene_id, wrong_paired_dif_exp$gene_id),
+  category.names = c("Paired genes", "Unpaired genes", "Paired F up"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1", "forestgreen"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1", "forestgreen"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "paired_vs_unpaired.png",
+  disable.logging = TRUE
+)
+
+
+
+
+final_gene_counts_paired <- final_gene_counts
+final_gene_counts_unpaired <- read.csv("intermediate/LumA/final_gene_counts.csv")
+
+
+
+venn.diagram(
+  x = list(paired_hits = final_gene_counts$external_gene_name, unpaired_hits = final_gene_counts_unpaired$external_gene_name),
+  category.names = c("paired", "unpaired"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "paired_vs_unpaired_ranks.png",
+  disable.logging = TRUE
+)
+
+
 
 
 
