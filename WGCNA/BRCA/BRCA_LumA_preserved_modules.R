@@ -2,6 +2,7 @@ library(biomaRt)
 library(tidyverse)
 library(WGCNA)
 library(edgeR)
+library(DESeq2)
 library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(gridExtra)
@@ -32,24 +33,17 @@ table(gsg$goodSamples)
 
 data <- data[gsg$goodGenes == TRUE, ]
 
+# filter low expression genes
+group <- factor(c(rep(1, length(colnames(LumA_unstranded))), rep(2, length(colnames(normal_unstranded)))))
+counts_filt <- filterByExpr(data, group = group)
 
-keepTheseGenes <- (rowSums(cpm(data) > 1) >= ncol(data)/2)
-print(summary(keepTheseGenes))
-
-# add gene ids back into df
-data <- rownames_to_column(data)
-rownames(data) <- data$rowname
-
-removedGenes <- data$rowname[!keepTheseGenes]
-removedGenes <- as.data.frame(removedGenes)
-colnames(removedGenes)[1] <- "gene_id"
-
-data <- data[keepTheseGenes, ]
-data <- data[, -1]
-
+# passed genes
+table(counts_filt)
+data_filt <- data[counts_filt, ]
 
 # normalisation
-wgcna_data <- cpm(data)
+data_filt <- as.matrix(data_filt)
+wgcna_data <- varianceStabilizingTransformation(data_filt)
 wgcna_data <- as.data.frame(wgcna_data)
 
 
@@ -60,7 +54,6 @@ wgcna_disease <- t(wgcna_disease)
 
 wgcna_benign <- wgcna_data[, colnames(wgcna_data) %in% colnames(normal_unstranded)]
 wgcna_benign <- t(wgcna_benign)
-
 
 wgcna_data <- t(wgcna_data)
 
@@ -98,12 +91,13 @@ start_time <- Sys.time()
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
                           TOMType = "signed",
-                          power = 12,
+                          power = 7,
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
                           verbose = 3)
 elapsed_time <- Sys.time() - start_time
+system("say run complete")
 print(elapsed_time)
 
 
@@ -117,11 +111,42 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
 
 
 # create adjacency matrix
-disease_adj <- adjacency(wgcna_disease, power = 10, type = "signed")
-benign_adj <- adjacency(wgcna_benign, power = 10, type = "signed")
+disease_adj <- adjacency(wgcna_disease, power = 7, type = "signed")
+benign_adj <- adjacency(wgcna_benign, power = 7, type = "signed")
+
+
+# preserved modules function
+multidata <- multiData(Reference = benign_adj, 
+                       Test = disease_adj)
+
+
+multicolour <- list(Reference = bwnet$colors)
+system("say run complete")
+
+
+start_time <- Sys.time()
+preserved_modules <- modulePreservation(multiData = multidata,
+                                        multiColor = multicolour,
+                                        networkType = "signed",
+                                        quickCor = 1,
+                                        randomSeed = 1234,
+                                        verbose = 3,
+                                        nPermutations = 10,
+                                        testNetworks = 2,
+                                        maxModuleSize = max(table(bwnet$colors)),
+                                        calculateClusterCoeff = F)
+end_time <- Sys.time()
+end_time - start_time
+system("say run complete")
+
+
+
+
+
 
 
 # diff_i 
+# https://academic.oup.com/bioinformatics/article/36/9/2821/5711285?login=false
 sum_matrix <- disease_adj + benign_adj
 normalised_scores <- apply(sum_matrix, 2, max)
 normalised_scores <- sum_matrix / normalised_scores
