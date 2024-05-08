@@ -390,6 +390,10 @@ venn.diagram(
   disable.logging = TRUE
 )
 
+
+paired_dif_exp <- dif_exp
+unpaired_dif_exp <- dif_exp
+
 venn.diagram(
   x = list(unpaired_hits = unpaired_dif_exp$gene_id, paired_hits = paired_dif_exp$gene_id),
   category.names = c("Unaired genes", "Paired genes"),
@@ -446,6 +450,42 @@ venn.diagram(
   filename = "paired_vs_unpaired_ranks.png",
   disable.logging = TRUE
 )
+
+
+
+
+library(ggplot2)
+library(ggrepel)
+
+# PCA
+
+normal_filt <- filterByExpr(normal_unstranded)
+normal_filt <- normal_unstranded[normal_filt, ]
+
+cpm_normal <- cpm(normal_filt)
+
+
+pca <- prcomp(t(cpm_normal), scale. = T)
+pca_data <- pca$x
+pca_var <- pca$sdev^2
+
+pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+
+pca_data <- as.data.frame(pca_data)
+
+
+# Create a custom color palette for stages
+# Create the PCA plot with color mapping
+ggplot(pca_data, aes(PC1, PC2)) +
+  geom_point() +
+  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+  theme_bw() +
+  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+       y = paste0('PC2: ', pca_var_perc[2], ' %'))
+
+
+
+centroid <- colMeans(pca$x[,1:2])
 
 
 

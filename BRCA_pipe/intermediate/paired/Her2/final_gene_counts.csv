@@ -1,0 +1,69 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"STAT5A","signal transducer and activator of transcription 5A",181,5,11,25,0
+"PIK3R1","phosphoinositide-3-kinase regulatory subunit 1",162,3,5,6,0
+"EGFR","epidermal growth factor receptor",159,3,5,6,0
+"FYN","FYN proto-oncogene, Src family tyrosine kinase",147,4,9,4,0
+"SPTBN1","spectrin beta, non-erythrocytic 1",142,20,29,5,0
+"COLGALT2","collagen beta(1-O)galactosyltransferase 2",137,1,3,3,0
+"CDH23","cadherin related 23",136,6,10,12,0
+"GRIK3","glutamate ionotropic receptor kainate type subunit 3",106,1,3,3,0
+"ANK2","ankyrin 2",105,36,35,4,4
+"GABBR1","gamma-aminobutyric acid type B receptor subunit 1",91,46,34,21,4
+"SCARB1","scavenger receptor class B member 1",91,1,1,1,0
+"CETP","cholesteryl ester transfer protein",88,26,25,0,0
+"KIRREL1","kirre like nephrin family adhesion molecule 1",83,11,10,13,0
+"FZD4","frizzled class receptor 4",70,1,2,0,0
+"ESR1","estrogen receptor 1",68,32,34,0,8
+"TEAD1","TEA domain transcription factor 1",63,35,14,8,1
+"INPP5D","inositol polyphosphate-5-phosphatase D",59,4,6,0,0
+"CACNA1G","calcium voltage-gated channel subunit alpha1 G",57,1,1,0,0
+"AGPAT4","1-acylglycerol-3-phosphate O-acyltransferase 4",54,9,12,0,0
+"CDH17","cadherin 17",53,19,34,0,3
+"RND3","Rho family GTPase 3",49,50,20,12,19
+"LAMC2","laminin subunit gamma 2",43,11,16,0,0
+"QKI","QKI, KH domain containing RNA binding",34,6,13,0,1
+"EGF","epidermal growth factor",31,7,8,0,0
+"KCNAB1","potassium voltage-gated channel subfamily A regulatory beta subunit 1",31,4,5,0,0
+"ITSN1","intersectin 1",30,2,3,0,0
+"CAV1","caveolin 1",27,1,2,0,0
+"SLC17A7","solute carrier family 17 member 7",26,6,1,0,1
+"ARRB1","arrestin beta 1",20,4,7,0,11
+"GPER1","G protein-coupled estrogen receptor 1",20,3,4,0,7
+"CTNNA3","catenin alpha 3",19,1,4,0,4
+"CD36","CD36 molecule",15,5,5,0,15
+"LAMA1","laminin subunit alpha 1",15,1,2,0,2
+"STEAP1","STEAP family member 1",14,1,1,0,1
+"TRO","trophinin",13,1,3,0,3
+"NTRK3","neurotrophic receptor tyrosine kinase 3",10,20,2,31,0
+"REEP2","receptor accessory protein 2",10,1,1,0,1
+"LRRK2","leucine rich repeat kinase 2",9,3,0,6,0
+"SCN9A","sodium voltage-gated channel alpha subunit 9",8,3,0,0,4
+"WLS","Wnt ligand secretion mediator",8,3,2,0,8
+"ADGRL2","adhesion G protein-coupled receptor L2",7,3,0,4,0
+"GNB3","G protein subunit beta 3",7,14,0,0,15
+"KLHL36","kelch like family member 36",7,1,1,0,3
+"VTN","vitronectin",7,37,0,20,28
+"ZFP2","ZFP2 zinc finger protein",7,21,0,35,6
+"MYO15A","myosin XVA",6,28,12,36,56
+"WNT11","Wnt family member 11",6,2,0,3,0
+"MAOA","monoamine oxidase A",4,2,0,0,0
+"SCN7A","sodium voltage-gated channel alpha subunit 7",4,29,14,42,53
+"SYT1","synaptotagmin 1",4,19,32,49,45
+"CYP2C8","cytochrome P450 family 2 subfamily C member 8",3,21,25,47,52
+"DMGDH","dimethylglycine dehydrogenase",3,4,22,24,51
+"LIMS2","LIM zinc finger domain containing 2",3,15,24,55,37
+"P3H2","prolyl 3-hydroxylase 2",3,6,0,1,7
+"PAK3","p21 (RAC1) activated kinase 3",3,8,0,15,12
+"SCD5","stearoyl-CoA desaturase 5",3,6,0,1,19
+"WASF2","WASP family member 2",3,2,1,0,9
+"DUOX2","dual oxidase 2",2,0,1,0,1
+"GPR34","G protein-coupled receptor 34",2,0,2,0,2
+"GPRASP2","G protein-coupled receptor associated sorting protein 2",2,4,0,6,4
+"PRKCA","protein kinase C alpha",2,0,9,27,0
+"WIF1","WNT inhibitory factor 1",2,1,0,1,1
+"ADCY4","adenylate cyclase 4",1,0,21,12,1
+"CCNB1IP1","cyclin B1 interacting protein 1",1,0,0,2,0
+"MUC3A","mucin 3A, cell surface associated",1,0,16,25,29
+"NPHP3","nephrocystin 3",1,0,14,10,41
+"PLCG2","phospholipase C gamma 2",1,0,26,30,28
+"TMC2","transmembrane channel like 2",1,0,18,15,23

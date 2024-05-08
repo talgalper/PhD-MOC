@@ -65,7 +65,7 @@ Her2_unstranded <- assay(Her2_data, "unstranded")
 rownames(Her2_unstranded) <- gsub("\\.\\d+", "", rownames(Her2_unstranded))
 Her2_unstranded <- as.data.frame(Her2_unstranded)
 
-load("TCGA_normal.RData")
+load("RData/TCGA_normal.RData")
 
 barplot(colSums(Her2_unstranded),
         xaxt = "n")
