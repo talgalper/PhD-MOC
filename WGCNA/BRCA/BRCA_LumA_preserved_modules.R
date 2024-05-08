@@ -3,6 +3,7 @@ library(tidyverse)
 library(WGCNA)
 library(edgeR)
 library(DESeq2)
+library(matrixStats)
 library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(gridExtra)
@@ -121,7 +122,7 @@ multidata <- multiData(Reference = benign_adj,
 
 
 multicolour <- list(Reference = bwnet$colors)
-system("say run complete")
+#system("say run complete") 
 
 
 start_time <- Sys.time()
@@ -137,8 +138,80 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         calculateClusterCoeff = F)
 end_time <- Sys.time()
 end_time - start_time
-system("say run complete")
+#system("say run complete")
 
+
+
+
+# plot modules with median rank and Zsummary threshold
+
+plot_data <- data.frame(
+  cluster = rownames(preserved_modules$preservation$Z$ref.Reference$inColumnsAlsoPresentIn.Test),
+  moduleSize = preserved_modules$preservation$observed$ref.Reference$inColumnsAlsoPresentIn.Test$moduleSize,
+  medianRank.pres = preserved_modules$preservation$observed$ref.Reference$inColumnsAlsoPresentIn.Test$medianRank.pres,
+  Zsummary.pres = preserved_modules$preservation$Z$ref.Reference$inColumnsAlsoPresentIn.Test$Zsummary.pres
+)
+
+
+modColors <- unique(plot_data$cluster) 
+plotData <-  plot_data[, c(2:ncol(plot_data), 1)]
+plotMods <-  !(modColors %in% c("grey", "gold"))
+
+plot1 <- ggplot(plot_data, aes(x = moduleSize, y = medianRank.pres)) +
+  geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
+  scale_x_log10() +
+  labs(x = "Module size", y = "Median Rank") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+  geom_hline(yintercept = 8, linetype = "dashed") +
+  annotate("text", x = 1.5, y = 7.5, label = "Below", size = 3) +
+  scale_fill_manual(values = modColors) 
+
+
+plot2 <- ggplot(plot_data, aes(x = moduleSize, y = Zsummary.pres)) +
+  geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
+  scale_x_log10() +
+  labs(x = "Module size", y = "Z Summary") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+  geom_hline(yintercept = 10, linetype = "dashed") +
+  annotate("text", x = 1.5, y = 11, label = "Above", size = 3) +
+  scale_fill_manual(values = modColors)
+
+# Display both plots side by side
+grid.arrange(plot1, plot2, ncol = 2)
+
+
+# extract genes from non-preserved modules
+colours <- as.data.frame(bwnet$colors)
+colours <- rownames_to_column(colours)
+colnames(colours) <- c("genes", "cluster")
+
+non_preserved_modules <- subset(plot_data, medianRank.pres <= 8 & Zsummary.pres >= 10)
+non_preserved_genes <- colours[colours$cluster %in% non_preserved_modules$cluster, ]
+
+
+
+gene_names <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                    filters = "ensembl_gene_id", 
+                    values = non_preserved_genes$genes, 
+                    mart = ensembl)
+
+non_preserved_genes <- cbind(gene_names, non_preserved_genes)
+non_preserved_genes <- non_preserved_genes[, -3]
+
+median_rank <- preserved_modules$preservation$observed$ref.Reference$inColumnsAlsoPresentIn.Test
+median_rank <- rownames_to_column(median_rank)
+median_rank <- subset(median_rank, select = c("rowname", "medianRank.pres"))
+merged <- merge(non_preserved_genes, median_rank, by.x = "cluster", by.y = "rowname")
+
+Zsummary <- preserved_modules$preservation$Z$ref.Reference$inColumnsAlsoPresentIn.Test
+Zsummary <- rownames_to_column(Zsummary)
+Zsummary <- subset(Zsummary, select = c("rowname", "Zsummary.pres"))
+
+merged <- merge(merged, Zsummary, by.x = "cluster", by.y = "rowname")
 
 
 
