@@ -229,40 +229,64 @@ differential_weights <- normalised_scores - median
 
 
 
-## plot samples for outlier detection
-#htree <- hclust(dist(t(wgcna_data)), method = "average")
-#sizeGrWindow(8, 6)
-#plot(htree, xlab = "", sub = "")
-#
-#
-#
-## PCA
-#pca <- prcomp(t(wgcna_data))
-#pca_data <- pca$x
-#pca_var <- pca$sdev^2
-#
-#pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
-#
-#pca_data <- as.data.frame(pca_data)
-#
-#stage_info <- subset(common, select = c("cases", "ajcc_pathologic_stage"))
-## Merge sample-stage mapping with PCA data
-#pca_data <- merge(pca_data, stage_info, by.x = "row.names", by.y = "cases")
-#
-## Create a custom color palette for stages
-#stage_colors <- c("ben" = "blue", "stage_I" = "green", "stage_II" = "red", "stage_III" = "purple", "stage_IV" = "orange")
-#
-## Create the PCA plot with color mapping
-#ggplot(pca_data, aes(PC1, PC2, color = Stage)) +
-#  geom_point() +
-#  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
-#  scale_color_manual(values = stage_colors) + # Use the custom color palette
-#  theme_bw() +
-#  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
-#       y = paste0('PC2: ', pca_var_perc[2], ' %'))
+# plot samples for outlier detection
+htree <- hclust(dist(t(data_filt)), method = "average")
+sizeGrWindow(8, 6)
+plot(htree, xlab = "", sub = "")
 
 
 
+# PCA using raw counts
+pca <- prcomp(t(data_filt))
+pca_data <- pca$x
+pca_var <- pca$sdev^2
+
+pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+
+pca_data <- as.data.frame(pca_data)
+
+subtype_info <- subset(common, select = c("cases", "Subtype_Selected"))
+# Merge sample-stage mapping with PCA data
+pca_data <- merge(pca_data, subtype_info, by.x = "row.names", by.y = "cases")
+
+# Create a custom color palette for stages
+subtype_colors <- c("BRCA.Normal" = "green", "BRCA.LumA" = "red")
+
+# Create the PCA plot with color mapping
+ggplot(pca_data, aes(PC1, PC2, colour = Subtype_Selected)) +
+  geom_point() +
+  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+  scale_color_manual(values = subtype_colors) + # Use the custom color palette
+  theme_bw() +
+  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+       y = paste0('PC2: ', pca_var_perc[2], ' %'))
+
+
+
+# PCA using normalised counts (variance stabilised)
+pca <- prcomp(wgcna_data)
+pca_data <- pca$x
+pca_var <- pca$sdev^2
+
+pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+
+pca_data <- as.data.frame(pca_data)
+
+subtype_info <- subset(common, select = c("cases", "Subtype_Selected"))
+# Merge sample-stage mapping with PCA data
+pca_data <- merge(pca_data, subtype_info, by.x = "row.names", by.y = "cases")
+
+# Create a custom color palette for stages
+subtype_colors <- c("BRCA.Normal" = "green", "BRCA.LumA" = "red")
+
+# Create the PCA plot with color mapping
+ggplot(pca_data, aes(PC1, PC2, colour = Subtype_Selected)) +
+  geom_point() +
+  geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+  scale_color_manual(values = subtype_colors) + # Use the custom color palette
+  theme_bw() +
+  labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+       y = paste0('PC2: ', pca_var_perc[2], ' %'))
 
 
 

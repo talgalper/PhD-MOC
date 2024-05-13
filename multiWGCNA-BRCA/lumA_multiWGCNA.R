@@ -7,6 +7,12 @@ library(DESeq2)
 library(edgeR)
 library(gridExtra)
 
+# To enable multi-threading
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+
 # load in data
 load("../BRCA_pipe/RData/TCGA_normal.RData")
 load("../BRCA_pipe/RData/LumA/lumA_data.RData")
@@ -76,12 +82,17 @@ grid.arrange(a1, a2, nrow = 2)
 
 
 # define variables for `constructNetworks` function
+selectedBarcodes <- c(colnames(LumA_unstranded), colnames(normal_unstranded))
+
 sampleTable <- common[ ,-3]
+sampleTable <- sampleTable[sampleTable$cases %in% selectedBarcodes, ]
+
 conditions1 = unique(sampleTable[,2])
 conditions2 = unique(sampleTable[,3])
 
+startTime <- Sys.time()
 # Construct the combined networks and all the sub-networks
-autism_networks = constructNetworks(wgcna_data, sampleTable, conditions1, conditions2,
+LumA_networks <-  constructNetworks(wgcna_data, sampleTable, conditions1, conditions2,
                                     networkType = "unsigned", power = 10,
                                     minModuleSize = 40, maxBlockSize = 25000,
                                     reassignThreshold = 0, minKMEtoStay = 0.7,
@@ -89,10 +100,15 @@ autism_networks = constructNetworks(wgcna_data, sampleTable, conditions1, condit
                                     pamRespectsDendro = FALSE, verbose=3,
                                     saveTOMs = TRUE)
 
+elapsedTime <- Sys.time() - startTime
+elapsedTime
 
+# Save results to a list
+results=list()
+results$overlaps=iterate(autism_networks, overlapComparisons, plot=TRUE)
 
-
-
+# Check the reciprocal best matches between the autism and control networks
+head(results$overlaps$autism_vs_controls$bestMatches)
 
 
 
