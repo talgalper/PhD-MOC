@@ -7,9 +7,14 @@ selectedBarcodes <- c(colnames(LumA_unstranded), colnames(normal_unstranded))
 
 sampleTable <- common[ ,-3]
 sampleTable <- sampleTable[sampleTable$cases %in% selectedBarcodes, ]
+rownames(sampleTable) <- sampleTable[ , 1]
+
+sampleTable <- DataFrame(sampleTable)
 
 conditions1 = unique(sampleTable[,2])
 conditions2 = unique(sampleTable[,3])
+
+
 
 
 # Construct the combined networks and all the sub-networks
@@ -20,5 +25,24 @@ LumA_networks <- constructNetworks(wgcna_data_subset, sampleTable, conditions1, 
                                     mergeCutHeight = 0.10, numericLabels = TRUE,
                                     pamRespectsDendro = FALSE, verbose=3,
                                     saveTOMs = TRUE)
+
+
+
+LumA_query <- GDCquery(project = "TCGA-BRCA",
+                       access = "open", 
+                       data.category = "Transcriptome Profiling",
+                       experimental.strategy = "RNA-Seq",
+                       barcode = selectedBarcodes)
+
+LumA_data <- GDCprepare(LumA_query, summarizedExperiment = T, directory = "../BRCA_pipe/GDCdata/")
+
+colData <- colData(LumA_data)
+
+
+
+
+
+
+
 
 
