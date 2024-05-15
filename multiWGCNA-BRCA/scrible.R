@@ -16,7 +16,6 @@ conditions2 = unique(sampleTable[,3])
 
 
 
-
 # Construct the combined networks and all the sub-networks
 LumA_networks <- constructNetworks(wgcna_data_subset, sampleTable, conditions1, conditions2,
                                     networkType = "unsigned", power = 10,
