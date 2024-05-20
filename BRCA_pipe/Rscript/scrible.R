@@ -496,6 +496,50 @@ GOI_hits <- hits[hits$gene_id %in% c("ENSG00000091831", "ENSG00000082175", "ENSG
 edges <- as_edgelist(subnet)
 
 
+rank_master <- merge(lumA_rank, lumB_rank, by = "external_gene_name", all = T)
+rank_master <- merge(rank_master, Her2_rank, by = "external_gene_name", all = T)
+rank_master <- merge(rank_master, basal_rank, by = "external_gene_name", all = T)
+rownames(ranks) <- NULL
+
+rank_master$lumA_rank <- as.integer(rank_master$lumA_rank)
+
+
+
+
+rank_preview <- merge(lumA_rank[1:25, ], lumB_rank[1:25, ], by = "external_gene_name", all = T)
+rank_preview <- merge(rank_preview, Her2_rank[1:25, ], by = "external_gene_name", all = T)
+rank_preview <- merge(rank_preview, basal_rank[1:25, ], by = "external_gene_name", all = T)
+
+rank_preview$lumA_rank <- as.integer(rank_preview$lumA_rank)
+rank_preview$lumB_rank <- as.integer(rank_preview$lumB_rank)
+rank_preview$Her2_rank <- as.integer(rank_preview$Her2_rank)
+rank_preview$basal_rank <- as.integer(rank_preview$basal_rank)
+
+rownames(rank_preview) <- NULL
+
+
+library(VennDiagram)
+venn.plot <- venn.diagram(
+  x = list(LuminalA = lumA_rank$external_gene_name, 
+           LuminalB = lumB_rank$external_gene_name, 
+           Her2 = Her2_rank$external_gene_name, 
+           Basal = basal_rank$external_gene_name),
+  category.names = c("Luminal A", "Luminal B", "Her2", "Basal"),
+  col = "transparent",
+  fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442"),
+  alpha = 0.5,
+  cex = 2,
+  main = "Gene Overlap Across Breast Cancer Subtypes",
+  cat.cex = 1.5,
+  cat.fontface = "bold",
+  cat.default.pos = "text",
+  cat.pos = c(-30, 30, -30, 30),
+  cat.dist = c(0.05, 0.05, 0.05, 0.05),
+  filename = "venn_rank.png",
+  disable.logging = T
+)
+
+pdf("VennDiagram_ColorBlindFriendly.pdf", width = 10, height = 10)
 
 
 

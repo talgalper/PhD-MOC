@@ -1,4 +1,4 @@
-library(geneSynonym)
+library(geneexternal_gene_name)
 library(biomaRt)
 library(tidyverse)
 library(reshape2)
@@ -9,7 +9,7 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # targets from API query (profile)
 OpenTargets <- read_tsv("breast_carcinoma_known_drugs.tsv")
-OpenTargets <- subset(OpenTargets, select = c("Target Approved Symbol", "Disease Name", "Drug Name", "Action Type", "Drug Type"))
+OpenTargets <- subset(OpenTargets, select = c("Target Approved Symbol", "Disease Name", "Drug Name", "Action Type", "Mechanism of Action","Drug Type"))
 OpenTargets_filtered <- unique(OpenTargets) # drop duplicate rows
 OpenTargets_filtered <- OpenTargets_filtered[OpenTargets_filtered$`Drug Type` == "Small molecule", ] # subset small molecule drugs
 
@@ -21,7 +21,6 @@ IDs <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "descriptio
 IDs$description <- gsub("\\s*\\[.*?\\]", "", IDs$description)
 
 targets <- merge(IDs, OpenTargets_filtered, by.x = "external_gene_name", by.y = "Target Approved Symbol")
-
 
 
 
@@ -62,75 +61,67 @@ targets <- merge(targets, basal_hits, by.x = "ensembl_gene_id", by.y = "gene_id"
 LumA_centrality <- read.csv("intermediate/LumA/PCSF_output.csv")
 colnames(LumA_centrality)[4] <- "lumA_centrality"
 LumA_centrality <- subset(LumA_centrality, select = c("gene_id", "lumA_centrality"))
-targets <- merge(targets, LumA_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
+targets <- merge(targets, LumA_centrality, by.x = "external_gene_name", by.y = "gene_id", all.x = T)
 
 lumB_centrality <- read.csv("intermediate/lumB/PCSF_output.csv")
 colnames(lumB_centrality)[4] <- "lumB_centrality"
 lumB_centrality <- subset(lumB_centrality, select = c("gene_id", "lumB_centrality"))
-targets <- merge(targets, lumB_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
+targets <- merge(targets, lumB_centrality, by.x = "external_gene_name", by.y = "gene_id", all.x = T)
 
 Her2_centrality <- read.csv("intermediate/Her2/PCSF_output.csv")
 colnames(Her2_centrality)[4] <- "Her2_centrality"
 Her2_centrality <- subset(Her2_centrality, select = c("gene_id", "Her2_centrality"))
-targets <- merge(targets, Her2_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
+targets <- merge(targets, Her2_centrality, by.x = "external_gene_name", by.y = "gene_id", all.x = T)
 
 basal_centrality <- read.csv("intermediate/basal/PCSF_output.csv")
 colnames(basal_centrality)[4] <- "basal_centrality"
 basal_centrality <- subset(basal_centrality, select = c("gene_id", "basal_centrality"))
-targets <- merge(targets, basal_centrality, by.x = "synonym", by.y = "gene_id", all.x = T)
+targets <- merge(targets, basal_centrality, by.x = "external_gene_name", by.y = "gene_id", all.x = T)
 
 # add rank data
 lumA_rank <- read.csv("intermediate/LumA/final_gene_counts.csv")
 lumA_rank <- rownames_to_column(lumA_rank)
 colnames(lumA_rank)[1] <- "lumA_rank"
 lumA_rank <- subset(lumA_rank, select = c("lumA_rank", "external_gene_name"))
-targets <- merge(targets, lumA_rank, by.x = "synonym", by.y = "external_gene_name", all.x = T)
+targets <- merge(targets, lumA_rank, by.x = "external_gene_name", by.y = "external_gene_name", all.x = T)
 
 lumB_rank <- read.csv("intermediate/LumB/final_gene_counts.csv")
 lumB_rank <- rownames_to_column(lumB_rank)
 colnames(lumB_rank)[1] <- "lumB_rank"
 lumB_rank <- subset(lumB_rank, select = c("lumB_rank", "external_gene_name"))
-targets <- merge(targets, lumB_rank, by.x = "synonym", by.y = "external_gene_name", all.x = T)
+targets <- merge(targets, lumB_rank, by.x = "external_gene_name", by.y = "external_gene_name", all.x = T)
 
 Her2_rank <- read.csv("intermediate/Her2/final_gene_counts.csv")
 Her2_rank <- rownames_to_column(Her2_rank)
 colnames(Her2_rank)[1] <- "Her2_rank"
 Her2_rank <- subset(Her2_rank, select = c("Her2_rank", "external_gene_name"))
-targets <- merge(targets, Her2_rank, by.x = "synonym", by.y = "external_gene_name", all.x = T)
+targets <- merge(targets, Her2_rank, by.x = "external_gene_name", by.y = "external_gene_name", all.x = T)
 
 basal_rank <- read.csv("intermediate/basal/final_gene_counts.csv")
 basal_rank <- rownames_to_column(basal_rank)
 colnames(basal_rank)[1] <- "basal_rank"
 basal_rank <- subset(basal_rank, select = c("basal_rank", "external_gene_name"))
-targets <- merge(targets, basal_rank, by.x = "synonym", by.y = "external_gene_name", all.x = T)
+targets <- merge(targets, basal_rank, by.x = "external_gene_name", by.y = "external_gene_name", all.x = T)
 
 
 # tidy up
-filtered_targets <- targets[!duplicated(targets$synonym) | !duplicated(targets$druggability, fromLast = TRUE), ]
-filtered_targets <- subset(filtered_targets, select = c("input_term", "synonym", "ensembl_gene_id", "description", "NCBI_gene", 
+filtered_targets <- targets[!duplicated(targets$uniprot_gn_id) | !duplicated(targets$druggability, fromLast = TRUE) | !duplicated(targets$`Drug Name`), ]
+filtered_targets <- subset(filtered_targets, select = c("external_gene_name", "ensembl_gene_id", "description", 
                                                         "uniprot_gn_id", "pocket", "druggability", "struct_score","max_hit",
+                                                        "Drug Name", "Action Type", "Mechanism of Action", "Drug Type", "Disease Name",
                                                         "lumA_logFC", "lumB_logFC", "Her2_logFC", "basal_logFC",
                                                         "lumA_centrality", "lumB_centrality", "Her2_centrality", "basal_centrality",
                                                         "lumA_rank", "lumB_rank", "Her2_rank", "basal_rank"))
-filtered_targets <- filtered_targets[order(filtered_targets$input_term), ]
+filtered_targets <- filtered_targets[order(filtered_targets$external_gene_name), ]
 
-# remove synonym duplicates without a druggability score
-# rerun this chunk twice for some reason
-duplicate_rows <- duplicated(filtered_targets$synonym) | duplicated(filtered_targets$synonym, fromLast = TRUE)
+# remove external_gene_name duplicates without a druggability score
+duplicate_rows <- duplicated(filtered_targets$external_gene_name) | duplicated(filtered_targets$external_gene_name, fromLast = TRUE)
 for (i in which(duplicate_rows)) {
-  group <- filtered_targets[filtered_targets$synonym == filtered_targets$synonym[i], ]
+  group <- filtered_targets[filtered_targets$external_gene_name == filtered_targets$external_gene_name[i], ]
   if (any(!is.na(group$druggability))) {
-    filtered_targets <- filtered_targets[!(filtered_targets$synonym == filtered_targets$synonym[i] & is.na(filtered_targets$druggability)), ]
+    filtered_targets <- filtered_targets[!(filtered_targets$external_gene_name == filtered_targets$external_gene_name[i] & is.na(filtered_targets$druggability)), ]
   }
 }
-
-
-# alternate organisaiton
-filtered_targets <- subset(filtered_targets, select = c("input_term", "synonym", "ensembl_gene_id", "description", "NCBI_gene", 
-                                                        "uniprot_gn_id", "pocket", "druggability", "struct_score","max_hit",
-                                                        "lumA_logFC", "lumA_centrality", "lumA_rank", "lumB_logFC", "lumB_centrality",
-                                                        "lumB_rank", "Her2_logFC", "Her2_centrality", "Her2_rank", "basal_logFC",
-                                                        "basal_centrality", "basal_rank"))
 
 
 # flag shit logFC scores
@@ -158,4 +149,12 @@ filtered_targets$struct_score <- ifelse(filtered_targets$struct_score < 60,
                                         paste(filtered_targets$struct_score, "*"), 
                                         filtered_targets$struct_score)
 
+
+ranks <- subset(filtered_targets, select = c("external_gene_name", "Drug Name", "Mechanism of Action", "Action Type", 
+                                             "lumA_rank", "lumB_rank", "Her2_rank", "basal_rank"))
+
+ranks <- ranks[!is.na(ranks$lumA_rank) | !is.na(ranks$lumB_rank) | !is.na(ranks$Her2_rank) | !is.na(ranks$basal_rank), ]
+ranks <- ranks[!duplicated(ranks), ]
+
+rownames(ranks) <- NULL
 
