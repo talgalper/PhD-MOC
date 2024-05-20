@@ -9,23 +9,33 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 gene_id <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"), 
                  filters = "external_gene_name", 
-                 values = c("ESR2", "ESR1", "PGR", "ERBB2", "MKI67"), 
+                 values = c("ESR1", "PGR", "ERBB2"), 
                  mart = ensembl)
 
+GTEx_data <- read.table("bulk-gex_v8_rna-seq_counts-by-tissue_gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
+colnames(GTEx_data) <- GTEx_data[1, ]
+GTEx_data <- GTEx_data[-1, -1]
+GTEx_data$Name <- gsub("\\.[0-9]*$", "", GTEx_data$Name)
+rownames(GTEx_data) <- NULL
+GTEx_data <- column_to_rownames(GTEx_data, "Name")
+GTEx_data <- GTEx_data[ , -1]
+rownames <- rownames(GTEx_data)
+GTEx_data <- as.data.frame(sapply(GTEx_data, as.numeric))
+rownames(GTEx_data) <- rownames
 
 
-load("RData/lumA/BRCA_lumA_DE_data.RData")
-load("RData/lumB/BRCA_lumB_DE_data.RData")
-load("RData/Her2/BRCA_Her2_DE_data.RData")
-load("RData/Basal/BRCA_Basal_DE_data.RData")
-load("RData/Normal/BRCA_Normal_DE_data.RData")
+load("RData/lumA/DE_data.RData")
+load("RData/lumB/DE_data.RData")
+load("RData/Her2/DE_data.RData")
+load("RData/Basal/DE_data.RData")
+load("RData/TCGA_normal.RData")
 
 # logCPM on raw data
 LumA_CPM <- as.data.frame(cpm(LumA_unstranded))
 LumB_CPM <- as.data.frame(cpm(LumB_unstranded))
 Her2_CPM <- as.data.frame(cpm(Her2_unstranded))
 Basal_CPM <- as.data.frame(cpm(Basal_unstranded))
-TCGA_normal_CPM <- as.data.frame(cpm(TCGA_normal_unstranded))
+TCGA_normal_CPM <- as.data.frame(cpm(normal_unstranded))
 GTEx_normal_CPM <- as.data.frame(cpm(GTEx_data))
 
 # subset target genes

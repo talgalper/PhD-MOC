@@ -193,7 +193,7 @@ toptags <- topTags(lrt, n = Inf)
 
 # Identify which genes are significantly differentially expressed from 
 # an edgeR fit object containing p-values and test statistics.
-dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 1)
+dif_exp <- decideTests(lrt, p = 0.05, adjust = "fdr", lfc = 1)
 print(summary(dif_exp))
 
 dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]

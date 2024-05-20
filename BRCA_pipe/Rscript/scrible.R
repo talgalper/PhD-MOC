@@ -490,6 +490,13 @@ centroid <- colMeans(pca$x[,1:2])
 
 
 
+GOI_hits <- hits[hits$gene_id %in% c("ENSG00000091831", "ENSG00000082175", "ENSG00000141736"), ]
+
+
+edges <- as_edgelist(subnet)
+
+
+
 
 
 
