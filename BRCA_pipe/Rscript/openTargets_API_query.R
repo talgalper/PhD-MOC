@@ -1,4 +1,4 @@
-library(geneexternal_gene_name)
+library(geneSynonym)
 library(biomaRt)
 library(tidyverse)
 library(reshape2)

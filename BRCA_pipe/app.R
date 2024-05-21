@@ -127,6 +127,10 @@ server <- function(input, output, session) {
           subtype_data <- GDCprepare(subtype_query, summarizedExperiment = TRUE)
           rv$subtype_unstranded <- as.data.frame(assay(subtype_data, "unstranded"))
           
+          if (input$save_output) {
+            save(subtype_unstranded, file = paste0("app_data/", input$subtype, "_unstranded.RData"))
+          }
+          
         } else {
           incProgress(0.1, detail = "Initializing query")
           
@@ -174,6 +178,10 @@ server <- function(input, output, session) {
           subtype_data <- GDCprepare(subtype_query, summarizedExperiment = TRUE)
           rv$subtype_unstranded <- as.data.frame(assay(subtype_data, "unstranded"))
           
+          if (input$save_output) {
+            save(subtype_unstranded, file = paste0("app_data/", input$subtype, "_unstranded.RData"))
+          }
+          
           if (input$save_query) {
             if (!dir.exists("app_data")) {
               dir.create("app_data")
@@ -183,9 +191,7 @@ server <- function(input, output, session) {
           }
         }
         
-        if (input$save_output) {
-          save(subtype_unstranded, file = paste0("app_data/", input$subtype, "_unstranded.RData"))
-        }
+
         
         incProgress(1, detail = "Finished")
         Sys.sleep(3)

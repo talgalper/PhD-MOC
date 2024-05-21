@@ -23,19 +23,9 @@ LumA_networks <- constructNetworks(wgcna_data_subset, sampleTable, conditions1, 
                                     reassignThreshold = 0, minKMEtoStay = 0.7,
                                     mergeCutHeight = 0.10, numericLabels = TRUE,
                                     pamRespectsDendro = FALSE, verbose=3,
-                                    saveTOMs = TRUE)
+                                    saveTOMs = FALSE)
 
 
-
-LumA_query <- GDCquery(project = "TCGA-BRCA",
-                       access = "open", 
-                       data.category = "Transcriptome Profiling",
-                       experimental.strategy = "RNA-Seq",
-                       barcode = selectedBarcodes)
-
-LumA_data <- GDCprepare(LumA_query, summarizedExperiment = T, directory = "../BRCA_pipe/GDCdata/")
-
-colData <- colData(LumA_data)
 
 
 
