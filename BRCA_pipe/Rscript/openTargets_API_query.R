@@ -9,10 +9,106 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # targets from API query (profile)
 OpenTargets <- read_tsv("breast_carcinoma_known_drugs.tsv")
-OpenTargets <- subset(OpenTargets, select = c("Target Approved Symbol", "Disease Name", "Drug Name", "Action Type", "Mechanism of Action","Drug Type"))
+#OpenTargets <- subset(OpenTargets, select = c("Target Approved Symbol", "Disease Name", "Drug Name", "Action Type", "Mechanism of Action","Drug Type"))
+
 OpenTargets_filtered <- unique(OpenTargets) # drop duplicate rows
 OpenTargets_filtered <- OpenTargets_filtered[OpenTargets_filtered$`Drug Type` == "Small molecule", ] # subset small molecule drugs
+OpenTargets_filtered <- OpenTargets_filtered[OpenTargets_filtered$Status %in% c("Active, not recruiting", "Completed", "Recruiting"), ]
 
+OpenTargets_unique <- OpenTargets_filtered[!duplicated(OpenTargets_filtered$`Target Approved Symbol`), ]
+OpenTargets_unique <- OpenTargets_unique[!duplicated(OpenTargets_unique$`Drug Name`), ]
+#OpenTargets_unique <- subset(OpenTargets_unique, select = c("Phase", "Disease Name", "Drug Name", "Target Approved Symbol",
+#                                                            "Target Approved Name", "Mechanism of Action", "Action Type"))
+
+OpenTargets_unique$NCT_ID <- sub(".*(NCT\\d+).*", "\\1", OpenTargets_unique$URL) # isolate NCT IDs
+
+
+# read in data from NCT
+NCT_summaries <- read.csv("OpenTargets_data/NCT_summaries.csv")
+colnames(NCT_summaries) <- c("NCT_ID", "Breif Summary")
+
+NCT_OpenTargets <- merge(OpenTargets_unique, NCT_summaries, by = "NCT_ID")
+NCT_OpenTargets <- NCT_OpenTargets[!duplicated(NCT_OpenTargets$`Drug Name`), ]
+NCT_OpenTargets <- subset(NCT_OpenTargets, select = c("NCT_ID", "Phase", "Status", "Disease Name", "Drug Name",
+                                                      "Mechanism of Action", "Action Type", "Target Approved Name", 
+                                                      "Target Approved Symbol", "Drug Type", "Breif Summary"))
+
+
+# read in manually tagged NCT data
+OpenTargets_NCT <- read.csv("OpenTargets_data/OpenTargets_NCT.csv", row.names = 1)
+rownames(OpenTargets_NCT) <- NULL
+table(OpenTargets_NCT$Cancer.Type)
+table(OpenTargets_NCT$Cancer.Type[is.na(OpenTargets_NCT$Subtype)])
+
+# existing annotations
+OpenTargets_NCT$Subtype <- ifelse(OpenTargets_NCT$Disease.Name == "triple-negative breast cancer", "TNBC", NA)
+OpenTargets_NCT$Subtype <- ifelse(
+  OpenTargets_NCT$Disease.Name == "HER2 Positive Breast Carcinoma", 
+  "Her2", 
+  OpenTargets_NCT$Subtype
+)
+
+# luminal A
+OpenTargets_NCT$Subtype <- ifelse(
+  OpenTargets_NCT$Cancer.Type %in% c("ER+/Her2-", "ER+/Her2-/FGFR-", "ER+/PR+/Her2-", "HR+/Her2-"), 
+  "lumA",
+  OpenTargets_NCT$Subtype
+  )
+
+# luminal B
+OpenTargets_NCT$Subtype <- ifelse(
+  grepl("ER+", OpenTargets_NCT$Cancer.Type, fixed = TRUE) & grepl("Her2+", OpenTargets_NCT$Cancer.Type, fixed = TRUE),
+  "lumB",
+  OpenTargets_NCT$Subtype)
+
+# TNBC
+OpenTargets_NCT$Subtype <- ifelse(
+  grepl("TNBC", OpenTargets_NCT$Cancer.Type, fixed = TRUE),
+  "TNBC",
+  OpenTargets_NCT$Subtype
+)
+
+# luminal A/B
+OpenTargets_NCT$Subtype <- ifelse(
+  OpenTargets_NCT$Cancer.Type %in% c("ER+", "AR+/ER+", "ER+/PR+", "HR+"), 
+  "lumA/B",
+  OpenTargets_NCT$Subtype
+)
+
+# luminal A/TNBC
+OpenTargets_NCT$Subtype <- ifelse(
+  OpenTargets_NCT$Cancer.Type == "Her2-", 
+  "lumA/TNBC",
+  OpenTargets_NCT$Subtype
+)
+
+# luminal B/Her2
+OpenTargets_NCT$Subtype <- ifelse(
+  OpenTargets_NCT$Cancer.Type == "Her2+", 
+  "lumB/Her2",
+  OpenTargets_NCT$Subtype
+)
+
+# Her2/TNBC
+OpenTargets_NCT$Subtype <- ifelse(
+  OpenTargets_NCT$Cancer.Type == "HR-", 
+  "Her2/TNBC",
+  OpenTargets_NCT$Subtype
+)
+
+# misc
+OpenTargets_NCT$Subtype <- ifelse(
+  !is.na(OpenTargets_NCT$Cancer.Type) & is.na(OpenTargets_NCT$Subtype),
+  "misc",
+  OpenTargets_NCT$Subtype)
+
+
+OpenTargets_NCT_filtered <- OpenTargets_NCT[OpenTargets_NCT$Impact.On.Cacner.Progression != "no", ]
+
+
+
+
+### merge with pipeline data
 
 IDs <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description", "uniprot_gn_id"), 
              filters = "external_gene_name", 

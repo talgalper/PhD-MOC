@@ -543,5 +543,21 @@ pdf("VennDiagram_ColorBlindFriendly.pdf", width = 10, height = 10)
 
 
 
+library(plotly)
+library(ggplot2)
 
+plotData <- as.data.frame(table(OpenTargets_NCT_filtered$Subtype, useNA = "ifany"))
 
+plotData <- as.data.frame(table(OpenTargets_unique$`Disease Name`))
+
+pie(plotData$Freq, labels = plotData$Var1, main = "")
+
+ggplot(plotData, aes(x = "", y = Freq, fill = Var1)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y") +
+  theme_void() +
+  labs(title = "Pie Chart with ggplot2")
+
+plot_ly(plotData, labels = ~Var1, values = ~Freq, type = 'pie',
+        textinfo = 'label+value') %>%
+  layout(showlegend = FALSE)
