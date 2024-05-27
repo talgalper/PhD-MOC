@@ -16,7 +16,7 @@ synon <- humanSyno(c("ESR1", "PGR", "ERBB2", "CDK4", "CDK6",
                      "MELK", "TOPK"))
 
 # get terms from open targets platform
-open_targets <- read.table("OT-MONDO_0007254-associated-targets-16_04_2024-v24_03.tsv", sep = "\t")
+open_targets <- read.table("OpenTargets_data/OT-MONDO_0007254-associated-targets-16_04_2024-v24_03.tsv", sep = "\t")
 open_targets <- read.table("OT-MONDO_0007254-associated-targets-19_04_2024-v24_03.tsv", sep = "\t") # prioritised by chemBL
 open_targets <- read.table("OT-MONDO_0007254-associated-targets.tsv", sep = "\t") # prioritised by chemBL and Europe PMC
 

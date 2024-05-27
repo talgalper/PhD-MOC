@@ -8,15 +8,16 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
 # targets from API query (profile)
-OpenTargets <- read_tsv("breast_carcinoma_known_drugs.tsv")
+OpenTargets <- read_tsv("OpenTargets_data/breast_carcinoma_known_drugs.tsv")
 #OpenTargets <- subset(OpenTargets, select = c("Target Approved Symbol", "Disease Name", "Drug Name", "Action Type", "Mechanism of Action","Drug Type"))
 
 OpenTargets_filtered <- unique(OpenTargets) # drop duplicate rows
 OpenTargets_filtered <- OpenTargets_filtered[OpenTargets_filtered$`Drug Type` == "Small molecule", ] # subset small molecule drugs
 OpenTargets_filtered <- OpenTargets_filtered[OpenTargets_filtered$Status %in% c("Active, not recruiting", "Completed", "Recruiting"), ]
 
-OpenTargets_unique <- OpenTargets_filtered[!duplicated(OpenTargets_filtered$`Target Approved Symbol`), ]
-OpenTargets_unique <- OpenTargets_unique[!duplicated(OpenTargets_unique$`Drug Name`), ]
+# either filter by unique drug name or gene name
+OpenTargets_unique <- OpenTargets_filtered[!duplicated(OpenTargets_filtered$`Target Approved Symbol`), ] 
+OpenTargets_unique <- OpenTargets_filtered[!duplicated(OpenTargets_filtered$`Drug Name`), ]
 #OpenTargets_unique <- subset(OpenTargets_unique, select = c("Phase", "Disease Name", "Drug Name", "Target Approved Symbol",
 #                                                            "Target Approved Name", "Mechanism of Action", "Action Type"))
 
@@ -106,17 +107,63 @@ OpenTargets_NCT$Subtype <- ifelse(
 OpenTargets_NCT_filtered <- OpenTargets_NCT[OpenTargets_NCT$Impact.On.Cacner.Progression != "no", ]
 
 
+lumA_OpenTargets <- OpenTargets_NCT_filtered[grepl("lumA", OpenTargets_NCT_filtered$Subtype), ]
+lumB_OpenTargets <-  OpenTargets_NCT_filtered[OpenTargets_NCT_filtered$Subtype %in% c("lumB", "lumA/B", "lumB/Her2"), ]
+Her2_OpenTargets <- OpenTargets_NCT_filtered[grepl("Her2", OpenTargets_NCT_filtered$Subtype), ]
+basal_OpenTargets <- OpenTargets_NCT_filtered[grepl("TNBC", OpenTargets_NCT_filtered$Subtype), ]
+misc_OpenTargets <- OpenTargets_NCT_filtered[OpenTargets_NCT_filtered$Subtype %in% c(NA, "misc"), ]
+
+
+
+lumA_rank <- read.csv("intermediate/LumA/final_gene_counts.csv")
+lumA_rank <- rownames_to_column(lumA_rank)
+colnames(lumA_rank)[1] <- "lumA_rank"
+lumA_rank <- subset(lumA_rank, select = c("lumA_rank", "external_gene_name"))
+
+lumB_rank <- read.csv("intermediate/LumB/final_gene_counts.csv")
+lumB_rank <- rownames_to_column(lumB_rank)
+colnames(lumB_rank)[1] <- "lumB_rank"
+lumB_rank <- subset(lumB_rank, select = c("lumB_rank", "external_gene_name"))
+
+Her2_rank <- read.csv("intermediate/Her2/final_gene_counts.csv")
+Her2_rank <- rownames_to_column(Her2_rank)
+colnames(Her2_rank)[1] <- "Her2_rank"
+Her2_rank <- subset(Her2_rank, select = c("Her2_rank", "external_gene_name"))
+
+basal_rank <- read.csv("intermediate/basal/final_gene_counts.csv")
+basal_rank <- rownames_to_column(basal_rank)
+colnames(basal_rank)[1] <- "basal_rank"
+basal_rank <- subset(basal_rank, select = c("basal_rank", "external_gene_name"))
+
+ranks <- merge(lumA_rank, OpenTargets_NCT_filtered, by.x = "external_gene_name", by.y = "Target.Approved.Symbol", all = T)
+ranks <- subset(ranks, select = c("external_gene_name", "lumA_rank", "Subtype", "Phase", "Drug.Name", "Mechanism.of.Action", "Impact.On.Cacner.Progression"))
+ranks <- merge(lumB_rank, ranks, by = "external_gene_name", all = T)
+ranks <- merge(Her2_rank, ranks, by = "external_gene_name", all = T)
+ranks <- merge(basal_rank, ranks, by = "external_gene_name", all = T)
+
+ranks <- ranks[!is.na(ranks$Drug.Name), ]
+
+ranks <- merge(OpenTargets_NCT[c(1, 5)], ranks, by = "Drug.Name", all.y = T)
+
+ranks <- ranks[!is.na(ranks$lumA_rank) | !is.na(ranks$lumB_rank) | !is.na(ranks$Her2_rank) | !is.na(ranks$basal_rank), ]
+
+
+# proportion of drugs per subtype found
+
+
+
+
 
 
 ### merge with pipeline data
 
 IDs <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description", "uniprot_gn_id"), 
              filters = "external_gene_name", 
-             values = OpenTargets_filtered$`Target Approved Symbol`, 
+             values = OpenTargets_NCT_filtered$Target.Approved.Symbol, 
              mart = ensembl)
 IDs$description <- gsub("\\s*\\[.*?\\]", "", IDs$description)
 
-targets <- merge(IDs, OpenTargets_filtered, by.x = "external_gene_name", by.y = "Target Approved Symbol")
+targets <- merge(IDs, OpenTargets_NCT_filtered, by.x = "external_gene_name", by.y = "Target.Approved.Symbol")
 
 
 
@@ -201,10 +248,10 @@ targets <- merge(targets, basal_rank, by.x = "external_gene_name", by.y = "exter
 
 
 # tidy up
-filtered_targets <- targets[!duplicated(targets$uniprot_gn_id) | !duplicated(targets$druggability, fromLast = TRUE) | !duplicated(targets$`Drug Name`), ]
+filtered_targets <- targets[!duplicated(targets$uniprot_gn_id) | !duplicated(targets$druggability, fromLast = TRUE) | !duplicated(targets$Drug.Name), ]
 filtered_targets <- subset(filtered_targets, select = c("external_gene_name", "ensembl_gene_id", "description", 
                                                         "uniprot_gn_id", "pocket", "druggability", "struct_score","max_hit",
-                                                        "Drug Name", "Action Type", "Mechanism of Action", "Drug Type", "Disease Name",
+                                                        "Drug.Name", "Action.Type", "Mechanism.of.Action", "Drug.Type", "Disease.Name",
                                                         "lumA_logFC", "lumB_logFC", "Her2_logFC", "basal_logFC",
                                                         "lumA_centrality", "lumB_centrality", "Her2_centrality", "basal_centrality",
                                                         "lumA_rank", "lumB_rank", "Her2_rank", "basal_rank"))
@@ -246,11 +293,11 @@ filtered_targets$struct_score <- ifelse(filtered_targets$struct_score < 60,
                                         filtered_targets$struct_score)
 
 
-ranks <- subset(filtered_targets, select = c("external_gene_name", "Drug Name", "Mechanism of Action", "Action Type", 
+ranks2 <- subset(filtered_targets, select = c("external_gene_name", "Drug.Name", "Mechanism.of.Action", "Action.Type", 
                                              "lumA_rank", "lumB_rank", "Her2_rank", "basal_rank"))
 
-ranks <- ranks[!is.na(ranks$lumA_rank) | !is.na(ranks$lumB_rank) | !is.na(ranks$Her2_rank) | !is.na(ranks$basal_rank), ]
-ranks <- ranks[!duplicated(ranks), ]
+ranks2 <- filtered_targets[!is.na(filtered_targets$lumA_rank) | !is.na(filtered_targets$lumB_rank) | !is.na(filtered_targets$Her2_rank) | !is.na(filtered_targets$basal_rank), ]
+ranks2 <- ranks2[!duplicated(ranks2), ]
 
-rownames(ranks) <- NULL
+rownames(ranks2) <- NULL
 

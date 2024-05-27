@@ -391,12 +391,16 @@ venn.diagram(
 )
 
 
-paired_dif_exp <- dif_exp
-unpaired_dif_exp <- dif_exp
+
+hits <- read.table("intermediate/Basal/gene_list.txt")
+unpaired_dif_exp <- hits
+
+hits <- read.table("intermediate/paired/Basal/gene_list.txt")
+paired_dif_exp <- hits
 
 venn.diagram(
-  x = list(unpaired_hits = unpaired_dif_exp$gene_id, paired_hits = paired_dif_exp$gene_id),
-  category.names = c("Unaired genes", "Paired genes"),
+    x = list(unpaired_hits = unpaired_dif_exp$V1, paired_hits = paired_dif_exp$V1),
+  category.names = c("Unpaired genes", "Paired genes"),
   col = "transparent",  # set the color of the intersections to transparent
   fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
   alpha = 0.5,  # set the transparency level of the circles
@@ -561,3 +565,38 @@ ggplot(plotData, aes(x = "", y = Freq, fill = Var1)) +
 plot_ly(plotData, labels = ~Var1, values = ~Freq, type = 'pie',
         textinfo = 'label+value') %>%
   layout(showlegend = FALSE)
+
+
+
+ranks <- filtered_targets[!is.na(filtered_targets$lumA_rank) | !is.na(filtered_targets$lumB_rank) | !is.na(filtered_targets$Her2_rank) | !is.na(filtered_targets$basal_rank), ]
+ranks <- subset(ranks, select = c("input_term", "synonym", "description", 
+                                  "lumA_rank", "lumB_rank", "Her2_rank", "basal_rank"))
+
+
+
+library(rDGIdb)
+
+DGIdb <- queryDGIdb(filtered_targets$synonym)
+results <- byGene(DGIdb)
+detailed_results <- resultSummary(DGIdb)
+x <- detailedResults(DGIdb)
+
+
+
+plotData <- as.data.frame(table(ranks$Subtype, useNA = "ifany"))
+
+plot_ly(plotData, labels = ~Var1, values = ~Freq, type = 'pie',
+        textinfo = 'label+value') %>%
+  layout(showlegend = FALSE)
+
+
+
+sum(grepl("\\*", filtered_targets$lumA_logFC) | grepl("\\*", filtered_targets$lumB_logFC) | grepl("\\*", filtered_targets$Her2_logFC) | grepl("\\*", filtered_targets$basal_logFC))
+
+table(is.na(filtered_targets$lumA_centrality) & is.na(filtered_targets$lumB_centrality) & is.na(filtered_targets$Her2_centrality) & is.na(filtered_targets$basal_centrality))
+
+
+
+
+
+
