@@ -550,6 +550,7 @@ pdf("VennDiagram_ColorBlindFriendly.pdf", width = 10, height = 10)
 library(plotly)
 library(ggplot2)
 
+
 plotData <- as.data.frame(table(OpenTargets_NCT_filtered$Subtype, useNA = "ifany"))
 
 plotData <- as.data.frame(table(OpenTargets_unique$`Disease Name`))
@@ -594,6 +595,31 @@ plot_ly(plotData, labels = ~Var1, values = ~Freq, type = 'pie',
 sum(grepl("\\*", filtered_targets$lumA_logFC) | grepl("\\*", filtered_targets$lumB_logFC) | grepl("\\*", filtered_targets$Her2_logFC) | grepl("\\*", filtered_targets$basal_logFC))
 
 table(is.na(filtered_targets$lumA_centrality) & is.na(filtered_targets$lumB_centrality) & is.na(filtered_targets$Her2_centrality) & is.na(filtered_targets$basal_centrality))
+
+
+max_length <- max(length(ranks_unpaired$Drug.Name), length(ranks_unpaired$external_gene_name), length(ranks_paired$Drug.Name), length(ranks_paired$external_gene_name))
+
+
+
+unpaired_drugs <- ranks_unpaired$Drug.Name
+unparied_genes <- ranks_unpaired$external_gene_name
+paired_drugs <- ranks_paired$Drug.Name
+paired_genes <- ranks_paired$external_gene_name
+
+
+length(unpaired_drugs) <- max_length
+length(unparied_genes) <- max_length
+length(paired_drugs) <- max_length
+length(paired_genes) <- max_length
+
+common <- data.frame(unpaired_drugs = unpaired_drugs,
+                     unparied_genes = unparied_genes,
+                     paired_drugs = paired_drugs,
+                     paired_genes = paired_genes)
+
+
+targets <- targets[!duplicated(targets$uniprot_gn_id), ]
+
 
 
 

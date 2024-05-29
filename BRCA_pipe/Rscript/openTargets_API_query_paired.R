@@ -148,13 +148,6 @@ ranks <- merge(OpenTargets_NCT[c(1, 5)], ranks, by = "Drug.Name", all.y = T)
 ranks <- ranks[!is.na(ranks$lumA_rank) | !is.na(ranks$lumB_rank) | !is.na(ranks$Her2_rank) | !is.na(ranks$basal_rank), ]
 
 
-# proportion of drugs per subtype found
-
-
-
-
-
-
 ### merge with pipeline data
 
 IDs <- getBM(attributes = c("external_gene_name", "ensembl_gene_id", "description", "uniprot_gn_id"), 
@@ -198,7 +191,7 @@ basal_hits <- read.csv("intermediate/paired/basal/DE_results.csv")
 basal_hits <- basal_hits[basal_hits$PValue <= 0.05, ]
 basal_hits <- subset(basal_hits, select = c("gene_id", "logFC"))
 colnames(basal_hits)[2] <- "basal_logFC"
-targets <- merge(targets, basal_hits, by.x = "ensembl_gene_id", by.y = "X", all.x = T)
+targets <- merge(targets, basal_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
 
 # add centrality data
 LumA_centrality <- read.csv("intermediate/paired/LumA/PCSF_output.csv")
@@ -297,4 +290,34 @@ ranks2 <- filtered_targets[!is.na(filtered_targets$lumA_rank) | !is.na(filtered_
 ranks2 <- ranks2[!duplicated(ranks2), ]
 
 rownames(ranks2) <- NULL
+
+
+
+
+
+# proportion of drugs per subtype found
+proportions <- as.data.frame(table(OpenTargets_NCT_filtered$Subtype, useNA = "ifany"))
+colnames(proportions) <- c("subtype", "total")
+proportions_paired <- as.data.frame(table(ranks$Subtype, useNA = "ifany"))
+proportions_unpaired <- as.data.frame(table(ranks$Subtype, useNA = "ifany"))
+
+proportions <- merge(proportions, proportions_unpaired, by.x = "subtype", by.y = "Var1", all.x = T)
+proportions <- merge(proportions, proportions_paired, by.x = "subtype", by.y = "Var1", all.x = T)
+colnames(proportions) <- c("subtype", "total", "unpaired", "paired")
+proportions$unpaired_proportion <- proportions$unpaired / proportions$total
+proportions$paired_proportion <- proportions$paired / proportions$total
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
