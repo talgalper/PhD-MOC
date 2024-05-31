@@ -107,13 +107,6 @@ OpenTargets_NCT$Subtype <- ifelse(
 OpenTargets_NCT_filtered <- OpenTargets_NCT[OpenTargets_NCT$Impact.On.Cacner.Progression != "no", ]
 
 
-lumA_OpenTargets <- OpenTargets_NCT_filtered[grepl("lumA", OpenTargets_NCT_filtered$Subtype), ]
-lumB_OpenTargets <-  OpenTargets_NCT_filtered[OpenTargets_NCT_filtered$Subtype %in% c("lumB", "lumA/B", "lumB/Her2"), ]
-Her2_OpenTargets <- OpenTargets_NCT_filtered[grepl("Her2", OpenTargets_NCT_filtered$Subtype), ]
-basal_OpenTargets <- OpenTargets_NCT_filtered[grepl("TNBC", OpenTargets_NCT_filtered$Subtype), ]
-misc_OpenTargets <- OpenTargets_NCT_filtered[OpenTargets_NCT_filtered$Subtype %in% c(NA, "misc"), ]
-
-
 
 lumA_rank <- read.csv("intermediate/paired/LumA/final_gene_counts.csv")
 lumA_rank <- rownames_to_column(lumA_rank)

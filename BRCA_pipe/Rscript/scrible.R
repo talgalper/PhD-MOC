@@ -620,6 +620,42 @@ common <- data.frame(unpaired_drugs = unpaired_drugs,
 
 targets <- targets[!duplicated(targets$uniprot_gn_id), ]
 
+targets_drug <- targets[!is.na(targets$druggability), ]
+
+length(unique(targets$external_gene_name))
+length(unique(targets_drug$external_gene_name))
+
+targets$external_gene_name[!targets$external_gene_name %in% targets_drug$external_gene_name]
+
+
+druggability <- subset(filtered_targets, select = c("external_gene_name", "pocket", "druggability", "max_hit", "struct_score"))
+
+breast_cancer_targets <- c("PIK3CA", "ERBB2", "ESR1", "BRCA1", "BRCA2", "AR", 
+                           "CDK4", "CDK6", "EGFR", "AKT1", "MTOR", "CHEK2", 
+                           "ERBB3", "PTEN", "TP53", "MAOA", "KRAS")
+druggability <- druggability[druggability$external_gene_name %in% breast_cancer_targets, ]
+
+
+PCSF_lumA <- read.csv("intermediate/LumA/PCSF_output.csv")
+PCSF_lumB <- read.csv("intermediate/LumB/PCSF_output.csv")
+PCSF_Her2 <- read.csv("intermediate/Her2/PCSF_output.csv")
+PCSF_basal <- read.csv("intermediate/basal/PCSF_output.csv")
+
+PCSF_lumA <- as.data.frame(table(PCSF_lumA$cluster))
+colnames(PCSF_lumA) <- c("cluster", "number_of_genes")
+PCSF_lumB <- as.data.frame(table(PCSF_lumB$cluster))
+colnames(PCSF_lumB) <- c("cluster", "number_of_genes")
+PCSF_Her2 <- as.data.frame(table(PCSF_Her2$cluster))
+colnames(PCSF_Her2) <- c("cluster", "number_of_genes")
+PCSF_basal <- as.data.frame(table(PCSF_basal$cluster))
+colnames(PCSF_basal) <- c("cluster", "number_of_genes")
+
+max_rows <- max(nrow(PCSF_lumA), nrow(PCSF_lumB), nrow(PCSF_Her2), nrow(PCSF_basal))
+
+
+
+
+
 
 
 

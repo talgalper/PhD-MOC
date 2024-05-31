@@ -17,70 +17,31 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
 
+load("RData/LumA/lumA_data.RData")
+load("RData/TCGA_normal.RData")
 
-#### query TCGA for TCGA-OV project data ####
-getProjectSummary('TCGA-BRCA')
-
-query_TCGA <- GDCquery(project = "TCGA-BRCA",
-                       access = "open", 
-                       data.category = "Transcriptome Profiling",
-                       experimental.strategy = "RNA-Seq")
-
-query_output <- getResults(query_TCGA)
-
-clinical <- GDCquery_clinic(project = "TCGA-BRCA",
-                            type = "clinical")
-
-clinical_query <- clinical[complete.cases(clinical$ajcc_pathologic_stage), ]
-clinical_query <- merge(query_output, clinical_query, by.x = "cases.submitter_id", by.y = "submitter_id")
-clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
-                                                    "tissue_or_organ_of_origin", "sample_type"))
-
-table(clinical_query$ajcc_pathologic_stage)
-
-
-
-subtypes <- PanCancerAtlas_subtypes()
-
-#common <- query_output[query_output$cases %in% subtypes$pan.samplesID, ]
-
-common <- merge(clinical_query, subtypes, by.x = "cases", by.y = "pan.samplesID")
-common <- subset(common, select = c("cases", "Subtype_Selected", "sample_type", "ajcc_pathologic_stage"))
-
-
-selected_barcodes <- common[common$Subtype_Selected == "BRCA.LumA", ]
-
-LumA_query <- GDCquery(project = "TCGA-BRCA",
-                        access = "open", 
-                        data.category = "Transcriptome Profiling",
-                        experimental.strategy = "RNA-Seq",
-                        barcode = selected_barcodes$cases)
-
-GDCdownload(LumA_query)
-
-LumA_data <- GDCprepare(LumA_query, summarizedExperiment = T)
-
-
-LumA_unstranded <- assay(LumA_data, "unstranded")  
-rownames(LumA_unstranded) <- gsub("\\.\\d+", "", rownames(LumA_unstranded))
-LumA_unstranded <- as.data.frame(LumA_unstranded)
-
-
-
-barplot(colSums(LumA_unstranded),
-        xaxt = "n")
-
-barplot(colSums(normal_unstranded),
-        xaxt = "n")
-
-
-#### Remove low activity genes ####
-colnames(LumA_unstranded) <- paste("LumA", 1:ncol(LumA_unstranded), sep = "_")
-colnames(normal_unstranded) <- paste("normal", 1:ncol(normal_unstranded), sep = "_")
+normal_df <- data.frame(sample = colnames(normal_unstranded),
+                        subtype = rep("normal", ncol(normal_unstranded)))
+disease_df <- data.frame(sample = colnames(LumA_unstranded),
+                        subtype = rep("disease", ncol(LumA_unstranded)))
+sample_df <- rbind(disease_df, normal_df)
 
 merged_df <- merge(LumA_unstranded, normal_unstranded, by = "row.names")
-
 merged_df <- column_to_rownames(merged_df, "Row.names")
+
+group <- factor(sample_df$subtype)
+
+counts_filt <- filterByExpr(merged_df, group = group)
+counts_filt <- merged_df[counts_filt, ]
+
+low_exp_genes <- merged_df[!rownames(merged_df) %in% rownames(counts_filt), ]
+
+
+
+
+
+
+
 
 gene_id <- rownames(merged_df)
 
@@ -98,57 +59,6 @@ colnames(removedGenes)[1] <- "gene_id"
 merged_df <- merged_df[keepTheseGenes, ]
 
 merged_df <- merged_df[, -1]
-
-
-# top x% of samples
-#num_genes <- nrow(merged_df)
-#top_threshold <- ceiling(num_genes * 0.50)
-#
-## min required samples
-#num_samples <- ncol(merged_df)
-#min_required_samples <- ceiling(num_samples * 0.10)
-#
-#
-#
-## Extract the gene names and data columns
-#gene_names <- rownames(merged_df)
-#data_columns <- merged_df[, 2:ncol(merged_df)]
-#
-## Initialise an empty data frame
-#results_df <- data.frame(gene_id = gene_names)
-#
-## Iterate through each data column and perform the test
-#for (col_id in seq_along(data_columns)) {
-#  # Get the column name and the data
-#  col_name <- colnames(data_columns)[col_id]
-#  col_data <- data_columns[, col_id]
-#  
-#  # Sort the data and mark genes within the top_threshold rows as TRUE
-#  sorted_indices <- order(col_data, decreasing = TRUE)
-#  top_indices <- sorted_indices[1:top_threshold]
-#  
-#  # Create a logical vector for gene presence in top_threshold
-#  gene_presence <- rep(FALSE, nrow(merged_df))
-#  gene_presence[top_indices] <- TRUE
-#  
-#  # Add to the results data frame
-#  results_df <- cbind(results_df, gene_presence)
-#}
-#
-## Rename columns 
-#colnames(results_df) <- c("gene_id", colnames(data_columns))
-#
-#
-## Calculate the number of TRUE values for each gene across columns
-#gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
-#failed_genes <- gene_counts < min_required_samples
-#print(summary(failed_genes))
-#
-#BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_genes]))
-
-
-
-
 
 
 
