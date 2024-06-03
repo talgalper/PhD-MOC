@@ -1,0 +1,67 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"H2BC13","H2B clustered histone 13",245,19,25,4,0
+"ESR1","estrogen receptor 1",184,3,10,9,0
+"H2AC20","H2A clustered histone 20",183,2,2,3,0
+"H2AX","H2A.X variant histone",161,18,15,5,0
+"H2BC7","H2B clustered histone 7",127,2,3,2,0
+"H1-4","H1.4 linker histone, cluster member",123,14,25,59,18
+"CCT3","chaperonin containing TCP1 subunit 3",110,1,2,2,0
+"H2BC11","H2B clustered histone 11",104,5,7,2,0
+"PCNA","proliferating cell nuclear antigen",87,1,1,1,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",78,2,2,1,0
+"EZR","ezrin",67,22,27,0,0
+"SMC1B","structural maintenance of chromosomes 1B",57,16,18,0,0
+"H2BC9","H2B clustered histone 9",55,23,26,0,1
+"SMC4","structural maintenance of chromosomes 4",55,20,26,0,2
+"EXOC3L4","exocyst complex component 3 like 4",51,12,16,0,0
+"RBBP7","RB binding protein 7, chromatin remodeling factor",51,57,50,57,56
+"NOX1","NADPH oxidase 1",50,1,1,0,0
+"ZNF217","zinc finger protein 217",46,9,15,0,0
+"PLK1","polo like kinase 1",45,5,7,0,0
+"CCDC87","coiled-coil domain containing 87",44,11,12,0,4
+"RARA","retinoic acid receptor alpha",44,3,4,0,0
+"BPIFB1","BPI fold containing family B member 1",41,2,2,0,0
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",40,1,1,0,0
+"ANLN","anillin, actin binding protein",39,1,1,0,0
+"CDC45","cell division cycle 45",36,1,1,0,0
+"H2BC12","H2B clustered histone 12",35,2,5,0,4
+"TRIM37","tripartite motif containing 37",31,1,2,0,2
+"OIP5","Opa interacting protein 5",30,1,2,0,2
+"H2BC15","H2B clustered histone 15",29,3,2,0,5
+"H2BC4","H2B clustered histone 4",27,1,1,0,1
+"AURKB","aurora kinase B",26,2,3,0,5
+"RFC4","replication factor C subunit 4",25,1,1,0,1
+"PCGF2","polycomb group ring finger 2",23,44,14,50,33
+"CENPE","centromere protein E",21,14,0,7,0
+"KCNK1","potassium two pore domain channel subfamily K member 1",21,13,0,21,0
+"KIF18B","kinesin family member 18B",20,1,3,8,0
+"CENPX","centromere protein X",18,2,17,0,0
+"H2BC5","H2B clustered histone 5",18,20,28,23,0
+"KIFC2","kinesin family member C2",17,27,16,5,46
+"NOX5","NADPH oxidase 5",17,18,9,0,25
+"FBXO45","F-box protein 45",14,18,3,0,7
+"EEF1A2","eukaryotic translation elongation factor 1 alpha 2",12,14,0,0,8
+"CHD5","chromodomain helicase DNA binding protein 5",8,16,0,5,31
+"SYT1","synaptotagmin 1",8,8,0,0,18
+"DPP3","dipeptidyl peptidase 3",7,12,3,0,29
+"CACNA1D","calcium voltage-gated channel subunit alpha1 D",5,25,34,60,37
+"CACNA1H","calcium voltage-gated channel subunit alpha1 H",5,10,0,15,0
+"CENPU","centromere protein U",5,5,0,13,0
+"KIF11","kinesin family member 11",5,22,26,59,38
+"CECR2","CECR2 histone acetyl-lysine reader",3,19,0,3,19
+"DNAJC12","DnaJ heat shock protein family (Hsp40) member C12",3,12,0,0,3
+"PRC1","protein regulator of cytokinesis 1",3,20,0,21,9
+"SHISA9","shisa family member 9",3,13,0,3,22
+"HSD17B7","hydroxysteroid 17-beta dehydrogenase 7",2,0,23,23,46
+"KCNK6","potassium two pore domain channel subfamily K member 6",2,16,0,31,24
+"SLC6A4","solute carrier family 6 member 4",2,0,20,2,22
+"SPP1","secreted phosphoprotein 1",2,9,0,19,2
+"TRIM55","tripartite motif containing 55",2,0,3,0,3
+"ASIC2","acid sensing ion channel subunit 2",1,0,10,4,0
+"C15orf48","chromosome 15 open reading frame 48",1,0,29,22,8
+"CACNA1I","calcium voltage-gated channel subunit alpha1 I",1,0,12,7,18
+"GABRB3","gamma-aminobutyric acid type A receptor subunit beta3",1,0,24,28,21
+"MELK","maternal embryonic leucine zipper kinase",1,0,12,29,14
+"PARP1","poly(ADP-ribose) polymerase 1",1,0,0,0,1
+"SPAG4","sperm associated antigen 4",1,0,16,17,32
+"SYN1","synapsin I",1,0,3,0,3

@@ -1,0 +1,64 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"ESR1","estrogen receptor 1",238,2,5,7,0
+"H2BC13","H2B clustered histone 13",219,19,23,12,0
+"H2BC9","H2B clustered histone 9",188,18,25,9,0
+"H2BC4","H2B clustered histone 4",150,25,6,45,6
+"PLK1","polo like kinase 1",138,1,4,4,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",125,6,7,5,0
+"H2BC5","H2B clustered histone 5",118,1,3,3,0
+"CDK1","cyclin dependent kinase 1",116,4,6,15,0
+"HDAC11","histone deacetylase 11",92,1,1,1,0
+"H1-4","H1.4 linker histone, cluster member",84,2,2,1,0
+"FOXA1","forkhead box A1",78,19,30,0,0
+"BPIFB1","BPI fold containing family B member 1",59,21,34,0,2
+"VTN","vitronectin",56,1,2,0,0
+"ASPM","assembly factor for spindle microtubules",55,15,24,0,0
+"ANLN","anillin, actin binding protein",54,4,8,0,0
+"H2AC20","H2A clustered histone 20",49,11,16,0,0
+"SLC7A8","solute carrier family 7 member 8",49,16,25,0,2
+"SPAG17","sperm associated antigen 17",49,59,37,47,43
+"SYT1","synaptotagmin 1",47,18,22,0,0
+"H2BC6","H2B clustered histone 6",46,1,1,0,0
+"H2AJ","H2A.J histone",45,9,14,0,3
+"GRIK4","glutamate ionotropic receptor kainate type subunit 4",42,4,6,0,0
+"CYP2C8","cytochrome P450 family 2 subfamily C member 8",36,1,1,0,0
+"KCNK1","potassium two pore domain channel subfamily K member 1",35,5,4,0,0
+"H2BC11","H2B clustered histone 11",33,3,7,0,4
+"KIF18B","kinesin family member 18B",32,2,3,0,1
+"SHH","sonic hedgehog signaling molecule",32,3,6,0,5
+"H2BC12","H2B clustered histone 12",25,2,3,0,2
+"ACTN2","actinin alpha 2",24,10,3,0,19
+"CENPU","centromere protein U",21,2,1,0,3
+"ASIC2","acid sensing ion channel subunit 2",20,1,1,0,1
+"CENPE","centromere protein E",19,46,48,61,57
+"H3C2","H3 clustered histone 2",19,8,12,29,0
+"GATA3","GATA binding protein 3",18,15,0,15,0
+"KIFC2","kinesin family member C2",17,45,17,38,49
+"ROBO2","roundabout guidance receptor 2",15,30,20,7,47
+"FN1","fibronectin 1",14,13,5,0,12
+"CDC20B","cell division cycle 20B",12,16,24,22,59
+"KCNK6","potassium two pore domain channel subfamily K member 6",12,30,5,23,52
+"SYN1","synapsin I",10,4,0,0,5
+"ABCC8","ATP binding cassette subfamily C member 8",7,7,9,0,0
+"CACNA1D","calcium voltage-gated channel subunit alpha1 D",7,2,0,4,0
+"CACNA1H","calcium voltage-gated channel subunit alpha1 H",7,35,0,12,27
+"DNAJC12","DnaJ heat shock protein family (Hsp40) member C12",7,22,0,23,0
+"EPN3","epsin 3",7,3,0,0,0
+"GLDC","glycine decarboxylase",6,11,0,0,0
+"RARA","retinoic acid receptor alpha",5,11,0,0,15
+"SOX2","SRY-box transcription factor 2",5,10,0,15,1
+"BUB1","BUB1 mitotic checkpoint serine/threonine kinase",4,9,0,3,23
+"C15orf48","chromosome 15 open reading frame 48",4,3,0,2,0
+"NPHS1","NPHS1 adhesion molecule, nephrin",4,2,14,45,14
+"H2BC21","H2B clustered histone 21",3,0,10,25,20
+"H2BC8","H2B clustered histone 8",3,0,32,40,31
+"KIF11","kinesin family member 11",3,0,3,7,0
+"LGALS9B","galectin 9B",3,9,19,43,39
+"MELK","maternal embryonic leucine zipper kinase",3,0,10,0,20
+"OR2W3","olfactory receptor family 2 subfamily W member 3",3,3,0,5,2
+"AGXT","alanine--glyoxylate aminotransferase",2,0,4,2,0
+"CCDC74B","coiled-coil domain containing 74B",2,0,23,12,23
+"CERS6","ceramide synthase 6",1,0,11,7,5
+"COL12A1","collagen type XII alpha 1 chain",1,0,1,14,7
+"SHISA9","shisa family member 9",1,0,6,9,6
+"TNNI1","troponin I1, slow skeletal type",1,0,17,8,15

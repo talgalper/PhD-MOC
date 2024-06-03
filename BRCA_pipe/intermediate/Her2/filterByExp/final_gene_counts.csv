@@ -1,0 +1,72 @@
+"external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
+"H2AC20","H2A clustered histone 20",183,18,28,6,0
+"H2AX","H2A.X variant histone",166,3,5,5,0
+"HDAC9","histone deacetylase 9",159,2,3,4,0
+"PLK1","polo like kinase 1",157,20,18,10,0
+"H2BC17","H2B clustered histone 17",148,2,3,6,0
+"NCAPG2","non-SMC condensin II complex subunit G2",111,15,5,32,0
+"H2BC7","H2B clustered histone 7",110,1,3,3,0
+"H2BC5","H2B clustered histone 5",108,1,2,2,0
+"RARA","retinoic acid receptor alpha",92,1,2,2,0
+"PCGF2","polycomb group ring finger 2",85,1,2,2,0
+"H4C5","H4 clustered histone 5",81,16,19,0,0
+"ORC1","origin recognition complex subunit 1",78,13,18,0,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",66,21,27,0,0
+"ASPM","assembly factor for spindle microtubules",58,16,26,0,0
+"ANLN","anillin, actin binding protein",52,21,27,0,1
+"H2BC9","H2B clustered histone 9",49,15,21,0,0
+"CCDC87","coiled-coil domain containing 87",47,9,10,0,0
+"KIF18B","kinesin family member 18B",47,46,28,31,10
+"ATP6V0A4","ATPase H+ transporting V0 subunit a4",45,11,11,0,4
+"H1-4","H1.4 linker histone, cluster member",45,9,12,0,2
+"BPIFB1","BPI fold containing family B member 1",44,3,6,0,0
+"CCT3","chaperonin containing TCP1 subunit 3",44,1,2,0,0
+"TRIM37","tripartite motif containing 37",42,2,2,0,0
+"CDC45","cell division cycle 45",40,1,1,0,0
+"H2BC15","H2B clustered histone 15",40,2,3,0,2
+"PLA2G2D","phospholipase A2 group IID",38,1,2,0,0
+"H2BC4","H2B clustered histone 4",36,1,2,0,2
+"CDK1","cyclin dependent kinase 1",34,1,2,0,2
+"LBP","lipopolysaccharide binding protein",29,3,5,0,10
+"H2AC8","H2A clustered histone 8",27,1,1,0,1
+"SHMT2","serine hydroxymethyltransferase 2",27,1,1,0,1
+"OIP5","Opa interacting protein 5",25,1,1,0,1
+"CENPE","centromere protein E",21,15,3,24,0
+"AIFM1","apoptosis inducing factor mitochondria associated 1",19,11,0,18,0
+"KIF20A","kinesin family member 20A",19,31,28,60,38
+"ABCA12","ATP binding cassette subfamily A member 12",16,9,12,8,0
+"AGR2","anterior gradient 2, protein disulphide isomerase family member",16,11,0,0,0
+"H2BC11","H2B clustered histone 11",16,9,25,2,0
+"CENPX","centromere protein X",15,34,5,11,36
+"CCNA2","cyclin A2",14,32,13,29,57
+"RFC4","replication factor C subunit 4",14,27,0,0,8
+"KCNK1","potassium two pore domain channel subfamily K member 1",12,27,17,27,60
+"ACTN2","actinin alpha 2",11,5,2,0,11
+"KIF11","kinesin family member 11",11,10,6,0,16
+"CENPU","centromere protein U",10,19,10,10,55
+"H4C8","H4 clustered histone 8",9,9,23,17,57
+"AKR1B10","aldo-keto reductase family 1 member B10",6,7,0,9,0
+"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",6,24,27,59,39
+"LASP1","LIM and SH3 protein 1",6,19,0,3,25
+"RFC2","replication factor C subunit 2",6,7,0,14,0
+"PPP1R1B","protein phosphatase 1 regulatory inhibitor subunit 1B",4,2,0,3,0
+"DLG3","discs large MAGUK scaffold protein 3",3,11,11,53,9
+"MAPK15","mitogen-activated protein kinase 15",3,1,23,0,0
+"MSLN","mesothelin",3,5,0,1,0
+"CACNA1H","calcium voltage-gated channel subunit alpha1 H",2,6,12,32,36
+"CCNB1","cyclin B1",2,0,4,0,11
+"CSTB","cystatin B",2,1,0,0,0
+"DAND5","DAN domain BMP antagonist family member 5",2,13,0,1,10
+"DPP3","dipeptidyl peptidase 3",2,1,0,2,0
+"GLDC","glycine decarboxylase",2,2,0,0,0
+"HOXB7","homeobox B7",2,4,1,1,0
+"KIF22","kinesin family member 22",2,1,3,21,19
+"SPAG4","sperm associated antigen 4",2,2,21,25,45
+"SULT1E1","sulfotransferase family 1E member 1",2,6,0,5,5
+"AKR1B15","aldo-keto reductase family 1 member B15",1,0,7,25,1
+"CLTC","clathrin heavy chain",1,0,1,1,0
+"IDO1","indoleamine 2,3-dioxygenase 1",1,0,22,26,15
+"MELK","maternal embryonic leucine zipper kinase",1,0,4,0,16
+"NDC80","NDC80 kinetochore complex component",1,0,1,1,0
+"SLC6A4","solute carrier family 6 member 4",1,0,31,21,12
+"SMC4","structural maintenance of chromosomes 4",1,0,10,8,3

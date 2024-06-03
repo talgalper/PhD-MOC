@@ -4,13 +4,15 @@ library(biomaRt)
 library(edgeR)
 library(ggplot2)
 library(reshape2)
-library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(dplyr) #need to install tidy packages separately because of biomart thing
 library(tidyr)
 library(tidyverse)
 library(progress)
-library(rDGIdb)
+library(VennDiagram)
+
+dir.create("intermediate/lumA/filterByExp")
+dir.create("RData/LumA/filterByExp")
 
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
@@ -20,13 +22,13 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 load("RData/LumA/lumA_data.RData")
 load("RData/TCGA_normal.RData")
 
-normal_df <- data.frame(sample = colnames(normal_unstranded),
-                        subtype = rep("normal", ncol(normal_unstranded)))
 disease_df <- data.frame(sample = colnames(LumA_unstranded),
-                        subtype = rep("disease", ncol(LumA_unstranded)))
-sample_df <- rbind(disease_df, normal_df)
+                         subtype = rep("disease", ncol(LumA_unstranded)))
+normal_df <- data.frame(sample = colnames(normal_unstranded),
+                        subtype = rep("control", ncol(normal_unstranded)))
+sample_df <- rbind(normal_df, disease_df)
 
-merged_df <- merge(LumA_unstranded, normal_unstranded, by = "row.names")
+merged_df <- merge(normal_unstranded, LumA_unstranded, by = "row.names")
 merged_df <- column_to_rownames(merged_df, "Row.names")
 
 group <- factor(sample_df$subtype)
@@ -39,44 +41,9 @@ low_exp_genes <- merged_df[!rownames(merged_df) %in% rownames(counts_filt), ]
 
 
 
-
-
-
-
-gene_id <- rownames(merged_df)
-
-# subset genes that have a cpm of greater than one, in more than 50% of the samples
-keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
-print(summary(keepTheseGenes))
-
-# add gene ids back into df
-merged_df <- cbind(gene_id, merged_df)
-
-removedGenes <- merged_df$gene_id[!keepTheseGenes]
-removedGenes <- as.data.frame(removedGenes)
-colnames(removedGenes)[1] <- "gene_id"
-
-merged_df <- merged_df[keepTheseGenes, ]
-
-merged_df <- merged_df[, -1]
-
-
-
 #### Differential expression analysis ####
 
-# Select the columns that start with "LumA"
-cols <- grep("^LumA", colnames(merged_df))
-
-# Assign the unstranded columns to the cancer group
-cancer <- colnames(merged_df)[cols]
-
-# Assign the rest of the columns to the healty group
-benign <- setdiff(colnames(merged_df), cancer)
-
-# Create the group variable
-group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
-
-data <- DGEList(counts = merged_df, group = group)
+data <- DGEList(counts = counts_filt, group = group)
 
 design <- model.matrix(~group)
 
@@ -116,17 +83,28 @@ hits <- hits[,c("gene_id", colnames)]
 
 dif_exp <- hits[dif_exp_genes, ]
 
-write.csv(hits, "intermediate/LumA/DE_results.csv", row.names = F)
+write.csv(hits, "intermediate/LumA/filterByExp/DE_results.csv", row.names = F)
 
-# Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
-plotBCV(tagwise, main = "biological coefficient of variation")
 
-# Make a mean-difference plot of two libraries of count data with smearing of points with very low counts, 
-# especially those that are zero for one of the columns.
-plotSmear(lrt, de.tags = dif_exp_genes, main = "Mean-difference plot")
+# compare DE results with hard threshold expression filter pipeline
+custom_filt_DE_results <- read.csv("intermediate/lumA/DE_results.csv")
+custom_filt_DE_results <- custom_filt_DE_results[custom_filt_DE_results$logFC >=1 | custom_filt_DE_results$logFC <=-1, ]
 
-# plot Pvalues of different logFC scores
-ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted logFC")
+venn.diagram(
+  x = list(custom_filt = custom_filt_DE_results$gene_id, filterByExpr = dif_exp$gene_id),
+  category.names = c("custom filt DE results", "filterByExpr"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "intermediate/LumA/filterByExp/DE_result_compare.png",
+  disable.logging = TRUE
+)
 
 
 
@@ -156,12 +134,12 @@ gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
 # check to see if genes that at all genes were converted at least once
 missing_genes <- anti_join(data, gene_id, by = "gene_id")
 
-write.table(gene_data$external_gene_name, "intermediate/LumA/gene_list.txt", quote = F, row.names = F, col.names = F)
+write.table(gene_data$external_gene_name, "intermediate/LumA/filterByExp/gene_list.txt", quote = F, row.names = F, col.names = F)
 
 
 #### get interaction data ####
 
-string_edge_data <- read.table("intermediate/LumA/STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+string_edge_data <- read.table("intermediate/LumA/filterByExp/STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
 ppi_list <- subset(string_edge_data, select = c("name", "stringdb..score"))
 ppi_list <- ppi_list %>% 
   separate(name, sep = " ", into = c("node_1", "del", "node_2"))
@@ -169,7 +147,7 @@ ppi_list <- subset(ppi_list, select = c("node_1", "node_2", "stringdb..score"))
 ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
 ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
 
-string_node_data <- read.table("intermediate/LumA/STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
+string_node_data <- read.table("intermediate/LumA/filterByExp/STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
 node_list <- subset(string_node_data, select = c("name", "query.term"))
 node_list$name <- gsub(".*.\\.", "", node_list$name)
 ppi_list$original_order <- seq_len(nrow(ppi_list))
@@ -180,7 +158,52 @@ merged_df <- merged_df[order(merged_df$original_order), ]
 final_df <- merged_df[, c("query.term.x", "query.term.y", "stringdb..score")]
 colnames(final_df) <- c("node_1", "node_2", "score")
 
-save(final_df, gene_data, file = "RData/LumA/PCSF_input.RData")
+save(final_df, gene_data, file = "RData/LumA/filterByExp/PCSF_input.RData")
+
+
+# compare STRING outputs
+custom_filt_string_node <- read.csv("intermediate/LumA/STRING network (physical) default node.csv")
+
+venn.diagram(
+  x = list(custom_filt = custom_filt_string_node$query.term, filterByExpr = string_node_data$query.term),
+  category.names = c("custom filt", "filterByExpr"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "intermediate/LumA/filterByExp/string_node_compare.png",
+  disable.logging = TRUE
+)
+
+load("RData/LumA/PCSF_input.RData")
+custom_filt_STRING_edge <- final_df # make sure to rerun STRING network code after this
+
+set1 <- paste(custom_filt_STRING_edge$node_1, custom_filt_STRING_edge$node_2, sep = "--")
+set2 <- paste(final_df$node_1, final_df$node_2, sep = "--")
+
+venn.diagram(
+  x = list(set1, set2),
+  category.names = c("custom filt", "filterByExpr"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "intermediate/LumA/filterByExp/string_edge_compare.png",
+  disable.logging = TRUE
+)
+
+
+
 
 
 # set seed for reproducibility 
@@ -202,9 +225,7 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
-save(subnet, file = "RData/LumA/PCSF_subnet.RData")
-
-
+save(subnet, file = "RData/LumA/filterByExp/PCSF_subnet.RData")
 
 
 
@@ -223,7 +244,7 @@ rownames(df) <- 1:nrow(df)
 
 df <- df[order(-df$degree_centrality), ]
 
-write.csv(df, "intermediate/LumA/PCSF_output.csv", row.names = F)
+write.csv(df, "intermediate/LumA/filterByExp/PCSF_output.csv", row.names = F)
 
 # convert external gene name to uniprot
 gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
@@ -249,16 +270,10 @@ PCSF_results <- merge(PCSF_master, af_drugability, by.x = "uniprot_gn_id", by.y 
 missing_genes <- unique(PCSF_master$external_gene_name)[!unique(PCSF_master$external_gene_name) %in% unique(PCSF_results$external_gene_name)]
 
 
-write.csv(PCSF_results, "intermediate/LumA/PCSF_druggability.csv")
+write.csv(PCSF_results, "intermediate/LumA/filterByExp/PCSF_druggability.csv")
 
 
-# run citation scoring tool and read in
-citation_scores <- read.csv("intermediate/LumA/citation_scores.csv")
 
-PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
-PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
-PCSF_results <- PCSF_results[order(-PCSF_results$druggability), ]
-rownames(PCSF_results) <- NULL
 
 
 # keep structure duplicates with highest druggability
@@ -266,12 +281,12 @@ filtered_results <- PCSF_results %>%
   group_by(external_gene_name) %>%
   filter(druggability == max(druggability))
 
-write.csv(filtered_results, "intermediate/LumA/PCSF_master_unique.csv")
+write.csv(filtered_results, "intermediate/LumA/filterByExp/PCSF_master_unique.csv")
 
 
 
 #### Ranking ####
-pcsf_master <- read.csv("intermediate/LumA/PCSF_master_unique.csv", row.names = 1)
+pcsf_master <- filtered_results
 
 pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
 pcsf_master <- merge(pcsf_master, pocketminer_data, by = "ID")
@@ -415,8 +430,25 @@ final_gene_counts$description <- gsub("\\s*\\[.*?\\]", "", final_gene_counts$des
 rownames(final_gene_counts) <- NULL
 
 
-write.csv(final_gene_counts, "intermediate/LumA/final_gene_counts.csv", row.names = F)
+write.csv(final_gene_counts, "intermediate/LumA/filterByExp/final_gene_counts.csv", row.names = F)
 
+
+custom_filt_final_counts <- read.csv("intermediate/LumA/final_gene_counts.csv")
+venn.diagram(
+  x = list(final_gene_counts$external_gene_name, custom_filt_final_counts$external_gene_name),
+  category.names = c("filterByExpr", "custom filt"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "intermediate/lumB/filterByExp/final_gene_counts_compare.png",
+  disable.logging = TRUE
+)
 
 
 

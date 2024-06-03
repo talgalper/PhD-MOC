@@ -654,9 +654,21 @@ max_rows <- max(nrow(PCSF_lumA), nrow(PCSF_lumB), nrow(PCSF_Her2), nrow(PCSF_bas
 
 
 
+missing_genes_convert <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "uniprot_gn_id", "description"), 
+                               filters = "ensembl_gene_id", 
+                               values = missing_genes$gene_id, 
+                               mart = ensembl)
+missing_genes_convert <- merge(missing_genes_convert, missing_genes, by.x = "ensembl_gene_id", by.y = "gene_id", all = T)
 
+# number of unrecognised terms
+table(is.na(missing_genes_convert$uniprot_gn_id) & is.na(missing_genes_convert$description))
 
+novel_transcripts <- missing_genes_convert[grep("novel transcript", missing_genes_convert$description), ]
+novel_proteins <- missing_genes_convert[grep("novel protein", missing_genes_convert$description), ]
+pseudogene <- missing_genes_convert[grep("pseudogene", missing_genes_convert$description), ]
 
+temp <- filtered_targets[!is.na(filtered_targets$Her2_rank), ]
+unique(temp$external_gene_name)
 
 
 
