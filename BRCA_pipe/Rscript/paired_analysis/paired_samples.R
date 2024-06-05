@@ -7,6 +7,7 @@ load("RData/TCGA_query.RData")
 
 clinical <- GDCquery_clinic(project = "TCGA-BRCA",
                             type = "clinical")
+query_output <- getResults(query_TCGA)
 clinical_query <- merge(query_output, clinical, by.x = "cases.submitter_id", by.y = "submitter_id")
 clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
                                                     "tissue_or_organ_of_origin", "sample_type", "bcr_patient_barcode"))

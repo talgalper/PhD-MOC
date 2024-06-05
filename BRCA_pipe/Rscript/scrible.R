@@ -672,5 +672,19 @@ unique(temp$external_gene_name)
 
 
 
+DE_results <- list(TCGA_lumA = lumA_DE$hits,
+                   TCGA_lumB = lumB_DE$hits,
+                   TCGA_Her2 = Her2_DE$hits,
+                   TCGA_basal = basal_DE$hits,
+                   GTEx_lumA = GTEx_lumA_DE$hits,
+                   GTEx_lumB = GTEx_lumB_DE$hits,
+                   GTEx_Her2 = GTEx_Her2_DE$hits,
+                   GTEx_basal = GTEx_basal_DE$hits)
+
+save(DE_results, file = "RData/DE_results_master.RData")
+
+
+
+
 
 

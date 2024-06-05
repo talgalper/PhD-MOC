@@ -23,33 +23,38 @@ getProjectSummary('TCGA-BRCA')
 
 query_TCGA <- GDCquery(project = "TCGA-BRCA",
                        access = "open", 
-                       data.category = "Transcriptome Profiling")
+                       data.category = "Transcriptome Profiling",
+                       experimental.strategy = "RNA-Seq")
 
 query_output <- getResults(query_TCGA)
 
 clinical <- GDCquery_clinic(project = "TCGA-BRCA",
                             type = "clinical")
 
-clinical <- merge(query_output, clinical, by.x = "cases.submitter_id", by.y = "submitter_id")
-clinical <- subset(clinical, select = c("cases.submitter_id", "ajcc_pathologic_stage", "tissue_or_organ_of_origin"))
+clinical_query <- clinical[complete.cases(clinical$ajcc_pathologic_stage), ]
+clinical_query <- merge(query_output, clinical_query, by.x = "cases.submitter_id", by.y = "submitter_id")
+clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
+                                                    "tissue_or_organ_of_origin", "sample_type"))
 
-table(clinical$ajcc_pathologic_stage)
+table(clinical_query$ajcc_pathologic_stage)
 
 
 
 subtypes <- PanCancerAtlas_subtypes()
 
-common <- query_output[query_output$cases %in% subtypes$pan.samplesID, ]
+#common <- query_output[query_output$cases %in% subtypes$pan.samplesID, ]
 
-common <- merge(query_output, subtypes, by.x = "cases", by.y = "pan.samplesID")
-selected_barcodes <- subset(common, select = c("cases", "Subtype_Selected", "sample_type"))
-selected_barcodes <- selected_barcodes[selected_barcodes$Subtype_Selected == "BRCA.Her2", ]
+common <- merge(clinical_query, subtypes, by.x = "cases", by.y = "pan.samplesID")
+common <- subset(common, select = c("cases", "Subtype_Selected", "sample_type", "ajcc_pathologic_stage"))
 
+
+selected_barcodes <- common[common$Subtype_Selected == "BRCA.Her2", ]
 
 Her2_query <- GDCquery(project = "TCGA-BRCA",
-                       access = "open", 
-                       data.category = "Transcriptome Profiling",
-                       barcode = selected_barcodes$cases)
+                        access = "open", 
+                        data.category = "Transcriptome Profiling",
+                        experimental.strategy = "RNA-Seq",
+                        barcode = selected_barcodes$cases)
 
 GDCdownload(Her2_query)
 
@@ -60,91 +65,86 @@ Her2_unstranded <- assay(Her2_data, "unstranded")
 rownames(Her2_unstranded) <- gsub("\\.\\d+", "", rownames(Her2_unstranded))
 Her2_unstranded <- as.data.frame(Her2_unstranded)
 
-
-
-GTEx_raw <- read.table("bulk-gex_v8_rna-seq_counts-by-tissue_gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2, header = T)
-
-GTEx_data <- GTEx_raw[, -c(1:3)]
-rownames(GTEx_data) <- GTEx_raw$Name
-rownames(GTEx_data) <- gsub("\\.\\d+", "", rownames(GTEx_data))
-
-
-save(Her2_unstranded, GTEx_data, file = "RData/Her2/BRCA_Her2_DE_data.RData")
+load("RData/TCGA_normal.RData")
 
 barplot(colSums(Her2_unstranded),
         xaxt = "n")
 
-barplot(colSums(GTEx_data),
+barplot(colSums(normal_unstranded),
         xaxt = "n")
 
+
 #### Remove low activity genes ####
-merged_df <- merge(Her2_unstranded, GTEx_data, by = "row.names")
+colnames(Her2_unstranded) <- paste("Her2", 1:ncol(Her2_unstranded), sep = "_")
+colnames(normal_unstranded) <- paste("normal", 1:ncol(normal_unstranded), sep = "_")
+
+merged_df <- merge(Her2_unstranded, normal_unstranded, by = "row.names")
 
 merged_df <- column_to_rownames(merged_df, "Row.names")
 
-#gene_id <- rownames(merged_df)
-#
-## subset genes that have a cpm of greater than one, in more than 50% of the samples
-#keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
-#print(summary(keepTheseGenes))
-#
-## add gene ids back into df
-#merged_df <- cbind(gene_id, merged_df)
-#
-#removedGenes <- merged_df$gene_id[!keepTheseGenes]
-#removedGenes <- as.data.frame(removedGenes)
-#colnames(removedGenes)[1] <- "gene_id"
-#
-#merged_df <- merged_df[keepTheseGenes, ]
-#
-#merged_df <- merged_df[, -1]
+gene_id <- rownames(merged_df)
+
+# subset genes that have a cpm of greater than one, in more than 50% of the samples
+keepTheseGenes <- (rowSums(cpm(merged_df) > 1) >= ncol(merged_df)/2)
+print(summary(keepTheseGenes))
+
+# add gene ids back into df
+merged_df <- cbind(gene_id, merged_df)
+
+removedGenes <- merged_df$gene_id[!keepTheseGenes]
+removedGenes <- as.data.frame(removedGenes)
+colnames(removedGenes)[1] <- "gene_id"
+
+merged_df <- merged_df[keepTheseGenes, ]
+
+merged_df <- merged_df[, -1]
 
 
 # top x% of samples
-num_genes <- nrow(merged_df)
-top_threshold <- ceiling(num_genes * 0.50)
-
-# min required samples
-num_samples <- ncol(merged_df)
-min_required_samples <- ceiling(num_samples * 0.10)
-
-
-
-# Extract the gene names and data columns
-gene_names <- rownames(merged_df)
-data_columns <- merged_df[, 2:ncol(merged_df)]
-
-# Initialise an empty data frame
-results_df <- data.frame(gene_id = gene_names)
-
-# Iterate through each data column and perform the test
-for (col_id in seq_along(data_columns)) {
-  # Get the column name and the data
-  col_name <- colnames(data_columns)[col_id]
-  col_data <- data_columns[, col_id]
-  
-  # Sort the data and mark genes within the top_threshold rows as TRUE
-  sorted_indices <- order(col_data, decreasing = TRUE)
-  top_indices <- sorted_indices[1:top_threshold]
-  
-  # Create a logical vector for gene presence in top_threshold
-  gene_presence <- rep(FALSE, nrow(merged_df))
-  gene_presence[top_indices] <- TRUE
-  
-  # Add to the results data frame
-  results_df <- cbind(results_df, gene_presence)
-}
-
-# Rename columns 
-colnames(results_df) <- c("gene_id", colnames(data_columns))
-
-
-# Calculate the number of TRUE values for each gene across columns
-gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
-failed_genes <- gene_counts < min_required_samples
-print(summary(failed_genes))
-
-BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_genes]))
+#num_genes <- nrow(merged_df)
+#top_threshold <- ceiling(num_genes * 0.50)
+#
+## min required samples
+#num_samples <- ncol(merged_df)
+#min_required_samples <- ceiling(num_samples * 0.10)
+#
+#
+#
+## Extract the gene names and data columns
+#gene_names <- rownames(merged_df)
+#data_columns <- merged_df[, 2:ncol(merged_df)]
+#
+## Initialise an empty data frame
+#results_df <- data.frame(gene_id = gene_names)
+#
+## Iterate through each data column and perform the test
+#for (col_id in seq_along(data_columns)) {
+#  # Get the column name and the data
+#  col_name <- colnames(data_columns)[col_id]
+#  col_data <- data_columns[, col_id]
+#  
+#  # Sort the data and mark genes within the top_threshold rows as TRUE
+#  sorted_indices <- order(col_data, decreasing = TRUE)
+#  top_indices <- sorted_indices[1:top_threshold]
+#  
+#  # Create a logical vector for gene presence in top_threshold
+#  gene_presence <- rep(FALSE, nrow(merged_df))
+#  gene_presence[top_indices] <- TRUE
+#  
+#  # Add to the results data frame
+#  results_df <- cbind(results_df, gene_presence)
+#}
+#
+## Rename columns 
+#colnames(results_df) <- c("gene_id", colnames(data_columns))
+#
+#
+## Calculate the number of TRUE values for each gene across columns
+#gene_counts <- rowSums(results_df[, -1]) # Exclude the first column ("gene_id")
+#failed_genes <- gene_counts < min_required_samples
+#print(summary(failed_genes))
+#
+#BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_genes]))
 
 
 
@@ -155,18 +155,18 @@ BRCA_data <- subset(merged_df, !(rownames(merged_df) %in% gene_names[failed_gene
 #### Differential expression analysis ####
 
 # Select the columns that start with "TCGA"
-cols <- grep("^TCGA", colnames(BRCA_data))
+cols <- grep("^Her2", colnames(merged_df))
 
 # Assign the unstranded columns to the cancer group
-cancer <- colnames(BRCA_data)[cols]
+cancer <- colnames(merged_df)[cols]
 
 # Assign the rest of the columns to the healty group
-benign <- setdiff(colnames(BRCA_data), cancer)
+benign <- setdiff(colnames(merged_df), cancer)
 
 # Create the group variable
 group <- factor(c(rep("cancer", length(cancer)), rep("benign", length(benign))))
 
-data <- DGEList(counts = BRCA_data, group = group)
+data <- DGEList(counts = merged_df, group = group)
 
 design <- model.matrix(~group)
 
@@ -193,7 +193,7 @@ toptags <- topTags(lrt, n = Inf)
 
 # Identify which genes are significantly differentially expressed from 
 # an edgeR fit object containing p-values and test statistics.
-dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 2)
+dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 1)
 print(summary(dif_exp))
 
 dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
@@ -206,8 +206,7 @@ hits <- hits[,c("gene_id", colnames)]
 
 dif_exp <- hits[dif_exp_genes, ]
 
-save(dif_exp, hits, file = "RData/Her2/DE_results.RData")
-
+write.csv(hits, "intermediate/Her2/DE_results.csv", row.names = F)
 
 # Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
 plotBCV(tagwise, main = "biological coefficient of variation")
@@ -243,9 +242,6 @@ colnames(gene_id)[1] <- "gene_id"
 gene_data <- merge(gene_id, data, by = "gene_id")
 
 gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
-
-marker_genes <- subset(gene_data, external_gene_name %in% c("ERBB2", "MKI67", "PGR", "ESR2"))
-
 
 # check to see if genes that at all genes were converted at least once
 missing_genes <- anti_join(data, gene_id, by = "gene_id")
@@ -304,7 +300,7 @@ save(subnet, file = "RData/Her2/PCSF_subnet.RData")
 
 
 # extract cluster data
-clust <- clusters(subnet)
+clust <- components(subnet)
 df <- data.frame(gene_id = names(clust$membership), cluster = factor(clust$membership))
 betweenness <- betweenness(subnet) 
 centrality <- degree(subnet) 
@@ -317,6 +313,7 @@ rownames(df) <- 1:nrow(df)
 
 df <- df[order(-df$degree_centrality), ]
 
+write.csv(df, "intermediate/Her2/PCSF_output.csv")
 
 # convert external gene name to uniprot
 gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
@@ -339,6 +336,8 @@ af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
 # merge PCSF data with AF
 PCSF_results <- merge(PCSF_master, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id")
 
+missing_genes <- unique(PCSF_master$external_gene_name)[!unique(PCSF_master$external_gene_name) %in% unique(PCSF_results$external_gene_name)]
+
 write.csv(PCSF_results, "intermediate/Her2/PCSF_druggability.csv")
 
 
@@ -351,7 +350,7 @@ PCSF_results <- PCSF_results[order(-PCSF_results$druggability), ]
 rownames(PCSF_results) <- NULL
 
 
-# Jess wants to keep structure duplicates with highest druggability
+# keep structure duplicates with highest druggability
 filtered_results <- PCSF_results %>%
   group_by(external_gene_name) %>%
   filter(druggability == max(druggability))
@@ -360,7 +359,160 @@ write.csv(filtered_results, "intermediate/Her2/PCSF_master_unique.csv")
 
 
 
+#### Ranking ####
+pcsf_master <- read.csv("intermediate/Her2/PCSF_master_unique.csv", row.names = 1)
+
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
+pcsf_master <- merge(pcsf_master, pocketminer_data, by = "ID")
+
+missing_genes <- filtered_results$external_gene_name[!filtered_results$external_gene_name %in% pcsf_master$external_gene_name]
 
 
+
+betweeness_norm <- (pcsf_master$betweenness - min(pcsf_master$betweenness)) / (max(pcsf_master$betweenness) - min(pcsf_master$betweenness))
+
+centrality_norm <- (pcsf_master$degree_centrality - min(pcsf_master$degree_centrality)) / (max(pcsf_master$degree_centrality) - min(pcsf_master$degree_centrality))
+
+
+
+# Define the number of weight values (genes in top x) to test (including 0)
+# i.e. 0, 0.1, 0.2, 0.3, ..., 1
+num_weights <- 11
+
+# Create weight value sequences that sum up to 1
+betweeness_w_values <- seq(0, 1, length.out = num_weights)
+centrality_w_values <- seq(0, 1, length.out = num_weights)
+druggability_w_values <- seq(0, 1, length.out = num_weights)
+cryptic_pocket_w_values <- seq(0, 1, length.out = num_weights)
+
+
+# Calculate the total number of iterations a.k.a number of variables
+total_iterations <- num_weights ^ 4
+
+# Create a progress bar
+pb <- progress_bar$new(total = total_iterations)
+
+# Create an empty data frame with proper column names
+sensitivity_results <- data.frame(
+  betweeness_weight = numeric(),
+  centrality_weight = numeric(),
+  druggability_weight = numeric(),
+  cryptic_pocket_weight = numeric(),
+  top_genes = character(),
+  stringsAsFactors = FALSE
+)
+
+# Perform sensitivity test
+for (betweeness_w in betweeness_w_values) {
+  for (centrality_w in centrality_w_values) {
+    for (druggability_w in druggability_w_values) {
+      for (cryptic_pocket_w in cryptic_pocket_w_values) {
+        # Check if the weights sum up to 1
+        if (betweeness_w + centrality_w + druggability_w + cryptic_pocket_w == 1) {
+          # Combine scores using current weights
+          combined_score <- (betweeness_w * betweeness_norm) +
+            (centrality_w * centrality_norm) +
+            (druggability_w * pcsf_master$druggability) +
+            (cryptic_pocket_w * pcsf_master$max_hit)
+          
+          # Rank the genes based on the combined score
+          pcsf_master_ranked <- pcsf_master
+          pcsf_master_ranked$combined_score <- combined_score
+          pcsf_master_ranked <- pcsf_master_ranked[order(-pcsf_master_ranked$combined_score), ]
+          
+          # Select the top 10 genes
+          top_genes <- head(pcsf_master_ranked$external_gene_name, 10)
+          
+          # Add results to the sensitivity_results data frame
+          sensitivity_results <- rbind(sensitivity_results, list(
+            betweeness_weight = betweeness_w,
+            centrality_weight = centrality_w,
+            druggability_weight = druggability_w,
+            cryptic_pocket_weight = cryptic_pocket_w,
+            top_genes = paste(top_genes, collapse = ', ')
+          ))
+        }
+        
+        # Increment the progress bar
+        pb$tick()
+      }
+    }
+  }
+}
+
+
+# Split the "top_genes" column into a list of genes
+sensitivity_results$top_genes_list <- strsplit(sensitivity_results$top_genes, ', ')
+
+# Count the occurrences of each gene
+all_genes <- unlist(sensitivity_results$top_genes_list)
+all_genes_unique <- unique(all_genes)
+count <- sapply(all_genes_unique, function(g) sum(sapply(sensitivity_results$top_genes_list, function(lst) g %in% lst)))
+
+# Create an empty data frame to store gene counts
+gene_counts <- data.frame(
+  gene = all_genes_unique,
+  count = count,
+  stringsAsFactors = FALSE
+)
+
+# Sort the gene counts by count
+gene_counts <- gene_counts[order(-gene_counts$count), ]
+
+
+# add scores when variable = 0
+counts_when_betweeness_0 <- sensitivity_results[
+  sensitivity_results$betweeness_weight == 0 &
+    rowSums(sensitivity_results[, c("centrality_weight", "druggability_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_betweeness_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_betweeness_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_betweeness_0)
+
+
+counts_when_centrality_0 <- sensitivity_results[
+  sensitivity_results$centrality_weight == 0 &
+    rowSums(sensitivity_results[, c("betweeness_weight", "druggability_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_centrality_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_centrality_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_centrality_0)
+
+
+counts_when_druggability_0 <- sensitivity_results[
+  sensitivity_results$druggability_weight == 0 &
+    rowSums(sensitivity_results[, c("centrality_weight", "betweeness_weight", "cryptic_pocket_weight")]) != 0, ]
+counts_when_druggability_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_druggability_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_druggability_0)
+
+
+counts_when_cryptic_pockets_0 <- sensitivity_results[
+  sensitivity_results$cryptic_pocket_weight == 0 &
+    rowSums(sensitivity_results[, c("centrality_weight", "betweeness_weight", "druggability_weight")]) != 0, ]
+counts_when_cryptic_pockets_0 <- sapply(all_genes_unique, function(g) sum(sapply(counts_when_cryptic_pockets_0$top_genes_list, function(lst) g %in% lst)))
+gene_counts <- cbind(gene_counts, counts_when_cryptic_pockets_0)
+
+
+
+# add gene description
+gene_description <- getBM(attributes = c("external_gene_name", "description"), 
+                          filters = "external_gene_name", 
+                          values = gene_counts$gene, 
+                          mart = ensembl)
+
+final_gene_counts <- merge(gene_description, gene_counts, by.x = "external_gene_name", by.y = "gene")
+
+final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
+
+final_gene_counts$description <- gsub("\\s*\\[.*?\\]", "", final_gene_counts$description)
+
+rownames(final_gene_counts) <- NULL
+
+write.csv(final_gene_counts, "intermediate/Her2/final_gene_counts.csv", row.names = F)
+
+
+
+DGIdb <- queryDGIdb(final_gene_counts$external_gene_name)
+results <- byGene(DGIdb)
+results <- subset(results, select = c("Gene", "DistinctDrugCount"))
+gene_count_drug <- merge(results, final_gene_counts, by.x = "Gene", by.y = "external_gene_name")
+gene_count_drug <- gene_count_drug[order(-gene_count_drug$count), ]
+rownames(gene_count_drug) <- NULL
 
 
