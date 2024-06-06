@@ -20,7 +20,7 @@ paired_samples <- list(lumA_paired = lumA_paired,
                        Basal_paired = Basal_paired)
 rm(lumA_paired, lumB_paired, Her2_paired, Basal_paired, master)
 
-# removes any duplicated patient barcodes from sample info
+# some samples had 2 healthy samples to one disease, needed to remove them
 for (i in seq_along(paired_samples)) {
   subtype_info <- as.data.frame(paired_samples[i])
   subtype_info <- subtype_info[!duplicated(subtype_info[1]), ]
@@ -63,47 +63,18 @@ basal_QC <- paired_filter_low_expr(counts_data$Basal_unstranded, counts_data$Nor
 basal_DE <- paired_DE_analysis(counts_matrix = basal_QC$counts_filt, sample_info = basal_QC$sample_info)
 
 
-### These results use GTEx mammary tissue as a control group ###
+# save results
+DE_results <- list(TCGA_lumA = list(hits = lumA_DE$hits, dif_exp = lumA_DE$dif_exp),
+                   TCGA_lumB = list(hits = lumB_DE$hits, dif_exp = lumB_DE$dif_exp),
+                   TCGA_Her2 = list(hits = Her2_DE$hits, dif_exp = Her2_DE$dif_exp),
+                   TCGA_basal = list(hits = basal_DE$hits, dif_exp = basal_DE$dif_exp))
 
-# load and clear data
-GTEx_data <- read.table("gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
-colnames(GTEx_data) <- GTEx_data[1, ]
-GTEx_data <- GTEx_data[-1, -1]
-rownames(GTEx_data) <- NULL
-
-# opt for having gene Ensembl IDs instead of gene names as rownames (same as TCGA)
-GTEx_ENS <- column_to_rownames(GTEx_data, "Name")
-rownames(GTEx_ENS) <- gsub("\\.\\d+", "", rownames(GTEx_ENS))
-GTEx_ENS <- GTEx_ENS[ , -1]
-rownames <- rownames(GTEx_ENS)
-GTEx_ENS <- as.data.frame(sapply(GTEx_ENS, as.numeric))
-rownames(GTEx_ENS) <- rownames
-
-# add GTEx data to data object and tidy env
-counts_data["GTEx_data"] <- list(GTEx_ENS)
-rm(GTEx_data, GTEx_ENS, rownames)
-
-
-## luminal A results with GTEx as control
-GTEx_lumA_QC <- filter_low_expr(counts_data$LumA_unstranded, counts_data$GTEx_data)
-GTEx_lumA_DE <- DE_analysis(counts_matrix = GTEx_lumA_QC$counts_filt, sample_info = GTEx_lumA_QC$sample_info)
-
-## luminal B results with GTEx as control
-GTEx_lumB_QC <- filter_low_expr(counts_data$LumB_unstranded, counts_data$GTEx_data)
-GTEx_lumB_DE <- DE_analysis(counts_matrix = GTEx_lumB_QC$counts_filt, sample_info = GTEx_lumB_QC$sample_info)
-
-## Her2 results with GTEx as control
-GTEx_Her2_QC <- filter_low_expr(counts_data$Her2_unstranded, counts_data$GTEx_data)
-GTEx_Her2_DE <- DE_analysis(counts_matrix = GTEx_Her2_QC$counts_filt, sample_info = GTEx_Her2_QC$sample_info)
-
-## basal results with GTEx as control
-GTEx_basal_QC <- filter_low_expr(counts_data$Basal_unstranded, counts_data$GTEx_data)
-GTEx_basal_DE <- DE_analysis(counts_matrix = GTEx_basal_QC$counts_filt, sample_info = GTEx_basal_QC$sample_info)
+save(DE_results, file = "RData/DE_results_master_paired.RData")
 
 
 
 # compare logFC of markers
-gene_id <- getBM(attributes = c("external_gene_name", "hgnc_symbol", "ensembl_gene_id"), 
+gene_id <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"), 
                  filters = "external_gene_name", 
                  values = c("ESR1", "PGR", "ERBB2"), 
                  mart = ensembl)
@@ -117,42 +88,32 @@ Her2_subset <- Her2_DE$hits[rownames(Her2_DE$hits) %in% gene_id$ensembl_gene_id,
 Her2_subset <- subset(Her2_subset, select = c("gene_id", "logFC"))
 Basal_subset <- basal_DE$hits[rownames(basal_DE$hits) %in% gene_id$ensembl_gene_id, ]
 Basal_subset <- subset(Basal_subset, select = c("gene_id", "logFC"))
-GTEx_LumA_subset <- GTEx_lumA_DE$hits[rownames(GTEx_lumA_DE$hits) %in% gene_id$ensembl_gene_id, ]
-GTEx_LumA_subset <- subset(GTEx_LumA_subset, select = c("gene_id", "logFC"))
-GTEx_LumB_subset <- GTEx_lumB_DE$hits[rownames(GTEx_lumB_DE$hits) %in% gene_id$ensembl_gene_id, ]
-GTEx_LumB_subset <- subset(GTEx_LumB_subset, select = c("gene_id", "logFC"))
-GTEx_Her2_subset <- GTEx_Her2_DE$hits[rownames(GTEx_Her2_DE$hits) %in% gene_id$ensembl_gene_id, ]
-GTEx_Her2_subset <- subset(GTEx_Her2_subset, select = c("gene_id", "logFC"))
-GTEx_Basal_subset <- GTEx_basal_DE$hits[rownames(GTEx_basal_DE$hits) %in% gene_id$ensembl_gene_id, ]
-GTEx_Basal_subset <- subset(GTEx_Basal_subset, select = c("gene_id", "logFC"))
 
 
 marker_logFC <- merge(gene_id, LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 colnames(marker_logFC)[3] <- "TCGA_lumA"
-marker_logFC <- merge(marker_logFC, GTEx_LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
-colnames(marker_logFC)[4] <- "GTEx_lumA"
+
 
 # Luminal B (LumB)
 marker_logFC <- merge(marker_logFC, LumB_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 colnames(marker_logFC)[5] <- "TCGA_lumB"
-marker_logFC <- merge(marker_logFC, GTEx_LumB_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
-colnames(marker_logFC)[6] <- "GTEx_lumB"
+
 
 # HER2-enriched (Her2)
 marker_logFC <- merge(marker_logFC, Her2_subset, by.x = "ensembl_gene_id", by.y = "gene_id", all = T)
 colnames(marker_logFC)[7] <- "TCGA_her2"
-marker_logFC <- merge(marker_logFC, GTEx_Her2_subset, by.x = "ensembl_gene_id", by.y = "gene_id", all = T)
-colnames(marker_logFC)[8] <- "GTEx_her2"
+
 
 # Basal-like (Basal)
 marker_logFC <- merge(marker_logFC, Basal_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 colnames(marker_logFC)[9] <- "TCGA_basal"
-marker_logFC <- merge(marker_logFC, GTEx_Basal_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
-colnames(marker_logFC)[10] <- "GTEx_basal"
 
 
 
 
+
+
+# need to update with paired vs unpaired
 venn.diagram(
   x = list(TCGA_control = lumA_DE$dif_exp_genes, GETx_control = rownames(GTEx_lumA_DE$dif_exp)),
   category.names = c("DE with TCGA Normal", "DE with GTEx Healthy"),

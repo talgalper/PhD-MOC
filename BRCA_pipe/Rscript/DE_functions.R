@@ -62,13 +62,13 @@ DE_analysis <- function(counts_matrix, sample_info) {
   
   data <- estimateDisp(data)
   
-  cat("Conduct likelihood ratio test \n")
+  cat("Conduct quasi-likelihood F-test \n")
   
-  fit <- glmFit(data, design)
-  lrt <- glmLRT(fit)
-  toptags <- topTags(lrt, n = Inf)
+  fit <- glmQLFit(data, design)
+  qlf <- glmQLFTest(fit)
+  toptags <- topTags(qlf, n = Inf)
   
-  dif_exp <- decideTests(lrt, p = 0.05, adjust = "fdr", lfc = 1)
+  dif_exp <- decideTests(qlf, p = 0.05, adjust = "fdr", lfc = 1)
   print(summary(dif_exp))
   dif_exp_genes <- rownames(data$counts)[as.logical(dif_exp)]
   hits <- toptags$table[toptags$table$FDR < 0.1, ]
@@ -83,7 +83,7 @@ DE_analysis <- function(counts_matrix, sample_info) {
               toptags = toptags,
               data = data,
               fit = fit,
-              lrt = lrt,
+              qlf = qlf,
               design = design))
 }
 
@@ -102,13 +102,13 @@ paired_DE_analysis <- function(counts_matrix, sample_info) {
   
   data <- estimateDisp(data)
   
-  cat("Conduct likelihood ratio test \n")
+  cat("Conduct quasi-likelihood F-test \n")
   
-  fit <- glmFit(data, design)
-  lrt <- glmLRT(fit)
-  toptags <- topTags(lrt, n = Inf)
+  fit <- glmQLFit(data, design)
+  qlf <- glmQLFTest(fit)
+  toptags <- topTags(qlf, n = Inf)
   
-  dif_exp <- decideTests(lrt, p = 0.05, adjust = "fdr", lfc = 1)
+  dif_exp <- decideTests(qlf, p = 0.05, adjust = "fdr", lfc = 1)
   print(summary(dif_exp))
   dif_exp_genes <- rownames(data$counts)[as.logical(dif_exp)]
   hits <- toptags$table[toptags$table$FDR < 0.1, ]
@@ -123,20 +123,20 @@ paired_DE_analysis <- function(counts_matrix, sample_info) {
               toptags = toptags,
               data = data,
               fit = fit,
-              lrt = lrt,
+              qlf = qlf,
               design = design))
 }
 
 
 # print DE counts
 print_summary <- function(subtype_DE_results) {
-  lrt <- subtype_DE_results$lrt
+  qlf <- subtype_DE_results$qlf
   data <- subtype_DE_results$data
   
-  dif_exp <- decideTests(lrt, p = 0.05, adjust = "fdr", lfc = 1)
+  dif_exp <- decideTests(qlf, p = 0.05, adjust = "fdr", lfc = 1)
   print(summary(dif_exp))
   
-  toptags <- topTags(lrt, n = Inf)
+  toptags <- topTags(qlf, n = Inf)
   dif_exp_genes <- rownames(data$counts)[as.logical(dif_exp)]
   hits <- toptags$table[toptags$table$FDR < 0.1, ]
   colnames <- colnames(hits)
@@ -153,7 +153,7 @@ plot_DE_results <- function(DE_results) {
   
   # Make a mean-difference plot of two libraries of count data with smearing of points with very low counts, 
   # especially those that are zero for one of the columns.
-  plotSmear(DE_results$lrt, de.tags = DE_results$dif_exp_genes, main = "Mean-difference plot")
+  plotSmear(DE_results$qlf, de.tags = DE_results$dif_exp_genes, main = "Mean-difference plot")
   
   # plot Pvalues of different logFC scores
   ggplot(DE_results$hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted logFC")

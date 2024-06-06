@@ -81,14 +81,31 @@ GTEx_Her2_DE <- DE_analysis(counts_matrix = GTEx_Her2_QC$counts_filt, sample_inf
 GTEx_basal_QC <- filter_low_expr(counts_data$Basal_unstranded, counts_data$GTEx_data)
 GTEx_basal_DE <- DE_analysis(counts_matrix = GTEx_basal_QC$counts_filt, sample_info = GTEx_basal_QC$sample_info)
 
+# save results
+DE_results <- list(TCGA_lumA = list(hits = lumA_DE$hits, dif_exp = lumA_DE$dif_exp),
+                   TCGA_lumB = list(hits = lumB_DE$hits, dif_exp = lumB_DE$dif_exp),
+                   TCGA_Her2 = list(hits = Her2_DE$hits, dif_exp = Her2_DE$dif_exp),
+                   TCGA_basal = list(hits = basal_DE$hits, dif_exp = basal_DE$dif_exp),
+                   
+                   GTEx_lumA = list(hits = GTEx_lumA_DE$hits, dif_exp = GTEx_lumA_DE$dif_exp),
+                   GTEx_lumB = list(GTEx_lumB_DE$hits, dif_exp = GTEx_lumB_DE$dif_exp),
+                   GTEx_Her2 = list(GTEx_Her2_DE$hits, dif_exp = GTEx_Her2_DE$dif_exp),
+                   GTEx_basal = list(GTEx_basal_DE$hits, dif_exp = GTEx_basal_DE$dif_exp))
+
+save(DE_results, file = "RData/DE_results_master.RData")
+
+
+
+
+
+
 
 
 # compare logFC of markers
-gene_id <- getBM(attributes = c("external_gene_name", "hgnc_symbol", "ensembl_gene_id"), 
+gene_id <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"), 
                  filters = "external_gene_name", 
                  values = c("ESR1", "PGR", "ERBB2"), 
                  mart = ensembl)
-
 
 LumA_subset <- lumA_DE$hits[rownames(lumA_DE$hits) %in% gene_id$ensembl_gene_id, ]
 LumA_subset <- subset(LumA_subset, select = c("gene_id", "logFC"))

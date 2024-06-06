@@ -684,6 +684,61 @@ DE_results <- list(TCGA_lumA = lumA_DE$hits,
 save(DE_results, file = "RData/DE_results_master.RData")
 
 
+nrow(GTEx_lumA_QC$low_exp_genes)
+temp <- merge(GTEx_ENS, LumA_unstranded, by = "row.names")
+
+
+
+LumA_subset <- lumA_DE$hits[rownames(lumA_DE$hits) %in% gene_id$ensembl_gene_id, ]
+LumB_subset <- lumB_DE$hits[rownames(lumB_DE$hits) %in% gene_id$ensembl_gene_id, ]
+Her2_subset <- Her2_DE$hits[rownames(Her2_DE$hits) %in% gene_id$ensembl_gene_id, ]
+Basal_subset <- basal_DE$hits[rownames(basal_DE$hits) %in% gene_id$ensembl_gene_id, ]
+GTEx_LumA_subset <- GTEx_lumA_DE$hits[rownames(GTEx_lumA_DE$hits) %in% gene_id$ensembl_gene_id, ]
+GTEx_LumB_subset <- GTEx_lumB_DE$hits[rownames(GTEx_lumB_DE$hits) %in% gene_id$ensembl_gene_id, ]
+GTEx_Her2_subset <- GTEx_Her2_DE$hits[rownames(GTEx_Her2_DE$hits) %in% gene_id$ensembl_gene_id, ]
+GTEx_Basal_subset <- GTEx_basal_DE$hits[rownames(GTEx_basal_DE$hits) %in% gene_id$ensembl_gene_id, ]
+
+
+LumA_subset <- merge(gene_id, LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+LumB_subset <- merge(gene_id, LumB_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+Her2_subset <- merge(gene_id, Her2_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+Basal_subset <- merge(gene_id, Basal_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+
+GTEx_LumA_subset <- merge(gene_id, GTEx_LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+GTEx_LumB_subset <- merge(gene_id, GTEx_LumB_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+GTEx_Her2_subset <- merge(gene_id, GTEx_Her2_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+GTEx_Basal_subset <- merge(gene_id, GTEx_Basal_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
+
+
+temp <- lumA_DE$hits
+temp <- temp[temp$logFC >= 1 | temp$logFC <= -1, ]
+
+
+
+
+load("RData/DE_results_master.RData")
+
+venn.diagram(
+  x = list(DE_results$TCGA_basal$dif_exp$gene_id,
+           DE_results$GTEx_basal$dif_exp$gene_id,
+           basal_DE$dif_exp$gene_id),
+  category.names = c("DE with TCGA Normal", "DE with GTEx Healthy", "Paired TCGA DE"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "DE_comparison/basal.png",
+  disable.logging = TRUE
+)
+
+
+
+
 
 
 
