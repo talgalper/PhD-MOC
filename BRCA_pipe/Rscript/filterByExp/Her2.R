@@ -15,93 +15,30 @@ dir.create("RData/Her2/filterByExp")
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
-
-
-load("RData/Her2/DE_data.RData")
-
-disease_df <- data.frame(sample = colnames(Her2_unstranded),
-                         subtype = rep("disease", ncol(Her2_unstranded)))
-normal_df <- data.frame(sample = colnames(normal_unstranded),
-                        subtype = rep("control", ncol(normal_unstranded)))
-sample_df <- rbind(normal_df, disease_df)
-
-merged_df <- merge(normal_unstranded, Her2_unstranded, by = "row.names")
-merged_df <- column_to_rownames(merged_df, "Row.names")
-
-group <- factor(sample_df$subtype)
-
-counts_filt <- filterByExpr(merged_df, group = group)
-counts_filt <- merged_df[counts_filt, ]
-
-low_exp_genes <- merged_df[!rownames(merged_df) %in% rownames(counts_filt), ]
-
-
-
-
-#### Differential expression analysis ####
-
-data <- DGEList(counts = counts_filt, group = group)
-
-design <- model.matrix(~group)
-
-# Estimate a common negative binomial dispersion parameter for a DGE dataset with a general experimental design
-common <- estimateGLMCommonDisp(data, design, verbose = T)
-
-# Estimate the abundance-dispersion trend by Cox-Reid approximate profile likelihood.
-trend <- estimateGLMTrendedDisp(common, design)
-
-# Compute an empirical Bayes estimate of the negative binomial dispersion parameter for each tag, 
-# with expression levels specified by a log-linear model.
-tagwise <- estimateGLMTagwiseDisp(trend, design)
-
-# Fit a negative binomial generalized log-linear model to the read counts for each gene. 
-# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
-fit <- glmFit(tagwise, design)
-
-# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
-lrt <- glmLRT(fit, coef = 2)
-
-# Extract the most differentially expressed genes (or sequence tags) from a test object, 
-# ranked either by p-value or by absolute log-fold-change.
-toptags <- topTags(lrt, n = Inf)
-
-# Identify which genes are significantly differentially expressed from 
-# an edgeR fit object containing p-values and test statistics.
-dif_exp <- decideTests(lrt, p = 0.05, adjust = "fdr", lfc = 1)
-print(summary(dif_exp))
-
-dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
-
-# create a results df
-hits <- toptags$table[toptags$table$FDR < 0.1, ]
-colnames <- colnames(hits)
-hits$gene_id <- rownames(hits)
-hits <- hits[,c("gene_id", colnames)]
-
-dif_exp <- hits[dif_exp_genes, ]
-
-write.csv(hits, "intermediate/Her2/filterByExp/DE_results.csv", row.names = F)
+## load in DE data
+load("RData/DE_results_master.RData")
+dif_exp <- DE_results$TCGA_Her2$dif_exp
 
 
 # compare DE results with hard threshold expression filter pipeline
-custom_filt_DE_results <- read.csv("intermediate/Her2/DE_results.csv")
-custom_filt_DE_results <- custom_filt_DE_results[custom_filt_DE_results$logFC >=1 | custom_filt_DE_results$logFC <=-1, ]
-
-venn.diagram(
-  x = list(custom_filt = custom_filt_DE_results$gene_id, filterByExpr = dif_exp$gene_id),
-  category.names = c("custom filt DE results", "filterByExpr"),
-  col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
-  alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
-  cat.fontfamily = "Arial",  # set the font family for category labels
-  cat.fontface = "bold",  # set the font face for category labels
-  cat.fontsize = 10,  # set the font size for category labels
-  cex = 1.5,  # increase the size of the circles
-  margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "intermediate/Her2/filterByExp/DE_result_compare.png",
-  disable.logging = TRUE
-)
+#custom_filt_DE_results <- read.csv("intermediate/Her2/DE_results.csv")
+#custom_filt_DE_results <- custom_filt_DE_results[custom_filt_DE_results$logFC >=1 | custom_filt_DE_results$logFC <=-1, ]
+#
+#venn.diagram(
+#  x = list(custom_filt = custom_filt_DE_results$gene_id, filterByExpr = dif_exp$gene_id),
+#  category.names = c("custom filt DE results", "filterByExpr"),
+#  col = "transparent",  # set the color of the intersections to transparent
+#  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
+#  alpha = 0.5,  # set the transparency level of the circles
+#  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
+#  cat.fontfamily = "Arial",  # set the font family for category labels
+#  cat.fontface = "bold",  # set the font face for category labels
+#  cat.fontsize = 10,  # set the font size for category labels
+#  cex = 1.5,  # increase the size of the circles
+#  margin = 0.1,  # set the margin size (proportion of the plot)
+#  filename = "intermediate/Her2/filterByExp/DE_result_compare.png",
+#  disable.logging = TRUE
+#)
 
 
 
@@ -132,6 +69,23 @@ gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
 missing_genes <- anti_join(data, gene_id, by = "gene_id")
 
 write.table(gene_data$external_gene_name, "intermediate/Her2/filterByExp/gene_list.txt", quote = F, row.names = F, col.names = F)
+
+
+
+## create table with details of lost genes
+missing_genes_convert <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "uniprot_gn_id", "description"), 
+                               filters = "ensembl_gene_id", 
+                               values = missing_genes$gene_id, 
+                               mart = ensembl)
+missing_genes_convert <- merge(missing_genes_convert, missing_genes, by.x = "ensembl_gene_id", by.y = "gene_id", all = T)
+
+# number of unrecognised terms
+table(is.na(missing_genes_convert$uniprot_gn_id) & is.na(missing_genes_convert$description))
+
+novel_transcripts <- missing_genes_convert[grep("novel transcript", missing_genes_convert$description), ]
+novel_proteins <- missing_genes_convert[grep("novel protein", missing_genes_convert$description), ]
+pseudogene <- missing_genes_convert[grep("pseudogene", missing_genes_convert$description), ]
+
 
 
 #### get interaction data ####

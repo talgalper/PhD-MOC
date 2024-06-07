@@ -738,8 +738,8 @@ venn.diagram(
 
 
 
-
-
-
+library(readxl)
+study_data <- read_excel("../../../../Downloads/bsr-2021-2218_supp1/BSR-2021-2218_suppST3.xlsx")
+study_data <- study_data[study_data$...1 %in% gene_id$external_gene_name, ]
 
 
