@@ -80,35 +80,17 @@ gene_id <- getBM(attributes = c("external_gene_name", "ensembl_gene_id"),
                  mart = ensembl)
 
 
-LumA_subset <- lumA_DE$hits[rownames(lumA_DE$hits) %in% gene_id$ensembl_gene_id, ]
-LumA_subset <- subset(LumA_subset, select = c("gene_id", "logFC"))
-LumB_subset <- lumB_DE$hits[rownames(lumB_DE$hits) %in% gene_id$ensembl_gene_id, ]
-LumB_subset <- subset(LumB_subset, select = c("gene_id", "logFC"))
-Her2_subset <- Her2_DE$hits[rownames(Her2_DE$hits) %in% gene_id$ensembl_gene_id, ]
-Her2_subset <- subset(Her2_subset, select = c("gene_id", "logFC"))
-Basal_subset <- basal_DE$hits[rownames(basal_DE$hits) %in% gene_id$ensembl_gene_id, ]
-Basal_subset <- subset(Basal_subset, select = c("gene_id", "logFC"))
+LumA_subset <- DE_results$TCGA_lumA$hits[rownames(DE_results$TCGA_lumA$hits) %in% gene_id$ensembl_gene_id, ]
+LumA_subset <- merge(gene_id, LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 
+LumB_subset <- DE_results$TCGA_lumB$hits[rownames(DE_results$TCGA_lumB$hits) %in% gene_id$ensembl_gene_id, ]
+LumB_subset <- merge(gene_id, LumB_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 
-marker_logFC <- merge(gene_id, LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
-colnames(marker_logFC)[3] <- "TCGA_lumA"
+Her2_subset <- DE_results$TCGA_Her2$hits[rownames(DE_results$TCGA_Her2$hits) %in% gene_id$ensembl_gene_id, ]
+Her2_subset <- merge(gene_id, Her2_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 
-
-# Luminal B (LumB)
-marker_logFC <- merge(marker_logFC, LumB_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
-colnames(marker_logFC)[5] <- "TCGA_lumB"
-
-
-# HER2-enriched (Her2)
-marker_logFC <- merge(marker_logFC, Her2_subset, by.x = "ensembl_gene_id", by.y = "gene_id", all = T)
-colnames(marker_logFC)[7] <- "TCGA_her2"
-
-
-# Basal-like (Basal)
-marker_logFC <- merge(marker_logFC, Basal_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
-colnames(marker_logFC)[9] <- "TCGA_basal"
-
-
+Basal_subset <- DE_results$TCGA_basal$hits[rownames(DE_results$TCGA_basal$hits) %in% gene_id$ensembl_gene_id, ]
+Basal_subset <- merge(gene_id, Basal_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 
 
 

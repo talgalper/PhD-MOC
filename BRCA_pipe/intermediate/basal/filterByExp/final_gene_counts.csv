@@ -1,81 +1,75 @@
 "external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
-"H2BC7","H2B clustered histone 7",208,4,8,6,0
-"PLK1","polo like kinase 1",199,2,4,7,0
-"H2BC17","H2B clustered histone 17",189,3,7,4,0
-"CALML5","calmodulin like 5",143,5,9,5,0
-"H2AX","H2A.X variant histone",131,14,19,8,0
-"AGO2","argonaute RISC catalytic component 2",119,1,3,3,0
-"POLD1","DNA polymerase delta 1, catalytic subunit",91,23,36,2,0
-"H2BC15","H2B clustered histone 15",86,1,2,2,0
-"RFC4","replication factor C subunit 4",81,20,31,1,0
-"H4C12","H4 clustered histone 12",75,1,3,3,0
-"NUDCD1","NudC domain containing 1",66,18,30,0,0
-"RYR2","ryanodine receptor 2",65,27,18,18,0
-"KIFC2","kinesin family member C2",55,15,22,0,0
-"PRKDC","protein kinase, DNA-activated, catalytic subunit",53,11,17,0,0
-"NDRG1","N-myc downstream regulated 1",52,18,29,0,0
-"RBP1","retinol binding protein 1",48,10,14,0,0
-"MMP13","matrix metallopeptidase 13",47,19,27,0,1
-"SOX2","SRY-box transcription factor 2",47,4,6,0,0
-"CYP1B1","cytochrome P450 family 1 subfamily B member 1",45,10,15,0,2
-"MCM5","minichromosome maintenance complex component 5",45,7,7,0,1
-"CENPX","centromere protein X",43,10,14,0,7
-"ANLN","anillin, actin binding protein",42,2,2,0,0
-"YBX1","Y-box binding protein 1",42,1,1,0,0
-"CDC45","cell division cycle 45",41,1,1,0,0
-"RFC2","replication factor C subunit 2",39,2,4,0,5
-"H4C8","H4 clustered histone 8",28,1,3,0,3
-"RECQL4","RecQ like helicase 4",27,1,3,0,3
-"CENPE","centromere protein E",26,2,3,0,4
-"OIP5","Opa interacting protein 5",25,2,1,0,2
-"SHMT2","serine hydroxymethyltransferase 2",23,1,1,0,1
-"H1-4","H1.4 linker histone, cluster member",22,8,4,20,0
-"UBE2S","ubiquitin conjugating enzyme E2 S",21,26,0,34,2
-"CD1B","CD1b molecule",20,11,0,10,0
-"IL2RA","interleukin 2 receptor subunit alpha",20,11,0,18,0
-"KIF18B","kinesin family member 18B",20,7,0,5,0
-"DNA2","DNA replication helicase/nuclease 2",19,35,38,47,60
-"RAC3","Rac family small GTPase 3",19,7,0,0,0
-"H4C5","H4 clustered histone 5",18,31,37,46,61
-"KIF11","kinesin family member 11",16,26,36,42,61
-"CCT5","chaperonin containing TCP1 subunit 5",14,6,0,0,14
-"CHEK1","checkpoint kinase 1",14,7,12,0,31
-"KIF20A","kinesin family member 20A",13,21,0,11,0
-"PCNA","proliferating cell nuclear antigen",13,6,7,30,0
-"TNR","tenascin R",13,2,0,0,5
-"CARMIL2","capping protein regulator and myosin 1 linker 2",12,22,15,57,31
-"ASPM","assembly factor for spindle microtubules",11,2,0,3,0
-"AQP9","aquaporin 9",10,5,0,0,0
-"BRCA2","BRCA2 DNA repair associated",9,1,0,0,0
-"SEPTIN3","septin 3",8,34,0,35,43
-"STAT1","signal transducer and activator of transcription 1",8,19,0,0,24
-"ACTN2","actinin alpha 2",7,6,0,0,11
-"FBXO45","F-box protein 45",7,6,20,11,48
-"H2BC12","H2B clustered histone 12",7,5,0,0,5
-"CCT3","chaperonin containing TCP1 subunit 3",6,8,0,0,0
-"KCNK1","potassium two pore domain channel subfamily K member 1",6,17,0,13,0
-"TNF","tumor necrosis factor",6,1,0,0,0
-"ACAN","aggrecan",5,9,0,0,8
-"CENPU","centromere protein U",5,11,0,27,9
-"CD1A","CD1a molecule",4,4,0,2,0
-"RYR1","ryanodine receptor 1",4,12,0,9,15
-"YWHAZ","tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein zeta",4,1,0,0,4
-"COL10A1","collagen type X alpha 1 chain",3,0,7,0,0
-"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",3,7,0,4,15
-"H2BC4","H2B clustered histone 4",3,0,3,0,7
-"H2BC9","H2B clustered histone 9",3,0,4,0,4
-"HAUS8","HAUS augmin like complex subunit 8",3,0,28,39,35
-"IL4I1","interleukin 4 induced 1",3,0,0,0,1
-"LSM2","LSM2 homolog, U6 small nuclear RNA and mRNA degradation associated",3,8,7,25,41
-"MAPK15","mitogen-activated protein kinase 15",3,2,4,31,18
-"GABRA3","gamma-aminobutyric acid type A receptor subunit alpha3",2,0,11,0,17
-"GPR55","G protein-coupled receptor 55",2,0,1,0,0
-"P2RX5","purinergic receptor P2X 5",2,0,0,1,0
-"CLDN10","claudin 10",1,0,1,1,0
-"GLDC","glycine decarboxylase",1,0,17,19,11
-"GPR156","G protein-coupled receptor 156",1,0,1,1,0
-"H2AC20","H2A clustered histone 20",1,0,10,10,2
-"KIR3DL2","killer cell immunoglobulin like receptor, three Ig domains and long cytoplasmic tail 2",1,0,5,4,0
-"MCM6","minichromosome maintenance complex component 6",1,0,1,0,1
-"TEAD4","TEA domain transcription factor 4",1,0,6,0,5
-"TNFSF13B","TNF superfamily member 13b",1,0,5,6,2
+"H2BC17","H2B clustered histone 17",192,4,8,7,0
+"PLK1","polo like kinase 1",154,2,5,7,0
+"H2BC7","H2B clustered histone 7",153,2,6,4,0
+"CALML5","calmodulin like 5",146,1,4,4,0
+"H4C8","H4 clustered histone 8",139,3,8,5,0
+"EZH2","enhancer of zeste 2 polycomb repressive complex 2 subunit",105,18,17,15,0
+"SOX2","SRY-box transcription factor 2",98,4,12,10,0
+"RFC4","replication factor C subunit 4",92,1,4,4,0
+"H2AX","H2A.X variant histone",87,21,39,3,0
+"P4HB","prolyl 4-hydroxylase subunit beta",76,1,2,2,0
+"CDK1","cyclin dependent kinase 1",69,13,25,0,0
+"NUDCD1","NudC domain containing 1",67,6,10,0,0
+"HEATR1","HEAT repeat containing 1",66,17,32,0,0
+"RYR2","ryanodine receptor 2",62,13,22,0,0
+"ANLN","anillin, actin binding protein",59,14,23,0,0
+"CENPI","centromere protein I",56,3,5,0,0
+"CCT3","chaperonin containing TCP1 subunit 3",55,13,23,0,0
+"RFC2","replication factor C subunit 2",55,4,10,0,0
+"EXOC3L4","exocyst complex component 3 like 4",49,12,23,0,0
+"KIFC2","kinesin family member C2",44,14,17,0,0
+"AGO2","argonaute RISC catalytic component 2",42,2,4,0,0
+"H4C12","H4 clustered histone 12",39,8,11,0,2
+"NDRG1","N-myc downstream regulated 1",39,15,26,0,1
+"POLD1","DNA polymerase delta 1, catalytic subunit",36,6,8,0,2
+"ATP6V0A4","ATPase H+ transporting V0 subunit a4",35,3,5,0,2
+"SRC","SRC proto-oncogene, non-receptor tyrosine kinase",34,6,7,0,8
+"CYP1B1","cytochrome P450 family 1 subfamily B member 1",33,2,5,0,6
+"H4C5","H4 clustered histone 5",33,1,4,0,4
+"RBP1","retinol binding protein 1",32,1,3,0,3
+"MMP13","matrix metallopeptidase 13",31,1,2,0,2
+"FANCC","FA complementation group C",30,2,3,0,5
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",28,2,1,0,3
+"PCNA","proliferating cell nuclear antigen",26,34,0,34,8
+"KIF18B","kinesin family member 18B",25,15,0,9,0
+"OIP5","Opa interacting protein 5",23,13,0,14,0
+"CCT5","chaperonin containing TCP1 subunit 5",20,2,0,4,0
+"HSD17B10","hydroxysteroid 17-beta dehydrogenase 10",20,10,0,17,0
+"CDC45","cell division cycle 45",17,1,1,2,0
+"CACNA1E","calcium voltage-gated channel subunit alpha1 E",15,11,0,0,0
+"CENPE","centromere protein E",15,22,26,19,49
+"ELOVL4","ELOVL fatty acid elongase 4",14,29,17,30,60
+"CDK6","cyclin dependent kinase 6",13,27,36,45,61
+"KIF11","kinesin family member 11",12,4,0,0,12
+"CARMIL2","capping protein regulator and myosin 1 linker 2",11,3,0,0,7
+"CD1B","CD1b molecule",10,4,8,0,21
+"TNR","tenascin R",9,25,0,19,0
+"RMI1","RecQ mediated genome instability 1",8,10,10,14,0
+"CENPU","centromere protein U",7,2,0,1,0
+"CENPX","centromere protein X",7,25,0,17,1
+"DNMT1","DNA methyltransferase 1",7,26,0,7,9
+"FBXO45","F-box protein 45",7,3,0,7,0
+"ACAN","aggrecan",6,35,1,35,45
+"MED30","mediator complex subunit 30",6,5,0,0,7
+"SEPTIN3","septin 3",6,18,0,0,20
+"AQP9","aquaporin 9",5,14,5,53,14
+"RYR1","ryanodine receptor 1",5,1,0,1,0
+"SHMT2","serine hydroxymethyltransferase 2",5,1,0,0,2
+"ACP7","acid phosphatase 7, tartrate resistant (putative)",4,15,0,8,1
+"LBP","lipopolysaccharide binding protein",4,11,12,46,33
+"LSM2","LSM2 homolog, U6 small nuclear RNA and mRNA degradation associated",4,1,1,0,3
+"MAPK15","mitogen-activated protein kinase 15",4,12,0,10,20
+"RPL3L","ribosomal protein L3 like",4,9,24,41,50
+"GABRA3","gamma-aminobutyric acid type A receptor subunit alpha3",3,5,0,12,32
+"IL4I1","interleukin 4 induced 1",3,10,0,16,19
+"RAC3","Rac family small GTPase 3",3,2,0,1,1
+"CD1A","CD1a molecule",2,0,11,8,3
+"CHEK1","checkpoint kinase 1",2,0,2,0,2
+"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",2,0,12,27,30
+"GBP4","guanylate binding protein 4",2,0,31,29,28
+"H2BC4","H2B clustered histone 4",2,0,5,5,0
+"PRPF3","pre-mRNA processing factor 3",2,0,20,5,29
+"RUVBL1","RuvB like AAA ATPase 1",2,0,18,17,13
+"ACTN2","actinin alpha 2",1,0,5,6,1
+"COL26A1","collagen type XXVI alpha 1 chain",1,0,1,0,1

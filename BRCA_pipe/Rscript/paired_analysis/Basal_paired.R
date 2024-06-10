@@ -9,101 +9,8 @@ library(progress)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 
-load("RData/paired/paired_subtypes.RData")
-
-selected_barcodes <- c(Basal_paired$normal, Basal_paired$Basal)
-
-# drop duplciate samples
-selected_barcodes <- selected_barcodes[!duplicated(selected_barcodes) & !duplicated(selected_barcodes, fromLast = TRUE)]
-
-
-Basal_query <- GDCquery(project = "TCGA-BRCA",
-                       access = "open", 
-                       data.category = "Transcriptome Profiling",
-                       experimental.strategy = "RNA-Seq",
-                       barcode = selected_barcodes)
-
-GDCdownload(Basal_query)
-
-Basal_data <- GDCprepare(Basal_query, summarizedExperiment = T)
-
-
-Basal_unstranded <- assay(Basal_data, "unstranded")  
-rownames(Basal_unstranded) <- gsub("\\.\\d+", "", rownames(Basal_unstranded))
-Basal_unstranded <- as.data.frame(Basal_unstranded)
-
-
-
-subtype_subset <- master[master$cases %in% colnames(Basal_unstranded), ]
-subtype_subset <- subtype_subset[match(colnames(Basal_unstranded), subtype_subset$cases), ]
-
-group <- factor(subtype_subset$Subtype_Selected)
-pat_id <- factor(subtype_subset$bcr_patient_barcode)
-
-counts_filt <- filterByExpr(Basal_unstranded, group = group)
-counts_filt <- Basal_unstranded[counts_filt, ]
-
-low_exp_genes <- Basal_unstranded[!counts_filt, ]
-
-#### Differential expression analysis ####
-
-data <- DGEList(counts = counts_filt, group = group)
-
-design <- model.matrix(~group + pat_id)
-
-# Estimate a common negative binomial dispersion parameter for a DGE dataset with a general experimental design
-common <- estimateGLMCommonDisp(data, design, verbose = T)
-
-# Estimate the abundance-dispersion trend by Cox-Reid approximate profile likelihood.
-trend <- estimateGLMTrendedDisp(common, design)
-
-# Compute an empirical Bayes estimate of the negative binomial dispersion parameter for each tag, 
-# with expression levels specified by a log-linear model.
-tagwise <- estimateGLMTagwiseDisp(trend, design)
-
-# Fit a negative binomial generalized log-linear model to the read counts for each gene. 
-# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
-fit <- glmFit(tagwise, design)
-
-# Conduct genewise statistical tests for a given coefficient or coefficient contrast.
-lrt <- glmLRT(fit, coef = 2)
-
-# Extract the most differentially expressed genes (or sequence tags) from a test object, 
-# ranked either by p-value or by absolute log-fold-change.
-toptags <- topTags(lrt, n = Inf)
-
-# Identify which genes are significantly differentially expressed from 
-# an edgeR fit object containing p-values and test statistics.
-dif_exp <- decideTestsDGE(lrt, p = 0.05, adjust = "fdr", lfc = 1)
-print(summary(dif_exp))
-
-dif_exp_genes <- rownames(tagwise)[as.logical(dif_exp)]
-
-# create a results df
-hits <- toptags$table[toptags$table$FDR < 0.1, ]
-hits <- rownames_to_column(hits)
-rownames(hits) <- hits$rowname
-colnames(hits)[1] <- "gene_id"
-
-dif_exp <- hits[dif_exp_genes, ]
-
-# Plot the genewise biological coefficient of variation (BCV) against gene abundance (in log2 counts per million).
-plotBCV(tagwise, main = "biological coefficient of variation")
-
-# Make a mean-difference plot of two libraries of count data with smearing of points with very low counts, 
-# especially those that are zero for one of the columns.
-plotSmear(lrt, de.tags = dif_exp_genes, main = "Mean-difference plot")
-
-# plot Pvalues of different logFC scores
-ggplot(hits, aes(x=logFC, y=-log(FDR))) + geom_point() + labs(title = "Adjusted logFC")
-
-paired_hits <- toptags$table
-paired_hits_subset <- paired_hits[paired_hits$FDR < 0.1, ]
-
-
-
-
-
+load("RData/DE_results_master_paired.RData")
+dif_exp <- DE_results$TCGA_basal$dif_exp
 
 
 data <- subset(dif_exp, select = c("gene_id", "logFC"))
@@ -130,12 +37,27 @@ gene_data <- subset(gene_data, select = c("external_gene_name", "logFC"))
 # check to see if genes that at all genes were converted at least once
 missing_genes <- anti_join(data, gene_id, by = "gene_id")
 
-write.table(gene_data$external_gene_name, "intermediate/paired/Basal/gene_list.txt", quote = F, row.names = F, col.names = F)
+write.table(gene_data$external_gene_name, "intermediate/paired/basal/gene_list.txt", quote = F, row.names = F, col.names = F)
+
+
+## create table with details of lost genes
+missing_genes_convert <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "uniprot_gn_id", "description"), 
+                               filters = "ensembl_gene_id", 
+                               values = missing_genes$gene_id, 
+                               mart = ensembl)
+missing_genes_convert <- merge(missing_genes_convert, missing_genes, by.x = "ensembl_gene_id", by.y = "gene_id", all = T)
+
+# number of unrecognised terms
+table(is.na(missing_genes_convert$uniprot_gn_id) & is.na(missing_genes_convert$description))
+
+novel_transcripts <- missing_genes_convert[grep("novel transcript", missing_genes_convert$description), ]
+novel_proteins <- missing_genes_convert[grep("novel protein", missing_genes_convert$description), ]
+pseudogene <- missing_genes_convert[grep("pseudogene", missing_genes_convert$description), ]
+
 
 
 #### get interaction data ####
-
-string_edge_data <- read.table("intermediate/paired/Basal/STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
+string_edge_data <- read.table("intermediate/paired/basal/STRING network (physical) default edge.csv", header = T, sep = ",", stringsAsFactors = F)
 ppi_list <- subset(string_edge_data, select = c("name", "stringdb..score"))
 ppi_list <- ppi_list %>% 
   separate(name, sep = " ", into = c("node_1", "del", "node_2"))
@@ -143,7 +65,7 @@ ppi_list <- subset(ppi_list, select = c("node_1", "node_2", "stringdb..score"))
 ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
 ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
 
-string_node_data <- read.table("intermediate/paired/Basal/STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
+string_node_data <- read.table("intermediate/paired/basal/STRING network (physical) default node.csv", header = T, sep = ",", stringsAsFactors = F)
 node_list <- subset(string_node_data, select = c("name", "query.term"))
 node_list$name <- gsub(".*.\\.", "", node_list$name)
 ppi_list$original_order <- seq_len(nrow(ppi_list))
@@ -154,7 +76,7 @@ merged_df <- merged_df[order(merged_df$original_order), ]
 final_df <- merged_df[, c("query.term.x", "query.term.y", "stringdb..score")]
 colnames(final_df) <- c("node_1", "node_2", "score")
 
-save(final_df, gene_data, file = "RData/paired/Basal/PCSF_input.RData")
+save(final_df, gene_data, file = "RData/paired/basal/PCSF_input.RData")
 
 
 # set seed for reproducibility 
@@ -176,7 +98,8 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
-save(subnet, file = "RData/paired/Basal/PCSF_subnet.RData")
+save(subnet, file = "RData/paired/basal/PCSF_subnet.RData")
+
 
 
 
@@ -194,7 +117,7 @@ rownames(df) <- 1:nrow(df)
 
 df <- df[order(-df$degree_centrality), ]
 
-write.csv(df, "intermediate/paired/Basal/PCSF_output.csv", row.names = F)
+write.csv(df, "intermediate/paired/basal/PCSF_output.csv", row.names = F)
 
 # convert external gene name to uniprot
 gn_to_uniprot <- getBM(attributes = c("external_gene_name", "uniprot_gn_id"), 
@@ -209,6 +132,7 @@ missing_genes <- missing_genes$external_gene_name
 PCSF_master <- merge(gn_to_uniprot, df, by.x = "external_gene_name", by.y = "gene_id")
 
 PCSF_master <- merge(PCSF_master, gene_data, by = "external_gene_name")
+PCSF_master <- PCSF_master[PCSF_master$uniprot_gn_id != "", ]
 
 
 # load Fpocket data
@@ -219,17 +143,9 @@ PCSF_results <- merge(PCSF_master, af_drugability, by.x = "uniprot_gn_id", by.y 
 
 missing_genes <- unique(PCSF_master$external_gene_name)[!unique(PCSF_master$external_gene_name) %in% unique(PCSF_results$external_gene_name)]
 
+write.csv(PCSF_results, "intermediate/paired/basal/PCSF_druggability.csv")
 
-write.csv(PCSF_results, "intermediate/paired/Basal/PCSF_druggability.csv")
 
-
-# run citation scoring tool and read in
-citation_scores <- read.csv("intermediate/Basal/citation_scores.csv")
-
-PCSF_results <- merge(PCSF_results, citation_scores, by.x = "external_gene_name", by.y = "gene_id")
-PCSF_results <- na.omit(PCSF_results) # for some reason the merge created empty duplicates.
-PCSF_results <- PCSF_results[order(-PCSF_results$druggability), ]
-rownames(PCSF_results) <- NULL
 
 
 # keep structure duplicates with highest druggability
@@ -237,12 +153,11 @@ filtered_results <- PCSF_results %>%
   group_by(external_gene_name) %>%
   filter(druggability == max(druggability))
 
-write.csv(filtered_results, "intermediate/Basal/PCSF_master_unique.csv")
+write.csv(filtered_results, "intermediate/paired/basal/PCSF_master_unique.csv")
 
 
-
-#### Ranking ####
-pcsf_master <- read.csv("intermediate/Basal/PCSF_master_unique.csv", row.names = 1)
+## cryptic pocket scores
+pcsf_master <- filtered_results
 
 pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
 pcsf_master <- merge(pcsf_master, pocketminer_data, by = "ID")
@@ -250,11 +165,10 @@ pcsf_master <- merge(pcsf_master, pocketminer_data, by = "ID")
 missing_genes <- filtered_results$external_gene_name[!filtered_results$external_gene_name %in% pcsf_master$external_gene_name]
 
 
+#### Ranking ####
 betweeness_norm <- (pcsf_master$betweenness - min(pcsf_master$betweenness)) / (max(pcsf_master$betweenness) - min(pcsf_master$betweenness))
 
 centrality_norm <- (pcsf_master$degree_centrality - min(pcsf_master$degree_centrality)) / (max(pcsf_master$degree_centrality) - min(pcsf_master$degree_centrality))
-
-
 
 # Define the number of weight values (genes in top x) to test (including 0)
 # i.e. 0, 0.1, 0.2, 0.3, ..., 1
@@ -386,4 +300,4 @@ final_gene_counts$description <- gsub("\\s*\\[.*?\\]", "", final_gene_counts$des
 rownames(final_gene_counts) <- NULL
 
 
-write.csv(final_gene_counts, "intermediate/paired/Basal/final_gene_counts.csv", row.names = F)
+write.csv(final_gene_counts, "intermediate/paired/basal/final_gene_counts.csv", row.names = F)

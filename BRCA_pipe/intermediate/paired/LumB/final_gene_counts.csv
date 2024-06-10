@@ -1,79 +1,83 @@
 "external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
-"INPP5D","inositol polyphosphate-5-phosphatase D",220,7,4,14,0
-"COLGALT2","collagen beta(1-O)galactosyltransferase 2",217,3,4,4,0
-"EGFR","epidermal growth factor receptor",191,3,3,6,0
-"FYN","FYN proto-oncogene, Src family tyrosine kinase",164,2,3,4,0
-"FAM20C","FAM20C golgi associated secretory pathway kinase",163,5,7,4,0
-"CDH23","cadherin related 23",130,18,25,2,0
-"CD59","CD59 molecule (CD59 blood group)",125,1,2,2,0
-"CALML5","calmodulin like 5",109,2,1,3,0
-"PIK3R1","phosphoinositide-3-kinase regulatory subunit 1",107,6,4,5,0
-"CSF1","colony stimulating factor 1",93,22,30,1,0
-"ANK2","ankyrin 2",92,57,48,40,42
-"STAT5B","signal transducer and activator of transcription 5B",78,2,4,0,0
-"GABBR1","gamma-aminobutyric acid type B receptor subunit 1",77,11,17,0,0
-"SPTBN1","spectrin beta, non-erythrocytic 1",65,49,57,38,42
-"CAV1","caveolin 1",61,2,2,0,0
-"CCR2","C-C motif chemokine receptor 2",56,18,24,0,0
-"GNE","glucosamine (UDP-N-acetyl)-2-epimerase/N-acetylmannosamine kinase",54,31,17,4,0
-"AGPAT4","1-acylglycerol-3-phosphate O-acyltransferase 4",43,4,4,0,0
-"CTNNA3","catenin alpha 3",37,13,20,0,0
-"XCR1","X-C motif chemokine receptor 1",34,50,25,9,15
-"KCNAB1","potassium voltage-gated channel subfamily A regulatory beta subunit 1",30,11,13,0,0
-"PLCG2","phospholipase C gamma 2",30,3,4,0,0
-"CD36","CD36 molecule",28,6,6,0,0
-"COL7A1","collagen type VII alpha 1 chain",26,3,5,0,0
-"HTR1F","5-hydroxytryptamine receptor 1F",25,3,4,0,0
-"SERPINA1","serpin family A member 1",25,2,3,0,0
-"SLC17A7","solute carrier family 17 member 7",22,2,2,0,0
-"P3H2","prolyl 3-hydroxylase 2",21,1,1,0,0
-"TLN1","talin 1",20,6,14,0,10
-"EGF","epidermal growth factor",17,1,2,0,2
-"ITGB3","integrin subunit beta 3",17,1,3,0,3
-"CDH17","cadherin 17",15,3,4,0,9
-"ITPR1","inositol 1,4,5-trisphosphate receptor type 1",14,1,2,0,2
-"GPER1","G protein-coupled estrogen receptor 1",12,2,3,0,4
-"STXBP1","syntaxin binding protein 1",11,1,1,0,1
-"LAMA1","laminin subunit alpha 1",9,1,1,0,1
-"REEP2","receptor accessory protein 2",9,1,1,0,1
-"WLS","Wnt ligand secretion mediator",9,1,1,0,1
-"CCL19","C-C motif chemokine ligand 19",8,4,0,0,0
-"LAMA2","laminin subunit alpha 2",8,8,0,8,0
-"FGF13","fibroblast growth factor 13",6,16,0,0,9
-"NTRK3","neurotrophic receptor tyrosine kinase 3",6,6,1,0,2
-"AQP1","aquaporin 1 (Colton blood group)",5,7,1,21,0
-"CCL13","C-C motif chemokine ligand 13",5,39,0,17,24
-"CYP2C8","cytochrome P450 family 2 subfamily C member 8",5,1,0,0,1
-"KLHL36","kelch like family member 36",5,1,2,0,4
-"PAK3","p21 (RAC1) activated kinase 3",5,19,30,59,39
-"XDH","xanthine dehydrogenase",5,1,0,0,1
-"ADGRF1","adhesion G protein-coupled receptor F1",4,7,0,0,0
-"CACNA1F","calcium voltage-gated channel subunit alpha1 F",4,3,1,0,11
-"CXCR2","C-X-C motif chemokine receptor 2",4,29,0,25,38
-"GRIA1","glutamate ionotropic receptor AMPA type subunit 1",4,6,2,0,18
-"QKI","QKI, KH domain containing RNA binding",4,34,26,49,57
-"RYR1","ryanodine receptor 1",4,1,0,1,0
-"TSPAN4","tetraspanin 4",4,27,21,39,58
-"ZFP2","ZFP2 zinc finger protein",4,5,0,0,0
-"GRAP","GRB2 related adaptor protein",3,15,0,37,15
-"MAOA","monoamine oxidase A",3,7,0,10,24
-"WIF1","WNT inhibitory factor 1",3,19,6,36,43
-"ADGRL2","adhesion G protein-coupled receptor L2",2,0,2,0,2
-"ATP8B4","ATPase phospholipid transporting 8B4 (putative)",2,1,0,1,1
-"GPR34","G protein-coupled receptor 34",2,0,2,0,2
-"MAOB","monoamine oxidase B",2,0,4,16,0
-"SYN3","synapsin III",2,0,39,31,25
-"WASF2","WASP family member 2",2,9,5,30,28
-"ABCC9","ATP binding cassette subfamily C member 9",1,0,15,10,0
-"ADCY4","adenylate cyclase 4",1,0,21,39,17
-"ADRA2C","adrenoceptor alpha 2C",1,0,2,4,3
-"CLDN10","claudin 10",1,0,1,0,0
-"DUOX2","dual oxidase 2",1,0,5,5,0
-"FOLR1","folate receptor alpha",1,0,4,0,1
-"IRAK3","interleukin 1 receptor associated kinase 3",1,0,5,7,0
-"MUC3A","mucin 3A, cell surface associated",1,0,1,0,1
-"MYC","MYC proto-oncogene, bHLH transcription factor",1,0,1,0,1
-"PTCH1","patched 1",1,0,12,13,7
-"SCN9A","sodium voltage-gated channel alpha subunit 9",1,0,29,26,32
-"TGFA","transforming growth factor alpha",1,0,1,0,1
-"TMC2","transmembrane channel like 2",1,0,10,0,22
+"NUDCD1","NudC domain containing 1",224,2,4,5,0
+"ESR1","estrogen receptor 1",178,2,3,5,0
+"PLK1","polo like kinase 1",162,2,4,5,0
+"DNA2","DNA replication helicase/nuclease 2",159,4,5,3,0
+"RFC2","replication factor C subunit 2",102,17,13,8,0
+"H2BC11","H2B clustered histone 11",92,2,2,3,0
+"H2AC20","H2A clustered histone 20",90,11,18,2,0
+"H2BC7","H2B clustered histone 7",89,2,5,9,0
+"H2AX","H2A.X variant histone",85,1,1,1,0
+"NBN","nibrin",85,2,4,5,0
+"KIFC2","kinesin family member C2",82,22,28,0,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",72,22,26,0,0
+"RPA3","replication protein A3",68,14,23,0,0
+"SMC2","structural maintenance of chromosomes 2",58,9,10,0,0
+"MBOAT2","membrane bound O-acyltransferase domain containing 2",56,5,9,0,0
+"POLR2H","RNA polymerase II, I and III subunit H",56,18,25,0,0
+"GBA1","glucosylceramidase beta 1",51,1,1,0,0
+"RBBP7","RB binding protein 7, chromatin remodeling factor",51,19,21,0,0
+"H2BC5","H2B clustered histone 5",47,15,14,0,0
+"H2BC15","H2B clustered histone 15",40,8,11,0,0
+"NOX1","NADPH oxidase 1",39,9,10,0,0
+"UGCG","UDP-glucose ceramide glucosyltransferase",39,6,7,0,0
+"ANLN","anillin, actin binding protein",36,6,7,0,2
+"HSP90AA1","heat shock protein 90 alpha family class A member 1",36,7,8,0,6
+"SRP54","signal recognition particle 54",35,1,2,0,0
+"RAD21","RAD21 cohesin complex component",34,1,3,0,3
+"MMP13","matrix metallopeptidase 13",33,1,2,0,2
+"RFC4","replication factor C subunit 4",31,1,2,0,2
+"OIP5","Opa interacting protein 5",28,2,2,0,3
+"IARS2","isoleucyl-tRNA synthetase 2, mitochondrial",27,2,3,0,4
+"HM13","histocompatibility minor 13",25,1,2,0,2
+"COL12A1","collagen type XII alpha 1 chain",24,1,1,0,1
+"P4HB","prolyl 4-hydroxylase subunit beta",22,14,0,20,0
+"RFC5","replication factor C subunit 5",22,3,1,0,4
+"CDC45","cell division cycle 45",17,10,0,9,0
+"CCT5","chaperonin containing TCP1 subunit 5",16,2,0,0,0
+"KIF18B","kinesin family member 18B",16,42,0,6,7
+"WDR76","WD repeat domain 76",15,17,41,49,30
+"CENPE","centromere protein E",14,2,1,0,5
+"DHCR7","7-dehydrocholesterol reductase",14,29,4,6,36
+"MSMO1","methylsterol monooxygenase 1",14,11,10,0,0
+"RARA","retinoic acid receptor alpha",14,7,0,0,14
+"KIF23","kinesin family member 23",13,12,34,33,59
+"CENPS","centromere protein S",10,1,0,0,1
+"ABCA12","ATP binding cassette subfamily A member 12",9,24,11,33,0
+"CELSR1","cadherin EGF LAG seven-pass G-type receptor 1",9,14,0,17,0
+"CENPX","centromere protein X",9,5,0,9,0
+"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",9,4,10,0,38
+"HSPA4","heat shock protein family A (Hsp70) member 4",9,2,0,2,0
+"PCNA","proliferating cell nuclear antigen",9,9,0,0,0
+"SHMT2","serine hydroxymethyltransferase 2",9,40,40,59,56
+"RUVBL1","RuvB like AAA ATPase 1",8,3,0,0,0
+"TNR","tenascin R",7,9,4,0,32
+"H2BC4","H2B clustered histone 4",6,3,0,0,4
+"ARHGEF16","Rho guanine nucleotide exchange factor 16",5,15,11,0,38
+"DNAJC12","DnaJ heat shock protein family (Hsp40) member C12",5,21,0,19,11
+"FBXO45","F-box protein 45",5,17,3,47,16
+"H1-4","H1.4 linker histone, cluster member",5,18,0,3,0
+"H4C5","H4 clustered histone 5",5,6,0,0,0
+"KIF11","kinesin family member 11",5,6,0,0,0
+"CACNA1H","calcium voltage-gated channel subunit alpha1 H",4,3,0,0,2
+"CENPU","centromere protein U",4,1,0,0,2
+"ACAN","aggrecan",3,6,0,0,15
+"ASAH2","N-acylsphingosine amidohydrolase 2",3,22,20,40,50
+"H2BC9","H2B clustered histone 9",3,7,0,5,2
+"RMI1","RecQ mediated genome instability 1",3,4,0,5,5
+"SIDT1","SID1 transmembrane family member 1",3,12,0,10,21
+"COQ2","coenzyme Q2, polyprenyltransferase",2,0,28,33,8
+"H2BC12","H2B clustered histone 12",2,0,13,42,14
+"IL4I1","interleukin 4 induced 1",2,1,0,1,1
+"MAPK15","mitogen-activated protein kinase 15",2,1,0,4,5
+"NDE1","nudE neurodevelopment protein 1",2,0,22,15,46
+"PLPP4","phospholipid phosphatase 4",2,1,0,0,1
+"TOPBP1","DNA topoisomerase II binding protein 1",2,0,14,30,0
+"ACTN2","actinin alpha 2",1,0,1,0,0
+"H4C8","H4 clustered histone 8",1,0,3,0,0
+"HSD17B7","hydroxysteroid 17-beta dehydrogenase 7",1,0,8,31,7
+"KCTD13","potassium channel tetramerization domain containing 13",1,0,15,0,1
+"KIF14","kinesin family member 14",1,0,7,4,11
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",1,0,23,26,22
+"RMI2","RecQ mediated genome instability 2",1,0,19,16,30
+"TAF2","TATA-box binding protein associated factor 2",1,0,1,0,1

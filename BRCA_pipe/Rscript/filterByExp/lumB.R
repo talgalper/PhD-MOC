@@ -4,13 +4,8 @@ library(biomaRt)
 library(edgeR)
 library(ggplot2)
 library(reshape2)
-library(SummarizedExperiment)
 library(tidyverse)
 library(progress)
-library(VennDiagram)
-
-dir.create("intermediate/lumB/filterByExp")
-dir.create("RData/lumB/filterByExp")
 
 
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
@@ -19,27 +14,6 @@ ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 ## load in DE data
 load("RData/DE_results_master.RData")
 dif_exp <- DE_results$TCGA_lumB$dif_exp
-
-
-# compare DE results with hard threshold expression filter pipeline
-#custom_filt_DE_results <- read.csv("intermediate/lumB/DE_results.csv")
-#custom_filt_DE_results <- custom_filt_DE_results[custom_filt_DE_results$logFC >=1 | custom_filt_DE_results$logFC <=-1, ]
-#
-#venn.diagram(
-#  x = list(custom_filt = custom_filt_DE_results$gene_id, filterByExpr = dif_exp$gene_id),
-#  category.names = c("custom filt DE results", "filterByExpr"),
-#  col = "transparent",  # set the color of the intersections to transparent
-#  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
-#  alpha = 0.5,  # set the transparency level of the circles
-#  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
-#  cat.fontfamily = "Arial",  # set the font family for category labels
-#  cat.fontface = "bold",  # set the font face for category labels
-#  cat.fontsize = 10,  # set the font size for category labels
-#  cex = 1.5,  # increase the size of the circles
-#  margin = 0.1,  # set the margin size (proportion of the plot)
-#  filename = "intermediate/lumB/filterByExp/DE_result_compare.png",
-#  disable.logging = TRUE
-#)
 
 
 
@@ -113,51 +87,6 @@ colnames(final_df) <- c("node_1", "node_2", "score")
 save(final_df, gene_data, file = "RData/lumB/filterByExp/PCSF_input.RData")
 
 
-# compare STRING outputs
-custom_filt_string_node <- read.csv("intermediate/lumB/STRING network (physical) default node.csv")
-
-venn.diagram(
-  x = list(custom_filt = custom_filt_string_node$query.term, filterByExpr = string_node_data$query.term),
-  category.names = c("custom filt", "filterByExpr"),
-  col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
-  alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
-  cat.fontfamily = "Arial",  # set the font family for category labels
-  cat.fontface = "bold",  # set the font face for category labels
-  cat.fontsize = 10,  # set the font size for category labels
-  cex = 1.5,  # increase the size of the circles
-  margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "intermediate/lumB/filterByExp/string_node_compare.png",
-  disable.logging = TRUE
-)
-
-load("RData/lumB/PCSF_input.RData")
-custom_filt_STRING_edge <- final_df # make sure to rerun STRING network and gene_data code after this
-
-set1 <- paste(custom_filt_STRING_edge$node_1, custom_filt_STRING_edge$node_2, sep = "--")
-set2 <- paste(final_df$node_1, final_df$node_2, sep = "--")
-
-venn.diagram(
-  x = list(set1, set2),
-  category.names = c("custom filt", "filterByExpr"),
-  col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
-  alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
-  cat.fontfamily = "Arial",  # set the font family for category labels
-  cat.fontface = "bold",  # set the font face for category labels
-  cat.fontsize = 10,  # set the font size for category labels
-  cex = 1.5,  # increase the size of the circles
-  margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "intermediate/lumB/filterByExp/string_edge_compare.png",
-  disable.logging = TRUE
-)
-
-
-
-
-
 # set seed for reproducibility 
 set.seed(1234)
 
@@ -211,6 +140,7 @@ missing_genes <- missing_genes$external_gene_name
 PCSF_master <- merge(gn_to_uniprot, df, by.x = "external_gene_name", by.y = "gene_id")
 
 PCSF_master <- merge(PCSF_master, gene_data, by = "external_gene_name")
+PCSF_master <- PCSF_master[PCSF_master$uniprot_gn_id != "", ]
 
 
 # load Fpocket data
@@ -237,7 +167,16 @@ write.csv(filtered_results, "intermediate/lumB/filterByExp/PCSF_master_unique.cs
 
 
 
-#### Ranking ####
+# keep structure duplicates with highest druggability
+filtered_results <- PCSF_results %>%
+  group_by(external_gene_name) %>%
+  filter(druggability == max(druggability))
+
+write.csv(filtered_results, "intermediate/LumA/filterByExp/PCSF_master_unique.csv")
+
+
+
+## cryptic pocket scores
 pcsf_master <- filtered_results
 
 pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
@@ -246,11 +185,10 @@ pcsf_master <- merge(pcsf_master, pocketminer_data, by = "ID")
 missing_genes <- filtered_results$external_gene_name[!filtered_results$external_gene_name %in% pcsf_master$external_gene_name]
 
 
+#### Ranking ####
 betweeness_norm <- (pcsf_master$betweenness - min(pcsf_master$betweenness)) / (max(pcsf_master$betweenness) - min(pcsf_master$betweenness))
 
 centrality_norm <- (pcsf_master$degree_centrality - min(pcsf_master$degree_centrality)) / (max(pcsf_master$degree_centrality) - min(pcsf_master$degree_centrality))
-
-
 
 # Define the number of weight values (genes in top x) to test (including 0)
 # i.e. 0, 0.1, 0.2, 0.3, ..., 1
@@ -383,24 +321,6 @@ rownames(final_gene_counts) <- NULL
 
 
 write.csv(final_gene_counts, "intermediate/lumB/filterByExp/final_gene_counts.csv", row.names = F)
-
-
-custom_filt_final_counts <- read.csv("intermediate/lumB/final_gene_counts.csv")
-venn.diagram(
-  x = list(final_gene_counts$external_gene_name, custom_filt_final_counts$external_gene_name),
-  category.names = c("filterByExpr", "custom filt"),
-  col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1"),  # set colors for each category
-  alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1"),  # set colors for category labels
-  cat.fontfamily = "Arial",  # set the font family for category labels
-  cat.fontface = "bold",  # set the font face for category labels
-  cat.fontsize = 10,  # set the font size for category labels
-  cex = 1.5,  # increase the size of the circles
-  margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "intermediate/lumB/filterByExp/final_gene_counts_compare.png",
-  disable.logging = TRUE
-)
 
 
 

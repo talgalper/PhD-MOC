@@ -1,86 +1,69 @@
 "external_gene_name","description","count","counts_when_betweeness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_cryptic_pockets_0"
-"GRIK4","glutamate ionotropic receptor kainate type subunit 4",186,12,9,24,0
-"ESR1","estrogen receptor 1",178,3,3,4,0
-"ANK1","ankyrin 1",153,2,2,3,0
-"GRIN1","glutamate ionotropic receptor NMDA type subunit 1",143,9,9,7,0
-"PIK3R1","phosphoinositide-3-kinase regulatory subunit 1",136,3,2,5,0
-"SHISA6","shisa family member 6",125,2,2,3,0
-"ANK2","ankyrin 2",114,1,2,2,0
-"CDH23","cadherin related 23",98,2,2,3,0
-"GRIK3","glutamate ionotropic receptor kainate type subunit 3",98,29,22,5,0
-"MYH10","myosin heavy chain 10",95,1,1,1,0
-"WNT5A","Wnt family member 5A",87,6,6,0,0
-"ITGB3","integrin subunit beta 3",74,14,12,0,0
-"SPTBN1","spectrin beta, non-erythrocytic 1",68,43,28,3,7
-"COLGALT2","collagen beta(1-O)galactosyltransferase 2",61,8,3,0,0
-"SCN4A","sodium voltage-gated channel alpha subunit 4",59,8,8,0,0
-"LAMB3","laminin subunit beta 3",58,2,3,0,0
-"LAMA1","laminin subunit alpha 1",48,1,1,0,0
-"CD36","CD36 molecule",41,13,18,0,0
-"FLRT3","fibronectin leucine rich transmembrane protein 3",41,17,18,0,0
-"EGF","epidermal growth factor",40,14,17,0,0
-"KL","klotho",36,17,14,0,0
-"SLC17A7","solute carrier family 17 member 7",36,46,15,2,16
-"LAMA2","laminin subunit alpha 2",35,21,13,0,0
-"CTNNA3","catenin alpha 3",34,11,11,0,1
-"PLCB1","phospholipase C beta 1",34,6,5,0,0
-"MMRN1","multimerin 1",31,2,2,0,0
-"TEAD1","TEA domain transcription factor 1",31,2,2,0,0
-"BPIFB1","BPI fold containing family B member 1",27,19,5,0,16
-"CERT1","ceramide transporter 1",27,3,3,0,1
-"CAV1","caveolin 1",25,1,2,0,2
-"FLNC","filamin C",24,1,2,0,2
-"SMAD3","SMAD family member 3",24,7,12,0,36
-"HTR1F","5-hydroxytryptamine receptor 1F",23,2,3,0,5
-"GPER1","G protein-coupled estrogen receptor 1",21,1,1,0,1
-"VTN","vitronectin",20,1,1,0,1
-"FGF2","fibroblast growth factor 2",19,4,2,0,7
-"TRO","trophinin",17,10,1,23,0
-"KIF17","kinesin family member 17",14,6,23,9,0
-"NTRK3","neurotrophic receptor tyrosine kinase 3",14,2,0,2,0
-"LRP1","LDL receptor related protein 1",13,9,0,0,1
-"MYO15A","myosin XVA",12,3,0,0,4
-"GPRASP2","G protein-coupled receptor associated sorting protein 2",10,1,0,0,1
-"KCNAB1","potassium voltage-gated channel subfamily A regulatory beta subunit 1",10,30,25,58,37
-"SPAG17","sperm associated antigen 17",10,2,17,3,41
-"DLG4","discs large MAGUK scaffold protein 4",9,5,0,7,0
-"LIN7A","lin-7 homolog A, crumbs cell polarity complex component",8,37,0,19,33
-"STEAP1","STEAP family member 1",8,2,0,2,0
-"ABCC8","ATP binding cassette subfamily C member 8",7,23,0,0,4
-"SYT1","synaptotagmin 1",7,5,0,0,1
-"SCN7A","sodium voltage-gated channel alpha subunit 7",6,6,0,0,13
-"CACNA1F","calcium voltage-gated channel subunit alpha1 F",5,2,0,1,0
-"HSPG2","heparan sulfate proteoglycan 2",5,16,0,0,5
-"MSX2","msh homeobox 2",5,17,29,58,34
-"STXBP1","syntaxin binding protein 1",5,1,0,0,0
-"ZFP2","ZFP2 zinc finger protein",5,1,0,1,0
-"ABCC9","ATP binding cassette subfamily C member 9",4,3,0,0,5
-"AGTR1","angiotensin II receptor type 1",4,15,8,39,6
-"EDNRA","endothelin receptor type A",4,8,0,0,3
-"EPB41L3","erythrocyte membrane protein band 4.1 like 3",4,15,0,37,17
-"LIMS2","LIM zinc finger domain containing 2",3,5,0,0,0
-"NPHP3","nephrocystin 3",3,24,12,42,47
-"PROKR1","prokineticin receptor 1",3,4,0,0,0
-"SGSM2","small G protein signaling modulator 2",3,5,13,47,3
-"ACADVL","acyl-CoA dehydrogenase very long chain",2,0,1,0,1
-"CYP2C8","cytochrome P450 family 2 subfamily C member 8",2,8,0,11,9
-"CYP4F12","cytochrome P450 family 4 subfamily F member 12",2,1,0,0,1
-"DNAJC12","DnaJ heat shock protein family (Hsp40) member C12",2,1,0,0,0
-"MAOA","monoamine oxidase A",2,8,0,14,13
-"MASP2","MBL associated serine protease 2",2,1,0,0,0
-"PRKCA","protein kinase C alpha",2,2,0,2,4
-"TEKT2","tektin 2",2,5,0,4,7
-"TRIM55","tripartite motif containing 55",2,0,50,44,47
-"WLS","Wnt ligand secretion mediator",2,3,1,0,19
-"AR","androgen receptor",1,0,19,0,5
-"ARRB1","arrestin beta 1",1,0,1,0,1
-"CYP4F8","cytochrome P450 family 4 subfamily F member 8",1,0,28,17,41
-"CYYR1","cysteine and tyrosine rich 1",1,0,38,39,37
-"ITPR1","inositol 1,4,5-trisphosphate receptor type 1",1,0,2,0,2
-"LAMA3","laminin subunit alpha 3",1,0,32,38,36
-"MUC3A","mucin 3A, cell surface associated",1,0,5,0,13
-"P3H2","prolyl 3-hydroxylase 2",1,0,14,30,4
-"PAK3","p21 (RAC1) activated kinase 3",1,0,17,0,4
-"REEP6","receptor accessory protein 6",1,0,4,1,8
-"TMC2","transmembrane channel like 2",1,0,17,10,16
-"TRIL","TLR4 interactor with leucine rich repeats",1,0,2,0,2
+"NUDCD1","NudC domain containing 1",224,2,4,6,0
+"H2BC7","H2B clustered histone 7",198,20,16,10,0
+"H2AX","H2A.X variant histone",164,13,20,4,0
+"H2BC9","H2B clustered histone 9",150,1,3,3,0
+"RFC2","replication factor C subunit 2",134,21,30,2,0
+"PLK1","polo like kinase 1",133,2,2,3,0
+"CBFB","core-binding factor subunit beta",128,1,3,3,0
+"POLD1","DNA polymerase delta 1, catalytic subunit",126,5,3,5,0
+"UPK3B","uroplakin 3B",99,1,1,1,0
+"UBE2S","ubiquitin conjugating enzyme E2 S",85,1,1,1,0
+"RFC4","replication factor C subunit 4",83,22,30,0,2
+"IL2RA","interleukin 2 receptor subunit alpha",76,21,25,0,0
+"PCNA","proliferating cell nuclear antigen",72,36,21,29,0
+"DNA2","DNA replication helicase/nuclease 2",62,17,25,0,0
+"MBOAT2","membrane bound O-acyltransferase domain containing 2",50,13,16,0,0
+"HEATR1","HEAT repeat containing 1",49,13,44,6,4
+"NDRG1","N-myc downstream regulated 1",48,18,27,0,0
+"CDC45","cell division cycle 45",45,6,9,0,0
+"GBA1","glucosylceramidase beta 1",42,7,10,0,1
+"ANLN","anillin, actin binding protein",41,10,14,0,8
+"YES1","YES proto-oncogene 1, Src family tyrosine kinase",37,1,1,0,0
+"SMARCA4","SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily a, member 4",35,4,3,0,0
+"H2AC20","H2A clustered histone 20",34,2,4,0,3
+"KIFC2","kinesin family member C2",34,1,1,0,0
+"IRF5","interferon regulatory factor 5",29,1,1,0,0
+"STAT1","signal transducer and activator of transcription 1",27,2,4,0,6
+"SKP2","S-phase kinase associated protein 2",26,2,3,0,5
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",25,3,4,0,10
+"CENPE","centromere protein E",24,1,3,0,3
+"CENPI","centromere protein I",24,1,1,0,1
+"CHEK1","checkpoint kinase 1",23,30,0,35,11
+"SHMT2","serine hydroxymethyltransferase 2",23,3,1,0,6
+"KIF18B","kinesin family member 18B",20,12,0,11,0
+"RFC3","replication factor C subunit 3",19,11,0,10,0
+"CCT5","chaperonin containing TCP1 subunit 5",18,9,0,13,0
+"OIP5","Opa interacting protein 5",16,2,6,6,0
+"FPR2","formyl peptide receptor 2",14,10,0,0,0
+"H2BC12","H2B clustered histone 12",12,27,13,23,60
+"H2BC5","H2B clustered histone 5",12,33,34,44,60
+"KLC3","kinesin light chain 3",12,14,1,0,3
+"CENPU","centromere protein U",10,3,0,0,2
+"KCNK1","potassium two pore domain channel subfamily K member 1",9,4,6,0,21
+"H2BC15","H2B clustered histone 15",7,35,4,45,22
+"TAF2","TATA-box binding protein associated factor 2",7,5,0,0,12
+"ACAN","aggrecan",6,24,25,59,40
+"CCT3","chaperonin containing TCP1 subunit 3",6,10,37,26,42
+"FBXO45","F-box protein 45",6,40,40,59,56
+"KIF11","kinesin family member 11",6,6,0,1,0
+"COQ2","coenzyme Q2, polyprenyltransferase",5,6,0,0,10
+"RMI1","RecQ mediated genome instability 1",5,5,0,0,7
+"TEAD4","TEA domain transcription factor 4",5,15,0,0,17
+"CCNB1","cyclin B1",4,2,0,0,0
+"GPR156","G protein-coupled receptor 156",4,4,6,23,0
+"ACTL6A","actin like 6A",3,5,0,9,14
+"GAPDH","glyceraldehyde-3-phosphate dehydrogenase",3,18,0,17,29
+"H2BC4","H2B clustered histone 4",3,2,0,3,0
+"MELK","maternal embryonic leucine zipper kinase",3,13,18,42,45
+"P2RX5","purinergic receptor P2X 5",3,4,0,0,4
+"VRK1","VRK serine/threonine kinase 1",3,19,0,27,25
+"CD1A","CD1a molecule",1,0,1,0,0
+"GLDC","glycine decarboxylase",1,0,6,0,17
+"H2AZ1","H2A.Z variant histone 1",1,0,0,1,1
+"H4C5","H4 clustered histone 5",1,0,13,12,17
+"IDO1","indoleamine 2,3-dioxygenase 1",1,0,13,15,5
+"IFIH1","interferon induced with helicase C domain 1",1,0,12,12,10
+"MSLN","mesothelin",1,1,0,1,1
+"SH2B2","SH2B adaptor protein 2",1,0,24,31,25
+"VGLL1","vestigial like family member 1",1,0,31,22,15

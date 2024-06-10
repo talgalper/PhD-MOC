@@ -505,8 +505,7 @@ rank_master <- merge(rank_master, Her2_rank, by = "external_gene_name", all = T)
 rank_master <- merge(rank_master, basal_rank, by = "external_gene_name", all = T)
 rownames(ranks) <- NULL
 
-rank_master$lumA_rank <- as.integer(rank_master$lumA_rank)
-
+write.csv(rank_master, "../../../../Desktop/Chapter data/TCGA_norm_rank_master.csv")
 
 
 
@@ -636,10 +635,10 @@ breast_cancer_targets <- c("PIK3CA", "ERBB2", "ESR1", "BRCA1", "BRCA2", "AR",
 druggability <- druggability[druggability$external_gene_name %in% breast_cancer_targets, ]
 
 
-PCSF_lumA <- read.csv("intermediate/LumA/PCSF_output.csv")
-PCSF_lumB <- read.csv("intermediate/LumB/PCSF_output.csv")
-PCSF_Her2 <- read.csv("intermediate/Her2/PCSF_output.csv")
-PCSF_basal <- read.csv("intermediate/basal/PCSF_output.csv")
+PCSF_lumA <- read.csv("intermediate/LumA/filterByExp/GTEx/PCSF_output.csv")
+PCSF_lumB <- read.csv("intermediate/LumB/filterByExp/GTEx/PCSF_output.csv")
+PCSF_Her2 <- read.csv("intermediate/Her2/filterByExp/GTEx/PCSF_output.csv")
+PCSF_basal <- read.csv("intermediate/basal/filterByExp/GTEx/PCSF_output.csv")
 
 PCSF_lumA <- as.data.frame(table(PCSF_lumA$cluster))
 colnames(PCSF_lumA) <- c("cluster", "number_of_genes")
@@ -650,7 +649,22 @@ colnames(PCSF_Her2) <- c("cluster", "number_of_genes")
 PCSF_basal <- as.data.frame(table(PCSF_basal$cluster))
 colnames(PCSF_basal) <- c("cluster", "number_of_genes")
 
-max_rows <- max(nrow(PCSF_lumA), nrow(PCSF_lumB), nrow(PCSF_Her2), nrow(PCSF_basal))
+
+PCSF_lumA <- read.csv("intermediate/paired/LumA/PCSF_output.csv")
+PCSF_lumB <- read.csv("intermediate/paired/LumB/PCSF_output.csv")
+PCSF_Her2 <- read.csv("intermediate/paired/Her2/PCSF_output.csv")
+PCSF_basal <- read.csv("intermediate/paired/basal/PCSF_output.csv")
+
+PCSF_lumA <- as.data.frame(table(PCSF_lumA$cluster))
+colnames(PCSF_lumA) <- c("cluster", "number_of_genes")
+PCSF_lumB <- as.data.frame(table(PCSF_lumB$cluster))
+colnames(PCSF_lumB) <- c("cluster", "number_of_genes")
+PCSF_Her2 <- as.data.frame(table(PCSF_Her2$cluster))
+colnames(PCSF_Her2) <- c("cluster", "number_of_genes")
+PCSF_basal <- as.data.frame(table(PCSF_basal$cluster))
+colnames(PCSF_basal) <- c("cluster", "number_of_genes")
+
+
 
 
 
@@ -741,5 +755,393 @@ venn.diagram(
 library(readxl)
 study_data <- read_excel("../../../../Downloads/bsr-2021-2218_supp1/BSR-2021-2218_suppST3.xlsx")
 study_data <- study_data[study_data$...1 %in% gene_id$external_gene_name, ]
+
+
+
+
+
+missing_genes_convert <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "uniprot_gn_id", "description"), 
+                               filters = "external_gene_name", 
+                               values = missing_genes, 
+                               mart = ensembl)
+missing_genes_convert <- merge(missing_genes_convert, missing_genes, by.x = "external_gene_name", by.y = "x", all = T)
+
+# number of unrecognised terms
+table(is.na(missing_genes_convert$uniprot_gn_id) & is.na(missing_genes_convert$description))
+
+novel_transcripts <- missing_genes_convert[grep("novel transcript", missing_genes_convert$description), ]
+novel_proteins <- missing_genes_convert[grep("novel protein", missing_genes_convert$description), ]
+pseudogene <- missing_genes_convert[grep("pseudogene", missing_genes_convert$description), ]
+
+
+library(VennDiagram)
+library(gridExtra)
+
+### plot comparing results from the 3 pipelines
+LumA_venn <- venn.diagram(
+  x = list(DE_results$TCGA_lumA$dif_exp$gene_id,
+           DE_results$GTEx_lumA$dif_exp$gene_id,
+           DE_results_paired$TCGA_lumA$dif_exp$gene_id),
+  main = "Luminal A",
+  category.names = c("DE with TCGA Normal", "DE with GTEx Healthy", "Paired TCGA DE"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+LumB_venn <- venn.diagram(
+  x = list(DE_results$TCGA_lumB$dif_exp$gene_id,
+           DE_results$GTEx_lumB$dif_exp$gene_id,
+           DE_results_paired$TCGA_lumB$dif_exp$gene_id),
+  main = "Luminal B",
+  category.names = c("DE with TCGA Normal", "DE with GTEx Healthy", "Paired TCGA DE"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+Her2_venn <- venn.diagram(
+  x = list(DE_results$TCGA_Her2$dif_exp$gene_id,
+           DE_results$GTEx_Her2$dif_exp$gene_id,
+           DE_results_paired$TCGA_Her2$dif_exp$gene_id),
+  main = "Her2",
+  category.names = c("DE with TCGA Normal", "DE with GTEx Healthy", "Paired TCGA DE"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+basal_venn <- venn.diagram(
+  x = list(DE_results$TCGA_basal$dif_exp$gene_id,
+           DE_results$GTEx_basal$dif_exp$gene_id,
+           DE_results_paired$TCGA_basal$dif_exp$gene_id),
+  main = "Basal",
+  category.names = c("DE with TCGA Normal", "DE with GTEx Healthy", "Paired TCGA DE"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+LumA_grob <- grobTree(LumA_venn)
+LumB_grob <- grobTree(LumB_venn)
+Her2_grob <- grobTree(Her2_venn)
+basal_grob <- grobTree(basal_venn)
+
+grid.arrange(
+  grobs = list(
+    LumA_grob,
+    LumB_grob,
+    Her2_grob,
+    basal_grob
+  ),
+  ncol = 2)
+
+
+
+
+
+LumA_TCGA_norm <- read.csv("intermediate/LumA/filterByExp/final_gene_counts.csv")
+LumA_TCGA_norm <- rownames_to_column(LumA_TCGA_norm)
+colnames(LumA_TCGA_norm)[1] <- "lumA_rank"
+LumA_TCGA_norm <- subset(LumA_TCGA_norm, select = c("lumA_rank", "external_gene_name"))
+
+LumB_TCGA_norm <- read.csv("intermediate/LumB/filterByExp/final_gene_counts.csv")
+LumB_TCGA_norm <- rownames_to_column(LumB_TCGA_norm)
+colnames(LumB_TCGA_norm)[1] <- "lumB_rank"
+LumB_TCGA_norm <- subset(LumB_TCGA_norm, select = c("lumB_rank", "external_gene_name"))
+
+Her2_TCGA_norm <- read.csv("intermediate/Her2/filterByExp/final_gene_counts.csv")
+Her2_TCGA_norm <- rownames_to_column(Her2_TCGA_norm)
+colnames(Her2_TCGA_norm)[1] <- "Her2_rank"
+Her2_TCGA_norm <- subset(Her2_TCGA_norm, select = c("Her2_rank", "external_gene_name"))
+
+basal_TCGA_norm <- read.csv("intermediate/basal/filterByExp/final_gene_counts.csv")
+basal_TCGA_norm <- rownames_to_column(basal_TCGA_norm)
+colnames(basal_TCGA_norm)[1] <- "basal_rank"
+basal_TCGA_norm <- subset(basal_TCGA_norm, select = c("basal_rank", "external_gene_name"))
+
+
+
+LumA_GTEx <- read.csv("intermediate/LumA/filterByExp/GTEx/final_gene_counts.csv")
+LumA_GTEx <- rownames_to_column(LumA_GTEx)
+colnames(LumA_GTEx)[1] <- "lumA_rank"
+LumA_GTEx <- subset(LumA_GTEx, select = c("lumA_rank", "external_gene_name"))
+
+LumB_GTEx <- read.csv("intermediate/LumB/filterByExp/GTEx/final_gene_counts.csv")
+LumB_GTEx <- rownames_to_column(LumB_GTEx)
+colnames(LumB_GTEx)[1] <- "lumB_rank"
+LumB_GTEx <- subset(LumB_GTEx, select = c("lumB_rank", "external_gene_name"))
+
+Her2_GTEx <- read.csv("intermediate/Her2/filterByExp/GTEx/final_gene_counts.csv")
+Her2_GTEx <- rownames_to_column(Her2_GTEx)
+colnames(Her2_GTEx)[1] <- "Her2_rank"
+Her2_GTEx <- subset(Her2_GTEx, select = c("Her2_rank", "external_gene_name"))
+
+basal_GTEx <- read.csv("intermediate/basal/filterByExp/GTEx/final_gene_counts.csv")
+basal_GTEx <- rownames_to_column(basal_GTEx)
+colnames(basal_GTEx)[1] <- "basal_rank"
+basal_GTEx <- subset(basal_GTEx, select = c("basal_rank", "external_gene_name"))
+
+
+
+LumA_paired <- read.csv("intermediate/paired/LumA/final_gene_counts.csv")
+LumA_paired <- rownames_to_column(LumA_paired)
+colnames(LumA_paired)[1] <- "lumA_rank"
+LumA_paired <- subset(LumA_paired, select = c("lumA_rank", "external_gene_name"))
+
+LumB_paired <- read.csv("intermediate/paired/LumB/final_gene_counts.csv")
+LumB_paired <- rownames_to_column(LumB_paired)
+colnames(LumB_paired)[1] <- "lumB_rank"
+LumB_paired <- subset(LumB_paired, select = c("lumB_rank", "external_gene_name"))
+
+Her2_paired <- read.csv("intermediate/paired/Her2/final_gene_counts.csv")
+Her2_paired <- rownames_to_column(Her2_paired)
+colnames(Her2_paired)[1] <- "Her2_rank"
+Her2_paired <- subset(Her2_paired, select = c("Her2_rank", "external_gene_name"))
+
+basal_paired <- read.csv("intermediate/paired/basal/final_gene_counts.csv")
+basal_paired <- rownames_to_column(basal_paired)
+colnames(basal_paired)[1] <- "basal_rank"
+basal_paired <- subset(basal_paired, select = c("basal_rank", "external_gene_name"))
+
+
+LumA_venn <- venn.diagram(
+  x = list(LumA_TCGA_norm$external_gene_name,
+           LumA_GTEx$external_gene_name,
+           LumA_paired$external_gene_name),
+  main = "Luminal A",
+  category.names = c("TCGA Normal pipeline", "GTEx pipeline", "Paired pipeline"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+LumB_venn <- venn.diagram(
+  x = list(LumB_TCGA_norm$external_gene_name,
+           LumB_GTEx$external_gene_name,
+           LumB_paired$external_gene_name),
+  main = "Luminal B",
+  category.names = c("TCGA Normal pipeline", "GTEx pipeline", "Paired pipeline"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+Her2_venn <- venn.diagram(
+  x = list(Her2_TCGA_norm$external_gene_name,
+           Her2_GTEx$external_gene_name,
+           Her2_paired$external_gene_name),
+  main = "Her2",
+  category.names = c("TCGA Normal pipeline", "GTEx pipeline", "Paired pipeline"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+basal_venn <- venn.diagram(
+  x = list(basal_TCGA_norm$external_gene_name,
+           basal_GTEx$external_gene_name,
+           basal_paired$external_gene_name),
+  main = "Basal",
+  category.names = c("TCGA Normal pipeline", "GTEx pipeline", "Paired pipeline"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+LumA_grob <- grobTree(LumA_venn)
+LumB_grob <- grobTree(LumB_venn)
+Her2_grob <- grobTree(Her2_venn)
+basal_grob <- grobTree(basal_venn)
+
+grid.arrange(
+  grobs = list(
+    LumA_grob,
+    LumB_grob,
+    Her2_grob,
+    basal_grob
+  ),
+  ncol = 2)
+
+
+lumA_common <- merge(LumA_TCGA_norm, LumA_GTEx, by = "external_gene_name", all = T)
+lumA_common <- merge(lumA_common, LumA_paired, by = "external_gene_name", all = T)
+colnames(lumA_common) <- c("external_gene_name", "TCGA_norm", "GTEx", "paired")
+lumA_common[2:4] <- sapply(lumA_common[2:4], as.integer)
+
+lumB_common <- merge(LumB_TCGA_norm, LumB_GTEx, by = "external_gene_name", all = T)
+lumB_common <- merge(lumB_common, LumB_paired, by = "external_gene_name", all = T)
+colnames(lumB_common) <- c("external_gene_name", "TCGA_norm", "GTEx", "paired")
+lumB_common[2:4] <- sapply(lumB_common[2:4], as.integer)
+
+Her2_common <- merge(Her2_TCGA_norm, Her2_GTEx, by = "external_gene_name", all = T)
+Her2_common <- merge(Her2_common, Her2_paired, by = "external_gene_name", all = T)
+colnames(Her2_common) <- c("external_gene_name", "TCGA_norm", "GTEx", "paired")
+Her2_common[2:4] <- sapply(Her2_common[2:4], as.integer)
+
+basal_common <- merge(basal_TCGA_norm, basal_GTEx, by = "external_gene_name", all = T)
+basal_common <- merge(basal_common, basal_paired, by = "external_gene_name", all = T)
+colnames(basal_common) <- c("external_gene_name", "TCGA_norm", "GTEx", "paired")
+basal_common[2:4] <- sapply(basal_common[2:4], as.integer)
+
+write.csv(lumA_common, "../../../../Desktop/lumA_common.csv")
+write.csv(lumB_common, "../../../../Desktop/lumB_common.csv")
+write.csv(Her2_common, "../../../../Desktop/Her2_common.csv")
+write.csv(basal_common, "../../../../Desktop/basal_common.csv")
+
+lumA_common <- merge(lumA_common, OpenTargets_NCT_filtered, by.x = "external_gene_name", by.y = "Target.Approved.Symbol")
+
+
+
+TCGA_norm_venn <- venn.diagram(
+  x = list(LumA_TCGA_norm$external_gene_name,
+           LumB_TCGA_norm$external_gene_name,
+           Her2_TCGA_norm$external_gene_name,
+           basal_TCGA_norm$external_gene_name),
+  main = "TCGA Normal Pipeline",
+  category.names = c("luminal A", "Luminal B", "Her2", "Basal"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73", "#CC79A7"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73", "#CC79A7"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+
+GTEx_venn <- venn.diagram(
+  x = list(LumA_GTEx$external_gene_name,
+           LumB_GTEx$external_gene_name,
+           Her2_GTEx$external_gene_name,
+           basal_GTEx$external_gene_name),
+  main = "GTEx Pipeline",
+  category.names = c("luminal A", "Luminal B", "Her2", "Basal"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73", "#CC79A7"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73", "#CC79A7"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+paired_venn <- venn.diagram(
+  x = list(LumA_paired$external_gene_name,
+           LumB_paired$external_gene_name,
+           Her2_paired$external_gene_name,
+           basal_paired$external_gene_name),
+  main = "GTEx Pipeline",
+  category.names = c("luminal A", "Luminal B", "Her2", "Basal"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("#E69F00", "#56B4E9", "#009E73", "#CC79A7"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("#E69F00", "#56B4E9", "#009E73", "#CC79A7"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = NULL,
+  disable.logging = TRUE
+)
+
+
+TCGA_norm_grob <- grobTree(TCGA_norm_venn)
+GTEx_grob <- grobTree(GTEx_venn)
+paired_grob <- grobTree(paired_venn)
+
+grid.arrange(
+  grobs = list(
+    TCGA_norm_grob,
+    GTEx_grob,
+    paired_grob
+    ),
+  ncol = 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

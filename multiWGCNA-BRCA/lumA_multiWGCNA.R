@@ -15,16 +15,18 @@ enableWGCNAThreads(nThreads = nCores)
 
 # load in data
 load("../BRCA_pipe/RData/TCGA_normal.RData")
-load("../BRCA_pipe/RData/LumA/lumA_data.RData")
+load("../BRCA_pipe/RData/LumA/DE_data.RData")
 load("../BRCA_pipe/RData/TCGA_query.RData")
 
 # merge normal and disease samples
 data <- merge(LumA_unstranded, normal_unstranded, by = "row.names")
 data <- column_to_rownames(data, var = "Row.names")
 
-# get subtypes
-subtypes <- PanCancerAtlas_subtypes()
-
+query_output <- getResults(query_TCGA)
+clinical_query <- clinical[complete.cases(clinical$ajcc_pathologic_stage), ]
+clinical_query <- merge(query_output, clinical_query, by.x = "cases.submitter_id", by.y = "submitter_id")
+clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
+                                                    "tissue_or_organ_of_origin", "sample_type"))
 # add subtypes to clinical data
 common <- merge(clinical_query, subtypes, by.x = "cases", by.y = "pan.samplesID")
 common <- subset(common, select = c("cases", "Subtype_Selected", "sample_type", "ajcc_pathologic_stage"))
