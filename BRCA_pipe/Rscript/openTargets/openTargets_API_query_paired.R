@@ -161,26 +161,28 @@ targets <- merge(targets, af_drugability, by.x = "uniprot_gn_id", by.y = "unipro
 pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
 targets <- merge(targets, pocketminer_data, by.x = "uniprot_gn_id", by.y = "uniprot_id", all.x = T)
 
+load("RData/DE_results_master_paired.RData")
+
 # add logFC scores
-lumA_hits <- read.csv("intermediate/paired/LumA/DE_results.csv")
+lumA_hits <- DE_results$TCGA_lumA$hits
 lumA_hits <- lumA_hits[lumA_hits$PValue <= 0.05, ]
-lumA_hits <- subset(lumA_hits, select = c("X", "logFC"))
+lumA_hits <- subset(lumA_hits, select = c("gene_id", "logFC"))
 colnames(lumA_hits)[2] <- "lumA_logFC"
-targets <- merge(targets, lumA_hits, by.x = "ensembl_gene_id", by.y = "X", all.x = T)
+targets <- merge(targets, lumA_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
 
-lumB_hits <- read.csv("intermediate/paired/LumB/DE_results.csv")
+lumB_hits <- DE_results$TCGA_lumB$hits
 lumB_hits <- lumB_hits[lumB_hits$PValue <= 0.05, ]
-lumB_hits <- subset(lumB_hits, select = c("X", "logFC"))
+lumB_hits <- subset(lumB_hits, select = c("gene_id", "logFC"))
 colnames(lumB_hits)[2] <- "lumB_logFC"
-targets <- merge(targets, lumB_hits, by.x = "ensembl_gene_id", by.y = "X", all.x = T)
+targets <- merge(targets, lumB_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
 
-Her2_hits <- read.csv("intermediate/paired/Her2/DE_results.csv")
+Her2_hits <- DE_results$TCGA_Her2$hits
 Her2_hits <- Her2_hits[Her2_hits$PValue <= 0.05, ]
-Her2_hits <- subset(Her2_hits, select = c("X", "logFC"))
+Her2_hits <- subset(Her2_hits, select = c("gene_id", "logFC"))
 colnames(Her2_hits)[2] <- "Her2_logFC"
-targets <- merge(targets, Her2_hits, by.x = "ensembl_gene_id", by.y = "X", all.x = T)
+targets <- merge(targets, Her2_hits, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
 
-basal_hits <- read.csv("intermediate/paired/basal/DE_results.csv")
+basal_hits <- DE_results$TCGA_basal$hits
 basal_hits <- basal_hits[basal_hits$PValue <= 0.05, ]
 basal_hits <- subset(basal_hits, select = c("gene_id", "logFC"))
 colnames(basal_hits)[2] <- "basal_logFC"

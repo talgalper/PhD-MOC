@@ -1132,12 +1132,50 @@ grid.arrange(
   ncol = 2)
 
 
+temp <- merge(pcsf_master, OpenTargets_NCT_filtered, by.x = "external_gene_name", by.y = "Target.Approved.Symbol")
+
+
+temp <- filtered_targets[!duplicated(filtered_targets$external_gene_name), ]
+
+# targets expressed in at least one subtype
+removed <- temp[is.na(temp$lumA_logFC) & is.na(temp$lumB_logFC) & is.na(temp$Her2_logFC) & is.na(temp$basal_logFC), ]
+temp <- temp[!(is.na(temp$lumA_logFC) & is.na(temp$lumB_logFC) & is.na(temp$Her2_logFC) & is.na(temp$basal_logFC)), ]
+
+# targets in at least one subtype network
+removed <- temp[is.na(temp$lumA_centrality) & is.na(temp$lumB_centrality) & is.na(temp$Her2_centrality) & is.na(temp$basal_centrality), ]
+temp <- temp[!(is.na(temp$lumA_centrality) & is.na(temp$lumB_centrality) & is.na(temp$Her2_centrality) & is.na(temp$basal_centrality)), ]
+
+# ranked at lesat once
+removed <- temp[is.na(temp$lumA_rank) & is.na(temp$lumB_rank) & is.na(temp$Her2_rank) & is.na(temp$basal_rank), ]
+temp <- temp[!(is.na(temp$lumA_rank) & is.na(temp$lumB_rank) & is.na(temp$Her2_rank) & is.na(temp$basal_rank)), ]
+
+table(temp$druggability >= 0.5)
+
+
+
+pcsf_master <- read.csv("intermediate/paired/LumA/PCSF_master_unique.csv", row.names = 1)
+pcsf_master <- read.csv("intermediate/LumA/filterByExp/GTEx/PCSF_master_unique.csv", row.names = 1)
 
 
 
 
+targets <- merge(IDs, OpenTargets_NCT_filtered, by.x = "external_gene_name", by.y = "Target.Approved.Symbol")
 
 
+
+# add Fpocket druggability scores
+af_drugability <- read.csv("../druggability_results/fpocket_druggability.csv")
+targets <- merge(targets, af_drugability, by.x = "uniprot_gn_id", by.y = "uniprot_id", all.x = T)
+
+# add PocketMiner scores
+pocketminer_data <- read.csv("../pocketminer/results/pocketminer_results_3.0.csv")
+targets <- merge(targets, pocketminer_data, by.x = "uniprot_gn_id", by.y = "uniprot_id", all.x = T)
+
+targets <- targets[order(-targets$druggability), ]
+targets <- targets[!duplicated(targets$external_gene_name), ]
+
+targets <- subset(targets, select = c("external_gene_name", "druggability", "max_hit", "struct_score"))
+table(targets$druggability >= 0.5)
 
 
 

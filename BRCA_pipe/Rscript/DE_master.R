@@ -44,7 +44,7 @@ basal_QC <- filter_low_expr(counts_data$Basal_unstranded, counts_data$Normal_uns
 basal_DE <- DE_analysis(counts_matrix = basal_QC$counts_filt, sample_info = basal_QC$sample_info)
 
 
-### These results use GTEx mammary tissue as a control group ###
+### This section uses GTEx mammary tissue as a control group ###
 
 # load and clear data
 GTEx_data <- read.table("gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
@@ -88,9 +88,9 @@ DE_results <- list(TCGA_lumA = list(hits = lumA_DE$hits, dif_exp = lumA_DE$dif_e
                    TCGA_basal = list(hits = basal_DE$hits, dif_exp = basal_DE$dif_exp),
                    
                    GTEx_lumA = list(hits = GTEx_lumA_DE$hits, dif_exp = GTEx_lumA_DE$dif_exp),
-                   GTEx_lumB = list(GTEx_lumB_DE$hits, dif_exp = GTEx_lumB_DE$dif_exp),
-                   GTEx_Her2 = list(GTEx_Her2_DE$hits, dif_exp = GTEx_Her2_DE$dif_exp),
-                   GTEx_basal = list(GTEx_basal_DE$hits, dif_exp = GTEx_basal_DE$dif_exp))
+                   GTEx_lumB = list(hits = GTEx_lumB_DE$hits, dif_exp = GTEx_lumB_DE$dif_exp),
+                   GTEx_Her2 = list(hits = GTEx_Her2_DE$hits, dif_exp = GTEx_Her2_DE$dif_exp),
+                   GTEx_basal = list(hits = GTEx_basal_DE$hits, dif_exp = GTEx_basal_DE$dif_exp))
 
 save(DE_results, file = "RData/DE_results_master.RData")
 
