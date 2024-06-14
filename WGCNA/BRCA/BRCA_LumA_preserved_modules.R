@@ -7,18 +7,27 @@ library(matrixStats)
 library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(gridExtra)
+library(doParallel)
+
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
 
 # load in data
 load("../BRCA_pipe/RData/TCGA_normal.RData")
-load("../BRCA_pipe/RData/LumA/lumA_data.RData")
+load("../BRCA_pipe/RData/LumA/DE_data.RData")
 load("../BRCA_pipe/RData/TCGA_query.RData")
 
+# merge normal and disease samples
 data <- merge(LumA_unstranded, normal_unstranded, by = "row.names")
 data <- column_to_rownames(data, var = "Row.names")
 
-
-subtypes <- PanCancerAtlas_subtypes()
-
+query_output <- getResults(query_TCGA)
+clinical_query <- clinical[complete.cases(clinical$ajcc_pathologic_stage), ]
+clinical_query <- merge(query_output, clinical_query, by.x = "cases.submitter_id", by.y = "submitter_id")
+clinical_query <- subset(clinical_query, select = c("cases", "cases.submitter_id", "ajcc_pathologic_stage", 
+                                                    "tissue_or_organ_of_origin", "sample_type"))
+# add subtypes to clinical data
 common <- merge(clinical_query, subtypes, by.x = "cases", by.y = "pan.samplesID")
 common <- subset(common, select = c("cases", "Subtype_Selected", "sample_type", "ajcc_pathologic_stage"))
 
@@ -31,10 +40,10 @@ gsg$allOK
 table(gsg$goodGenes)
 table(gsg$goodSamples)
 
-
+# filter out bad genes. There were no bad samples
 data <- data[gsg$goodGenes == TRUE, ]
 
-# filter low expression genes
+# filter low expression genes using edgeR function `filterByExpr`
 group <- factor(c(rep(1, length(colnames(LumA_unstranded))), rep(2, length(colnames(normal_unstranded)))))
 counts_filt <- filterByExpr(data, group = group)
 
@@ -46,7 +55,6 @@ data_filt <- data[counts_filt, ]
 data_filt <- as.matrix(data_filt)
 wgcna_data <- varianceStabilizingTransformation(data_filt)
 wgcna_data <- as.data.frame(wgcna_data)
-
 
 
 disease_samples <- colnames(LumA_unstranded)
@@ -64,7 +72,7 @@ power <- c(c(1:10), seq(from = 12, to = 50, by = 2))
 # Call the network topology analysis function
 sft <- pickSoftThreshold(wgcna_data,
                          powerVector = power,
-                         networkType = "signed",
+                         networkType = "unsigned",
                          verbose = 5)
 
 sft_data <- sft$fitIndices
@@ -87,12 +95,13 @@ a2 <- ggplot(sft_data, aes(Power, mean.k., label = Power)) +
 grid.arrange(a1, a2, nrow = 2)
 
 
+## chatGPT reckons pwr 6 instead of 5
 start_time <- Sys.time()
 # identify modules. this includes both benign and disease groups.
 bwnet <- blockwiseModules(wgcna_data,
                           maxBlockSize = 15000,
-                          TOMType = "signed",
-                          power = 7,
+                          TOMType = "unsigned",
+                          power = 6,
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,

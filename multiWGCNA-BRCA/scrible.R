@@ -4,11 +4,10 @@ wgcna_data_subset <- wgcna_data[sample(rownames(wgcna_data), 1500),]
 
 colnames(wgcna_data_subset) <- gsub("-", "", colnames(wgcna_data_subset))
 
-
 selectedBarcodes <- c(colnames(LumA_unstranded), colnames(normal_unstranded))
 
 sampleTable <- common[ ,-3]
-sampleTable <- sampleTable[sampleTable$cases %in% selectedBarcodes, ]
+sampleTable <- sampleTable[sampleTable$cases %in% selectedBarcodes, ] # doesnt change anything
 
 sampleTable$cases <- gsub("-", "", sampleTable$cases)
 
@@ -18,6 +17,8 @@ sampleTable$Subtype_Selected <- gsub("BRCA.", "", sampleTable$Subtype_Selected)
 
 colnames(sampleTable) <- c("Sample", "Subtype", "Stage")
 
+sampleTable <- DataFrame(sampleTable)
+
 # define variables for `constructNetworks` function
 se <- SummarizedExperiment(assay = list(LumA_unstranded = wgcna_data_subset), 
                            colData = list(Sample = sampleTable$Sample,
@@ -25,7 +26,6 @@ se <- SummarizedExperiment(assay = list(LumA_unstranded = wgcna_data_subset),
                                           Stage = sampleTable$Stage),
                            rowData = rownames(wgcna_data_subset))
 
-sampleTable <- DataFrame(sampleTable)
 
 conditions1 = unique(sampleTable[,2])
 conditions2 = unique(sampleTable[,3])
