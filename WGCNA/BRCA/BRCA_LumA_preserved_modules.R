@@ -105,9 +105,9 @@ bwnet <- blockwiseModules(wgcna_data,
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
-                          verbose = 3)
+                          verbose = 3,
+                          saveTOMs = FALSE)
 elapsed_time <- Sys.time() - start_time
-system("say run complete")
 print(elapsed_time)
 
 
