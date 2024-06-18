@@ -1,0 +1,150 @@
+library(biomaRt)
+library(tidyverse)
+library(WGCNA)
+library(edgeR)
+library(DESeq2)
+library(matrixStats)
+library(TCGAbiolinks)
+library(SummarizedExperiment)
+library(gridExtra)
+library(doParallel)
+require(parallel)
+
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+load("../BRCA_pipe/RData/TCGA_normal.RData")
+load("../BRCA_pipe/RData/LumA/DE_data.RData")
+load("../BRCA_pipe/RData/LumB/DE_data.RData")
+load("../BRCA_pipe/RData/Her2/DE_data.RData")
+load("../BRCA_pipe/RData/basal/DE_data.RData")
+
+
+# perform quality control
+filter_low_expr <- function(tumour_matrix, control_matrix) {
+  data <- merge(tumour_matrix, control_matrix, by = "row.names")
+  data <- column_to_rownames(data, var = "Row.names")
+  
+  group <- factor(c(rep(1, length(colnames(tumour_matrix))), rep(2, length(colnames(control_matrix)))))
+  counts_filt <- filterByExpr(data, group = group)
+  
+  print(table(counts_filt))
+  counts_filt <- data[counts_filt, ]
+  
+  cat("Performing GSG check: \n")
+  gsg <- goodSamplesGenes(t(counts_filt))
+  
+  geneCeck <- table(gsg$goodGenes)
+  sampleCheck <- table(gsg$goodSamples)
+
+  
+  if (any(names(geneCeck) == "FALSE")) {
+    cat("There are still bad genes in the dataset")
+  } else if(any(names(geneCeck) == "FALSE")) {
+    cat("There are still bad samples in the datase")
+  }
+  else {
+    cat("GSG all clear, all samples ok")
+  }
+  
+  return(counts_filt)
+}
+
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+
+all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                           control_matrix = normal_unstranded)
+
+
+# normalisation
+all_wgcna_data <- as.matrix(all_subtype_counts_filt)
+all_wgcna_data <- varianceStabilizingTransformation(all_wgcna_data)
+all_wgcna_data <- as.data.frame(all_wgcna_data)
+all_wgcna_data <- t(all_wgcna_data)
+
+
+pick_power <- function(WGCNA_data) {
+  start_time <- Sys.time()
+  power <- c(c(1:10), seq(from = 12, to = 50, by = 2))
+  
+  # Call the network topology analysis function
+  sft <- pickSoftThreshold(WGCNA_data,
+                           powerVector = power,
+                           networkType = "unsigned",
+                           blockSize = 45000,
+                           verbose = 2)
+  
+  sft_data <- sft$fitIndices
+  
+  # Visualise to pick power
+  a1 <- ggplot(sft_data, aes(Power, SFT.R.sq, label = Power)) +
+    geom_point() +
+    geom_text(nudge_y = 0.1) +
+    geom_hline(yintercept = 0.8, color = 'red') +
+    labs(x = 'Power', y = 'Scale free topology model fit, signed R^2') +
+    theme_classic()
+  
+  a2 <- ggplot(sft_data, aes(Power, mean.k., label = Power)) +
+    geom_point() +
+    geom_text(nudge_y = 0.1) +
+    labs(x = 'Power', y = 'Mean Connectivity') +
+    theme_classic()
+  
+  grid.arrange(a1, a2, nrow = 2)
+  
+  sft_data
+  
+
+  time_elapsed <- Sys.time() - start_time
+  cat("\n Time elapsed: ")
+  print(time_elapsed)
+  
+  return(sft)
+}
+
+all_subtype_sft_data <- pick_power(WGCNA_data = all_wgcna_data)
+
+
+
+
+sep_adj_matrix <- function(WGCNA_data, tumour_expr_df, control_expr_df, power) {
+  start_time <- Sys.time()
+  
+  count_df <- as.data.frame(t(WGCNA_data))
+
+  tumour_counts <- count_df[, colnames(count_df) %in% colnames(tumour_expr_df)]
+  tumour_matrix <- t(tumour_counts)
+  
+  control_counts <- count_df[, colnames(count_df) %in% colnames(control_expr_df)]
+  control_matrix <- t(control_counts)
+  
+  cat("Creating tumour adjacency... \n")
+  tumour_adj <- adjacency(tumour_matrix, power = power, type = "unsigned")
+  cat("Creating control adjacency... \n")
+  control_adj <- adjacency(control_matrix, power = power, type = "unsigned")
+  
+  time_elapsed <- Sys.time() - start_time
+  cat("Done, time elapsed: ")
+  print(time_elapsed)
+  adjcencies <- list(tumour = tumour_adj,
+                     control = control_adj)
+  
+  return(adjcencies)
+}
+
+all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
+                                  tumour_expr_df = all_subtypes,
+                                  control_expr_df = normal_unstranded,
+                                  power = 6)
+
+save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
+
+
+
+
+
+
+
+
