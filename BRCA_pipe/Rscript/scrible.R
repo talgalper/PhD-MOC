@@ -591,7 +591,53 @@ plot_ly(plotData, labels = ~Var1, values = ~Freq, type = 'pie',
 
 
 
-sum(grepl("\\*", filtered_targets$lumA_logFC) | grepl("\\*", filtered_targets$lumB_logFC) | grepl("\\*", filtered_targets$Her2_logFC) | grepl("\\*", filtered_targets$basal_logFC))
+#paired_backup <- unique_paired
+#GTEx_backup <- unique_GTEx
+
+unique_paired <- paired_backup
+unique_GTEx <- GTEx_backup
+
+
+unique_paired <- unique_paired[!duplicated(unique_paired$external_gene_name), ]
+unique_paired[is.na(unique_paired)] <- "*"
+
+table(grepl("\\*", unique_paired$lumA_logFC) & grepl("\\*", unique_paired$lumB_logFC) & grepl("\\*", unique_paired$Her2_logFC) & grepl("\\*", unique_paired$basal_logFC))
+unique_paired <- unique_paired[!grepl("\\*", unique_paired$lumA_logFC) | !grepl("\\*", unique_paired$lumB_logFC) | !grepl("\\*", unique_paired$Her2_logFC) | !grepl("\\*", unique_paired$basal_logFC), ]
+
+table(grepl("\\*", unique_paired$lumA_centrality) & grepl("\\*", unique_paired$lumB_centrality) & grepl("\\*", unique_paired$Her2_centrality) & grepl("\\*", unique_paired$basal_centrality))
+unique_paired <- unique_paired[!grepl("\\*", unique_paired$lumA_centrality) | !grepl("\\*", unique_paired$lumB_centrality) | !grepl("\\*", unique_paired$Her2_centrality) | !grepl("\\*", unique_paired$basal_centrality), ]
+
+table(grepl("\\*", unique_paired$lumA_rank) & grepl("\\*", unique_paired$lumB_rank) & grepl("\\*", unique_paired$Her2_rank) & grepl("\\*", unique_paired$basal_rank))
+unique_paired <- unique_paired[!grepl("\\*", unique_paired$lumA_rank) | !grepl("\\*", unique_paired$lumB_rank) | !grepl("\\*", unique_paired$Her2_rank) | !grepl("\\*", unique_paired$basal_rank), ]
+
+
+temp1 <- unique_paired[grepl("\\*", unique_paired$lumA_logFC) | grepl("\\*", unique_paired$lumB_logFC) | grepl("\\*", unique_paired$Her2_logFC) | grepl("\\*", unique_paired$basal_logFC), ]
+temp1 <- unique_paired[grepl("\\*", unique_paired$lumA_centrality) | grepl("\\*", unique_paired$lumB_centrality) | grepl("\\*", unique_paired$Her2_centrality) | grepl("\\*", unique_paired$basal_centrality), ]
+
+
+
+unique_GTEx <- unique_GTEx[!duplicated(unique_GTEx$external_gene_name), ]
+unique_GTEx[is.na(unique_GTEx)] <- "*"
+
+table(grepl("\\*", unique_GTEx$lumA_logFC) & grepl("\\*", unique_GTEx$lumB_logFC) & grepl("\\*", unique_GTEx$Her2_logFC) & grepl("\\*", unique_GTEx$basal_logFC))
+unique_GTEx <- unique_GTEx[!grepl("\\*", unique_GTEx$lumA_logFC) | !grepl("\\*", unique_GTEx$lumB_logFC) | !grepl("\\*", unique_GTEx$Her2_logFC) | !grepl("\\*", unique_GTEx$basal_logFC), ]
+
+table(grepl("\\*", unique_GTEx$lumA_centrality) & grepl("\\*", unique_GTEx$lumB_centrality) & grepl("\\*", unique_GTEx$Her2_centrality) & grepl("\\*", unique_GTEx$basal_centrality))
+unique_GTEx <- unique_GTEx[!grepl("\\*", unique_GTEx$lumA_centrality) | !grepl("\\*", unique_GTEx$lumB_centrality) | !grepl("\\*", unique_GTEx$Her2_centrality) | !grepl("\\*", unique_GTEx$basal_centrality), ]
+
+table(grepl("\\*", unique_GTEx$lumA_rank) & grepl("\\*", unique_GTEx$lumB_rank) & grepl("\\*", unique_GTEx$Her2_rank) & grepl("\\*", unique_GTEx$basal_rank))
+unique_GTEx <- unique_GTEx[!grepl("\\*", unique_GTEx$lumA_rank) | !grepl("\\*", unique_GTEx$lumB_rank) | !grepl("\\*", unique_GTEx$Her2_rank) | !grepl("\\*", unique_GTEx$basal_rank), ]
+
+
+temp2 <- unique_GTEx[grepl("\\*", unique_GTEx$lumA_logFC) | grepl("\\*", unique_GTEx$lumB_logFC) | grepl("\\*", unique_GTEx$Her2_logFC) | grepl("\\*", unique_GTEx$basal_logFC), ]
+temp2 <- unique_GTEx[grepl("\\*", unique_GTEx$lumA_centrality) | grepl("\\*", unique_GTEx$lumB_centrality) | grepl("\\*", unique_GTEx$Her2_centrality) | grepl("\\*", unique_GTEx$basal_centrality), ]
+
+temp2 <- temp1
+
+
+
+
+
 
 table(is.na(filtered_targets$lumA_centrality) & is.na(filtered_targets$lumB_centrality) & is.na(filtered_targets$Her2_centrality) & is.na(filtered_targets$basal_centrality))
 

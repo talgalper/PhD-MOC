@@ -146,10 +146,10 @@ for (i in seq_along(modules)) {
 }
 
 
-save(bwnet, sft, wgcna_data, file = "BRCA/lumA_WGCNA.RData")
+save(bwnet, sft, wgcna_data, module_clusters, file = "BRCA/RData/lumA_WGCNA.RData")
 
 
-
+## module enrichment 
 library(clusterProfiler)
 library(org.Hs.eg.db)
 
@@ -172,9 +172,39 @@ for (i in seq_along(module_clusters)) {
   
   enrichedModule <- enrichModule(gene_set$ensembl_gene_id)
   module_enrichment[[colour]] <- enrichedModule
+  
+  rm(gene_set, colour, enrichedModule)
 }
 
 
-save(module_enrichment, file = "BRCA/lumA_module_enrichment.RData")
+save(module_enrichment, file = "BRCA/RData/lumA_module_enrichment.RData")
+
+
+
+## cross reference modules with OpenTargets
+load("BRCA/RData/OpenTargets_NCT_filtered.RData")
+OpenTargets_NCT_unique <- OpenTargets_NCT_filtered[!duplicated(OpenTargets_NCT_filtered$Target.Approved.Symbol), ]
+
+OpenTargets_data <- subset(OpenTargets_NCT_unique, select = c("Target.Approved.Symbol", "Drug.Name"))
+
+module_OpenTargets <- list()
+drug_count <- data.frame(module = character(), drug_count = integer(), module_size = integer(), stringsAsFactors = FALSE)
+for (i in seq_along(module_clusters)) {
+  module <- module_clusters[[i]]
+  colour <- names(module_clusters)[i]
+  OpenTargets_module <- merge(module, OpenTargets_data, by.x = "external_gene_name", by.y = "Target.Approved.Symbol", all.x = T)
+  
+  module_OpenTargets[[colour]] <- OpenTargets_module
+  
+  # count number of drugs in each module
+  num_drugs <- nrow(unique(OpenTargets_module[!is.na(OpenTargets_module$Drug.Name), "Drug.Name", drop = FALSE]))
+  drug_count <- rbind(drug_count, data.frame(module = colour, drug_count = num_drugs, module_size = nrow(module), stringsAsFactors = FALSE))
+
+  # tidy up
+  rm(module, OpenTargets_module, num_drugs)
+}
+
+save(module_OpenTargets, drug_count, file = "BRCA/RData/LumA/OpenTargets_modules.RData")
+
 
 

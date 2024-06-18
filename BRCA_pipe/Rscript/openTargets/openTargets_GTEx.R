@@ -331,22 +331,22 @@ basal_TCGA_norm <- subset(basal_TCGA_norm, select = c("basal_rank", "external_ge
 
 
 
-LumA_GTEx <- read.csv("intermediate/LumA/filterByExp/GTEx/GTEx/final_gene_counts.csv")
+LumA_GTEx <- read.csv("intermediate/LumA/filterByExp/GTEx/final_gene_counts.csv")
 LumA_GTEx <- rownames_to_column(LumA_GTEx)
 colnames(LumA_GTEx)[1] <- "lumA_rank"
 LumA_GTEx <- subset(LumA_GTEx, select = c("lumA_rank", "external_gene_name"))
 
-LumB_GTEx <- read.csv("intermediate/LumB/filterByExp/GTEx/GTEx/final_gene_counts.csv")
+LumB_GTEx <- read.csv("intermediate/LumB/filterByExp/GTEx/final_gene_counts.csv")
 LumB_GTEx <- rownames_to_column(LumB_GTEx)
 colnames(LumB_GTEx)[1] <- "lumB_rank"
 LumB_GTEx <- subset(LumB_GTEx, select = c("lumB_rank", "external_gene_name"))
 
-Her2_GTEx <- read.csv("intermediate/Her2/filterByExp/GTEx/GTEx/final_gene_counts.csv")
+Her2_GTEx <- read.csv("intermediate/Her2/filterByExp/GTEx/final_gene_counts.csv")
 Her2_GTEx <- rownames_to_column(Her2_GTEx)
 colnames(Her2_GTEx)[1] <- "Her2_rank"
 Her2_GTEx <- subset(Her2_GTEx, select = c("Her2_rank", "external_gene_name"))
 
-basal_GTEx <- read.csv("intermediate/basal/filterByExp/GTEx/GTEx/final_gene_counts.csv")
+basal_GTEx <- read.csv("intermediate/basal/filterByExp/GTEx/final_gene_counts.csv")
 basal_GTEx <- rownames_to_column(basal_GTEx)
 colnames(basal_GTEx)[1] <- "basal_rank"
 basal_GTEx <- subset(basal_GTEx, select = c("basal_rank", "external_gene_name"))
