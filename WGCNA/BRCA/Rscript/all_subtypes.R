@@ -143,6 +143,27 @@ save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_sub
 
 
 
+# diff_i 
+# https://academic.oup.com/bioinformatics/article/36/9/2821/5711285?login=false
+diff_i <- function(tumour_adj, control_adj) {
+  sum_matrix <- tumour_adj + control_adj
+  normalised_scores <- apply(sum_matrix, 2, max)
+  normalised_scores <- sum_matrix / normalised_scores
+  median <- rowMedians(normalised_scores)
+  differential_weights <- normalised_scores - median
+  
+  return(differential_weights)
+}
+
+all_subtype_dif_net <- diff_i(tumour_adj = all_adjacencies$tumour,
+                              control_adj = all_adjacencies$control)
+
+
+
+
+
+
+
 
 
 
