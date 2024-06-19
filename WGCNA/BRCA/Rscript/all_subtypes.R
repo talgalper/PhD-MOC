@@ -9,6 +9,7 @@ library(SummarizedExperiment)
 library(gridExtra)
 library(doParallel)
 require(parallel)
+library(reshape2)
 
 nCores = 8
 registerDoParallel(cores = nCores)
@@ -65,6 +66,7 @@ all_wgcna_data <- as.data.frame(all_wgcna_data)
 all_wgcna_data <- t(all_wgcna_data)
 
 
+# function to pick soft thresholding power
 pick_power <- function(WGCNA_data) {
   start_time <- Sys.time()
   power <- c(c(1:10), seq(from = 12, to = 50, by = 2))
@@ -108,7 +110,7 @@ all_subtype_sft_data <- pick_power(WGCNA_data = all_wgcna_data)
 
 
 
-
+# function to create seperate adj matrix from combined tumour and control counts matrix
 sep_adj_matrix <- function(WGCNA_data, tumour_expr_df, control_expr_df, power) {
   start_time <- Sys.time()
   
@@ -140,10 +142,10 @@ all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
                                   power = 6)
 
 save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
+load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 
 
-
-# diff_i 
+# function for diff_i method
 # https://academic.oup.com/bioinformatics/article/36/9/2821/5711285?login=false
 diff_i <- function(tumour_adj, control_adj) {
   sum_matrix <- tumour_adj + control_adj
@@ -158,7 +160,11 @@ diff_i <- function(tumour_adj, control_adj) {
 all_subtype_dif_net <- diff_i(tumour_adj = all_adjacencies$tumour,
                               control_adj = all_adjacencies$control)
 
+# clear some memory 
+rm(all_subtype_adj)
+collectGarbage()
 
+all_subtype_edgeList <- melt(all_subtype_dif_net)
 
 
 
