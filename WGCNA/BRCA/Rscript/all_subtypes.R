@@ -4,12 +4,11 @@ library(WGCNA)
 library(edgeR)
 library(DESeq2)
 library(matrixStats)
-library(TCGAbiolinks)
-library(SummarizedExperiment)
 library(gridExtra)
 library(doParallel)
 require(parallel)
 library(reshape2)
+library(igraph)
 
 nCores = 8
 registerDoParallel(cores = nCores)
@@ -149,9 +148,9 @@ load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 # https://academic.oup.com/bioinformatics/article/36/9/2821/5711285?login=false
 diff_i <- function(tumour_adj, control_adj) {
   sum_matrix <- tumour_adj + control_adj
-  normalised_scores <- apply(sum_matrix, 2, max)
-  normalised_scores <- sum_matrix / normalised_scores
-  median <- rowMedians(normalised_scores)
+  max_scores <- apply(sum_matrix, 2, max)
+  normalised_scores <- sweep(sum_matrix, 2, max_scores, FUN = "/")  
+  median <- median(normalised_scores)
   differential_weights <- normalised_scores - median
   
   return(differential_weights)
@@ -165,6 +164,14 @@ rm(all_adjacencies)
 collectGarbage()
 
 all_subtype_edgeList <- melt(all_subtype_dif_net)
+colnames(all_subtype_edgeList) <- c("node_1", "node_2", "weight")
+
+edgeList_filt <- all_subtype_edgeList[all_subtype_edgeList$weight > -0.01 & all_subtype_edgeList$weight < 0.01, ]
+
+
+
+
+
 
 
 
