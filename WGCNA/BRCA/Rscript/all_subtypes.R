@@ -161,7 +161,7 @@ all_subtype_dif_net <- diff_i(tumour_adj = all_adjacencies$tumour,
                               control_adj = all_adjacencies$control)
 
 # clear some memory 
-rm(all_subtype_adj)
+rm(all_adjacencies)
 collectGarbage()
 
 all_subtype_edgeList <- melt(all_subtype_dif_net)
