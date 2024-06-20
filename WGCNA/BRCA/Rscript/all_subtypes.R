@@ -6,7 +6,6 @@ library(DESeq2)
 library(matrixStats)
 library(gridExtra)
 library(doParallel)
-require(parallel)
 library(reshape2)
 library(igraph)
 
@@ -14,13 +13,6 @@ nCores = 8
 registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
-
-load("../BRCA_pipe/RData/TCGA_normal.RData")
-load("../BRCA_pipe/RData/LumA/DE_data.RData")
-load("../BRCA_pipe/RData/LumB/DE_data.RData")
-load("../BRCA_pipe/RData/Her2/DE_data.RData")
-load("../BRCA_pipe/RData/basal/DE_data.RData")
-
 
 # perform quality control
 filter_low_expr <- function(tumour_matrix, control_matrix) {
@@ -52,28 +44,16 @@ filter_low_expr <- function(tumour_matrix, control_matrix) {
   return(counts_filt)
 }
 
-all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-
-all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
-                                           control_matrix = normal_unstranded)
-
-
-# normalisation
-all_wgcna_data <- as.matrix(all_subtype_counts_filt)
-all_wgcna_data <- varianceStabilizingTransformation(all_wgcna_data)
-all_wgcna_data <- as.data.frame(all_wgcna_data)
-all_wgcna_data <- t(all_wgcna_data)
-
 
 # function to pick soft thresholding power
-pick_power <- function(WGCNA_data) {
+pick_power <- function(WGCNA_data, network_type) {
   start_time <- Sys.time()
   power <- c(c(1:10), seq(from = 12, to = 50, by = 2))
   
   # Call the network topology analysis function
   sft <- pickSoftThreshold(WGCNA_data,
                            powerVector = power,
-                           networkType = "unsigned",
+                           networkType = network_type,
                            blockSize = 45000,
                            verbose = 2)
   
@@ -97,7 +77,7 @@ pick_power <- function(WGCNA_data) {
   
   sft_data
   
-
+  
   time_elapsed <- Sys.time() - start_time
   cat("\n Time elapsed: ")
   print(time_elapsed)
@@ -105,16 +85,13 @@ pick_power <- function(WGCNA_data) {
   return(sft)
 }
 
-all_subtype_sft_data <- pick_power(WGCNA_data = all_wgcna_data)
-
-
 
 # function to create seperate adj matrix from combined tumour and control counts matrix
 sep_adj_matrix <- function(WGCNA_data, tumour_expr_df, control_expr_df, power) {
   start_time <- Sys.time()
   
   count_df <- as.data.frame(t(WGCNA_data))
-
+  
   tumour_counts <- count_df[, colnames(count_df) %in% colnames(tumour_expr_df)]
   tumour_matrix <- t(tumour_counts)
   
@@ -135,13 +112,105 @@ sep_adj_matrix <- function(WGCNA_data, tumour_expr_df, control_expr_df, power) {
   return(adjcencies)
 }
 
+
+# identify modules
+network_modules <- function(WGCNA_data, Power) {
+  start_time <- Sys.time()
+  bwnet <- blockwiseModules(WGCNA_data,
+                            maxBlockSize = 45000,
+                            TOMType = "signed",
+                            networkType = "unsigned",
+                            power = Power,
+                            mergeCutHeight = 0.25,
+                            numericLabels = FALSE,
+                            randomSeed = 1234,
+                            verbose = 3,
+                            saveTOMs = FALSE)
+  elapsed_time <- Sys.time() - start_time
+  cat("Elapsed time: ")
+  print(elapsed_time)
+  
+  
+  # Plot the dendrogram
+  plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$colors),
+                      c("unmerged", "merged"),
+                      dendroLabels = FALSE,
+                      addGuide = TRUE,
+                      hang= 0.03,
+                      guideHang = 0.05)
+  
+  return(bwnet)
+}
+
+# load in data
+load("../BRCA_pipe/RData/TCGA_normal.RData")
+load("../BRCA_pipe/RData/LumA/DE_data.RData")
+load("../BRCA_pipe/RData/LumB/DE_data.RData")
+load("../BRCA_pipe/RData/Her2/DE_data.RData")
+load("../BRCA_pipe/RData/basal/DE_data.RData")
+
+# combine all tumour samples
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+
+# QC + combines tumour and control samples
+all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                           control_matrix = normal_unstranded)
+
+# normalisation
+all_wgcna_data <- as.matrix(all_subtype_counts_filt)
+all_wgcna_data <- varianceStabilizingTransformation(all_wgcna_data)
+all_wgcna_data <- as.data.frame(all_wgcna_data)
+all_wgcna_data <- t(all_wgcna_data)
+
+# clean env
+rm(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded, normal_unstranded, all_subtype_counts_filt)
+collectGarbage()
+
+# choose soft thresholding power
+unsigned_sft_data <- pick_power(WGCNA_data = all_wgcna_data,
+                                network_type = "unsigned")
+signed_sft_data <- pick_power(WGCNA_data = all_wgcna_data,
+                              network_type = "signed")
+
+# RESTART R AND LOAD WGCNA ONLY
+# identify modules: TOMType = "signed", networkType = "unsigned"
+all_subtype_bwnet <- network_modules(WGCNA_data = all_wgcna_data,
+                                     Power = 10)
+
+
+# create tumour and control adj matrix
 all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
                                   tumour_expr_df = all_subtypes,
                                   control_expr_df = normal_unstranded,
-                                  power = 6)
+                                  power = 10)
 
+# save adj matrix
 save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
+
 load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
+
+
+
+
+
+
+
+
+
+
+
+
+multidata <- multiData(Reference = benign_adj, 
+                       Test = disease_adj)
+
+
+multicolour <- list(Reference = bwnet$colors)
+
+
+
+
+
+
 
 
 # function for diff_i method
