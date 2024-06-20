@@ -179,9 +179,6 @@ all_subtype_bwnet <- network_modules(WGCNA_data = all_wgcna_data,
 
 save(all_subtype_bwnet, file = "BRCA/RData/all_TCGA/all_subtype_bwnet.RData")
 
-
-
-
 # create tumour and control adj matrix
 all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
                                   tumour_expr_df = all_subtypes,
@@ -193,21 +190,35 @@ save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_sub
 load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 
 
+# preserved modules function
+preserved_modules <- function(tumour_adj, control_adj, bwnet, network_type) {
+  multidata <- multiData(Reference = control_adj, 
+                         Test = tumour_adj)
+  
+  multicolour <- list(Reference = bwnet$colors)
+  
+  start_time <- Sys.time()
+  preserved_modules <- modulePreservation(multiData = multidata,
+                                          multiColor = multicolour,
+                                          networkType = network_type,
+                                          quickCor = 1,
+                                          randomSeed = 1234,
+                                          verbose = 3,
+                                          nPermutations = 10,
+                                          testNetworks = 2,
+                                          maxModuleSize = max(table(bwnet$colors)),
+                                          calculateClusterCoeff = F)
+  end_time <- Sys.time()
+  end_time - start_time
+  
+  return(preserved_modules)
+}
 
 
 
 
 
 
-
-
-
-
-multidata <- multiData(Reference = benign_adj, 
-                       Test = disease_adj)
-
-
-multicolour <- list(Reference = bwnet$colors)
 
 
 
