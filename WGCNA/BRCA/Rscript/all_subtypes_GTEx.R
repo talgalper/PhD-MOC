@@ -195,6 +195,7 @@ signed_sft_data <- pick_power(WGCNA_data = all_wgcna_data,
 # identify modules: TOMType = "signed", networkType = "unsigned"
 all_subtype_bwnet <- network_modules(WGCNA_data = all_wgcna_data,
                                      Power = 4)
+save(all_subtype_bwnet, file = "BRCA/RData/all_GTEx/all_subtype_GTEx_bwnet.RData")
 
 
 # create tumour and control adj matrix
