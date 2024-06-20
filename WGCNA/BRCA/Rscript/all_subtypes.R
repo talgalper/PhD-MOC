@@ -177,6 +177,10 @@ signed_sft_data <- pick_power(WGCNA_data = all_wgcna_data,
 all_subtype_bwnet <- network_modules(WGCNA_data = all_wgcna_data,
                                      Power = 10)
 
+save(all_subtype_bwnet, file = "BRCA/RData/all_TCGA/all_subtype_bwnet.RData")
+
+
+
 
 # create tumour and control adj matrix
 all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
@@ -186,7 +190,6 @@ all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
 
 # save adj matrix
 save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
-
 load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 
 
