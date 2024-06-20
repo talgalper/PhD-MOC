@@ -142,6 +142,9 @@ network_modules <- function(WGCNA_data, Power) {
   return(bwnet)
 }
 
+
+
+
 # load in data
 load("../BRCA_pipe/RData/TCGA_normal.RData")
 load("../BRCA_pipe/RData/LumA/DE_data.RData")
@@ -178,6 +181,7 @@ all_subtype_bwnet <- network_modules(WGCNA_data = all_wgcna_data,
                                      Power = 10)
 
 save(all_subtype_bwnet, file = "BRCA/RData/all_TCGA/all_subtype_bwnet.RData")
+load("BRCA/RData/all_TCGA/all_subtype_bwnet.RData")
 
 # create tumour and control adj matrix
 all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
@@ -189,32 +193,30 @@ all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
 save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 
+# find preserved modules
+multidata <- multiData(Reference = all_adjacencies$control, 
+                       Test = all_adjacencies$tumour)
 
-# preserved modules function
-preserved_modules <- function(tumour_adj, control_adj, bwnet, network_type) {
-  multidata <- multiData(Reference = control_adj, 
-                         Test = tumour_adj)
-  
-  multicolour <- list(Reference = bwnet$colors)
-  
-  start_time <- Sys.time()
-  preserved_modules <- modulePreservation(multiData = multidata,
-                                          multiColor = multicolour,
-                                          networkType = network_type,
-                                          quickCor = 1,
-                                          randomSeed = 1234,
-                                          verbose = 3,
-                                          nPermutations = 10,
-                                          testNetworks = 2,
-                                          maxModuleSize = max(table(bwnet$colors)),
-                                          calculateClusterCoeff = F)
-  end_time <- Sys.time()
-  end_time - start_time
-  
-  return(preserved_modules)
-}
+multicolour <- list(Reference = all_subtype_bwnet$colors)
 
+rm(all_adjacencies)
+collectGarbage()
 
+start_time <- Sys.time()
+preserved_modules <- modulePreservation(multiData = multidata,
+                                        multiColor = multicolour,
+                                        networkType = "unsigned",
+                                        quickCor = 1,
+                                        randomSeed = 1234,
+                                        verbose = 3,
+                                        nPermutations = 10,
+                                        testNetworks = 2,
+                                        maxModuleSize = max(table(all_subtype_bwnet$colors)),
+                                        calculateClusterCoeff = F)
+
+elapsed_time <- Sys.time() - start_time
+cat("Elapsed time: ")
+print(elapsed_time)
 
 
 
