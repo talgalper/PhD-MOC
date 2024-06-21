@@ -82,7 +82,7 @@ filter_low_expr <- function(tumour_matrix, control_matrix, sep = F) {
 # perform variance stabilizing transformation and transpose matrix for WGCNA
 vst_norm <- function(counts_df) {
   matrix <- as.matrix(counts_df)
-  matrix_norm <- varianceStabilizingTransformation(matrix)
+  matrix_norm <- vst(matrix)
   df_nrom <- as.data.frame(matrix_norm)
   transposed_norm_data <- t(df_nrom)
   
@@ -119,7 +119,7 @@ pick_power <- function(WGCNA_data, network_type, sft_data) {
       labs(x = 'Power', y = 'Mean Connectivity') +
       theme_classic()
     
-    grid.arrange(a1, a2, nrow = 2)
+    grid.arrange(a1, a2, nrow = 2, top = textGrob(deparse(substitute(WGCNA_data))))
     
     sft_data
     time_elapsed <- Sys.time() - start_time
@@ -145,7 +145,7 @@ pick_power <- function(WGCNA_data, network_type, sft_data) {
       labs(x = 'Power', y = 'Mean Connectivity') +
       theme_classic()
     
-    grid.arrange(a1, a2, nrow = 2)
+    grid.arrange(a1, a2, nrow = 2, top = textGrob(deparse(substitute(WGCNA_data))))
   }
 }
 
@@ -205,4 +205,47 @@ network_modules <- function(WGCNA_data, Power) {
   
   return(bwnet)
 }
+
+# create PCA plot and hclust tree for data visualisation
+plot_PCA <- function(expr_data, sample_info, plot_tree = F, output_plot_data = F) {
+  pca <- prcomp(expr_data)
+  pca_data <- pca$x
+  pca_var <- pca$sdev^2
+  
+  pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+  pca_data <- as.data.frame(pca_data)
+  
+  # Merge sample-stage mapping with PCA data
+  pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = "sample")
+  
+  # Create a custom color palette for stages
+  library(RColorBrewer)
+  groups <- unique(sample_info[ ,2])
+  num_colors <- length(groups)
+  colours <- brewer.pal(n = num_colors, name = "Dark2")
+  names(colours) <- groups
+  
+  # Create the PCA plot with color mapping
+  PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = group)) +
+    geom_point() +
+    geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
+    scale_color_manual(values = colours) + # Use the custom color palette
+    theme_bw() +
+    labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+    y = paste0('PC2: ', pca_var_perc[2], ' %'))
+  print(PCA_plot)
+  
+  htree <- NULL # will return empty object in list if plot_tree == F
+  if (plot_tree == T) {
+    htree <- hclust(dist(expr_data), method = "average")
+    plot(htree)
+  }
+  
+  if (output_plot_data == T) {
+    return(list(PCA_plot = PCA_plot, htree = htree))
+  }
+}
+
+
+
 

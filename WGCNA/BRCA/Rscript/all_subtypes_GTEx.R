@@ -48,10 +48,7 @@ all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
                                            control_matrix = GTEx_ENS)
 
 # normalisation
-all_wgcna_data <- as.matrix(all_subtype_counts_filt)
-all_wgcna_data <- varianceStabilizingTransformation(all_wgcna_data)
-all_wgcna_data <- as.data.frame(all_wgcna_data)
-all_wgcna_data <- t(all_wgcna_data)
+all_wgcna_data <- vst_norm(all_subtype_counts_filt)
 
 # clean env
 rm(LumA_unstranded, LumB_unstranded, Her2_unstranded, 
