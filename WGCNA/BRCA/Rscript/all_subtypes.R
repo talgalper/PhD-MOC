@@ -4,16 +4,14 @@ library(WGCNA)
 library(edgeR)
 library(DESeq2)
 library(matrixStats)
-library(gridExtra)
 library(doParallel)
 library(reshape2)
 library(igraph)
 
-nCores = 16
+nCores = 8
 registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
-
 
 # load in data
 load("../BRCA_pipe/RData/TCGA_normal.RData")
@@ -21,7 +19,6 @@ load("../BRCA_pipe/RData/LumA/DE_data.RData")
 load("../BRCA_pipe/RData/LumB/DE_data.RData")
 load("../BRCA_pipe/RData/Her2/DE_data.RData")
 load("../BRCA_pipe/RData/basal/DE_data.RData")
-
 
 # combine all tumour samples
 all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
@@ -52,9 +49,11 @@ PCA_results <- plot_PCA(expr_data = all_wgcna_data,
                         output_plot_data = T)
 
 # identify outliers
-dynamicCut <- cutreeDynamic(htree, distM = dist(all_wgcna_data), method = "tree", deepSplit = 2, pamRespectsDendro = FALSE)
+dynamicCut <- cutreeDynamic(PCA_results$htree, distM = dist(all_wgcna_data), method = "tree", deepSplit = 2, pamRespectsDendro = FALSE)
 outlierSamples <- which(dynamicCut == 0)
 cleanExprData <- all_wgcna_data[-outlierSamples, ]
+outlierSamples <- all_wgcna_data[outlierSamples, ]
+outlierSamples <- sample_info[sample_info$sample %in% rownames(outlierSamples), ]
 
 sample_info_filt <- sample_info[sample_info$sample %in% rownames(cleanExprData), ]
 
@@ -65,20 +64,26 @@ PCA_results_filt <- plot_PCA(expr_data = cleanExprData,
                              output_plot_data = T)
 
 # choose soft thresholding power
-unsigned_sft_data <- pick_power(WGCNA_data = cleanExprData,
+sft_data_unsigned <- pick_power(WGCNA_data = cleanExprData,
                                 network_type = "unsigned")
-signed_sft_data <- pick_power(WGCNA_data = cleanExprData,
+sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
                               network_type = "signed")
 
-
 # identify modules: TOMType = "signed", networkType = "unsigned"
+# split data
 control_expr <- cleanExprData[rownames(cleanExprData) %in% colnames(normal_unstranded), ]
 tumour_expr <- cleanExprData[!rownames(cleanExprData) %in% colnames(normal_unstranded), ]
+
+# clean env
+rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded,
+   control_info, lumA_info, lumB_info, her2_info, basal_info,
+   all_subtype_counts_filt, all_subtypes, dynamicCut)
+collectGarbage()
 
 # RESTART R AND LOAD WGCNA ONLY
 library(WGCNA)
 library(doParallel)
-nCores = 16
+nCores = 8
 registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()

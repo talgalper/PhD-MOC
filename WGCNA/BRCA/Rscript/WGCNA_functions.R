@@ -119,6 +119,8 @@ pick_power <- function(WGCNA_data, network_type, sft_data) {
       labs(x = 'Power', y = 'Mean Connectivity') +
       theme_classic()
     
+    library(grid)
+    library(gridExtra)
     grid.arrange(a1, a2, nrow = 2, top = textGrob(deparse(substitute(WGCNA_data))))
     
     sft_data
@@ -207,7 +209,7 @@ network_modules <- function(WGCNA_data, Power) {
 }
 
 # create PCA plot and hclust tree for data visualisation
-plot_PCA <- function(expr_data, sample_info, plot_tree = F, output_plot_data = F) {
+plot_PCA <- function(expr_data, sample_info, plot_tree = T, output_plot_data = T) {
   pca <- prcomp(expr_data)
   pca_data <- pca$x
   pca_var <- pca$sdev^2
@@ -226,6 +228,7 @@ plot_PCA <- function(expr_data, sample_info, plot_tree = F, output_plot_data = F
   names(colours) <- groups
   
   # Create the PCA plot with color mapping
+  library(ggrepel)
   PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = group)) +
     geom_point() +
     geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
@@ -242,7 +245,7 @@ plot_PCA <- function(expr_data, sample_info, plot_tree = F, output_plot_data = F
   }
   
   if (output_plot_data == T) {
-    return(list(PCA_plot = PCA_plot, htree = htree))
+    return(list(PCA_plot = PCA_plot, htree = htree, PCA_data = pca_data))
   }
 }
 
