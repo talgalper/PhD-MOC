@@ -14,11 +14,11 @@ enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
 
 # load in data
-load("../BRCA_pipe/RData/TCGA_normal.RData")
 load("../BRCA_pipe/RData/LumA/DE_data.RData")
 load("../BRCA_pipe/RData/LumB/DE_data.RData")
 load("../BRCA_pipe/RData/Her2/DE_data.RData")
 load("../BRCA_pipe/RData/basal/DE_data.RData")
+load("../BRCA_pipe/RData/TCGA_normal.RData")
 
 # combine all tumour samples
 all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)

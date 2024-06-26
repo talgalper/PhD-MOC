@@ -51,10 +51,10 @@ GTEx_data <- read.table("gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", sk
 colnames(GTEx_data) <- GTEx_data[1, ]
 GTEx_data <- GTEx_data[-1, -1]
 rownames(GTEx_data) <- NULL
+GTEx_data$Name <- gsub("\\.\\d+", "", GTEx_data$Name)
 
 # opt for having gene Ensembl IDs instead of gene names as rownames (same as TCGA)
 GTEx_ENS <- column_to_rownames(GTEx_data, "Name")
-rownames(GTEx_ENS) <- gsub("\\.\\d+", "", rownames(GTEx_ENS))
 GTEx_ENS <- GTEx_ENS[ , -1]
 rownames <- rownames(GTEx_ENS)
 GTEx_ENS <- as.data.frame(sapply(GTEx_ENS, as.numeric))

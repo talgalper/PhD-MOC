@@ -1226,6 +1226,16 @@ table(targets$druggability >= 0.5)
 
 
 
+plot_data <- log(as.matrix(normal_unstranded))
+plot(plot_data, xlab = "", ylab = "", main = "normal_unstranded")
+
+plot_data <- log(as.matrix(GTEx_ENS))
+plot(plot_data, xlab = "", ylab = "", main = "GTEx")
+
+hist(log(as.matrix(GTEx_ENS)))
+
+
+
 
 
 
