@@ -210,7 +210,7 @@ network_modules <- function(WGCNA_data, Power) {
 
 # create PCA plot and hclust tree for data visualisation
 plot_PCA <- function(expr_data, sample_info, plot_tree = T, output_plot_data = T) {
-  pca <- prcomp(expr_data)
+  pca <- prcomp(expr_data, scale. = T)
   pca_data <- pca$x
   pca_var <- pca$sdev^2
   
@@ -231,8 +231,8 @@ plot_PCA <- function(expr_data, sample_info, plot_tree = T, output_plot_data = T
   library(ggrepel)
   PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = group)) +
     geom_point() +
-    geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # Adjust the label size here
-    scale_color_manual(values = colours) + # Use the custom color palette
+    #geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # opt for point labels
+    scale_color_manual(values = colours) + 
     theme_bw() +
     labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
     y = paste0('PC2: ', pca_var_perc[2], ' %'))
