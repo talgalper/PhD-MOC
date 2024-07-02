@@ -129,9 +129,9 @@ paired_DE_analysis <- function(counts_matrix, sample_info) {
 
 
 # print DE counts
-print_summary <- function(subtype_DE_results) {
-  qlf <- subtype_DE_results$qlf
-  data <- subtype_DE_results$data
+print_summary <- function(DE_results) {
+  qlf <- DE_results$qlf
+  data <- DE_results$data
   
   dif_exp <- decideTests(qlf, p = 0.05, adjust = "fdr", lfc = 1)
   print(summary(dif_exp))
