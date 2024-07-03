@@ -1,7 +1,5 @@
 library(tidyverse)
 library(edgeR)
-library(DESeq2)
-library(dynamicTreeCut)
 
 # Load data
 load("RData/LumA/DE_data.RData")
@@ -42,14 +40,15 @@ sample_info$group <- factor(sample_info$group, levels = c("GTEx", "TCGA_normal",
 data_master_filt <- filterByExpr(data_master, group = sample_info$group)
 data_master_filt <- data_master[data_master_filt, ]
 
+data_master_norm <- cpm(as.matrix(data_master_filt), log = T)
+
 # requires function from WGCNA_functions.R
-PCA_data <- plot_PCA(expr_data = t(data_master_filt), sample_info = sample_info)
+PCA_all_data <- plot_PCA(expr_data = t(data_master_filt), sample_info = sample_info)
 
 
 
 
-
-## tumour and contorl data seperately
+## tumour and control data separately
 tumour_data <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 
 sample_info <- data.frame(
@@ -65,8 +64,7 @@ tumour_filt <- tumour_data[tumour_filt, ]
 
 tumour_norm <- cpm(as.matrix(tumour_filt), log = T)
 
-
-tumour_PCA <- plot_PCA(expr_data = t(tumour_norm), sample_info = sample_info)
+tumour_PCA <- plot_PCA(expr_data = t(logCPM), sample_info = sample_info, plot_tree = F)
 
 
 
