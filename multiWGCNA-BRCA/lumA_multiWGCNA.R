@@ -53,7 +53,7 @@ data_filt <- data[counts_filt, ]
 
 # normalisation
 data_filt <- as.matrix(data_filt)
-wgcna_data <- varianceStabilizingTransformation(data_filt)
+wgcna_data <- vst(data_filt)
 wgcna_data <- as.data.frame(wgcna_data)
 
 
