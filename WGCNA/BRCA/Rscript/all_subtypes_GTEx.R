@@ -64,6 +64,16 @@ PCA_results_GTEx <- plot_PCA(expr_data = all_wgcna_data,
                              plot_tree = T,
                              output_plot_data = T)
 
+
+# experimented with logCPM normalisation instead of vst
+#expr_data <- cpm(as.matrix(all_subtype_counts_filt), log = T)
+#PCA_results_GTEx <- plot_PCA(expr_data = t(expr_data),
+#                             sample_info = sample_info,
+#                             plot_tree = F,
+#                             output_plot_data = T)
+
+
+
 # identify outliers
 dynamicCut <- cutreeDynamic(PCA_results_GTEx$htree, distM = dist(all_wgcna_data), method = "tree", deepSplit = 2, pamRespectsDendro = FALSE)
 outlierSamples <- which(dynamicCut == 0)

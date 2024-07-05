@@ -1,0 +1,39 @@
+Abemaciclib
+Alpelisib
+Anastrozole
+Capecitabine
+Capivasertib
+Docetaxel
+Doxorubicin Hydrochloride
+Elacestrant Hydrochloride
+Eribulin Mesylate
+Everolimus
+Exemestane
+Fluorouracil
+Fulvestrant
+Gemcitabine Hydrochloride
+Goserelin Acetate
+Ixabepilone
+Trastuzumab Emtansine
+Lapatinib Ditosylate
+Letrozole
+Margetuximab
+Megestrol Acetate
+Methotrexate
+Methotrexate Sodium
+Neratinib Maleate
+Olaparib
+Paclitaxel
+Palbociclib
+Pamidronate Disodium
+Pembrolizumab
+Pertuzumab
+Ribociclib
+Sacituzumab Govitecan
+Talazoparib Tosylate
+Tamoxifen Citrate
+Atezolizumab
+Toremifene
+Trastuzumab
+Trastuzumab Deruxtecan
+Tucatinib
