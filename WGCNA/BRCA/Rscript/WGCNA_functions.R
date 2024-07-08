@@ -110,7 +110,7 @@ pick_power <- function(WGCNA_data, network_type, sft_data) {
       geom_point() +
       geom_text(nudge_y = 0.1) +
       geom_hline(yintercept = 0.8, color = 'red') +
-      labs(x = 'Power', y = 'Scale free topology model fit, signed R^2') +
+      labs(x = 'Power', y = 'Scale free topology model fit') +
       theme_classic()
     
     a2 <- ggplot(sft_data, aes(Power, mean.k., label = Power)) +
@@ -131,6 +131,9 @@ pick_power <- function(WGCNA_data, network_type, sft_data) {
     return(sft)
   }
   else {
+    library(grid)
+    library(gridExtra)
+    
     sft <- sft_data$fitIndices
     sft
     
@@ -138,7 +141,7 @@ pick_power <- function(WGCNA_data, network_type, sft_data) {
       geom_point() +
       geom_text(nudge_y = 0.1) +
       geom_hline(yintercept = 0.8, color = 'red') +
-      labs(x = 'Power', y = 'Scale free topology model fit, signed R^2') +
+      labs(x = 'Power', y = 'Scale free topology model fit') +
       theme_classic()
     
     a2 <- ggplot(sft, aes(Power, mean.k., label = Power)) +
@@ -184,7 +187,7 @@ network_modules <- function(WGCNA_data, Power) {
   start_time <- Sys.time()
   bwnet <- blockwiseModules(WGCNA_data,
                             maxBlockSize = 45000,
-                            TOMType = "signed",
+                            TOMType = "unsigned",
                             networkType = "unsigned",
                             power = Power,
                             mergeCutHeight = 0.25,

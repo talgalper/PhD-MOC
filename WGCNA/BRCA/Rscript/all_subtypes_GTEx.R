@@ -14,11 +14,11 @@ enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
 
 # load in data
-#load("../BRCA_pipe/RData/TCGA_normal.RData")
 load("../BRCA_pipe/RData/LumA/DE_data.RData")
 load("../BRCA_pipe/RData/LumB/DE_data.RData")
 load("../BRCA_pipe/RData/Her2/DE_data.RData")
 load("../BRCA_pipe/RData/basal/DE_data.RData")
+load("../BRCA_pipe/RData/TCGA_normal.RData")
 
 # load data
 GTEx_data <- read.table("../BRCA_pipe/gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
@@ -90,10 +90,15 @@ PCA_results_filt_GTEx <- plot_PCA(expr_data = cleanExprData,
                                   output_plot_data = T)
 
 # choose soft thresholding power
-sft_data_unsigned <- pick_power(WGCNA_data = cleanExprData,
+sft_data_unsigned <- pick_power(WGCNA_data = all_wgcna_data,
                                 network_type = "unsigned")
-sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
-                              network_type = "signed")
+
+sft_cleanData_unsigned <- pick_power(WGCNA_data = cleanExprData,
+                                     network_type = "unsigned",
+                                     sft_data = sft_cleanData_unsigned)
+
+#sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
+#                              network_type = "signed")
 
 # identify modules: TOMType = "signed", networkType = "unsigned"
 # split data

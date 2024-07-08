@@ -43,10 +43,10 @@ basal_info <- data.frame(sample = colnames(Basal_unstranded),
                         group = rep("basal", ncol(Basal_unstranded)))
 sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
 
-PCA_results <- plot_PCA(expr_data = all_wgcna_data,
-                        sample_info = sample_info,
-                        plot_tree = T,
-                        output_plot_data = T)
+PCA_results_normal <- plot_PCA(expr_data = all_wgcna_data,
+                               sample_info = sample_info,
+                               plot_tree = T,
+                               output_plot_data = T)
 
 # identify outliers
 dynamicCut <- cutreeDynamic(PCA_results$htree, distM = dist(all_wgcna_data), method = "tree", deepSplit = 2, pamRespectsDendro = FALSE)
@@ -66,8 +66,8 @@ PCA_results_filt <- plot_PCA(expr_data = cleanExprData,
 # choose soft thresholding power
 sft_data_unsigned <- pick_power(WGCNA_data = cleanExprData,
                                 network_type = "unsigned")
-sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
-                              network_type = "signed")
+#sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
+#                              network_type = "signed")
 
 # identify modules: TOMType = "signed", networkType = "unsigned"
 # split data
