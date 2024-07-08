@@ -94,8 +94,7 @@ sft_data_unsigned <- pick_power(WGCNA_data = all_wgcna_data,
                                 network_type = "unsigned")
 
 sft_cleanData_unsigned <- pick_power(WGCNA_data = cleanExprData,
-                                     network_type = "unsigned",
-                                     sft_data = sft_cleanData_unsigned)
+                                     network_type = "unsigned")
 
 #sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
 #                              network_type = "signed")
