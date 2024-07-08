@@ -124,7 +124,7 @@ GTEx_Her2_subset <- subset(GTEx_Her2_subset, select = c("gene_id", "logFC"))
 GTEx_Basal_subset <- GTEx_basal_DE$hits[rownames(GTEx_basal_DE$hits) %in% gene_id$ensembl_gene_id, ]
 GTEx_Basal_subset <- subset(GTEx_Basal_subset, select = c("gene_id", "logFC"))
 
-
+# Lumina B (lumA)
 marker_logFC <- merge(gene_id, LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
 colnames(marker_logFC)[3] <- "TCGA_lumA"
 marker_logFC <- merge(marker_logFC, GTEx_LumA_subset, by.x = "ensembl_gene_id", by.y = "gene_id")
