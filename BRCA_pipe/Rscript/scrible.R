@@ -1240,10 +1240,12 @@ NIH_targets <- read.table("NIH_BRCA_approved_drugs.txt", sep = "\t")
 colnames(NIH_targets)[1] <- "approved_drugs"
 NIH_targets$approved_drugs <- toupper(NIH_targets$approved_drugs)
 
+library(tidyverse)
+OpenTargets <- read_tsv("OpenTargets_data/breast_carcinoma_known_drugs.tsv")
 approved_openTargets <- merge(NIH_targets, OpenTargets, by.x = "approved_drugs", by.y = "Drug Name")
 approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$approved_drugs), ]
 
-NIH_targets$approved_drugs[!NIH_targets$approved_drugs %in% approved_openTargets$approved_drugs]
+
 
 
 master_common <- merge(Her2_common, approved_openTargets, by.x = "external_gene_name", by.y = "Target Approved Name")
@@ -1252,4 +1254,11 @@ master_common <- merge(Her2_common, approved_openTargets, by.x = "external_gene_
 common_genes <- c(lumA_common$external_gene_name, lumB_common$external_gene_name, Her2_common$external_gene_name, basal_common$external_gene_name)
 common_genes <- unique(common_genes)
 table(unique(approved_openTargets$`Target Approved Symbol`) %in% common_genes)
+
+
+
+
+
+
+
 
