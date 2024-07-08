@@ -43,7 +43,7 @@ all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_u
 all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
                                            control_matrix = GTEx_ENS)
 
-# normalisation
+# normalisation (transposes matrix)
 all_wgcna_data <- vst_norm(all_subtype_counts_filt)
 
 # plot PCA
