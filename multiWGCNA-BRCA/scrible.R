@@ -27,13 +27,14 @@ se <- SummarizedExperiment(assay = list(LumA_unstranded = wgcna_data_subset),
                            rowData = rownames(wgcna_data_subset))
 
 
+
 conditions1 = unique(sampleTable[,2])
 conditions2 = unique(sampleTable[,3])
 
 
 # Construct the combined networks and all the sub-networks
 LumA_networks <- constructNetworks(se, sampleTable, conditions1, conditions2,
-                                   networkType = "unsigned", TOMType = "signed", power = 10,
+                                   networkType = "unsigned", power = 10,
                                    minModuleSize = 40, maxBlockSize = 45000,
                                    reassignThreshold = 0, minKMEtoStay = 0.7,
                                    mergeCutHeight = 0.10, numericLabels = TRUE,
