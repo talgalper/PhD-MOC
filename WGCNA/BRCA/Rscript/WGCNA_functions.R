@@ -248,9 +248,58 @@ plot_PCA <- function(expr_data, sample_info, plot_tree = T, output_plot_data = T
   }
   
   if (output_plot_data == T) {
-    return(list(PCA_plot = PCA_plot, htree = htree, PCA_data = pca_data))
+    return(list(PCA_plot = PCA_plot, htree = htree, PCA_data = pca_data, prcomp = pca))
   }
 }
+
+
+# plot preserved modules
+plot_preserved_modules <- function(modulePreservation_data) {
+  plot_data <- data.frame(
+    cluster = rownames(modulePreservation_data$preservation$Z$ref.Control$inColumnsAlsoPresentIn.Tumour),
+    moduleSize = modulePreservation_data$preservation$observed$ref.Control$inColumnsAlsoPresentIn.Tumour$moduleSize,
+    medianRank.pres = modulePreservation_data$preservation$observed$ref.Control$inColumnsAlsoPresentIn.Tumour$medianRank.pres,
+    Zsummary.pres = modulePreservation_data$preservation$Z$ref.Control$inColumnsAlsoPresentIn.Tumour$Zsummary.pres
+  )
+  
+  modColors <- unique(plot_data$cluster) 
+  plotData <-  plot_data[, c(2:ncol(plot_data), 1)]
+  #plotMods <-  !(modColors %in% c("grey", "gold")) # excludes gold and grey i think
+  
+  library(ggplot2)
+  library(ggrepel)
+  library(gridExtra)
+  plot1 <- ggplot(plot_data, aes(x = moduleSize, y = medianRank.pres)) +
+    geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
+    scale_x_log10() +
+    labs(x = "Module size", y = "Median Rank") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+    geom_hline(yintercept = 8, linetype = "dashed") +
+    annotate("text", x = 1.5, y = 7.5, label = "Below", size = 3) +
+    scale_fill_manual(values = modColors) 
+  
+  
+  plot2 <- ggplot(plot_data, aes(x = moduleSize, y = Zsummary.pres)) +
+    geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
+    scale_x_log10() +
+    labs(x = "Module size", y = "Z Summary") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+    geom_hline(yintercept = 10, linetype = "dashed") +
+    annotate("text", x = 1.5, y = 11, label = "Above", size = 3) +
+    scale_fill_manual(values = modColors)
+  
+  # Display both plots side by side
+  grid.arrange(plot1, plot2, ncol = 2)
+  
+  return(list(plot_data = list(plot_data = plot_data, modColors = modColors),
+              meadianRank_plt = plot1,
+              Zsummary_plt = plot2))
+}
+
 
 
 
