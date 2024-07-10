@@ -47,6 +47,8 @@ counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
 tumour_data <- vst_norm(counts_df = counts_filt$tumour)
 control_data <- vst_norm(counts_df = counts_filt$control)
 
+save(control_data, tumour_data, file = "BRCA/RData/GTEx/data_norm_filt.RData")
+
 # plot PCA
 control_info <- data.frame(sample = colnames(GTEx_ENS),
                            group = rep("control", ncol(GTEx_ENS)))
@@ -213,18 +215,21 @@ non_preserved_modules <-plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsum
 #            preserved_modules = preserved_modules)
 
 load("BRCA/RData/GTEx/GTEx_tumour_modulePreservation(n=50).RData")
+load("BRCA/RData/GTEx/tumour_bwnet.RData")
+load("BRCA/RData/GTEx/control_bwnet.RData")
+load("BRCA/RData/GTEx/data_norm_filt.RData")
 
 # replot
 library(gridExtra)
 library(ggrepel)
 grid.arrange(modulePreservation_plt$meadianRank_plt, modulePreservation_plt$Zsummary_plt, ncol = 2)
 
-
-
 # query module data
 colours <- labels2colors(tumour_bwnet$colors)
 tumour_kWithin <- intramodularConnectivity.fromExpr(tumour_data, colours, power = 6)
 rownames(tumour_kWithin) <- colnames(tumour_data)
+
+save(tumour_kWithin, file = "BRCA/RData/GTEx/tumour_kWithin.RData")
 
 # get top 10 genes for connectivity for each non-preserved module
 tumour_topGenes = list()
@@ -236,6 +241,7 @@ for (module in non_preserved_modules$cluster) {
   
   rm(moduleGenes, module, topModuleGenes)
 }
+
 
 tumour_topGenes <- melt(tumour_topGenes)
 colnames(tumour_topGenes) <- c("ensembl_id", "module")
@@ -269,8 +275,12 @@ temp <- temp[!duplicated(temp$Row.names), ]
 temp_non <- approved_openTargets[!approved_openTargets$`Target ID` %in% rownames(tumour_kWithin), ]
 
 
+## create network
+# load in data for Ubuntu
+load("../../../../Desktop/WGCNA_BRCA_large_files/tumour_TOM.RData")
+
 # calculate TOM similarity
-tumour_TOM <- TOMsimilarityFromExpr(tumour_data, power = 6)
+tumour_TOM <- TOMsimilarityFromExpr(tumour_data, power = 6, nThreads = 8)
 backup_tmuour_TOM <- tumour_TOM
 
 # Converting TOM matrix to edge list
@@ -286,6 +296,8 @@ edges <-  data.frame(
   weight = weights
 )
 
+# load graph data for Ubuntu
+load("../../../../Desktop/WGCNA_BRCA_large_files/igraph_data.RData")
 
 library(igraph)
 # Create an igraph object
