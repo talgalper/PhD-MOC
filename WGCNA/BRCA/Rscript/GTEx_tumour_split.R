@@ -204,20 +204,102 @@ modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/GTEx_tumour_modulePreservation(n=50).RData")
 
 # non-preserved modules
-plot_data <- modulePreservation_plt$plot_data
+plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <-plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsummary.pres > 10, ]
 
+# for new session, re-load data
+#load("BRCA/RData/GTEx/GTEx_tumour_modulePreservation(n=10).RData")
+#n10 <- list(plot_data = modulePreservation_plt,
+#            preserved_modules = preserved_modules)
+
+load("BRCA/RData/GTEx/GTEx_tumour_modulePreservation(n=50).RData")
+
+# replot
+library(gridExtra)
+library(ggrepel)
+grid.arrange(modulePreservation_plt$meadianRank_plt, modulePreservation_plt$Zsummary_plt, ncol = 2)
 
 
-# NEED TO INVESTIGATE EACH OF THE NON-PRESERVED MODULES
 
 # query module data
+colours <- labels2colors(tumour_bwnet$colors)
+tumour_kWithin <- intramodularConnectivity.fromExpr(tumour_data, colours, power = 6)
+rownames(tumour_kWithin) <- colnames(tumour_data)
+
+# get top 10 genes for connectivity for each non-preserved module
+tumour_topGenes = list()
+for (module in non_preserved_modules$cluster) {
+  moduleGenes = names(tumour_bwnet$colors)[tumour_bwnet$colors == module]
+  moduleKWithin = tumour_kWithin[moduleGenes, ]
+  topModuleGenes = head(order(moduleKWithin$kWithin, decreasing = TRUE), 10)
+  tumour_topGenes[[module]] = moduleGenes[topModuleGenes]
+  
+  rm(moduleGenes, module, topModuleGenes)
+}
+
+tumour_topGenes <- melt(tumour_topGenes)
+colnames(tumour_topGenes) <- c("ensembl_id", "module")
+
+#library(biomaRt)
+#ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+#topGenes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+#                         filters = "ensembl_gene_id", 
+#                         values = tumour_topGenes$ensembl_id, 
+#                         mart = ensembl)
+
+
+# read in drug data
+NIH_targets <- read.table("../BRCA_pipe/NIH_BRCA_approved_drugs.txt", sep = "\t")
+colnames(NIH_targets)[1] <- "approved_drugs"
+NIH_targets$approved_drugs <- toupper(NIH_targets$approved_drugs)
+
+OpenTargets <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
+approved_openTargets <- merge(NIH_targets, OpenTargets, by.x = "approved_drugs", by.y = "Drug Name")
+approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$approved_drugs), ]
+
+load("../BRCA_pipe/OpenTargets_data/OpenTargets_NCT_filtered.RData")
+OpenTargets_NCT_targets <- unique(OpenTargets_NCT_filtered$Target.Approved.Symbol)
+
+table(approved_openTargets$`Target ID` %in% tumour_topGenes$ensembl_id)
+table(OpenTargets$`Target ID` %in% tumour_topGenes$ensembl_id)
+
+temp <- tumour_kWithin[rownames(tumour_kWithin) %in% approved_openTargets$`Target ID`, ]
+temp <- merge(tumour_kWithin, approved_openTargets, by.x = "row.names", by.y = "Target ID")
+temp <- temp[!duplicated(temp$Row.names), ]
+temp_non <- approved_openTargets[!approved_openTargets$`Target ID` %in% rownames(tumour_kWithin), ]
+
+
+# calculate TOM similarity
+tumour_TOM <- TOMsimilarityFromExpr(tumour_data, power = 6)
+backup_tmuour_TOM <- tumour_TOM
+
+# Converting TOM matrix to edge list
+geneNames <- colnames(tumour_data)
+tumour_TOM[upper.tri(tumour_TOM, diag = TRUE)] = NA
+edgeList <- which(!is.na(tumour_TOM), arr.ind = TRUE)
+weights <- tumour_TOM[!is.na(tumour_TOM)]
+
+# Create a data frame for igraph
+edges <-  data.frame(
+  from = geneNames[edgeList[, 1]],
+  to = geneNames[edgeList[, 2]],
+  weight = weights
+)
+
+
+library(igraph)
+# Create an igraph object
+network = graph_from_data_frame(edges, directed = FALSE)
+# Plot the network
+plot(network, vertex.size = 5, vertex.label = NA, edge.width = E(network)$weight)
+
+
+
+
 tumour_top_hubs <- chooseTopHubInEachModule(tumour_data, colorh = tumour_bwnet$colors)
 tumour_module_pvals <- cor(tumour_bwnet$MEs, tumour_data, use = "p")
 tumour_module_pvals <- corPvalueStudent(tumour_module_pvals, nSamples = nrow(tumour_data))
-
-
-
+tumour_module_pvals <- t(tumour_module_pvals)
 
 
 
