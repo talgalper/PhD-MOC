@@ -274,20 +274,32 @@ temp <- merge(tumour_kWithin, approved_openTargets, by.x = "row.names", by.y = "
 temp <- temp[!duplicated(temp$Row.names), ]
 temp_non <- approved_openTargets[!approved_openTargets$`Target ID` %in% rownames(tumour_kWithin), ]
 
+geneNames <- colnames(tumour_data)
+nonPreservedGenes <- geneNames[tumour_bwnet$colors %in% non_preserved_modules$cluster]
+table(approved_openTargets$`Target ID` %in% nonPreservedGenes)
 
 ## create network
 # load in data for Ubuntu
 load("../../../../Desktop/WGCNA_BRCA_large_files/tumour_TOM.RData")
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/tumour_TOM.RData")
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/data_norm_filt_GTEx.RData")
 
 # calculate TOM similarity
 tumour_TOM <- TOMsimilarityFromExpr(tumour_data, power = 6, nThreads = 8)
 backup_tmuour_TOM <- tumour_TOM
 
-# Converting TOM matrix to edge list
 geneNames <- colnames(tumour_data)
-tumour_TOM[upper.tri(tumour_TOM, diag = TRUE)] = NA
-edgeList <- which(!is.na(tumour_TOM), arr.ind = TRUE)
-weights <- tumour_TOM[!is.na(tumour_TOM)]
+
+
+# subset TOM for non-preserved genes
+dimnames(tumour_TOM) = list(geneNames, geneNames)
+nonPreservedGenes <- geneNames[tumour_bwnet$colors %in% non_preserved_modules$cluster]
+tumour_TOM_subset <- tumour_TOM[nonPreservedGenes, nonPreservedGenes]
+
+# Converting TOM matrix to edge list
+tumour_TOM_subset[upper.tri(tumour_TOM_subset, diag = TRUE)] = NA
+edgeList <- which(!is.na(tumour_TOM_subset), arr.ind = TRUE)
+weights <- tumour_TOM_subset[!is.na(tumour_TOM_subset)]
 
 # Create a data frame for igraph
 edges <-  data.frame(
@@ -298,20 +310,52 @@ edges <-  data.frame(
 
 # load graph data for Ubuntu
 load("../../../../Desktop/WGCNA_BRCA_large_files/igraph_data.RData")
+# load data fro mac
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/igraph_data.RData")
+
+
+# subset genes from non-preserved modules
+
+
 
 library(igraph)
 # Create an igraph object
 network = graph_from_data_frame(edges, directed = FALSE)
+
+# Assign colors to modules
+moduleColorsSubset = tumour_bwnet$colors[geneNames %in% nonPreservedGenes]
+colorPalette = unique(moduleColorsSubset)
+names(colorPalette) = unique(moduleColorsSubset)
+vertexColors = colorPalette[moduleColorsSubset]
+V(network)$color = vertexColors
+
 # Plot the network
-plot(network, vertex.size = 5, vertex.label = NA, edge.width = E(network)$weight)
+plot(network, vertex.size = 5, vertex.label = NA, edge.width = E(network)$weight, 
+     vertex.color = V(network)$color, edge.color = E(network)$color)
+
 
 
 
 
 tumour_top_hubs <- chooseTopHubInEachModule(tumour_data, colorh = tumour_bwnet$colors)
+
 tumour_module_pvals <- cor(tumour_bwnet$MEs, tumour_data, use = "p")
 tumour_module_pvals <- corPvalueStudent(tumour_module_pvals, nSamples = nrow(tumour_data))
 tumour_module_pvals <- t(tumour_module_pvals)
+tumour_module_pvals <- as.data.frame(tumour_module_pvals)
+
+top_pval_genes <- list()
+for (module in colnames(tumour_module_pvals)) {
+  sorted_genes <- tumour_module_pvals[order(tumour_module_pvals[[module]], decreasing = FALSE), ]
+  top_genes <- rownames(sorted_genes)[1:10]
+  top_pval_genes[[module]] <- top_genes
+}
+
+top_pval_genes <- melt(top_pval_genes)
+
+table(unique(approved_openTargets$`Target ID`) %in% top_pval_genes$value)
+
+
 
 
 
