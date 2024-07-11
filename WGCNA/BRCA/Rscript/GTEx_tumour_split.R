@@ -258,6 +258,14 @@ colnames(tumour_topGenes) <- c("ensembl_id", "module")
 
 # read in drug data
 OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
+OpenTargets_raw <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
+
+NIH_targets <- read.table("../BRCA_pipe/NIH_BRCA_approved_drugs.txt", sep = "\t")
+colnames(NIH_targets)[1] <- "approved_drugs"
+NIH_targets$approved_drugs <- toupper(NIH_targets$approved_drugs)
+
+approved_openTargets <- merge(NIH_targets, OpenTargets_raw, by.x = "approved_drugs", by.y = "Drug Name")
+approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$`Target ID`), ]
 
 table(unique(approved_openTargets$`Target ID`) %in% tumour_topGenes$ensembl_id)
 table(unique(OpenTargets$Target.ID) %in% tumour_topGenes$ensembl_id)
