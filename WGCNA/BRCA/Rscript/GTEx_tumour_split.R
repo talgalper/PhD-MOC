@@ -75,17 +75,17 @@ PCA_control <- plot_PCA(expr_data = control_data,
                         output_plot_data = T)
 
 # identify why it looks like theres two clusters in GTEx data
-xena_GTEx_sample_info <- read_tsv("../../../../Downloads/denseDataOnlyDownload.tsv")
-table(xena_GTEx_sample_info$sample %in% colnames(GTEx_ENS))
-control_info <- merge(control_info, xena_GTEx_sample_info, by = "sample", all.x = T)
-control_info <- subset(control_info, select = c("sample", "_gender"))
-control_info[is.na(control_info)] <- "unknown"
-colnames(control_info)[2] <- "group"
-
-PCA_control <- plot_PCA(expr_data = control_data,
-                        sample_info = control_info,
-                        plot_tree = F,
-                        output_plot_data = T)
+#xena_GTEx_sample_info <- read_tsv("../../../../Downloads/denseDataOnlyDownload.tsv")
+#table(xena_GTEx_sample_info$sample %in% colnames(GTEx_ENS))
+#control_info <- merge(control_info, xena_GTEx_sample_info, by = "sample", all.x = T)
+#control_info <- subset(control_info, select = c("sample", "_gender"))
+#control_info[is.na(control_info)] <- "unknown"
+#colnames(control_info)[2] <- "group"
+#
+#PCA_control <- plot_PCA(expr_data = control_data,
+#                        sample_info = control_info,
+#                        plot_tree = F,
+#                        output_plot_data = T)
 
 
 # identify outliers
@@ -207,13 +207,15 @@ save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/GTEx_tum
 
 # non-preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
-non_preserved_modules <-plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsummary.pres > 10, ]
+non_preserved_modules <- plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsummary.pres > 10, ]
+
+geneNames <- colnames(tumour_data)
+nonPreservedGenes <- geneNames[tumour_bwnet$colors %in% non_preserved_modules$cluster]
+table(unique(approved_openTargets$`Target ID`) %in% nonPreservedGenes)
+table(unique(OpenTargets$Target.ID) %in% nonPreservedGenes)
+
 
 # for new session, re-load data
-#load("BRCA/RData/GTEx/GTEx_tumour_modulePreservation(n=10).RData")
-#n10 <- list(plot_data = modulePreservation_plt,
-#            preserved_modules = preserved_modules)
-
 load("BRCA/RData/GTEx/GTEx_tumour_modulePreservation(n=50).RData")
 load("BRCA/RData/GTEx/tumour_bwnet.RData")
 load("BRCA/RData/GTEx/control_bwnet.RData")
@@ -255,28 +257,22 @@ colnames(tumour_topGenes) <- c("ensembl_id", "module")
 
 
 # read in drug data
-NIH_targets <- read.table("../BRCA_pipe/NIH_BRCA_approved_drugs.txt", sep = "\t")
-colnames(NIH_targets)[1] <- "approved_drugs"
-NIH_targets$approved_drugs <- toupper(NIH_targets$approved_drugs)
+OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
 
-OpenTargets <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
-approved_openTargets <- merge(NIH_targets, OpenTargets, by.x = "approved_drugs", by.y = "Drug Name")
-approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$approved_drugs), ]
+table(unique(approved_openTargets$`Target ID`) %in% tumour_topGenes$ensembl_id)
+table(unique(OpenTargets$Target.ID) %in% tumour_topGenes$ensembl_id)
 
-load("../BRCA_pipe/OpenTargets_data/OpenTargets_NCT_filtered.RData")
-OpenTargets_NCT_targets <- unique(OpenTargets_NCT_filtered$Target.Approved.Symbol)
-
-table(approved_openTargets$`Target ID` %in% tumour_topGenes$ensembl_id)
-table(OpenTargets$`Target ID` %in% tumour_topGenes$ensembl_id)
-
+# FDA targets
 temp <- tumour_kWithin[rownames(tumour_kWithin) %in% approved_openTargets$`Target ID`, ]
 temp <- merge(tumour_kWithin, approved_openTargets, by.x = "row.names", by.y = "Target ID")
 temp <- temp[!duplicated(temp$Row.names), ]
 temp_non <- approved_openTargets[!approved_openTargets$`Target ID` %in% rownames(tumour_kWithin), ]
 
-geneNames <- colnames(tumour_data)
-nonPreservedGenes <- geneNames[tumour_bwnet$colors %in% non_preserved_modules$cluster]
-table(approved_openTargets$`Target ID` %in% nonPreservedGenes)
+# OpenTargets 
+temp <- tumour_kWithin[rownames(tumour_kWithin) %in% OpenTargets$Target.ID, ]
+temp <- merge(tumour_kWithin, OpenTargets, by.x = "row.names", by.y = "Target.ID")
+temp <- temp[!duplicated(temp$Row.names), ]
+
 
 ## create network
 # load in data for Ubuntu
@@ -354,6 +350,11 @@ for (module in colnames(tumour_module_pvals)) {
 top_pval_genes <- melt(top_pval_genes)
 
 table(unique(approved_openTargets$`Target ID`) %in% top_pval_genes$value)
+table(unique(OpenTargets$Target.ID) %in% top_pval_genes$value)
+
+
+
+
 
 
 
