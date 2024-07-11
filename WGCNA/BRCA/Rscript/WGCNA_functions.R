@@ -183,12 +183,12 @@ sep_adj_matrix <- function(WGCNA_data, tumour_expr_df, control_expr_df, power) {
 
 
 # identify modules
-network_modules <- function(WGCNA_data, Power) {
+network_modules <- function(WGCNA_data, Power, TOM_type = "unsigned", network_type = "unsigned") {
   start_time <- Sys.time()
   bwnet <- blockwiseModules(WGCNA_data,
                             maxBlockSize = 45000,
-                            TOMType = "unsigned",
-                            networkType = "unsigned",
+                            TOMType = TOM_type,
+                            networkType = network_type,
                             power = Power,
                             mergeCutHeight = 0.25,
                             numericLabels = FALSE,
