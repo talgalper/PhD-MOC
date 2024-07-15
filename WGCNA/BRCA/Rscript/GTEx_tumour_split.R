@@ -209,12 +209,12 @@ save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/GTEx_tum
 plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <- plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsummary.pres > 10, ]
 
-nonPreservedGenes <- common_genes[tumour_bwnet$colors %in% non_preserved_modules$cluster]
+nonPreservedGenes <- common_genes[tumour_common_colours %in% non_preserved_modules$cluster]
 
 temp <- approved_openTargets[approved_openTargets$`Target ID` %in% nonPreservedGenes, ]
 
-table(unique(approved_openTargets$`Target ID`) %in% nonPreservedGenes)
-table(unique(OpenTargets$Target.ID) %in% nonPreservedGenes)
+table(unique(approved_openTargets$`Target Approved Symbol`) %in% temp$`Target Approved Symbol`)
+table(unique(OpenTargets$Target.ID) %in% temp$`Target Approved Symbol`)
 
 
 # for new session, re-load data
@@ -261,7 +261,6 @@ temp <- approved_openTargets[approved_openTargets$`Target ID` %in% tumour_topGen
 #                         mart = ensembl)
 
 
-# read in drug data
 OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
 OpenTargets_raw <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
 
@@ -270,7 +269,8 @@ colnames(NIH_targets)[1] <- "approved_drugs"
 NIH_targets$approved_drugs <- toupper(NIH_targets$approved_drugs)
 
 approved_openTargets <- merge(NIH_targets, OpenTargets_raw, by.x = "approved_drugs", by.y = "Drug Name")
-approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$`Target ID`), ]
+approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$approved_drugs) | !duplicated(approved_openTargets$`Target ID`), ]
+
 
 table(unique(approved_openTargets$`Target ID`) %in% tumour_topGenes$ensembl_id)
 table(unique(OpenTargets$Target.ID) %in% tumour_topGenes$ensembl_id)
