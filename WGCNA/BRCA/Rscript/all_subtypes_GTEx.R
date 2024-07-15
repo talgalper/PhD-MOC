@@ -143,21 +143,56 @@ load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
 
 
 
+### trait correlation
+sample_info <- data.frame(row.names = c(colnames(all_subtypes), colnames(GTEx_ENS)),
+                          status = c(rep("tumour", ncol(all_subtypes)), rep("control", ncol(GTEx_ENS))),
+                          group = c(rep("lumA", ncol(LumA_unstranded)),
+                                    rep("GTEx", ncol(GTEx_ENS)),
+                                    rep("lumB", ncol(LumB_unstranded)),
+                                    rep("Her2", ncol(Her2_unstranded)),
+                                    rep("basal", ncol(Basal_unstranded))))
 
 
+traits.state <- binarizeCategoricalColumns(sample_info$status,
+                                     includePairwise = F,
+                                     includeLevelVsAll = T)
+
+traits.subtype <- binarizeCategoricalColumns(sample_info$group,
+                                             includePairwise = F,
+                                             includeLevelVsAll = T,
+                                             levelOrder = c("GTEx", "lumA", "lumB", "Her2", "basal"))
+
+traits <- cbind(traits.state, traits.subtype)
+rownames(traits) <- c(colnames(all_subtypes), colnames(GTEx_ENS))
+
+moduleTrait_cor <- cor(all_subtype_bwnet$MEs, traits, use = "p")
+moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(all_wgcna_data))
+
+heatmap_data <- merge(all_subtype_bwnet$MEs, traits, by = "row.names")
+
+heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
+
+CorLevelPlot(heatmap_data,
+             x = names(heatmap_data)[17:21],
+             y = names(heatmap_data)[1:16],
+             col = c("blue1", "skyblue", "white", "pink", "red"))
 
 
+module.gene.mapping <- as.data.frame(all_subtype_bwnet$colors)
+module <- rownames(module.gene.mapping)[module.gene.mapping$`all_subtype_bwnet$colors` == "turquoise"]
+
+temp <- approved_openTargets[approved_openTargets$`Target ID` %in% module, ]
+table(unique(approved_openTargets$`Target Approved Symbol`) %in% temp$`Target Approved Symbol`)
 
 
+gene.signf.corr <- cor(all_wgcna_data, traits$data.tumour.vs.all, use = 'p')
+gene.signf.corr.pvals <- corPvalueStudent(gene.signf.corr, nSamples = nrow(all_wgcna_data))
+gene.signf.corr.pvals <- rownames_to_column(as.data.frame(gene.signf.corr.pvals))
+gene.signf.corr.pvals <- gene.signf.corr.pvals[order(-gene.signf.corr.pvals$V1), ]
+rownames(gene.signf.corr.pvals) <- NULL
 
-
-multidata <- multiData(Reference = benign_adj, 
-                       Test = disease_adj)
-
-
-multicolour <- list(Reference = bwnet$colors)
-
-
+temp <- gene.signf.corr.pvals[gene.signf.corr.pvals$rowname %in% unique(approved_openTargets$`Target ID`), ]
+temp <- merge(temp, approved_openTargets, by.x = "rowname", by.y = "Target ID")
 
 
 
@@ -187,11 +222,6 @@ all_subtype_edgeList <- melt(all_subtype_dif_net)
 colnames(all_subtype_edgeList) <- c("node_1", "node_2", "weight")
 
 edgeList_filt <- all_subtype_edgeList[all_subtype_edgeList$weight > -0.01 & all_subtype_edgeList$weight < 0.01, ]
-
-
-
-
-
 
 
 

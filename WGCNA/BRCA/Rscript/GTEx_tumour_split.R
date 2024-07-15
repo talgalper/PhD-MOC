@@ -209,8 +209,10 @@ save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/GTEx_tum
 plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <- plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsummary.pres > 10, ]
 
-geneNames <- colnames(tumour_data)
-nonPreservedGenes <- geneNames[tumour_bwnet$colors %in% non_preserved_modules$cluster]
+nonPreservedGenes <- common_genes[tumour_bwnet$colors %in% non_preserved_modules$cluster]
+
+temp <- approved_openTargets[approved_openTargets$`Target ID` %in% nonPreservedGenes, ]
+
 table(unique(approved_openTargets$`Target ID`) %in% nonPreservedGenes)
 table(unique(OpenTargets$Target.ID) %in% nonPreservedGenes)
 
@@ -247,6 +249,9 @@ for (module in non_preserved_modules$cluster) {
 
 tumour_topGenes <- melt(tumour_topGenes)
 colnames(tumour_topGenes) <- c("ensembl_id", "module")
+
+temp <- approved_openTargets[approved_openTargets$`Target ID` %in% tumour_topGenes$ensembl_id, ]
+
 
 #library(biomaRt)
 #ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
@@ -341,7 +346,7 @@ plot(network, vertex.size = 5, vertex.label = NA, edge.width = E(network)$weight
 
 
 
-tumour_top_hubs <- chooseTopHubInEachModule(tumour_data, colorh = tumour_bwnet$colors)
+#tumour_top_hubs <- chooseTopHubInEachModule(tumour_data, colorh = tumour_bwnet$colors)
 
 tumour_module_pvals <- cor(tumour_bwnet$MEs, tumour_data, use = "p")
 tumour_module_pvals <- corPvalueStudent(tumour_module_pvals, nSamples = nrow(tumour_data))
@@ -357,10 +362,8 @@ for (module in colnames(tumour_module_pvals)) {
 
 top_pval_genes <- melt(top_pval_genes)
 
-table(unique(approved_openTargets$`Target ID`) %in% top_pval_genes$value)
-table(unique(OpenTargets$Target.ID) %in% top_pval_genes$value)
-
-
+temp <- approved_openTargets[approved_openTargets$`Target ID` %in% top_pval_genes$value, ]
+table(unique(approved_openTargets$`Target Approved Symbol`) %in% unique(temp$`Target Approved Symbol`))
 
 
 
