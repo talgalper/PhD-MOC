@@ -1,6 +1,6 @@
 library(tidyverse)
 library(edgeR)
-
+library(PCSF)
 
 # Load data
 load("RData/LumA/DE_data.RData")
@@ -102,26 +102,30 @@ ppi_list$node_1 <- gsub(".*.\\.", "", ppi_list$node_1)
 ppi_list$node_2 <- gsub(".*.\\.", "", ppi_list$node_2)
 
 string_node_data <- read.table("intermediate/alt_pipe/STRING network (physical) default node(+100).csv", header = T, sep = ",", stringsAsFactors = F)
-node_list <- subset(string_node_data, select = c("name", "query.term")) # new genes introduced by STRING dont have quer.term
+node_list <- subset(string_node_data, select = c("name", "display.name"))
 node_list$name <- gsub(".*.\\.", "", node_list$name)
 ppi_list$original_order <- seq_len(nrow(ppi_list))
 merged_df <- merge(ppi_list, node_list, by.x = "node_1", by.y = "name", all.x = TRUE)
 merged_df <- merge(merged_df, node_list, by.x = "node_2", by.y = "name", all.x = TRUE)
 merged_df <- merged_df[order(merged_df$original_order), ]
 
-final_df <- merged_df[, c("query.term.x", "query.term.y", "stringdb..score")]
+final_df <- merged_df[, c("display.name.x", "display.name.y", "stringdb..score")]
 colnames(final_df) <- c("node_1", "node_2", "score")
 
 table(unique(approved_openTargets$`Target Approved Symbol`) %in% unique(string_node_data$display.name))
 
 
-library(PCSF)
+DE_gene_symbols <- merge(DE_genes, string_node_data, by.x = "gene_id", by.y = "query.term")
+DE_gene_symbols <- subset(DE_gene_symbols, select = c("gene_id", "display.name", "logFC", "logCPM", 
+                                                      "F", "PValue", "FDR"))
+
+
 # set seed for reproducibility 
 set.seed(1234)
 # construct interactome
 ppi <- construct_interactome(final_df)
 # set terminals
-terminals <- setNames(as.numeric(DE_genes$logFC), DE_genes$gene_id)
+terminals <- setNames(as.numeric(DE_gene_symbols$logFC), DE_gene_symbols$display.name)
 # run PCSF with random noise
 start_time <- Sys.time()
 subnet <- PCSF_rand(ppi, terminals, n = 50, r = 0.1, w = 2, b = 1, mu = 0.0005)
@@ -130,7 +134,7 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
-save(subnet, file = "RData/alt_pipe/PCSF_subnet.RData")
+save(subnet, file = "RData/alt_pipe/PCSF_subnet(+100).RData")
 
 
 # extract cluster data
