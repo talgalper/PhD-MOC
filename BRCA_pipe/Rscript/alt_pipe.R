@@ -34,6 +34,7 @@ DE_genes <- DE_results$dif_exp
 hits <- DE_results$hits
 topTags <- DE_results$toptags
 
+save(DE_genes, hits, topTags, DE_gene_symbols, file = "RData/alt_pipe/DE_results.RData")
 
 # read in drug data
 OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
@@ -136,6 +137,7 @@ plot.PCSF(subnet, node_label_cex = 15)
 
 save(subnet, file = "RData/alt_pipe/PCSF_subnet(+100).RData")
 
+load("RData/alt_pipe/PCSF_subnet(+100).RData")
 
 # extract cluster data
 clust <- components(subnet)
