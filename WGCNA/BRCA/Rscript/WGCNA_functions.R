@@ -277,7 +277,7 @@ plot_preserved_modules <- function(modulePreservation_data) {
     theme(legend.position = "none") +
     geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
     geom_hline(yintercept = 8, linetype = "dashed") +
-    annotate("text", x = 1.5, y = 7.5, label = "Below", size = 3) +
+    annotate("text", x = 1.5, y = 8.5, label = "Above", size = 3) +
     scale_fill_manual(values = modColors) 
   
   
@@ -289,7 +289,7 @@ plot_preserved_modules <- function(modulePreservation_data) {
     theme(legend.position = "none") +
     geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
     geom_hline(yintercept = 10, linetype = "dashed") +
-    annotate("text", x = 1.5, y = 11, label = "Above", size = 3) +
+    annotate("text", x = 1.5, y = 9, label = "Below", size = 3) +
     scale_fill_manual(values = modColors)
   
   # Display both plots side by side

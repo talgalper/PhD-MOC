@@ -207,7 +207,7 @@ save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/GTEx_tum
 
 # non-preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
-non_preserved_modules <- plot_data[plot_data$medianRank.pres < 8 & plot_data$Zsummary.pres > 10, ]
+non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
 
 nonPreservedGenes <- common_genes[tumour_common_colours %in% non_preserved_modules$cluster]
 
