@@ -151,21 +151,6 @@ save(control_bwnet, file = "BRCA/RData/GTEx/signed/control_bwnet.RData")
 save(tumour_bwnet, file = "BRCA/RData/GTEx/signed/tumour_bwnet.RData")
 
 
-# create tumour and control adj matrix
-start_time <- Sys.time()
-
-tumour_adj <- adjacency(tumour_data, power = 6, type = "unsigned")
-control_adj <- adjacency(control_data, power = 6, type = "unsigned")
-
-time_elapsed <- Sys.time() - start_time
-print(time_elapsed)
-rm(start_time)
-
-# save adj matrix
-save(tumour_adj, control_adj, file = "../../../../Desktop/WGCNA_BRCA_large_files/GTEx_tumour_sep_adj.RData")
-
-
-
 # module preservation using expr data
 common_genes <- intersect(colnames(tumour_data), colnames(control_data))
 tumour_common <- tumour_data[, colnames(tumour_data) %in% common_genes]
@@ -195,7 +180,7 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         quickCor = 1,
                                         randomSeed = 1234,
                                         verbose = 3,
-                                        nPermutations = 50,
+                                        nPermutations = 100,
                                         referenceNetworks = 1,
                                         maxModuleSize = max(max(table(tumour_bwnet$colors)), 
                                                             max(table(control_bwnet$colors))),
@@ -207,7 +192,7 @@ end_time - start_time
 # plot results
 modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 
-save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/signed/GTEx_tumour_modulePreservation(n=50).RData")
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/GTEx/signed/GTEx_tumour_modulePreservation(n=100).RData")
 
 # non-preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
