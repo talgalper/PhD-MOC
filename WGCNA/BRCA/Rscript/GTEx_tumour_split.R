@@ -290,6 +290,7 @@ temp <- temp[!duplicated(temp$Row.names), ]
 ## create network
 # load in data for Ubuntu
 load("../../../../Desktop/WGCNA_BRCA_large_files/tumour_TOM.RData")
+# load in for Mac
 load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/tumour_TOM.RData")
 load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/data_norm_filt_GTEx.RData")
 
@@ -319,7 +320,7 @@ edges <-  data.frame(
 
 # load graph data for Ubuntu
 load("../../../../Desktop/WGCNA_BRCA_large_files/igraph_data.RData")
-# load data fro mac
+# load data for mac
 load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/igraph_data.RData")
 
 
@@ -331,7 +332,7 @@ library(igraph)
 # Create an igraph object
 network = graph_from_data_frame(edges, directed = FALSE)
 
-# Assign colors to modules
+# Assign colours to modules
 moduleColorsSubset = tumour_bwnet$colors[geneNames %in% nonPreservedGenes]
 colorPalette = unique(moduleColorsSubset)
 names(colorPalette) = unique(moduleColorsSubset)
