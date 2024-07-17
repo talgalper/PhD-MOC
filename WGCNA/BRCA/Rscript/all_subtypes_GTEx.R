@@ -39,6 +39,8 @@ GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
 # combine all tumour samples
 all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 
+rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+
 # QC + combines tumour and control samples
 all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
                                            control_matrix = GTEx_ENS)
@@ -75,39 +77,39 @@ PCA_results_GTEx <- plot_PCA(expr_data = all_wgcna_data,
 
 
 # identify outliers
-dynamicCut <- cutreeDynamic(PCA_results_GTEx$htree, distM = dist(all_wgcna_data), method = "tree", deepSplit = 2, pamRespectsDendro = FALSE)
-outlierSamples <- which(dynamicCut == 0)
-cleanExprData <- all_wgcna_data[-outlierSamples, ]
-outlierSamples <- all_wgcna_data[outlierSamples, ]
-outlierSamples <- sample_info[sample_info$sample %in% rownames(outlierSamples), ]
-
-sample_info_filt <- sample_info[sample_info$sample %in% rownames(cleanExprData), ]
-
-# re-plot PCA with outliers removed
-PCA_results_filt_GTEx <- plot_PCA(expr_data = cleanExprData,
-                                  sample_info = sample_info_filt,
-                                  plot_tree = T,
-                                  output_plot_data = T)
-
-# choose soft thresholding power
+#dynamicCut <- cutreeDynamic(PCA_results_GTEx$htree, distM = dist(all_wgcna_data), method = "tree", deepSplit = 2, pamRespectsDendro = FALSE)
+#outlierSamples <- which(dynamicCut == 0)
+#cleanExprData <- all_wgcna_data[-outlierSamples, ]
+#outlierSamples <- all_wgcna_data[outlierSamples, ]
+#outlierSamples <- sample_info[sample_info$sample %in% rownames(outlierSamples), ]
+#
+#sample_info_filt <- sample_info[sample_info$sample %in% rownames(cleanExprData), ]
+#
+## re-plot PCA with outliers removed
+#PCA_results_filt_GTEx <- plot_PCA(expr_data = cleanExprData,
+#                                  sample_info = sample_info_filt,
+#                                  plot_tree = T,
+#                                  output_plot_data = T)
+#
+## choose soft thresholding power
 sft_data_unsigned <- pick_power(WGCNA_data = all_wgcna_data,
                                 network_type = "unsigned")
 
-sft_cleanData_unsigned <- pick_power(WGCNA_data = cleanExprData,
-                                     network_type = "unsigned")
+sft_data_signed <- pick_power(WGCNA_data = all_wgcna_data,
+                              network_type = "signed")
 
-#sft_data_signed <- pick_power(WGCNA_data = cleanExprData,
-#                              network_type = "signed")
+
+#sft_cleanData_unsigned <- pick_power(WGCNA_data = cleanExprData,
+#                                     network_type = "unsigned")
+
 
 # identify modules: TOMType = "signed", networkType = "unsigned"
 # split data
-control_expr <- cleanExprData[rownames(cleanExprData) %in% colnames(normal_unstranded), ]
-tumour_expr <- cleanExprData[!rownames(cleanExprData) %in% colnames(normal_unstranded), ]
+#control_expr <- cleanExprData[rownames(cleanExprData) %in% colnames(normal_unstranded), ]
+#tumour_expr <- cleanExprData[!rownames(cleanExprData) %in% colnames(normal_unstranded), ]
 
 # clean env
-rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded,
-   control_info, lumA_info, lumB_info, her2_info, basal_info,
-   all_subtype_counts_filt, all_subtypes, dynamicCut)
+rm(control_info, lumA_info, lumB_info, her2_info, basal_info)
 collectGarbage()
 
 # RESTART R AND LOAD WGCNA ONLY
@@ -118,27 +120,98 @@ registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
 
-control_bwnet <- network_modules(WGCNA_data = control_expr,
-                                 Power = 8)
-tumour_bwnet <- network_modules(WGCNA_data = tumour_expr,
-                                Power = 8)
+bwnet <- network_modules(WGCNA_data = all_wgcna_data,
+                         Power = 6)
 
-save(control_bwnet, file = "BRCA/RData/all_TCGA/control_bwnet.RData")
-save(tumour_bwnet, file = "BRCA/RData/all_TCGA/tumour_bwnet.RData")
-load("BRCA/RData/all_TCGA/all_subtype_bwnet.RData")
+
+save(bwnet, file = "BRCA/RData/all_together/bwnet.RData")
+load("BRCA/RData/all_together/bwnet.RData")
 
 
 
-# create tumour and control adj matrix
-all_adjacencies <- sep_adj_matrix(WGCNA_data = all_wgcna_data,
-                                  tumour_expr_df = all_subtypes,
-                                  control_expr_df = normal_unstranded,
-                                  power = 10)
 
-# save adj matrix
-save(all_adjacencies, file = "../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
+# module preservation using expr data
+# split expr data but use colours from combined
+all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                           control_matrix = GTEx_ENS,
+                                           sep = T)
+# normalisation (transposes matrix)
+tumour_wgcna_data <- vst_norm(all_subtype_counts_filt$tumour)
+control_wgcna_data <- vst_norm(all_subtype_counts_filt$control)
 
-load("../../../../Desktop/WGCNA_BRCA_large_files/all_subtype_adj.RData")
+common_genes <- intersect(colnames(tumour_wgcna_data), colnames(control_wgcna_data))
+tumour_common <- tumour_wgcna_data[, colnames(tumour_wgcna_data) %in% common_genes]
+control_common <- control_wgcna_data[, colnames(control_wgcna_data) %in% common_genes]
+
+colours <- bwnet$colors
+colours_common <- colours[names(colours) %in% common_genes]
+
+multidata <- multiData(Control = control_common, 
+                       Tumour = tumour_common)
+multicolour <- list(Control = colours_common)
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+preserved_modules <- modulePreservation(multiData = multidata,
+                                        multiColor = multicolour,
+                                        dataIsExpr = T,
+                                        networkType = "unsigned",
+                                        quickCor = 1,
+                                        randomSeed = 1234,
+                                        verbose = 3,
+                                        nPermutations = 50,
+                                        referenceNetworks = 1,
+                                        maxModuleSize = max(table(colours_common)),
+                                        calculateClusterCoeff = F,
+                                        parallelCalculation = T)
+end_time <- Sys.time()
+end_time - start_time
+
+# plot results
+modulePreservation_plt <- plot_preserved_modules(preserved_modules)
+
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_together/modulePreservation(n=50).RData")
+
+# non-preserved modules
+plot_data <- modulePreservation_plt$plot_data$plot_data
+non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
+
+nonPreservedGenes <- common_genes[tumour_common_colours %in% non_preserved_modules$cluster]
+
+temp <- approved_openTargets[approved_openTargets$`Target ID` %in% nonPreservedGenes, ]
+
+table(unique(approved_openTargets$`Target Approved Symbol`) %in% temp$`Target Approved Symbol`)
+table(unique(OpenTargets$Target.ID) %in% temp$`Target Approved Symbol`)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
