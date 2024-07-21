@@ -1,16 +1,14 @@
 library(multiWGCNA)
 library(WGCNA)
-library(TCGAbiolinks)
-library(SummarizedExperiment)
 library(tidyverse)
 library(DESeq2)
 library(edgeR)
-library(gridExtra)
 library(doParallel)
 
 nCores = 8
 registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
+
 
 # load data
 load("../BRCA_pipe/RData/LumA/DE_data.RData")
@@ -35,15 +33,15 @@ GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
 
 # subtype sample info
 control_info <- data.frame(sample = colnames(GTEx_ENS),
-                           group = rep("control", ncol(GTEx_ENS)))
+                           group = rep("Control", ncol(GTEx_ENS)))
 lumA_info <- data.frame(sample = colnames(LumA_unstranded),
-                        group = rep("lumA", ncol(LumA_unstranded)))
+                        group = rep("LumA", ncol(LumA_unstranded)))
 lumB_info <- data.frame(sample = colnames(LumB_unstranded),
-                        group = rep("lumB", ncol(LumB_unstranded)))
+                        group = rep("LumB", ncol(LumB_unstranded)))
 her2_info <- data.frame(sample = colnames(Her2_unstranded),
                         group = rep("Her2", ncol(Her2_unstranded)))
 basal_info <- data.frame(sample = colnames(Basal_unstranded),
-                         group = rep("basal", ncol(Basal_unstranded)))
+                         group = rep("Basal", ncol(Basal_unstranded)))
 sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
 rm(lumA_info, lumB_info, her2_info, basal_info, control_info)
 
@@ -68,81 +66,39 @@ wgcna_data <- rbind(control_norm, tumour_norm)
 wgcna_data <- as.data.frame(t(wgcna_data))
 
 
-wgcna_data_subset <- c(colnames(GTEx_ENS)[1:10],
-                       colnames(LumA_unstranded)[1:10],
-                       colnames(LumB_unstranded)[1:10],
-                       colnames(Her2_unstranded)[1:10],
-                       colnames(Basal_unstranded)[1:10])
+wgcna_data_subset <- c(colnames(GTEx_ENS)[1:30],
+                       colnames(LumA_unstranded)[1:20],
+                       colnames(LumB_unstranded)[1:20],
+                       colnames(Her2_unstranded)[1:20],
+                       colnames(Basal_unstranded)[1:20])
 wgcna_data_subset <- wgcna_data[, colnames(wgcna_data) %in% wgcna_data_subset]
-wgcna_data_subset <- wgcna_data_subset[1:1000, 1:ncol(wgcna_data_subset)]
+wgcna_data_subset <- wgcna_data_subset[1:2000, 1:ncol(wgcna_data_subset)]
+colnames(wgcna_data_subset) <- gsub("-", ".", colnames(wgcna_data_subset)) 
 
 
 sampleTable <- sample_info
+sampleTable$sample <- gsub("-", ".", sampleTable$sample)
 sampleTable <- sampleTable[sampleTable$sample %in% colnames(wgcna_data_subset), ]
-rownames(sampleTable) <- sampleTable[ , 1]
-sampleTable$state <- ifelse(sampleTable$group == "control", "control", "tumour")
-
+sampleTable$state <- ifelse(sampleTable$group == "Control", "Healthy", "Tumour")
 colnames(sampleTable) <- c("Sample", "Subtype", "State")
-sampleTable <- subset(sampleTable, select = c("Sample", "State", "Subtype"))
+sampleTable <- subset(sampleTable, select = c("Sample", "State", "Subtype")) # reorder columns
+rownames(sampleTable) <- NULL
 
-sampleTable <- DataFrame(sampleTable)
+conditions1 = sort(unique(sampleTable[,2]))
+conditions2 = sort(unique(sampleTable[,3]))
 
-# define variables for `constructNetworks` function
-se <- SummarizedExperiment(assay = list(WGCNA_data = wgcna_data_subset), 
-                           colData = list(Sample = sampleTable$Sample,
-                                          State = sampleTable$State,
-                                          Subtype = sampleTable$Subtype),
-                           rowData = rownames(wgcna_data_subset))
+table(sampleTable$Sample %in% colnames(wgcna_data_subset)) # check for miss-matches
 
-conditions1 = unique(sampleTable[,2])
-conditions2 = unique(sampleTable[,3])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# define variables for `constructNetworks` function
-selectedBarcodes <- c(colnames(LumA_unstranded), colnames(normal_unstranded))
-
-sampleTable <- common[ ,-3]
-sampleTable <- sampleTable[sampleTable$cases %in% selectedBarcodes, ]
-
-conditions1 = unique(sampleTable[,2])
-conditions2 = unique(sampleTable[,3])
-
-startTime <- Sys.time()
 # Construct the combined networks and all the sub-networks
-LumA_networks <-  constructNetworks(wgcna_data, sampleTable, conditions1, conditions2,
-                                    networkType = "unsigned", power = 10,
-                                    minModuleSize = 40, maxBlockSize = 25000,
-                                    reassignThreshold = 0, minKMEtoStay = 0.7,
-                                    mergeCutHeight = 0.10, numericLabels = TRUE,
-                                    pamRespectsDendro = FALSE, verbose=3,
-                                    saveTOMs = TRUE)
+multiWGCNA_results <- constructNetworks(wgcna_data_subset, sampleTable, conditions1, conditions2,
+                                        networkType = "unsigned", power = 10,
+                                        minModuleSize = 40, maxBlockSize = 45000,
+                                        reassignThreshold = 0, minKMEtoStay = 0.7,
+                                        mergeCutHeight = 0.10, numericLabels = TRUE,
+                                        pamRespectsDendro = FALSE, verbose=3,
+                                        saveTOMs = FALSE)
 
-elapsedTime <- Sys.time() - startTime
-elapsedTime
 
-# Save results to a list
-results=list()
-results$overlaps=iterate(autism_networks, overlapComparisons, plot=TRUE)
-
-# Check the reciprocal best matches between the autism and control networks
-head(results$overlaps$autism_vs_controls$bestMatches)
 
 
 
