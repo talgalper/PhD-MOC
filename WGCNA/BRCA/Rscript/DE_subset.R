@@ -60,6 +60,7 @@ DE_results <- DE_analysis(counts_matrix = DE_counts_filt$counts_filt,
 # check to see if drugs are in DE dataset
 OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
 OpenTargets_raw <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
+OpenTargets_updated <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_updated.csv")
 
 NIH_targets <- read.table("../BRCA_pipe/NIH_BRCA_approved_drugs.txt", sep = "\t")
 colnames(NIH_targets)[1] <- "approved_drugs"
@@ -69,6 +70,10 @@ approved_openTargets <- merge(NIH_targets, OpenTargets_raw, by.x = "approved_dru
 approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$approved_drugs) | !duplicated(approved_openTargets$`Target ID`), ]
 
 # number of targets in DE dataset
+#temp <- merge(approved_openTargets, DE_results$dif_exp, by.x = "Target ID", by.y = "gene_id", all.x = T)
+#temp <- temp[!duplicated(temp$`Target Approved Symbol`), ]
+#table(is.na(temp$logFC))
+
 temp <- approved_openTargets[approved_openTargets$`Target ID` %in% DE_results$dif_exp$gene_id, ]
 table(unique(approved_openTargets$`Target Approved Symbol`) %in% unique(temp$`Target Approved Symbol`))
 
@@ -145,16 +150,100 @@ topHubGenes <- chooseTopHubInEachModule(tumour_DE_subset, colorh = tumour_bwnet$
 
 
 
-library(clusterProfiler)
-enrichment <- enrichGO(names(tumour_bwnet$colors), 
-                       keyType = "ENSEMBL",
-                       OrgDb = "org.Hs.eg.db")
 
 
 
+### analyse each cluster individually ###
+module_gene_mapping <- as.data.frame(tumour_bwnet$colors)
+module_gene_mapping <- rownames_to_column(module_gene_mapping)
+colnames(module_gene_mapping) <- c("gene_id", "module")
+
+temp <- approved_openTargets[approved_openTargets$`Target ID` %in% module_gene_mapping$gene_id, ]
+table(unique(approved_openTargets$`Target Approved Symbol`) %in% unique(temp$`Target Approved Symbol`))
+
+# try converting to external_gene_name first to try and avoid conflict between Ensembl IDs with OpenTargets
+# OpenTargets bloke was smoking meth when mapping ensembl IDs to gene symbols
+OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
+OpenTargets_raw <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
+OpenTargets_updated <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_updated.csv")
+
+NIH_targets <- read.table("../BRCA_pipe/NIH_BRCA_approved_drugs.txt", sep = "\t")
+colnames(NIH_targets)[1] <- "approved_drugs"
+NIH_targets$approved_drugs <- toupper(NIH_targets$approved_drugs)
+
+approved_openTargets <- merge(NIH_targets, OpenTargets_raw, by.x = "approved_drugs", by.y = "Drug Name")
+approved_openTargets <- approved_openTargets[!duplicated(approved_openTargets$approved_drugs) | !duplicated(approved_openTargets$`Target ID`), ]
+
+
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                         filters = "ensembl_gene_id", 
+                         values = module_gene_mapping$gene_id, 
+                         mart = ensembl)
+
+genes_converted <- merge(module_gene_mapping, genes_converted, by.x = "gene_id", by.y = "ensembl_gene_id", all.x = T)
+
+OpenTargets_mapping <- merge(genes_converted, OpenTargets_raw, by.x = "gene_id", by.y = "Target ID", all.x = T)
+OpenTargets_mapping <- subset(OpenTargets_mapping, select = c("gene_id", "Target Approved Symbol", "external_gene_name"))
+
+OpenTargets_mapping$combined <- ifelse(OpenTargets_mapping$external_gene_name == "" | is.na(OpenTargets_mapping$external_gene_name), 
+                                       OpenTargets_mapping$`Target Approved Symbol`, OpenTargets_mapping$external_gene_name)
+OpenTargets_mapping$combined <- ifelse(is.na(OpenTargets_mapping$combined), OpenTargets_mapping$gene_id, OpenTargets_mapping$combined)
+OpenTargets_mapping <- OpenTargets_mapping[!duplicated(OpenTargets_mapping$gene_id) | !duplicated(OpenTargets_mapping$combined), ]
+
+
+approved_openTargets_EGN <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                                  filters = "ensembl_gene_id", 
+                                  values = unique(approved_openTargets$`Target ID`), 
+                                  mart = ensembl)
+approved_openTargets_EGN <- merge(approved_openTargets, approved_openTargets_EGN, by.x = "Target ID", by.y = "ensembl_gene_id")
+approved_openTargets_EGN <- approved_openTargets_EGN[!duplicated(approved_openTargets_EGN$`Target ID`) & !duplicated(approved_openTargets_EGN$external_gene_name), ]
 
 
 
+# get list of genes in each module
+gene_modules <- list()
+for (colour in unique(tumour_bwnet$colors)) {
+  module <- module_gene_mapping[module_gene_mapping$module == colour, ]
+  gene_modules[[colour]] <- module
+  
+  rm(module, colour)
+}
+
+# map to gene symbols
+gene_modules_converted <- list()
+for (module in gene_modules) {
+  module <- merge(module, OpenTargets_mapping, all.x = T)
+  module_genes <- module$combined
+  
+  colour <- unique(module$module)
+  gene_modules_converted[[colour]] <- module_genes
+  
+  rm(colour, module_genes)
+}
+
+
+# count the number of targets in each module
+counts <- c()
+for (module in names(gene_modules_converted)) {
+  genes <- gene_modules_converted[[colour]]
+  
+  targets_in_genes <- approved_openTargets[approved_openTargets$`Target Approved Symbol` %in% genes, ]
+  targets_in_ensemblGenes <- approved_openTargets[approved_openTargets$`Target ID` %in% genes, ]
+  targets_in_genes <- rbind(targets_in_genes, targets_in_ensemblGenes)
+  
+  unique_targets <- unique(targets_in_genes$`Target Approved Symbol`)
+  counts <- append(counts, length(unique_targets))
+  
+  rm(genes, unique_targets, targets_in_genes, colour)
+}
+
+# does not add up to 23 because some gene ensembles = more than one gene symbol
+targets_in_modules <- data.frame(module = names(gene_modules),
+                                 counts = counts)
+rm(counts)
 
 
 
