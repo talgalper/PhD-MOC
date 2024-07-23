@@ -196,26 +196,6 @@ table(unique(OpenTargets$Target.ID) %in% temp$`Target Approved Symbol`)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### trait correlation
 sample_info <- data.frame(row.names = c(colnames(all_subtypes), colnames(GTEx_ENS)),
                           status = c(rep("tumour", ncol(all_subtypes)), rep("control", ncol(GTEx_ENS))),

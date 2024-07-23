@@ -248,4 +248,51 @@ rm(counts)
 
 
 
+### preserved modules ###
+# module preservation using expr data
+# need to filter and normalise GTEx data
+GTEx_norm <- vst_norm(wgcna_counts_filt$control)
+
+
+
+multidata <- multiData(Tumour = tumour_DE_subset,
+                       Control = GTEx_norm)
+multicolour <- list(Tumour = tumour_bwnet$colors)
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+preserved_modules <- modulePreservation(multiData = multidata,
+                                        multiColor = multicolour,
+                                        dataIsExpr = T,
+                                        networkType = "unsigned",
+                                        quickCor = 1,
+                                        randomSeed = 1234,
+                                        verbose = 3,
+                                        nPermutations = 50,
+                                        referenceNetworks = 1,
+                                        maxModuleSize = max(table(tumour_bwnet$colors)),
+                                        calculateClusterCoeff = F,
+                                        parallelCalculation = T)
+end_time <- Sys.time()
+end_time - start_time
+
+# plot results
+modulePreservation_plt <- plot_preserved_modules(preserved_modules)
+
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_together/modulePreservation(n=50).RData")
+
+# non-preserved modules
+plot_data <- modulePreservation_plt$plot_data$plot_data
+non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
+
+nonPreservedGenes <- common_genes[tumour_common_colours %in% non_preserved_modules$cluster]
+
+
 
