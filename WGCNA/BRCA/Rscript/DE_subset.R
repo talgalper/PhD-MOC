@@ -56,6 +56,8 @@ DE_counts_filt <- filter_low_expr(disease_data = all_subtypes,
 DE_results <- DE_analysis(counts_matrix = DE_counts_filt$counts_filt,
                           sample_info = DE_counts_filt$sample_info)
 
+# save to onedrive (macOS only)
+save(DE_results, DE_counts_filt, DE_genes, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/DE_subset_data.RData")
 
 # check to see if drugs are in DE dataset
 OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
@@ -224,7 +226,7 @@ for (module in gene_modules) {
   rm(colour, module_genes)
 }
 
-
+## NEED TO FIX OPENTARGETS DATASET FIRST ##
 # count the number of targets in each module
 counts <- c()
 for (module in names(gene_modules_converted)) {
@@ -253,8 +255,6 @@ rm(counts)
 # need to filter and normalise GTEx data
 GTEx_norm <- vst_norm(wgcna_counts_filt$control)
 
-
-
 multidata <- multiData(Tumour = tumour_DE_subset,
                        Control = GTEx_norm)
 multicolour <- list(Tumour = tumour_bwnet$colors)
@@ -275,7 +275,7 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         quickCor = 1,
                                         randomSeed = 1234,
                                         verbose = 3,
-                                        nPermutations = 50,
+                                        nPermutations = 100,
                                         referenceNetworks = 1,
                                         maxModuleSize = max(table(tumour_bwnet$colors)),
                                         calculateClusterCoeff = F,
@@ -283,10 +283,57 @@ preserved_modules <- modulePreservation(multiData = multidata,
 end_time <- Sys.time()
 end_time - start_time
 
-# plot results
+
+# plot preserved modules
+plot_preserved_modules <- function(modulePreservation_data) {
+  plot_data <- data.frame(
+    cluster = rownames(modulePreservation_data$preservation$Z$ref.Tumour$inColumnsAlsoPresentIn.Control),
+    moduleSize = modulePreservation_data$preservation$observed$ref.Tumour$inColumnsAlsoPresentIn.Control$moduleSize,
+    medianRank.pres = modulePreservation_data$preservation$observed$ref.Tumour$inColumnsAlsoPresentIn.Control$medianRank.pres,
+    Zsummary.pres = modulePreservation_data$preservation$Z$ref.Tumour$inColumnsAlsoPresentIn.Control$Zsummary.pres
+  )
+  
+  modColors <- unique(plot_data$cluster) 
+  plotData <-  plot_data[, c(2:ncol(plot_data), 1)]
+  #plotMods <-  !(modColors %in% c("grey", "gold")) # excludes gold and grey i think
+  
+  library(ggplot2)
+  library(ggrepel)
+  library(gridExtra)
+  plot1 <- ggplot(plot_data, aes(x = moduleSize, y = medianRank.pres)) +
+    geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
+    scale_x_log10() +
+    labs(x = "Module size", y = "Median Rank") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+    geom_hline(yintercept = 8, linetype = "dashed") +
+    annotate("text", x = 1.5, y = 8.5, label = "Above", size = 3) +
+    scale_fill_manual(values = modColors) 
+  
+  
+  plot2 <- ggplot(plot_data, aes(x = moduleSize, y = Zsummary.pres)) +
+    geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
+    scale_x_log10() +
+    labs(x = "Module size", y = "Z Summary") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+    geom_hline(yintercept = 10, linetype = "dashed") +
+    annotate("text", x = 1.5, y = 9, label = "Below", size = 3) +
+    scale_fill_manual(values = modColors)
+  
+  # Display both plots side by side
+  grid.arrange(plot1, plot2, ncol = 2)
+  
+  return(list(plot_data = list(plot_data = plot_data, modColors = modColors),
+              meadianRank_plt = plot1,
+              Zsummary_plt = plot2))
+}
+
 modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 
-save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_together/modulePreservation(n=50).RData")
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/DE_subset/modulePreservation(n=100).RData")
 
 # non-preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
