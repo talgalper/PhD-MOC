@@ -68,6 +68,11 @@ DrugBank_targets_unique <- DrugBank_targets_unique[!duplicated(DrugBank_targets_
 temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% rownames(DE_counts_filt$low_exp_genes), ]
 temp <- DE_counts_filt$low_exp_genes[rownames(DE_counts_filt$low_exp_genes) %in% DrugBank_targets_unique$ensembl_gene_id, ] # get counts of low_expr_genes
 
+# DE tagrtes
+temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% DE_results$dif_exp$gene_id, ]
+table(unique(DrugBank_targets_unique$drugBank_target) %in% unique(temp$drugBank_target))
+
+
 # check to see if drugs are in DE dataset
 #OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
 #OpenTargets_raw <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
@@ -124,10 +129,9 @@ save(tumour_bwnet, file = "BRCA/RData/DE_subset/tumour_bwnet.RData")
 # intramodular connectivity
 colours <- labels2colors(tumour_bwnet$colors)
 tumour_kWithin <- intramodularConnectivity.fromExpr(tumour_DE_subset, colours, power = 6)
-save(tumour_kWithin, file = "BRCA/RData/DE_subset/tumour_kWithin.RData")
-
 rownames(tumour_kWithin) <- colnames(tumour_DE_subset)
 tumour_kWithin <- tumour_kWithin[order(-tumour_kWithin$kWithin), ]
+save(tumour_kWithin, file = "BRCA/RData/DE_subset/tumour_kWithin.RData")
 
 
 # get top 10 genes for connectivity for each non-preserved module
@@ -144,7 +148,7 @@ for (module in unique(tumour_bwnet$colors)) {
 tumour_topGenes <- melt(tumour_topGenes)
 colnames(tumour_topGenes) <- c("ensembl_id", "module")
 
-temp <- approved_openTargets[approved_openTargets$`Target ID` %in% tumour_topGenes$ensembl_id, ]
+temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% tumour_topGenes$ensembl_id, ]
 
 temp <- merge(tumour_kWithin, DrugBank_targets_unique, by.x = "row.names", by.y = "ensembl_gene_id")
 temp <- temp[!duplicated(temp$Row.names), ]

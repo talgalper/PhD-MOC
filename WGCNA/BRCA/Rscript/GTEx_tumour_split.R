@@ -163,6 +163,8 @@ save(tumour_adj, control_adj, file = "../../../../Desktop/WGCNA_BRCA_large_files
 
 
 # module preservation using expr data
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/data_norm_filt_GTEx.RData")
+
 common_genes <- intersect(colnames(tumour_data), colnames(control_data))
 tumour_common <- tumour_data[, colnames(tumour_data) %in% common_genes]
 control_common <- control_data[, colnames(control_data) %in% common_genes]
@@ -234,6 +236,9 @@ tumour_kWithin <- intramodularConnectivity.fromExpr(tumour_data, colours, power 
 rownames(tumour_kWithin) <- colnames(tumour_data)
 
 save(tumour_kWithin, file = "BRCA/RData/GTEx/tumour_kWithin.RData")
+
+tumour_kWithin <- tumour_kWithin[order(-tumour_kWithin$kWithin), ]
+
 
 # get top 10 genes for connectivity for each non-preserved module
 tumour_topGenes = list()
@@ -362,6 +367,10 @@ for (module in colnames(tumour_module_pvals)) {
 }
 
 top_pval_genes <- melt(top_pval_genes)
+
+temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% top_pval_genes$value, ]
+table(unique(DrugBank_targets_unique$drugBank_target) %in% unique(temp$drugBank_target))
+
 
 temp <- approved_openTargets[approved_openTargets$`Target ID` %in% top_pval_genes$value, ]
 table(unique(approved_openTargets$`Target Approved Symbol`) %in% unique(temp$`Target Approved Symbol`))
