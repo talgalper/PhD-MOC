@@ -1,0 +1,68 @@
+﻿drug,drugBank_target,Uniprot_ID
+abemaciclib,CDK4,P11802
+abemaciclib,CDK6,Q00534
+trastuzumab emtansine,ERBB2,P04626
+alpelisib,PIK3CA,P42336
+anastrozole,CYP19A1,P11511
+capivasertib,AKT1,P31749
+capivasertib,AKT2,P31751
+capivasertib,AKT3,Q9Y243
+elacestrant dihydrochloride,NA,NA
+elacestrant,ESR1,P03372
+everolimus,MTOR,P42345
+exemestane,CYP19A1,P11511
+fam-trastuzumab deruxtecan-nxki,NA,NA
+trastuzumab deruxtecan,FCGR1A,P12314
+trastuzumab deruxtecan,TOP1,P11387
+fulvestrant,ESR1,P03372
+lapatinib ditosylate,NA,NA
+lapatinib,EGFR,P00533
+lapatinib,ERBB2,P04626
+letrozole,CYP19A1,P11511
+margetuximab-cmkb,NA,NA
+margetuximab,ERBB2,P04626
+neratinib maleate,NA,NA
+neratinib,EGFR,P00533
+olaparib,PARP1,P09874
+olaparib,PARP2,Q9UGN5
+olaparib,PARP3,Q9Y6F1
+olaparib,AKR1C3,P42330
+palbociclib,CDK4,P11802
+palbociclib,CDK6,Q00534
+pembrolizumab,PDCD1,Q15116
+pembrolizumab,CD274,Q9NZQ7
+pertuzumab,ERBB2,P04626
+"pertuzumab, trastuzumab, and hyaluronidase-zzxf",NA,NA
+hyaluronidase,TGFB1,P01137
+ribociclib ,CDK4,P11802
+ribociclib ,CDK6,Q00534
+sacituzumab govitecan-hziy,NA,NA
+sacituzumab govitecan,TACSTD2,P09758
+sacituzumab govitecan,TOP1,P11387
+sacituzumab govitecan,FUBP1,Q96AE4
+talazoparib tosylate ,NA,NA
+talazoparib ,PARP1,P09874
+talazoparib ,PARP2,Q9UGN5
+tamoxifen citrate,NA,NA
+tamoxifen,ESR1,P03372
+tamoxifen,ESR2,Q92731
+tamoxifen,PRKCA,P17252
+tamoxifen,PRKCB,P05771
+tamoxifen,PRKCD,Q05655
+tamoxifen,PRKCE,Q02156
+tamoxifen,PRKCG,P05129
+tamoxifen,PRKCI,P41743
+tamoxifen,PRKCQ,Q04759
+tamoxifen,PRKCZ,Q05513
+tamoxifen,SHBG,P04278
+tamoxifen,EBP,Q15125
+tamoxifen,AR,P10275
+tamoxifen,KCNH2,Q12809
+tamoxifen,NR1I2,O75469
+tamoxifen,ESRRG,P62508
+tamoxifen,MAPK8,P45983
+toremifene,ESR1,P03372
+toremifene,SHBG,P04278
+trastuzumab,ERBB2,P04626
+tucatinib,ERBB2,P04626
+tucatinib,ERBB3,P21860
