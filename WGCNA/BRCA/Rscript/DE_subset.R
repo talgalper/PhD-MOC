@@ -343,3 +343,8 @@ nonPreservedGenes <- common_genes[tumour_common_colours %in% non_preserved_modul
 
 
 
+
+
+
+#### PCSF with DE subset and weighted with druggability scores (using new druggability score formulae) ####
+
