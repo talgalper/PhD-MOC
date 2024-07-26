@@ -126,6 +126,7 @@ tumour_bwnet <- network_modules(WGCNA_data = tumour_DE_subset,
 
 save(tumour_bwnet, file = "BRCA/RData/DE_subset/tumour_bwnet.RData")
 
+
 # intramodular connectivity
 colours <- labels2colors(tumour_bwnet$colors)
 tumour_kWithin <- intramodularConnectivity.fromExpr(tumour_DE_subset, colours, power = 6)
@@ -178,6 +179,7 @@ temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% mod
 
 # try converting to external_gene_name first to try and avoid conflict between Ensembl IDs with OpenTargets
 # OpenTargets bloke was smoking meth when mapping ensembl IDs to gene symbols
+# or maybe i was
 
 #OpenTargets <- read.csv("../BRCA_pipe/OpenTargets_data/OpenTargets_unique_drug.csv", row.names = 1)
 #OpenTargets_raw <- read_tsv("../BRCA_pipe/OpenTargets_data/breast_carcinoma_known_drugs.tsv")
@@ -192,7 +194,6 @@ temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% mod
 
 
 
-
 # get list of genes in each module
 gene_modules <- list()
 for (colour in unique(tumour_bwnet$colors)) {
@@ -201,18 +202,6 @@ for (colour in unique(tumour_bwnet$colors)) {
   
   rm(module, colour)
 }
-
-# map to gene symbols. No required for drugbank targets
-#gene_modules_converted <- list()
-#for (module in gene_modules) {
-#  module <- merge(module, DrugBank_targets_unique, by.x = "gene_id", by.y = "ensembl_gene_id", all.x = T)
-#  module_genes <- module$gene_id
-#  
-#  colour <- unique(module$module)
-#  gene_modules_converted[[colour]] <- module_genes
-#  
-#  rm(colour, module_genes, module)
-#}
 
 # count the number of targets in each module
 counts <- c()
