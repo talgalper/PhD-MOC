@@ -202,27 +202,116 @@ rm(counts)
 
 
 
-## module preservation using seperate expr but combined colours and on the DE subset data
-load("BRCA/RData/all_together/bwnet.RData")
+### module preservation using seperate expr but combined colours and on the DE subset data ###
 load("../../../../Desktop/WGCNA_BRCA_large_files/DE_subset_data.RData") # for ubuntu
+
+load("../BRCA_pipe/RData/LumA/DE_data.RData")
+load("../BRCA_pipe/RData/LumB/DE_data.RData")
+load("../BRCA_pipe/RData/Her2/DE_data.RData")
+load("../BRCA_pipe/RData/basal/DE_data.RData")
+load("../BRCA_pipe/RData/TCGA_normal.RData")
+
+# load data
+GTEx_data <- read.table("../BRCA_pipe/gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
+colnames(GTEx_data) <- GTEx_data[1, ]
+GTEx_data <- GTEx_data[-1, -1]
+rownames(GTEx_data) <- NULL
+
+GTEx_ENS <- column_to_rownames(GTEx_data, "Name")
+rownames(GTEx_ENS) <- gsub("\\.\\d+", "", rownames(GTEx_ENS))
+GTEx_ENS <- GTEx_ENS[ , -1]
+rownames <- rownames(GTEx_ENS)
+GTEx_ENS <- as.data.frame(sapply(GTEx_ENS, as.numeric))
+rownames(GTEx_ENS) <- rownames
+rm(rownames, GTEx_data)
+GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
+
+# subtype sample info
+control_info <- data.frame(sample = colnames(GTEx_ENS),
+                           group = rep("control", ncol(GTEx_ENS)))
+lumA_info <- data.frame(sample = colnames(LumA_unstranded),
+                        group = rep("lumA", ncol(LumA_unstranded)))
+lumB_info <- data.frame(sample = colnames(LumB_unstranded),
+                        group = rep("lumB", ncol(LumB_unstranded)))
+her2_info <- data.frame(sample = colnames(Her2_unstranded),
+                        group = rep("Her2", ncol(Her2_unstranded)))
+basal_info <- data.frame(sample = colnames(Basal_unstranded),
+                         group = rep("basal", ncol(Basal_unstranded)))
+tumour_info <- rbind(lumA_info, lumB_info, her2_info, basal_info)
+sample_info <- rbind(control_info, tumour_info)
+rm(lumA_info, lumB_info, her2_info, basal_info, control_info, tumour_info)
+
+
+# combine all tumour samples
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+rm(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded, normal_unstranded)
+
+
+# need to re-filter on only tumour set. Make sure to read in WGCNA_functions.R again
+wgcna_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                     control_matrix = GTEx_ENS,
+                                     sep = F)
+# VST normalisation
+wgcna_data_norm <- vst_norm(counts_df = wgcna_counts_filt)
+
+# subset DE genes from WGCNA dataset
+DE_genes <- DE_results$dif_exp$gene_id
+DE_subset <- wgcna_data_norm[, colnames(wgcna_data_norm) %in% DE_genes]
+
+# check for targets using new drugbank targets
+DrugBank_targets <- read.csv("../BRCA_pipe/DrugBank_targets_ENS.csv")
+DrugBank_targets_unique <- na.omit(DrugBank_targets)
+DrugBank_targets_unique <- DrugBank_targets_unique[!duplicated(DrugBank_targets_unique$ensembl_gene_id), ]
+
+temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% colnames(DE_subset), ]
+table(unique(DrugBank_targets_unique$drugBank_target) %in% unique(temp$drugBank_target))
+
+# PCA
+PCA_all <- plot_PCA(expr_data = DE_subset,
+                    sample_info = sample_info,
+                    plot_tree = F,
+                    output_plot_data = T)
+
+# choose soft thresholding power
+sft_data <- pick_power(WGCNA_data = DE_subset,
+                       network_type = "unsigned")
+
+sft_data <- pick_power(WGCNA_data = DE_subset,
+                       network_type = "signed")
+
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+DE_all_bwnet <- network_modules(WGCNA_data = DE_subset,
+                                Power = 6)
+
+save(DE_all_bwnet, file = "BRCA/RData/DE_subset/DE_all_bwnet.RData")
+
+# load in individually filtered and normalised datasets
 load("../../../../Desktop/WGCNA_BRCA_large_files/data_norm_filt_GTEx.RData") # for ubuntu
 
-tumour_colours <- bwnet$colors[names(bwnet$colors) %in% colnames(tumour_data)]
-GTEx_colours <- bwnet$colors[names(bwnet$colors) %in% colnames(control_data)]
+tumour_colours <- DE_all_bwnet$colors[names(DE_all_bwnet$colors) %in% colnames(tumour_data)]
+GTEx_colours <- DE_all_bwnet$colors[names(DE_all_bwnet$colors) %in% colnames(control_data)]
 
-tumour_colours <- tumour_colours[names(tumour_colours) %in% DE_genes]
-GTEx_colours <- GTEx_colours[names(GTEx_colours) %in% DE_genes]
+#tumour_colours <- tumour_colours[names(tumour_colours) %in% DE_genes]
+#GTEx_colours <- GTEx_colours[names(GTEx_colours) %in% DE_genes]
 
-x <- tumour_data[, colnames(tumour_data) %in% names(bwnet$colors)]
-y <- control_data[, colnames(control_data) %in% names(bwnet$colors)]
+tumour_data <- tumour_data[, colnames(tumour_data) %in% names(DE_all_bwnet$colors)]
+control_data <- control_data[, colnames(control_data) %in% names(DE_all_bwnet$colors)]
 
-x <- x[, colnames(x) %in% DE_genes]
-y <- y[, colnames(y) %in% DE_genes]
+#x <- x[, colnames(x) %in% DE_genes]
+#y <- y[, colnames(y) %in% DE_genes]
 
-multidata <- multiData(Tumour = x,
-                       Control = y)
-multicolour <- list(Tumour = tumour_colours,
-                    Control = GTEx_colours)
+multidata <- multiData(Control = control_data,
+                       Tumour = tumour_data)
+multicolour <- list(Control = GTEx_colours,
+                    Tumour = tumour_colours)
 
 library(WGCNA)
 library(doParallel)
@@ -241,7 +330,7 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         verbose = 3,
                                         nPermutations = 100,
                                         referenceNetworks = 1,
-                                        maxModuleSize = max(table(bwnet$colors)),
+                                        maxModuleSize = max(table(DE_all_bwnet$colors)),
                                         calculateClusterCoeff = F,
                                         parallelCalculation = T)
 end_time <- Sys.time()
@@ -249,7 +338,7 @@ end_time - start_time
 
 modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 
-save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_together/modulePreservation_sepEXPR_combined_colour_DE_subset(n=100).RData")
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/DE_subset/modulePreservation_DE_subset_combined(n=100).RData")
 
 # non-preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
@@ -257,8 +346,11 @@ non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsu
 
 nonPreservedGenes <- names(tumour_colours)[tumour_colours %in% non_preserved_modules$cluster]
 
+temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% nonPreservedGenes, ]
+table(unique(DrugBank_targets_unique$drugBank_target) %in% unique(temp$drugBank_target))
 
 
+###########################################################
 
 
 
