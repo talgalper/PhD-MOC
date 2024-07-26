@@ -353,6 +353,33 @@ table(unique(DrugBank_targets_unique$drugBank_target) %in% unique(temp$drugBank_
 ###########################################################
 
 
+# XENA DE pipeline data GTEx vs TCGA
+xena_DE <- read.csv("../../../../Downloads/DEG_results_GTEX vs. TCGA.csv")
+xena_DE_targets <- merge(DrugBank_targets_unique, xena_DE, by.x = "drugBank_target", by.y = "X", all.x = T)
+xena_DE_targets <- xena_DE_targets[!duplicated(xena_DE_targets$drugBank_target), ]
+
+
+xena_DE <- read.csv("../../../../Downloads/DEG_results_GTEX vs. TCGA.csv")
+xena_DE <- xena_DE[xena_DE$logFC >= 1 | xena_DE$logFC <= -1, ]
+xena_DE <- xena_DE[xena_DE$adj.P.Val <= 0.05, ]
+
+xena_DE <- subset(xena_DE, select = c("X", "logFC"))
+colnames(xena_DE) <- c("xena_gene", "xena_logFC")
+
+DE_hits <- DE_results$hits
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                         filters = "ensembl_gene_id", 
+                         values = DE_hits$gene_id, 
+                         mart = ensembl)
+
+genes_converted <- merge(DE_hits, genes_converted, by = "gene_id", all.x = T)
+
+table(xena_DE$xena_gene %in% unique(genes_converted$external_gene_name))
+
+
+
 
 
 
