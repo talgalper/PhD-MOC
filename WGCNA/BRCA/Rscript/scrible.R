@@ -296,10 +296,8 @@ save(DE_all_bwnet, file = "BRCA/RData/DE_subset/DE_all_bwnet.RData")
 # load in individually filtered and normalised datasets
 load("../../../../Desktop/WGCNA_BRCA_large_files/data_norm_filt_GTEx.RData") # for ubuntu
 
-load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/data_norm_filt_GTEx.RData") # macOS
-
-tumour_colours <- bwnet$colors[names(bwnet$colors) %in% colnames(tumour_data)]
-GTEx_colours <- bwnet$colors[names(bwnet$colors) %in% colnames(control_data)]
+tumour_colours <- DE_all_bwnet$colors[names(DE_all_bwnet$colors) %in% colnames(tumour_data)]
+GTEx_colours <- DE_all_bwnet$colors[names(DE_all_bwnet$colors) %in% colnames(control_data)]
 
 #tumour_colours <- tumour_colours[names(tumour_colours) %in% DE_genes]
 #GTEx_colours <- GTEx_colours[names(GTEx_colours) %in% DE_genes]
@@ -348,71 +346,12 @@ non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsu
 
 nonPreservedGenes <- names(tumour_colours)[tumour_colours %in% non_preserved_modules$cluster]
 
-### analyse each cluster individually ###
-module_gene_mapping <- as.data.frame(bwnet$colors)
-module_gene_mapping <- rownames_to_column(module_gene_mapping)
-colnames(module_gene_mapping) <- c("gene_id", "module")
-
-# check for targets using new drugbank targets
-DrugBank_targets <- read.csv("../BRCA_pipe/DrugBank_targets_ENS.csv")
-DrugBank_targets_unique <- na.omit(DrugBank_targets)
-DrugBank_targets_unique <- DrugBank_targets_unique[!duplicated(DrugBank_targets_unique$ensembl_gene_id), ]
-
-temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% module_gene_mapping$gene_id, ]
+temp <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% nonPreservedGenes, ]
+table(unique(DrugBank_targets_unique$drugBank_target) %in% unique(temp$drugBank_target))
 
 
-## counts of drug targets in all_together bwnet
-# get list of genes in each module
-gene_modules <- list()
-for (colour in unique(bwnet$colors)) {
-  module <- module_gene_mapping[module_gene_mapping$module == colour, ]
-  gene_modules[[colour]] <- module
-  
-  rm(module, colour)
-}
+###########################################################
 
-# count the number of targets in each module
-counts <- c()
-for (module in gene_modules) {
-  genes <- module$gene_id
-  targets_in_genes <- DrugBank_targets_unique[DrugBank_targets_unique$ensembl_gene_id %in% genes, ]
-  unique_targets <- unique(targets_in_genes$drugBank_target)
-  counts <- append(counts, length(unique_targets))
-  
-  rm(genes, targets_in_genes, unique_targets)
-}
-
-# does not add up to 23 because some gene ensembles = more than one gene symbol
-targets_in_modules <- data.frame(module = names(gene_modules),
-                                 counts = counts)
-rm(counts)
-
-
-
-
-
-# data frame with all FDA drug targets, colnames:
-#   target
-#   non-preserved
-#   P-values
-#   Degree
-#   intramodular connectivity 
-results_master <- DrugBank_targets_unique
-results_master$non_preserved <- ifelse(results_master$ensembl_gene_id %in% nonPreservedGenes, "yes", "no")
-results_master$top10_module_member <- ifelse(results_master$ensembl_gene_id %in% top_pval_genes$value, "yes", "no")
-results_master <- merge(results_master, degree, by.x = "ensembl_gene_id", by.y = "gene_id", all.x = T)
-results_master <- merge(results_master, tumour_kWithin, by.x = "ensembl_gene_id", by.y = "row.names", all.x = T)
-results_master <- subset(results_master, select = c("drugBank_target", "drug", "non_preserved", 
-                                                    "top10_module_member", "degree", "kWithin"))
-results_master <- results_master[!duplicated(results_master$drugBank_target) | !duplicated(results_master$kWithin), ]
-results_master <- results_master[order(-results_master$kWithin), ]
-
-write.csv(results_master, "../../../../Desktop/split_unsigned_results.csv")
-
-# XENA DE pipeline data GTEx vs TCGA
-xena_DE <- read.csv("../../../../Downloads/DEG_results_GTEX vs. TCGA.csv")
-xena_DE_targets <- merge(DrugBank_targets_unique, xena_DE, by.x = "drugBank_target", by.y = "X", all.x = T)
-xena_DE_targets <- xena_DE_targets[!duplicated(xena_DE_targets$drugBank_target), ]
 
 
 
