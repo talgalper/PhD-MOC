@@ -1,0 +1,2 @@
+- Not sure why but new R script to query GraphQL doesnt work. Only returns 65 unique targets across 10,404 entries
+- Web tool worked in safari so just going to use that

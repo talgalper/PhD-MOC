@@ -1,0 +1,1 @@
+- DGIdb site recomends using API for ease of use so maybe get onto generating python API script

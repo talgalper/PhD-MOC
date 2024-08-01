@@ -1,0 +1,3 @@
+- Make README in this dir with detailes on what each folder contains
+- double and triple check that all input/output directories have been updated
+- reorganise pocketminer dir. update with a readme with run steps.

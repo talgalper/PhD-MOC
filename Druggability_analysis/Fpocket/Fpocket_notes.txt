@@ -1,0 +1,2 @@
+- Need to update pipeline to incorporate new directory
+- Create README within this directory with step-by-step run instructions as well as input/output

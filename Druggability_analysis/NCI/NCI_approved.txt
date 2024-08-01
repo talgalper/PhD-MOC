@@ -1,0 +1,86 @@
+Abemaciclib
+Abraxane
+Ado-Trastuzumab Emtansine
+Afinitor
+Afinitor Disperz
+Alpelisib
+Anastrozole
+Aredia
+Arimidex
+Aromasin
+Capecitabine
+Capivasertib
+Cyclophosphamide
+Docetaxel
+Doxorubicin Hydrochloride
+Elacestrant Dihydrochloride
+Ellence
+Enhertu
+Epirubicin Hydrochloride
+Eribulin Mesylate
+Everolimus
+Exemestane
+5-FU
+Fam-Trastuzumab Deruxtecan-nxki
+Fareston
+Faslodex
+Femara
+Fluorouracil Injection
+Fulvestrant
+Gemcitabine Hydrochloride
+Gemzar
+Goserelin Acetate
+Halaven
+Herceptin Hylecta
+Herceptin
+Ibrance
+Infugem
+Ixabepilone
+Ixempra
+Kadcyla
+Keytruda
+Kisqali
+Lapatinib Ditosylate
+Letrozole
+Lynparza
+Margenza
+Margetuximab-cmkb
+Megestrol Acetate
+Methotrexate Sodium
+Neratinib Maleate
+Nerlynx
+Olaparib
+Orserdu
+Paclitaxel
+Paclitaxel Albumin-stabilized Nanoparticle Formulation
+Palbociclib
+Pamidronate Disodium
+Pembrolizumab
+Perjeta
+Pertuzumab
+Pertuzumab, Trastuzumab, and Hyaluronidase-zzxf
+Phesgo
+Piqray
+Ribociclib
+Sacituzumab Govitecan-hziy
+Soltamox
+Talazoparib Tosylate
+Talzenna
+Tamoxifen Citrate
+Taxotere
+Tecentriq
+Tepadina
+Thiotepa
+Toremifene
+Trastuzumab
+Trastuzumab and Hyaluronidase-oysk
+Trexall
+Trodelvy
+Truqap
+Tucatinib
+Tukysa
+Tykerb
+Verzenio
+Vinblastine Sulfate
+Xeloda
+Zoladex

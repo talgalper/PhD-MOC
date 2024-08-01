@@ -1,0 +1,26 @@
+abemaciclib
+ado-trastuzumab emtansine
+alpelisib
+anastrozole
+capivasertib
+elacestrant dihydrochloride
+everolimus
+exemestane
+fam-trastuzumab deruxtecan-nxki
+fulvestrant
+lapatinib ditosylate
+letrozole
+margetuximab-cmkb
+neratinib maleate
+olaparib
+palbociclib
+pembrolizumab
+pertuzumab
+pertuzumab, trastuzumab, and hyaluronidase-zzxf
+ribociclib
+sacituzumab govitecan-hziy
+talazoparib tosylate
+tamoxifen citrate
+toremifene
+trastuzumab
+tucatinib
