@@ -382,5 +382,36 @@ table(xena_DE$xena_gene %in% unique(genes_converted$external_gene_name))
 
 
 
+# subtype sample info
+control_info <- data.frame(sample = colnames(GTEx_ENS),
+                           group = rep("control", ncol(GTEx_ENS)))
+normal_info <- data.frame(sample = colnames(normal_unstranded),
+                           group = rep("normal", ncol(normal_unstranded)))
+lumA_info <- data.frame(sample = colnames(LumA_unstranded),
+                        group = rep("lumA", ncol(LumA_unstranded)))
+lumB_info <- data.frame(sample = colnames(LumB_unstranded),
+                        group = rep("lumB", ncol(LumB_unstranded)))
+her2_info <- data.frame(sample = colnames(Her2_unstranded),
+                        group = rep("Her2", ncol(Her2_unstranded)))
+basal_info <- data.frame(sample = colnames(Basal_unstranded),
+                         group = rep("basal", ncol(Basal_unstranded)))
+sample_info <- rbind(control_info, normal_info, lumA_info, lumB_info, her2_info, basal_info)
+rm(lumA_info, lumB_info, her2_info, basal_info, control_info, normal_info)
 
 
+# combine all tumour samples
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+control <- merge(GTEx_ENS, normal_unstranded, by = "row.names")
+control <- column_to_rownames(control, "Row.names")
+
+rm(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded, normal_unstranded)
+
+
+# need to re-filter on only tumour set. Make sure to read in WGCNA_functions.R again
+wgcna_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                     control_matrix = control,
+                                     sep = F)
+# VST normalisation
+wgcna_data_norm <- vst_norm(counts_df = wgcna_counts_filt)
+
+all_data_PCA <- plot_PCA(wgcna_data_norm, sample_info = sample_info, plot_tree = F, output_plot_data = T)
