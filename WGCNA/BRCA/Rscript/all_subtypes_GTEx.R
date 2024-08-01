@@ -36,19 +36,7 @@ rownames(GTEx_ENS) <- rownames
 rm(rownames, GTEx_data)
 GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
 
-# combine all tumour samples
-all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-
-rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-
-# QC + combines tumour and control samples
-all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
-                                           control_matrix = GTEx_ENS)
-
-# normalisation (transposes matrix)
-all_wgcna_data <- vst_norm(all_subtype_counts_filt)
-
-# plot PCA
+# sample info
 control_info <- data.frame(sample = colnames(GTEx_ENS),
                            group = rep("control", ncol(GTEx_ENS)))
 lumA_info <- data.frame(sample = colnames(LumA_unstranded),
@@ -61,18 +49,41 @@ basal_info <- data.frame(sample = colnames(Basal_unstranded),
                          group = rep("basal", ncol(Basal_unstranded)))
 sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
 
-PCA_results_GTEx <- plot_PCA(expr_data = all_wgcna_data,
-                             sample_info = sample_info,
-                             plot_tree = T,
-                             output_plot_data = T)
+# combine all tumour samples
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 
+rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 
-# experimented with logCPM normalisation instead of vst
-#expr_data <- cpm(as.matrix(all_subtype_counts_filt), log = T)
-#PCA_results_GTEx <- plot_PCA(expr_data = t(expr_data),
-#                             sample_info = sample_info,
-#                             plot_tree = F,
-#                             output_plot_data = T)
+# QC + combines tumour and control samples
+all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                           control_matrix = GTEx_ENS)
+
+# QC on groups separately and then combined based on common
+subtype_counts_filt_sep <- filter_low_expr(tumour_matrix = all_subtypes,
+                                           control_matrix = GTEx_ENS,
+                                           sep = T)
+common_genes <- intersect(rownames(subtype_counts_filt_sep$tumour), rownames(subtype_counts_filt_sep$control))
+tumour <- subtype_counts_filt_sep$tumour[rownames(subtype_counts_filt_sep$tumour) %in% common_genes, ]
+tumour <- vst_norm(tumour)
+control <- subtype_counts_filt_sep$control[rownames(subtype_counts_filt_sep$control) %in% common_genes, ]
+control <- vst_norm(control)
+all_wgcna_data_sepFilt <- rbind(as.data.frame(tumour), as.data.frame(control))
+all_wgcna_data_sepFilt <- as.matrix(all_wgcna_data_sepFilt)
+rm(tumour, control, common_genes)
+
+# normalisation (transposes matrix)
+all_wgcna_data <- vst_norm(all_subtype_counts_filt)
+
+# plot PCA
+all_data_PCA_results <- plot_PCA(expr_data = all_wgcna_data,
+                                 sample_info = sample_info,
+                                 plot_tree = T,
+                                 output_plot_data = T)
+
+all_data_PCA_results_sepFilt <- plot_PCA(expr_data = all_wgcna_data_sepFilt,
+                                         sample_info = sample_info,
+                                         plot_tree = T,
+                                         output_plot_data = T)
 
 
 
@@ -94,8 +105,12 @@ PCA_results_GTEx <- plot_PCA(expr_data = all_wgcna_data,
 ## choose soft thresholding power
 sft_data_unsigned <- pick_power(WGCNA_data = all_wgcna_data,
                                 network_type = "unsigned")
-
 sft_data_signed <- pick_power(WGCNA_data = all_wgcna_data,
+                              network_type = "signed")
+
+sft_sepFilt_data_unsigned <- pick_power(WGCNA_data = all_wgcna_data_sepFilt,
+                                network_type = "unsigned")
+sft_sepFilt_data_signed <- pick_power(WGCNA_data = all_wgcna_data_sepFilt,
                               network_type = "signed")
 
 
