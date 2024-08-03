@@ -360,13 +360,28 @@ save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_default/m
 # non preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
-nonPreservedGenes <- common_genes[tumour_common_colours %in% non_preserved_modules$cluster]
 
+# plot cross-tabulation
+cross_tab_counts <- preserved_modules$accuracy$observedCounts$ref.Control$inColumnsAlsoPresentIn.Tumour
+cross_tab_pvalues <- preserved_modules$accuracy$observedFisherPvalues$ref.Control$inColumnsAlsoPresentIn.Tumour
 
+data <- melt(cross_tab_counts)
+colnames(data) <- c("Test", "Reference", "Count")
 
+pvalues_melted <- melt(cross_tab_pvalues)
+colnames(pvalues_melted) <- c("Test", "Reference", "PValue")
 
+data$PValue <- pvalues_melted$PValue
+data$LogPValue <- -log10(data$PValue)
 
-
+ggplot(data, aes(x = Test, y = Reference, fill = LogPValue)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "white", high = "red") +
+  geom_text(aes(label = paste(Count, "\n", format(Count, scientific = TRUE))), size = 3) +
+  theme_minimal() +
+  labs(title = "C. Human modules (rows) vs. Chimp modules (columns)",
+       x = "Test Modules", y = "Reference Modules") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 
