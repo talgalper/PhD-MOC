@@ -415,3 +415,79 @@ wgcna_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
 wgcna_data_norm <- vst_norm(counts_df = wgcna_counts_filt)
 
 all_data_PCA <- plot_PCA(wgcna_data_norm, sample_info = sample_info, plot_tree = F, output_plot_data = T)
+
+
+
+
+
+
+
+
+# module preservation analysis with only reference colour module. Ends up the same.
+multidata <- multiData(Control = control_data, 
+                       Tumour = tumour_data)
+multicolour <- list(Control = control_bwnet$colors)
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+preserved_modules_2 <- modulePreservation(multiData = multidata,
+                                        multiColor = multicolour,
+                                        dataIsExpr = T,
+                                        quickCor = 1,
+                                        randomSeed = 1234,
+                                        verbose = 3,
+                                        nPermutations = 100,
+                                        maxModuleSize = max(max(table(tumour_bwnet$colors)), 
+                                                            max(table(control_bwnet$colors))),                                        calculateClusterCoeff = F,
+                                        parallelCalculation = T)
+end_time <- Sys.time()
+end_time - start_time
+
+# plot results
+modulePreservation_plt_2 <- plot_preserved_modules(preserved_modules_2)
+
+plot_data_2 <- modulePreservation_plt_2$plot_data$plot_data
+non_preserved_modules_2 <- plot_data_2[plot_data_2$medianRank.pres > 8 & plot_data_2$Zsummary.pres < 10, ]
+
+
+
+# non preserved modules with shared colour
+multidata <- multiData(Control = control_data, 
+                       Tumour = tumour_data)
+multicolour <- list(Control = bwnet$colors)
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+preserved_modules_3 <- modulePreservation(multiData = multidata,
+                                          multiColor = multicolour,
+                                          dataIsExpr = T,
+                                          quickCor = 1,
+                                          randomSeed = 1234,
+                                          verbose = 3,
+                                          nPermutations = 100,
+                                          maxModuleSize = max(table(bwnet$colors)), 
+                                          calculateClusterCoeff = F,
+                                          parallelCalculation = T)
+end_time <- Sys.time()
+end_time - start_time
+
+# plot results
+modulePreservation_plt_3 <- plot_preserved_modules(preserved_modules_3)
+
+# non preserved modules
+plot_data_3 <- modulePreservation_plt_3$plot_data$plot_data
+non_preserved_modules_3 <- plot_data_3[plot_data_3$medianRank.pres > 8 & plot_data_3$Zsummary.pres < 10, ]
