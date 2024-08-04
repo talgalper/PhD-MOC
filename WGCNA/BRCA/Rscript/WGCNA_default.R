@@ -370,18 +370,80 @@ colnames(data) <- c("Test", "Reference", "Count")
 
 pvalues_melted <- melt(cross_tab_pvalues)
 colnames(pvalues_melted) <- c("Test", "Reference", "PValue")
-
+# Combine the counts and p-values
 data$PValue <- pvalues_melted$PValue
 data$LogPValue <- -log10(data$PValue)
+
+# Add the total size of each module
+control_sizes <- as.data.frame(table(control_bwnet$colors))
+colnames(control_sizes) <- c("Module", "ControlSize")
+
+tumour_sizes <- as.data.frame(table(tumour_bwnet$colors))
+colnames(tumour_sizes) <- c("Module", "TumourSize")
+
+# Merge the sizes with the data
+data <- merge(data, tumour_sizes, by.x = "Test", by.y = "Module")
+data <- merge(data, control_sizes, by.x = "Reference", by.y = "Module")
+
+# Create labels with module size
+data$Reference <- paste(data$Reference, "(", data$ControlSize, ")", sep = "")
+data$Test <- paste(data$Test, "(", data$TumourSize, ")", sep = "")
 
 ggplot(data, aes(x = Test, y = Reference, fill = LogPValue)) +
   geom_tile(color = "white") +
   scale_fill_gradient(low = "white", high = "red") +
-  geom_text(aes(label = paste(Count, "\n", format(Count, scientific = TRUE))), size = 3) +
+  geom_text(aes(label = Count), size = 3) +  # Display only counts
   theme_minimal() +
-  labs(title = "C. Human modules (rows) vs. Chimp modules (columns)",
+  labs(title = "Control modules (rows) vs. Tumour modules (columns)",
        x = "Test Modules", y = "Reference Modules") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+# perform enrichment on modules
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(progress)
+pb <- progress_bar$new(total = length(unique(control_bwnet$colors)))
+
+# run GO enrichment on control modules
+control_GO <- list()
+for (module in unique(control_bwnet$colors)) {
+  genes <- names(control_bwnet$colors)[control_bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "ALL")
+  result <- GO@result
+  split_result <- split(result, result$ONTOLOGY)
+  result_first_5 <- lapply(split_result, function(df) head(df, 5))
+  result_first_5 <- do.call(rbind, result_first_5)
+  
+  control_GO[[module]] <- result_first_5
+  
+  rm(genes, GO, split_result, result_first_5, module)
+  pb$tick()
+}
+
+# run GO enrichment on tumour modules
+pb <- progress_bar$new(total = length(unique(tumour_bwnet$colors)))
+tumour_GO <- list()
+for (module in unique(tumour_bwnet$colors)) {
+  genes <- names(tumour_bwnet$colors)[tumour_bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "ALL")
+  result <- GO@result
+  split_result <- split(result, result$ONTOLOGY)
+  result_first_5 <- lapply(split_result, function(df) head(df, 5))
+  result_first_5 <- do.call(rbind, result_first_5)
+  
+  tumour_GO[[module]] <- result_first_5
+  
+  rm(genes, GO, split_result, result_first_5, module)
+  pb$tick()
+}
+rm(pb)
+
+save(control_GO, tumour_GO, file = "BRCA/RData/all_default/module_GO_data.RData")
+
+
+
+
 
 
 
