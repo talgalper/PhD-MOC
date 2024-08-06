@@ -128,7 +128,7 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
                     guideHang = 0.05)
 
 
-save(bwnet, file = "BRCA/RData/all_default/all_bwnet.RData")
+save(bwnet, sample_info, file = "BRCA/RData/all_default/all_bwnet.RData")
 load("BRCA/RData/all_default/all_bwnet.RData")
 
 
@@ -137,19 +137,19 @@ library(tidyverse)
 library(CorLevelPlot)
 
 sample_info <- data.frame(row.names = sample_info$sample,
-                          status = c(rep("tumour", ncol(all_subtypes)), rep("control", ncol(GTEx_ENS))),
+                          status = c(rep("tumour", ncol(all_subtypes)), 
+                                     rep("control", ncol(GTEx_ENS))),
                           group = c(rep("lumA", ncol(LumA_unstranded)),
-                                    rep("GTEx", ncol(GTEx_ENS)),
                                     rep("lumB", ncol(LumB_unstranded)),
                                     rep("Her2", ncol(Her2_unstranded)),
-                                    rep("basal", ncol(Basal_unstranded))))
-
-
+                                    rep("basal", ncol(Basal_unstranded)),
+                                    rep("GTEx", ncol(GTEx_ENS))))
 
 traits.state <- binarizeCategoricalColumns.forPlots(sample_info$status)
 traits.subtype <- binarizeCategoricalColumns.forPlots(sample_info$group)
 traits <- cbind(traits.state, traits.subtype)
 rownames(traits) <- c(colnames(all_subtypes), colnames(GTEx_ENS))
+traits <- subset(traits, select = c("data.control", "data.tumour", "data.lumA", "data.lumB", "data.Her2","data.basal", "data.GTEx")) # reorder columns
 
 moduleTrait_cor <- cor(bwnet$MEs, traits, use = "p")
 moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(all_wgcna_data))
@@ -159,16 +159,187 @@ heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
 
 CorLevelPlot(heatmap_data,
-             x = names(heatmap_data)[18:24],
+             x = names(heatmap_data)[18:23],
              y = names(heatmap_data)[1:17],
              col = c("blue1", "skyblue", "white", "pink", "red"))
 
 
+# intramodular connectivity
+colours <- labels2colors(bwnet$colors)
+kWithin <- intramodularConnectivity.fromExpr(all_wgcna_data, colours, power = 6)
+rownames(kWithin) <- colnames(all_wgcna_data)
+kWithin <- kWithin[order(-kWithin$kWithin), ]
+save(kWithin, file = "BRCA/RData/all_default/all_kwithin.RData")
+
+# get top 10 genes for connectivity for each non-preserved module
+top_connectivity_genes = list()
+for (module in unique(bwnet$colors)) {
+  moduleGenes = names(bwnet$colors)[bwnet$colors == module]
+  moduleKWithin = kWithin[moduleGenes, ]
+  topNumGenes <- ceiling(length(moduleGenes) * 0.10)
+  topModuleGenes = head(order(moduleKWithin$kWithin, decreasing = TRUE), topNumGenes)
+  top_connectivity_genes[[module]] = moduleGenes[topModuleGenes]
+  
+  rm(moduleGenes, module, topModuleGenes, topNumGenes)
+}
+
+top_connectivity_genes <- melt(top_connectivity_genes)
+colnames(top_connectivity_genes) <- c("ensembl_id", "module")
+top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
 
 
 # perform GO and pathway analysis
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(progress)
+pb <- progress_bar$new(total = length(unique(bwnet$colors)))
+
+# run GO enrichment
+# turn this into a function at some point
+all_GO <- list()
+for (module in unique(bwnet$colors)) {
+  genes <- names(bwnet$colors)[bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+  
+  all_GO[[module]] <- GO
+  
+  rm(genes, GO, module)
+  pb$tick()
+}
+
+save(all_GO, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/all_WGCNA_GO_BP.RData")
 
 
+GO_formatted <- data.frame()
+for (i in seq_along(all_GO)) {
+  module <- all_GO[[i]]
+  module_name <- names(all_GO)[i]
+  
+  result <- module@result
+  result_top10 <- head(result, 5)
+  result_top10$module <- rep(module_name, nrow(result_top10))
+  result_top10$`-log(p.adjust)` <- -log(result_top10$p.adjust)
+  
+  GO_formatted <- rbind(GO_formatted, result_top10)
+  
+  rm(module, i, result, result_top10)
+}
+
+# Function to convert GeneRatio to numeric
+convert_gene_ratio <- function(gene_ratio) {
+  # Split the string by "/"
+  parts <- strsplit(gene_ratio, "/")[[1]]
+  # Convert the parts to numeric and calculate the ratio
+  ratio <- as.numeric(parts[1]) / as.numeric(parts[2])
+  return(ratio)
+}
+
+GO_formatted$GeneRatio.num <- sapply(GO_formatted$GeneRatio, convert_gene_ratio)
+save(GO_formatted, file = "BRCA/RData/all_default/all_WGCNA_GO_BP.RData")
+
+ggplot(data = GO_formatted, aes(x = module, y = Description, 
+                        color = `p.adjust`, size = GeneRatio.num)) + 
+  geom_point() +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  labs(size = "Gene Ratio") +
+  ggtitle("GO enrichment analysis (BP)")
+
+
+
+## KEGG pwathway
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+pb <- progress_bar$new(total = length(unique(bwnet$colors)))
+
+all_KEGG <- list()
+for (module in unique(bwnet$colors)) {
+  genes <- names(bwnet$colors)[bwnet$colors %in% module]
+  genes_converted <- getBM(attributes = c("ensembl_gene_id", "entrezgene_id"), 
+                           filters = "ensembl_gene_id", 
+                           values = genes, 
+                           mart = ensembl,
+                           verbose = F)
+  
+  KEGG <- enrichKEGG(genes_converted$entrezgene_id, organism = "hsa", keyType = "ncbi-geneid")
+  
+  all_KEGG[[module]] <- KEGG
+  
+  rm(genes, genes_converted, KEGG, module)
+  pb$tick()
+}
+
+KEGG_formatted <- data.frame()
+for (i in seq_along(all_KEGG)) {
+  module <- all_KEGG[[i]]
+  module_name <- names(all_KEGG)[i]
+  
+  result <- module@result
+  result_top10 <- head(result, 5)
+  result_top10$module <- rep(module_name, nrow(result_top10))
+  result_top10$`-log(p.adjust)` <- -log(result_top10$p.adjust)
+  
+  KEGG_formatted <- rbind(KEGG_formatted, result_top10)
+  
+  rm(module, i, result, result_top10)
+}
+
+# uses convert_gene_ratio function
+KEGG_formatted$GeneRatio.num <- sapply(KEGG_formatted$GeneRatio, convert_gene_ratio)
+save(KEGG_formatted, file = "BRCA/RData/all_default/all_WGCNA_KEGG.RData")
+
+ggplot(data = KEGG_formatted, aes(x = module, y = Description, 
+                                color = `p.adjust`, size = GeneRatio.num)) + 
+  geom_point() +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  labs(size = "Gene Ratio") +
+  ggtitle("KEGG enrichment analysis")
+
+
+## cross section of tumour modules and DE genes
+load("BRCA/RData/DE_subset/dif_exp.RData")
+
+DE_genes_bwnet <- bwnet$colors[names(bwnet$colors) %in% dif_exp$gene_id]
+DE_genes_bwnet <- as.data.frame(table(DE_genes_bwnet))
+colnames(DE_genes_bwnet) <- c("module", "DE_genes")
+
+temp <- as.data.frame(table(bwnet$colors))
+colnames(temp) <- c("module", "total_size")
+DE_genes_bwnet <- merge(temp, DE_genes_bwnet, by = "module", all = T)
+DE_genes_bwnet[is.na(DE_genes_bwnet)] <- 0
+DE_genes_bwnet$`proportion(%)` <- DE_genes_bwnet$DE_genes/DE_genes_bwnet$total_size * 100
+DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
+
+
+## venn diagram for cross 
+DE_genes <- dif_exp$gene_id
+tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
+top_kwithin <- top_connectivity_genes$ensembl_id
+common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin))
+
+
+library(VennDiagram)
+
+venn.diagram(
+  x = list(DE_genes = DE_genes, tumour_associated = tumour_associated, kwithin = top_kwithin),
+  category.names = c("DE genes", "Tumour associated", "Top10% Kwithin"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1", "lightcoral"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1", "lightcoral"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "BRCA/RData/all_default/consensus_genes.png",
+  disable.logging = TRUE
+)
 
 
 
@@ -357,6 +528,7 @@ modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 
 save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_default/modulePreservation(n=100).RData")
 
+library(reshape2)
 # non preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
@@ -399,13 +571,80 @@ ggplot(data, aes(x = Test, y = Reference, fill = LogPValue)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
-# perform enrichment on modules
+## plot the colour mapping between control and tumour bwnet
+control_colors <- control_bwnet$colors
+tumour_colors <- tumour_bwnet$colors
+
+common_genes <- intersect(names(control_colors), names(tumour_colors))
+
+# Identify genes unique to control and tumour datasets
+unique_control_genes <- setdiff(names(control_colors), common_genes)
+unique_tumour_genes <- setdiff(names(tumour_colors), common_genes)
+
+# Create a data frame mapping control and tumour module colors for common genes
+color_mapping <- data.frame(
+  gene = common_genes,
+  control_color = control_colors[common_genes],
+  tumour_color = tumour_colors[common_genes]
+)
+
+# Add unique control genes with tumour_colour as "white"
+unique_control_df <- data.frame(
+  gene = unique_control_genes,
+  control_color = control_colors[unique_control_genes],
+  tumour_color = "white"
+)
+
+# Add unique tumour genes with control_color as "white"
+unique_tumour_df <- data.frame(
+  gene = unique_tumour_genes,
+  control_color = "white",
+  tumour_color = tumour_colors[unique_tumour_genes]
+)
+
+# Combine all data frames
+color_mapping <- bind_rows(color_mapping, unique_control_df, unique_tumour_df)
+
+# Count the number of genes in each control module that correspond to each tumour module color
+color_counts <- color_mapping %>%
+  group_by(control_color, tumour_color) %>%
+  summarise(count = n()) %>%
+  ungroup()
+
+# Reshape the data for plotting
+color_counts_wide <- color_counts %>%
+  spread(key = tumour_color, value = count, fill = 0)
+
+# Gather data back into long format for ggplot
+color_counts_long <- color_counts_wide %>%
+  gather(key = "tumour_color", value = "count", -control_color)
+
+# Define the color palette
+color_palette <- unique(c(color_counts_long$control_color, color_counts_long$tumour_color))
+color_palette <- setNames(color_palette, color_palette)
+color_palette["white"] <- "white"
+
+# Plot the results without major and minor grid lines and without legend
+ggplot(color_counts_long, aes(x = control_color, y = count, fill = tumour_color)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Control Module Color", y = "Number of Genes") +
+  scale_fill_manual(values = color_palette) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none")
+
+
+
+## perform enrichment on modules
 library(clusterProfiler)
 library(org.Hs.eg.db)
 library(progress)
 pb <- progress_bar$new(total = length(unique(control_bwnet$colors)))
 
 # run GO enrichment on control modules
+# turn this into a function at some point
 control_GO <- list()
 for (module in unique(control_bwnet$colors)) {
   genes <- names(control_bwnet$colors)[control_bwnet$colors %in% module]
@@ -441,7 +680,17 @@ rm(pb)
 
 save(control_GO, tumour_GO, file = "BRCA/RData/all_default/module_GO_data.RData")
 
+temp <- control_GO[["greenyellow"]]
+temp2 <- tumour_GO[["yellow"]]
 
+common_modules <- temp[temp$ID %in% temp2$ID, ]
+
+
+# KEGG not working rn
+control_KEGG <- list()
+genes <- names(control_bwnet$colors)[control_bwnet$colors %in% "black"]
+
+KEGG <- enrichKEGG(genes, organism = "org.Hs.eg.db", keyType = "ENSEMBL")
 
 
 

@@ -491,3 +491,37 @@ modulePreservation_plt_3 <- plot_preserved_modules(preserved_modules_3)
 # non preserved modules
 plot_data_3 <- modulePreservation_plt_3$plot_data$plot_data
 non_preserved_modules_3 <- plot_data_3[plot_data_3$medianRank.pres > 8 & plot_data_3$Zsummary.pres < 10, ]
+
+
+
+
+# run GO enrichment for all ontologies BP, CC & MF
+all_GO <- list()
+for (module in unique(bwnet$colors)) {
+  genes <- names(bwnet$colors)[bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "ALL")
+  result <- GO@result
+  split_result <- split(result, result$ONTOLOGY)
+  result_first_5 <- lapply(split_result, function(df) head(df, 5))
+  result_first_5 <- do.call(rbind, result_first_5)
+  
+  all_GO[[module]] <- result_first_5
+  
+  rm(genes, GO, split_result, result_first_5, module)
+  pb$tick()
+}
+
+save(all_GO, file = "BRCA/RData/all_default/all_WGCNA_GO.RData")
+
+
+temp <- all_GO$salmon
+temp$`log(p.adjust)` <- -log(temp$p.adjust)
+
+ggplot(temp, aes(x = reorder(Description, ONTOLOGY, FUN = identity), y = `log(p.adjust)`, fill = ONTOLOGY)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ggtitle("Module: black") +
+  labs(x = "", y = "p.adjust", fill = "Category") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 15), 
+        plot.margin = margin(l = 50, r = 10, t = 10, b = 10), 
+        panel.grid = element_blank())
