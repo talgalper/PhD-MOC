@@ -75,6 +75,7 @@ PCA_results <- plot_PCA(expr_data = all_wgcna_data,
 sft <- pickSoftThreshold(all_wgcna_data,
                          blockSize = 45000,
                          verbose = 2)
+
 sft <- sft$fitIndices
 
 library(gridExtra)
@@ -109,7 +110,8 @@ WGCNAnThreads()
 start_time <- Sys.time()
 bwnet <- blockwiseModules(all_wgcna_data,
                           maxBlockSize = 45000,
-                          power = 6,
+                          power = 12,
+                          networkType = "signed",
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
@@ -128,7 +130,7 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
                     guideHang = 0.05)
 
 
-save(bwnet, sample_info, file = "BRCA/RData/all_default/all_bwnet.RData")
+save(bwnet, sample_info, file = "BRCA/RData/all_default/signed/all_bwnet.RData")
 load("BRCA/RData/all_default/all_bwnet.RData")
 
 
