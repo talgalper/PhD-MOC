@@ -525,3 +525,17 @@ ggplot(temp, aes(x = reorder(Description, ONTOLOGY, FUN = identity), y = `log(p.
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 15), 
         plot.margin = margin(l = 50, r = 10, t = 10, b = 10), 
         panel.grid = element_blank())
+
+
+
+
+
+
+
+#### WGCNA default run using DE subset
+
+
+
+
+
+
