@@ -670,7 +670,7 @@ library(progress)
 pb <- progress_bar$new(total = length(unique(control_bwnet$colors)))
 
 # run GO enrichment on control modules
-# turn this into a function at some point
+# fix this up to only get BP
 control_GO <- list()
 for (module in unique(control_bwnet$colors)) {
   genes <- names(control_bwnet$colors)[control_bwnet$colors %in% module]
@@ -706,17 +706,23 @@ rm(pb)
 
 save(control_GO, tumour_GO, file = "BRCA/RData/all_default/module_GO_data.RData")
 
-temp <- control_GO[["greenyellow"]]
-temp2 <- tumour_GO[["yellow"]]
+
+# lightcyan and greenyellow merged into yellow in tumour set so im pulling GO terms for each
+temp <- control_GO[["lightcyan"]]
+temp2 <- control_GO[["greenyellow"]]
+temp3 <- tumour_GO[["yellow"]]
+
+
+temp <- temp[temp$ONTOLOGY == "BP", ]
+temp2 <- temp2[temp2$ONTOLOGY == "BP", ]
+temp3 <- temp3[temp3$ONTOLOGY == "BP", ]
+
+temp <- rbind(temp, temp2)
+temp <- rbind(temp, temp3)
 
 common_modules <- temp[temp$ID %in% temp2$ID, ]
 
 
-# KEGG not working rn
-control_KEGG <- list()
-genes <- names(control_bwnet$colors)[control_bwnet$colors %in% "black"]
-
-KEGG <- enrichKEGG(genes, organism = "org.Hs.eg.db", keyType = "ENSEMBL")
 
 
 
