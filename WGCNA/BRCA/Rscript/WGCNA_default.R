@@ -170,6 +170,21 @@ kWithin <- intramodularConnectivity.fromExpr(all_wgcna_data, colours, power = 6)
 rownames(kWithin) <- colnames(all_wgcna_data)
 kWithin <- kWithin[order(-kWithin$kWithin), ]
 save(kWithin, file = "BRCA/RData/all_default/all_kwithin.RData")
+load("BRCA/RData/all_default/all_kwithin.RData")
+
+# Does the same thing as above (intra modular connectivity)
+module.membership.measure <- cor(bwnet$MEs, all_wgcna_data, use = 'p')
+module.membership.measure.pvals <- corPvalueStudent(module.membership.measure, nrow(all_wgcna_data))
+module.membership.measure.pvals <- as.data.frame(t(module.membership.measure.pvals))
+
+
+# gene significance
+gene.signf.corr <- cor(all_wgcna_data, traits$data.tumour, use = 'p')
+gene.signf.corr.pvals <- as.data.frame(corPvalueStudent(gene.signf.corr, nrow(all_wgcna_data)))
+gene.signf.corr.pvals <- rownames_to_column(gene.signf.corr.pvals)
+gene.signf.corr.pvals <- gene.signf.corr.pvals[order(gene.signf.corr.pvals$V1), ]
+rownames(gene.signf.corr.pvals) <- NULL
+colnames(gene.signf.corr.pvals) <- c("gene_id", "pvalue")
 
 # get top 10 genes for connectivity for each non-preserved module
 top_connectivity_genes = list()
@@ -216,13 +231,13 @@ for (i in seq_along(all_GO)) {
   module_name <- names(all_GO)[i]
   
   result <- module@result
-  result_top10 <- head(result, 5)
-  result_top10$module <- rep(module_name, nrow(result_top10))
-  result_top10$`-log(p.adjust)` <- -log(result_top10$p.adjust)
+  result_top <- head(result, 5)
+  result_top$module <- rep(module_name, nrow(result_top))
+  result_top$`-log(p.adjust)` <- -log(result_top$p.adjust)
   
-  GO_formatted <- rbind(GO_formatted, result_top10)
+  GO_formatted <- rbind(GO_formatted, result_top)
   
-  rm(module, i, result, result_top10)
+  rm(module, i, result, result_top)
 }
 
 # Function to convert GeneRatio to numeric
@@ -277,13 +292,13 @@ for (i in seq_along(all_KEGG)) {
   module_name <- names(all_KEGG)[i]
   
   result <- module@result
-  result_top10 <- head(result, 5)
-  result_top10$module <- rep(module_name, nrow(result_top10))
-  result_top10$`-log(p.adjust)` <- -log(result_top10$p.adjust)
+  result_top <- head(result, 5)
+  result_top$module <- rep(module_name, nrow(result_top))
+  result_top$`-log(p.adjust)` <- -log(result_top$p.adjust)
   
-  KEGG_formatted <- rbind(KEGG_formatted, result_top10)
+  KEGG_formatted <- rbind(KEGG_formatted, result_top)
   
-  rm(module, i, result, result_top10)
+  rm(module, i, result, result_top)
 }
 
 # uses convert_gene_ratio function
@@ -320,18 +335,22 @@ DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
 DE_genes <- dif_exp$gene_id
 tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
 top_kwithin <- top_connectivity_genes$ensembl_id
-common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin))
+top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
+
 
 
 library(VennDiagram)
 
 venn.diagram(
-  x = list(DE_genes = DE_genes, tumour_associated = tumour_associated, kwithin = top_kwithin),
-  category.names = c("DE genes", "Tumour associated", "Top10% Kwithin"),
+  x = list(DE_genes = DE_genes, 
+           tumour_associated = tumour_associated, 
+           kwithin = top_kwithin,
+           top_tumour_membership = top_gene_membership),
+  category.names = c("DE genes", "Tumour associated", "Top10% Kwithin", "Top10% MM"),
   col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1", "lightcoral"),  # set colors for each category
+  fill = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for each category
   alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1", "lightcoral"),  # set colors for category labels
+  cat.col = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for category labels
   cat.fontfamily = "Arial",  # set the font family for category labels
   cat.fontface = "bold",  # set the font face for category labels
   cat.fontsize = 10,  # set the font size for category labels
@@ -342,6 +361,13 @@ venn.diagram(
 )
 
 
+common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
+
+genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                         filters = "ensembl_gene_id", 
+                         values = common_genes, 
+                         mart = ensembl,
+                         verbose = F)
 
 ###############################################################################
 # Will now perform WGCNA on TCGA and GTEx groups separately for module     
