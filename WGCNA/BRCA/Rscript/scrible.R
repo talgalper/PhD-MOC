@@ -533,6 +533,142 @@ ggplot(temp, aes(x = reorder(Description, ONTOLOGY, FUN = identity), y = `log(p.
 
 
 #### WGCNA default run using DE subset
+library(tidyverse)
+library(WGCNA)
+library(edgeR)
+library(DESeq2)
+library(doParallel)
+
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+
+# load in data
+load("../BRCA_pipe/RData/LumA/DE_data.RData")
+load("../BRCA_pipe/RData/LumB/DE_data.RData")
+load("../BRCA_pipe/RData/Her2/DE_data.RData")
+load("../BRCA_pipe/RData/basal/DE_data.RData")
+load("../BRCA_pipe/RData/TCGA_normal.RData")
+
+# load data
+GTEx_data <- read.table("../BRCA_pipe/gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
+colnames(GTEx_data) <- GTEx_data[1, ]
+GTEx_data <- GTEx_data[-1, -1]
+rownames(GTEx_data) <- NULL
+
+# opt for having gene Ensembl IDs instead of gene names as rownames (same as TCGA)
+GTEx_ENS <- column_to_rownames(GTEx_data, "Name")
+rownames(GTEx_ENS) <- gsub("\\.\\d+", "", rownames(GTEx_ENS))
+GTEx_ENS <- GTEx_ENS[ , -1]
+rownames <- rownames(GTEx_ENS)
+GTEx_ENS <- as.data.frame(sapply(GTEx_ENS, as.numeric))
+rownames(GTEx_ENS) <- rownames
+rm(rownames, GTEx_data)
+GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
+
+# sample info
+control_info <- data.frame(sample = colnames(GTEx_ENS),
+                           group = rep("control", ncol(GTEx_ENS)))
+lumA_info <- data.frame(sample = colnames(LumA_unstranded),
+                        group = rep("lumA", ncol(LumA_unstranded)))
+lumB_info <- data.frame(sample = colnames(LumB_unstranded),
+                        group = rep("lumB", ncol(LumB_unstranded)))
+her2_info <- data.frame(sample = colnames(Her2_unstranded),
+                        group = rep("Her2", ncol(Her2_unstranded)))
+basal_info <- data.frame(sample = colnames(Basal_unstranded),
+                         group = rep("basal", ncol(Basal_unstranded)))
+sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
+
+# combine all tumour samples
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+
+# clean env
+rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+rm(control_info, lumA_info, lumB_info, her2_info, basal_info)
+collectGarbage()
+
+# QC + combines tumour and control samples
+all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                                           control_matrix = GTEx_ENS)
+
+# normalisation (transposes matrix)
+all_wgcna_data <- vst_norm(all_subtype_counts_filt)
+
+# plot PCA
+PCA_results <- plot_PCA(expr_data = all_wgcna_data,
+                        sample_info = sample_info,
+                        plot_tree = F,
+                        output_plot_data = T)
+
+# plot PCA of DE subset
+load("BRCA/RData/DE_subset/dif_exp.RData")
+wgcna_data_DE_subset <- all_wgcna_data[, colnames(all_wgcna_data) %in% dif_exp$gene_id]
+
+PCA_results_DE_subset <- plot_PCA(expr_data = wgcna_data_DE_subset,
+                        sample_info = sample_info,
+                        plot_tree = F,
+                        output_plot_data = T)
+
+sft_DE_subset <- pickSoftThreshold(wgcna_data_DE_subset,
+                         blockSize = 45000,
+                         verbose = 2)
+sft_DE_subset <- sft_DE_subset$fitIndices
+
+library(gridExtra)
+library(grid)
+a1 <- ggplot(sft_DE_subset, aes(Power, SFT.R.sq, label = Power)) +
+  geom_point() +
+  geom_text(nudge_y = 0.1) +
+  geom_hline(yintercept = 0.8, color = 'red') +
+  labs(x = 'Power', y = 'Scale free topology model fit') +
+  theme_classic()
+
+a2 <- ggplot(sft_DE_subset, aes(Power, mean.k., label = Power)) +
+  geom_point() +
+  geom_text(nudge_y = 0.1) +
+  labs(x = 'Power', y = 'Mean Connectivity') +
+  theme_classic()
+
+grid.arrange(a1, a2, nrow = 2)
+rm(a1, a2)
+
+save(sft, file = "BRCA/RData/all_default/combined_sft.RData")
+
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+bwnet_DE_subset <- blockwiseModules(wgcna_data_DE_subset,
+                                    maxBlockSize = 45000,
+                                    power = 6,
+                                    mergeCutHeight = 0.25,
+                                    numericLabels = FALSE,
+                                    randomSeed = 1234,
+                                    verbose = 3,
+                                    saveTOMs = FALSE)
+elapsed_time <- Sys.time() - start_time
+print(paste0("Elapsed time: ", elapsed_time))
+
+
+# Plot the dendrogram
+plotDendroAndColors(bwnet_DE_subset$dendrograms[[1]], cbind(bwnet_DE_subset$unmergedColors, bwnet_DE_subset$colors),
+                    c("unmerged", "merged"),
+                    dendroLabels = FALSE,
+                    addGuide = TRUE,
+                    hang= 0.03,
+                    guideHang = 0.05)
+
+
+save(bwnet, sample_info, file = "BRCA/RData/all_default/all_bwnet.RData")
+load("BRCA/RData/all_default/all_bwnet.RData")
 
 
 
