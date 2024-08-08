@@ -2,6 +2,8 @@ library(tidyverse)
 library(WGCNA)
 library(matrixStats)
 library(reshape2)
+library(edgeR)
+library(DESeq2)
 
 # read in data
 MOC_raw_counts <- read.csv("rna_seq_data/analysis_set_raw_counts_genenames.csv")
@@ -89,7 +91,7 @@ enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
 
 start_time <- Sys.time()
-bwnet <- blockwiseModules(all_wgcna_data,
+bwnet <- blockwiseModules(MOC_data_norm,
                           maxBlockSize = 45000,
                           power = 6,
                           mergeCutHeight = 0.25,
@@ -175,6 +177,108 @@ CorLevelPlot(heatmap_data,
              x = names(heatmap_data)[18:23],
              y = names(heatmap_data)[1:17],
              col = c("blue1", "skyblue", "white", "pink", "red"))
+
+
+
+
+
+
+
+
+
+
+###############################################################################
+# Will now perform WGCNA on MOC and BEN groups separately for module     
+# preservation analysis                                                    
+###############################################################################
+counts_filt <- filter_low_expr(tumour_matrix = MOC_data,
+                               control_matrix = BEN_data,
+                               sep = T)
+
+MOC_data_norm <- vst_norm(counts_filt$tumour)
+BEN_data_norm <- vst_norm(counts_filt$control)
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+network_modules <- function(WGCNA_data, Power) {
+  start_time <- Sys.time()
+  bwnet <- blockwiseModules(WGCNA_data,
+                            maxBlockSize = 45000,
+                            power = Power,
+                            mergeCutHeight = 0.25,
+                            numericLabels = FALSE,
+                            randomSeed = 1234,
+                            verbose = 3,
+                            saveTOMs = FALSE)
+  elapsed_time <- Sys.time() - start_time
+  cat("Elapsed time: ")
+  print(elapsed_time)
+  
+  # Plot the dendrogram
+  plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$colors),
+                      c("unmerged", "merged"),
+                      dendroLabels = FALSE,
+                      addGuide = TRUE,
+                      hang= 0.03,
+                      guideHang = 0.05)
+  
+  return(bwnet)
+}
+
+MOC_bwnet <- network_modules(MOC_data_norm, Power = 6)
+BEN_bwnet <- network_modules(BEN_data_norm, Power = 6)
+
+save(tumour_bwnet, file = "MOC/RData/MOC_bwnet.RData")
+save(control_bwnet, file = "MOC/RData/BEN_bwnet.RData")
+
+load("MOC/RData/MOC_bwnet.RData")
+load("MOC/RData/BEN_bwnet.RData")
+
+
+# module preservation analysis
+multidata <- multiData(Control = control_data, 
+                       Tumour = tumour_data)
+multicolour <- list(Control = control_bwnet$colors,
+                    Tumour = tumour_bwnet$colors)
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+preserved_modules <- modulePreservation(multiData = multidata,
+                                        multiColor = multicolour,
+                                        dataIsExpr = T,
+                                        quickCor = 1,
+                                        randomSeed = 1234,
+                                        verbose = 3,
+                                        nPermutations = 100,
+                                        maxModuleSize = max(max(table(tumour_bwnet$colors)), 
+                                                            max(table(control_bwnet$colors))),                                        calculateClusterCoeff = F,
+                                        parallelCalculation = T)
+end_time <- Sys.time()
+end_time - start_time
+
+# plot results
+modulePreservation_plt <- plot_preserved_modules(preserved_modules)
+
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_default/modulePreservation(n=100).RData")
+
+
+
+
+
+
 
 
 
