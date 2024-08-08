@@ -1,6 +1,6 @@
 ### This script combines all the methods used in the different WGCNA attempts to hopefully be the best one ###
 ## firstly, combines TCGA and GTEx data to perform trait correlation ###
-### secondly, analyses the disease groups seperately for module preservation ###
+### secondly, analyses the disease groups separately for module preservation ###
 
 library(tidyverse)
 library(WGCNA)
@@ -110,8 +110,7 @@ WGCNAnThreads()
 start_time <- Sys.time()
 bwnet <- blockwiseModules(all_wgcna_data,
                           maxBlockSize = 45000,
-                          power = 12,
-                          networkType = "signed",
+                          power = 6,
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
@@ -130,13 +129,14 @@ plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$co
                     guideHang = 0.05)
 
 
-save(bwnet, sample_info, file = "BRCA/RData/all_default/signed/all_bwnet.RData")
+save(bwnet, sample_info, file = "BRCA/RData/all_default/all_bwnet.RData")
 load("BRCA/RData/all_default/all_bwnet.RData")
 
 
 ## trait correlation
 library(tidyverse)
 library(CorLevelPlot)
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/TCGA_GTEx_filt_norm.RData")
 
 sample_info <- data.frame(row.names = sample_info$sample,
                           status = c(rep("tumour", ncol(all_subtypes)), 
@@ -146,6 +146,9 @@ sample_info <- data.frame(row.names = sample_info$sample,
                                     rep("Her2", ncol(Her2_unstranded)),
                                     rep("basal", ncol(Basal_unstranded)),
                                     rep("GTEx", ncol(GTEx_ENS))))
+
+rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+collectGarbage()
 
 traits.state <- binarizeCategoricalColumns.forPlots(sample_info$status)
 traits.subtype <- binarizeCategoricalColumns.forPlots(sample_info$group)
@@ -179,7 +182,6 @@ module.membership.measure <- cor(bwnet$MEs, all_wgcna_data, use = 'p')
 module.membership.measure.pvals <- corPvalueStudent(module.membership.measure, nrow(all_wgcna_data))
 module.membership.measure.pvals <- as.data.frame(t(module.membership.measure.pvals))
 
-
 # gene significance
 gene.signf.corr <- cor(all_wgcna_data, traits$data.tumour, use = 'p')
 gene.signf.corr.pvals <- as.data.frame(corPvalueStudent(gene.signf.corr, nrow(all_wgcna_data)))
@@ -200,6 +202,7 @@ for (module in unique(bwnet$colors)) {
   rm(moduleGenes, module, topModuleGenes, topNumGenes)
 }
 
+library(reshape2)
 top_connectivity_genes <- melt(top_connectivity_genes)
 colnames(top_connectivity_genes) <- c("ensembl_id", "module")
 top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
