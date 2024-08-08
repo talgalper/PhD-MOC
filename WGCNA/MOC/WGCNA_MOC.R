@@ -1,10 +1,6 @@
-library(biomaRt)
 library(tidyverse)
 library(WGCNA)
-library(edgeR)
-library(DESeq2)
 library(matrixStats)
-library(doParallel)
 library(reshape2)
 
 # read in data
@@ -31,13 +27,14 @@ sample_info$Stage[sample_info$Grade == "BEN"] <- "BEN"
 # remove EOM and BDL samples
 sample_info_subset <- sample_info[sample_info$Classification != "EOM" & sample_info$Classification != "BDL", ]
 sample_info_subset <- sample_info_subset[!is.na(sample_info_subset$GAMUT_ID), ]
+
 # format for PCA
 sample_info_subset <- subset(sample_info_subset, select = c("GAMUT_ID", "Classification"))
 colnames(sample_info_subset) <- c("sample", "group")
 
 # subset RNA-seq data
-MOC_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_subset$GAMUT_ID[sample_info_subset$Classification == "MOC"]]
-BEN_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_subset$GAMUT_ID[sample_info_subset$Classification == "BEN"]]
+MOC_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_subset$sample[sample_info_subset$group == "MOC"]]
+BEN_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_subset$sample[sample_info_subset$group == "BEN"]]
 
 # QC
 counts_filt <- filter_low_expr(tumour_matrix = MOC_data,
@@ -52,7 +49,133 @@ MOC_PCA <- plot_PCA(expr_data = MOC_data_norm,
                     plot_tree = T,
                     output_plot_data = T)
 
+
 # choose soft thresholding power
+sft <- pickSoftThreshold(MOC_data_norm,
+                         blockSize = 45000,
+                         verbose = 2)
+
+sft <- sft$fitIndices
+
+library(gridExtra)
+library(grid)
+a1 <- ggplot(sft, aes(Power, SFT.R.sq, label = Power)) +
+  geom_point() +
+  geom_text(nudge_y = 0.1) +
+  geom_hline(yintercept = 0.8, color = 'red') +
+  labs(x = 'Power', y = 'Scale free topology model fit') +
+  theme_classic()
+
+a2 <- ggplot(sft, aes(Power, mean.k., label = Power)) +
+  geom_point() +
+  geom_text(nudge_y = 0.1) +
+  labs(x = 'Power', y = 'Mean Connectivity') +
+  theme_classic()
+
+grid.arrange(a1, a2, nrow = 2)
+rm(a1, a2)
+
+save(sft, file = "MOC/RData/combined_sft.RData")
+
+
+
+
+# RESTART R AND LOAD WGCNA ONLY
+library(WGCNA)
+library(doParallel)
+nCores = 8
+registerDoParallel(cores = nCores)
+enableWGCNAThreads(nThreads = nCores)
+WGCNAnThreads()
+
+start_time <- Sys.time()
+bwnet <- blockwiseModules(all_wgcna_data,
+                          maxBlockSize = 45000,
+                          power = 6,
+                          mergeCutHeight = 0.25,
+                          numericLabels = FALSE,
+                          randomSeed = 1234,
+                          verbose = 3,
+                          saveTOMs = FALSE)
+elapsed_time <- Sys.time() - start_time
+print(paste0("Elapsed time: ", elapsed_time))
+
+
+# Plot the dendrogram
+plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$colors),
+                    c("unmerged", "merged"),
+                    dendroLabels = FALSE,
+                    addGuide = TRUE,
+                    hang= 0.03,
+                    guideHang = 0.05)
+
+
+save(bwnet, sample_info, file = "MOC/RData/bwnet.RData")
+load("MOC/RData/bwnet.RData")
+
+
+
+
+## trait correlation
+library(tidyverse)
+library(CorLevelPlot)
+
+sample_info <- read.csv("rna_seq_data/All survival_CN_Aug18.csv")
+sample_info$GAMUT_ID <- paste0("GAMuT_", sample_info$GAMUT_ID) # match IDs
+
+# subset sample info to only those present in data matrix
+MOC_samples <- data.frame(GAMUT_ID = colnames(MOC_raw_counts_ENS))
+sample_info <- merge(MOC_samples, sample_info, by = "GAMUT_ID", all.x = T)
+sample_info$Stage[sample_info$Grade == "BEN"] <- "BEN"
+
+# remove EOM and BDL samples
+sample_info_subset <- sample_info[sample_info$Classification != "EOM" & sample_info$Classification != "BDL", ]
+sample_info_subset <- sample_info_subset[!is.na(sample_info_subset$GAMUT_ID), ]
+
+sample_info_subset <- subset(sample_info_subset, select = c("GAMUT_ID", "Classification", "Stage"))
+
+stage_I <- c("I","IA","IB","IC")
+stage_II <- c("II", "IIA", "IIB", "IIC")
+stage_III <- c("III", "IIIA", "IIIB", "IIIC", "IIIc")
+stage_IV <- c("IV")
+
+
+# Create a function to consolidate stages
+consolidate_stage <- function(stage) {
+  if (stage %in% stage_I) {
+    return("I")
+  } else if (stage %in% stage_II) {
+    return("II")
+  } else if (stage %in% stage_III) {
+    return("III")
+  } else if (stage %in% stage_IV) {
+    return("IV")
+  } else {
+    return(stage)
+  }
+}
+
+# Apply the function to the Stage column
+sample_info_subset$Consolidated_Stage <- sapply(sample_info_subset$Stage, consolidate_stage)
+
+traits.state <- binarizeCategoricalColumns.forPlots(sample_info_subset$Classification)
+traits.subtype <- binarizeCategoricalColumns.forPlots(sample_info_subset$Consolidated_Stage)
+traits <- cbind(traits.state, traits.subtype)
+rownames(traits) <- c(colnames(all_subtypes), colnames(GTEx_ENS))
+traits <- subset(traits, select = c("data.control", "data.tumour", "data.lumA", "data.lumB", "data.Her2","data.basal", "data.GTEx")) # reorder columns
+
+moduleTrait_cor <- cor(bwnet$MEs, traits, use = "p")
+moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(all_wgcna_data))
+
+heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
+
+heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
+
+CorLevelPlot(heatmap_data,
+             x = names(heatmap_data)[18:23],
+             y = names(heatmap_data)[1:17],
+             col = c("blue1", "skyblue", "white", "pink", "red"))
+
 
 
 
