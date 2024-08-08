@@ -417,8 +417,17 @@ rownames(GTEx_ENS) <- rownames
 rm(rownames, GTEx_data)
 GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
 
-# load in QC data, ubuntu
-load("../../../../Desktop/WGCNA_BRCA_large_files/TCGA_GTEx_filt_norm.RData")
+# combine all tumour samples
+all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+
+# QC + combines tumour and control samples
+counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
+                               control_matrix = GTEx_ENS,
+                               sep = T)
+
+# normalisation (transposes matrix)
+tumour_data <- vst_norm(counts_df = counts_filt$tumour)
+control_data <- vst_norm(counts_df = counts_filt$control)
 
 # plot PCA
 control_info <- data.frame(sample = colnames(GTEx_ENS),
@@ -482,8 +491,8 @@ pick_power <- function(WGCNA_data) {
 tumour_sft <- pick_power(tumour_data)
 control_sft <- pick_power(control_data)
 
-save(tumour_sft, file = "BRCA/RData/all_default/tumour_sft.RData")
-save(control_sft, file = "BRCA/RData/all_default/control_sft.RData")
+save(tumour_sft, file = "BRCA/RData/all_default/signed/tumour_sft.RData")
+save(control_sft, file = "BRCA/RData/all_default/signed/control_sft.RData")
 
 
 # RESTART R AND LOAD WGCNA ONLY
@@ -499,7 +508,7 @@ network_modules <- function(WGCNA_data, Power) {
   bwnet <- blockwiseModules(WGCNA_data,
                             maxBlockSize = 45000,
                             power = Power,
-                            networkType = "signed"
+                            networkType = "signed",
                             mergeCutHeight = 0.25,
                             numericLabels = FALSE,
                             randomSeed = 1234,
@@ -548,7 +557,7 @@ start_time <- Sys.time()
 preserved_modules <- modulePreservation(multiData = multidata,
                                         multiColor = multicolour,
                                         dataIsExpr = T,
-                                        networkType = "signed"
+                                        networkType = "signed",
                                         quickCor = 1,
                                         randomSeed = 1234,
                                         verbose = 3,
