@@ -190,7 +190,7 @@ gene.signf.corr.pvals <- gene.signf.corr.pvals[order(gene.signf.corr.pvals$V1), 
 rownames(gene.signf.corr.pvals) <- NULL
 colnames(gene.signf.corr.pvals) <- c("gene_id", "pvalue")
 
-# get top 10 genes for connectivity for each non-preserved module
+# get top 10 genes for connectivity for each module
 top_connectivity_genes = list()
 for (module in unique(bwnet$colors)) {
   moduleGenes = names(bwnet$colors)[bwnet$colors == module]
@@ -205,7 +205,7 @@ for (module in unique(bwnet$colors)) {
 library(reshape2)
 top_connectivity_genes <- melt(top_connectivity_genes)
 colnames(top_connectivity_genes) <- c("ensembl_id", "module")
-top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
+#top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
 
 
 # perform GO and pathway analysis
@@ -274,6 +274,7 @@ library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 pb <- progress_bar$new(total = length(unique(bwnet$colors)))
 
+# requires to be converted to enterez_id for KEGG
 all_KEGG <- list()
 for (module in unique(bwnet$colors)) {
   genes <- names(bwnet$colors)[bwnet$colors %in% module]
@@ -341,9 +342,9 @@ DE_genes <- dif_exp$gene_id
 tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
+save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/venn_data.RData")
 
-
-
+load("BRCA/RData/all_default/venn_data.RData")
 library(VennDiagram)
 
 venn.diagram(
@@ -361,10 +362,9 @@ venn.diagram(
   cat.fontsize = 10,  # set the font size for category labels
   cex = 1.5,  # increase the size of the circles
   margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "BRCA/RData/all_default/consensus_genes.png",
+  filename = "BRCA/RData/all_default/consensus_genes2.png",
   disable.logging = TRUE
 )
-
 
 common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
 
@@ -549,7 +549,8 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         verbose = 3,
                                         nPermutations = 100,
                                         maxModuleSize = max(max(table(tumour_bwnet$colors)), 
-                                                            max(table(control_bwnet$colors))),                                        calculateClusterCoeff = F,
+                                                            max(table(control_bwnet$colors))),                                        
+                                        calculateClusterCoeff = F,
                                         parallelCalculation = T)
 end_time <- Sys.time()
 end_time - start_time
@@ -563,6 +564,18 @@ library(reshape2)
 # non preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
+
+# non preserved genes common with rest of data: kwithin, MM, DE, tumour associated.
+non_preserved_genes <- names(control_bwnet$colors)[control_bwnet$colors %in% non_preserved_modules$cluster]
+non_preserved_common <- non_preserved_genes[non_preserved_genes %in% common_genes]
+
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                         filters = "ensembl_gene_id", 
+                         values = non_preserved_common, 
+                         mart = ensembl,
+                         verbose = F)
 
 # plot cross-tabulation
 cross_tab_counts <- preserved_modules$accuracy$observedCounts$ref.Control$inColumnsAlsoPresentIn.Tumour

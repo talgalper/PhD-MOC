@@ -97,7 +97,7 @@ a2 <- ggplot(sft, aes(Power, mean.k., label = Power)) +
 grid.arrange(a1, a2, nrow = 2)
 rm(a1, a2)
 
-save(sft, file = "BRCA/RData/all_default/combined_sft.RData")
+save(sft, file = "BRCA/RData/all_default/signed/combined_sft.RData")
 
 
 # RESTART R AND LOAD WGCNA ONLY
@@ -112,7 +112,7 @@ start_time <- Sys.time()
 bwnet <- blockwiseModules(all_wgcna_data,
                           maxBlockSize = 45000,
                           power = 12,
-                          networkType = "signed"
+                          networkType = "signed",
                           mergeCutHeight = 0.25,
                           numericLabels = FALSE,
                           randomSeed = 1234,
@@ -201,13 +201,13 @@ for (module in unique(bwnet$colors)) {
   topModuleGenes = head(order(moduleKWithin$kWithin, decreasing = TRUE), topNumGenes)
   top_connectivity_genes[[module]] = moduleGenes[topModuleGenes]
   
-  rm(moduleGenes, module, topModuleGenes, topNumGenes)
+  rm(moduleGenes, module, topModuleGenes, topNumGenes, moduleKWithin)
 }
 
 library(reshape2)
 top_connectivity_genes <- melt(top_connectivity_genes)
 colnames(top_connectivity_genes) <- c("ensembl_id", "module")
-top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
+#top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
 
 
 # perform GO and pathway analysis
@@ -343,9 +343,11 @@ DE_genes <- dif_exp$gene_id
 tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
+save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/signed/venn_data.RData")
 
+kWithin[rownames(kWithin) %in% "ENSG00000141510", ]
 
-
+load("BRCA/RData/all_default/venn_data.RData")
 library(VennDiagram)
 
 venn.diagram(
@@ -563,7 +565,8 @@ preserved_modules <- modulePreservation(multiData = multidata,
                                         verbose = 3,
                                         nPermutations = 100,
                                         maxModuleSize = max(max(table(tumour_bwnet$colors)), 
-                                                            max(table(control_bwnet$colors))),                                        calculateClusterCoeff = F,
+                                                            max(table(control_bwnet$colors))),                                        
+                                        calculateClusterCoeff = F,
                                         parallelCalculation = T)
 end_time <- Sys.time()
 end_time - start_time
@@ -572,11 +575,26 @@ end_time - start_time
 modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 
 save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_default/signed/modulePreservation(n=100).RData")
+load("BRCA/RData/all_default/signed/modulePreservation(n=100).RData")
 
 library(reshape2)
 # non preserved modules
 plot_data <- modulePreservation_plt$plot_data$plot_data
 non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsummary.pres < 10, ]
+
+
+# non preserved genes common with rest of data: kwithin, MM, DE, tumour associated.
+non_preserved_genes <- names(control_bwnet$colors)[control_bwnet$colors %in% non_preserved_modules$cluster]
+non_preserved_common <- non_preserved_genes[non_preserved_genes %in% common_genes]
+
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                         filters = "ensembl_gene_id", 
+                         values = non_preserved_common, 
+                         mart = ensembl,
+                         verbose = F)
+
 
 # plot cross-tabulation
 cross_tab_counts <- preserved_modules$accuracy$observedCounts$ref.Control$inColumnsAlsoPresentIn.Tumour
@@ -686,50 +704,68 @@ ggplot(color_counts_long, aes(x = control_color, y = count, fill = tumour_color)
 library(clusterProfiler)
 library(org.Hs.eg.db)
 library(progress)
-pb <- progress_bar$new(total = length(unique(control_bwnet$colors)))
 
-# run GO enrichment on control modules
-# fix this up to only get BP
-control_GO <- list()
-for (module in unique(control_bwnet$colors)) {
-  genes <- names(control_bwnet$colors)[control_bwnet$colors %in% module]
-  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "ALL")
-  result <- GO@result
-  split_result <- split(result, result$ONTOLOGY)
-  result_first_5 <- lapply(split_result, function(df) head(df, 5))
-  result_first_5 <- do.call(rbind, result_first_5)
+# function to enrich with GO terms and format results
+GO_analysis <- function(bwnet) {
+  pb <- progress_bar$new(total = length(unique(bwnet$colors)))
+  all_GO <- list()
+  for (module in unique(bwnet$colors)) {
+    genes <- names(bwnet$colors)[bwnet$colors %in% module]
+    GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+    
+    all_GO[[module]] <- GO
+    
+    rm(genes, GO, module)
+    pb$tick()
+  }
   
-  control_GO[[module]] <- result_first_5
+  GO_formatted <- data.frame()
+  for (i in seq_along(all_GO)) {
+    module <- all_GO[[i]]
+    module_name <- names(all_GO)[i]
+    
+    result <- module@result
+    result_top <- head(result, 5)
+    result_top$module <- rep(module_name, nrow(result_top))
+    result_top$`-log(p.adjust)` <- -log(result_top$p.adjust)
+    
+    GO_formatted <- rbind(GO_formatted, result_top)
+  }
   
-  rm(genes, GO, split_result, result_first_5, module)
-  pb$tick()
+  # Function to convert GeneRatio to numeric
+  convert_gene_ratio <- function(gene_ratio) {
+    # Split the string by "/"
+    parts <- strsplit(gene_ratio, "/")[[1]]
+    # Convert the parts to numeric and calculate the ratio
+    ratio <- as.numeric(parts[1]) / as.numeric(parts[2])
+    return(ratio)
+  }
+  
+  GO_formatted$GeneRatio.num <- sapply(GO_formatted$GeneRatio, convert_gene_ratio)
+  
+  return(GO_formatted)
 }
 
-# run GO enrichment on tumour modules
-pb <- progress_bar$new(total = length(unique(tumour_bwnet$colors)))
-tumour_GO <- list()
-for (module in unique(tumour_bwnet$colors)) {
-  genes <- names(tumour_bwnet$colors)[tumour_bwnet$colors %in% module]
-  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "ALL")
-  result <- GO@result
-  split_result <- split(result, result$ONTOLOGY)
-  result_first_5 <- lapply(split_result, function(df) head(df, 5))
-  result_first_5 <- do.call(rbind, result_first_5)
-  
-  tumour_GO[[module]] <- result_first_5
-  
-  rm(genes, GO, split_result, result_first_5, module)
-  pb$tick()
-}
-rm(pb)
 
-save(control_GO, tumour_GO, file = "BRCA/RData/all_default/module_GO_data.RData")
+control_GO <- GO_analysis(control_bwnet)
+tumour_GO <- GO_analysis(tumour_bwnet)
+
+save(control_GO, tumour_GO, file = "BRCA/RData/all_default/signed/split_GO_data.RData")
 
 
-# lightcyan and greenyellow merged into yellow in tumour set so im pulling GO terms for each
-temp <- control_GO[["lightcyan"]]
-temp2 <- control_GO[["greenyellow"]]
-temp3 <- tumour_GO[["yellow"]]
+
+
+
+
+
+
+temp <- control_GO[control_GO$module %in% "green", ]
+temp2 <- tumour_GO[tumour_GO$module %in% "green", ]
+
+common <- intersect(names(control_bwnet$colors)[control_bwnet$colors %in% "green"],  names(tumour_bwnet$colors)[tumour_bwnet$colors %in% "green"])
+GO <- enrichGO(common, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+
+GO <- GO@result
 
 
 temp <- temp[temp$ONTOLOGY == "BP", ]
