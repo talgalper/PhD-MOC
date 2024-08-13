@@ -41,7 +41,6 @@ DE_results <- DE_analysis(counts_matrix = DE_counts_filt$counts_filt,
 
 # load in DE results from WGCNA where we already did this analysis for BRCA
 load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
-
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 
@@ -68,8 +67,8 @@ merged_df <- merged_df[order(merged_df$original_order), ]
 final_df <- merged_df[, c("query.term.x", "query.term.y", "stringdb..score")]
 colnames(final_df) <- c("node_1", "node_2", "score")
 
-save(final_df, DE_data, file = "latest_run/RData/PCSF_input.RData")
-
+save(final_df, file = "latest_run/RData/STRING_PPI.RData")
+load("latest_run/RData/STRING_PPI.RData")
 
 
 # master human STRING network
@@ -106,14 +105,12 @@ DE_data_subset <- DE_data[DE_data$gene_id %in% common_genes, ]
 
 
 
-load("latest_run/RData/PCSF_input.RData")
-
 # set seed for reproducibility 
 set.seed(1234)
 # construct interactome
 ppi <- construct_interactome(final_df)
 # set terminals
-terminals <- setNames(as.numeric(DE_data_subset$logFC_abs), DE_data_subset$gene_id)
+terminals <- setNames(as.numeric(DE_data$logFC_abs), DE_data$gene_id)
 
 # run PCSF with random noise
 start_time <- Sys.time()
@@ -121,7 +118,11 @@ subnet <- PCSF_rand(ppi, terminals, n = 50, r = 0.1, b = 1, w = 2, mu = 0.0005)
 elapsed_time <- Sys.time() - start_time
 print(elapsed_time)
 
+plot.PCSF(subnet, node_label_cex = 15)
+
 save(subnet, file = "latest_run/RData/PCSF_subnet.RData")
+load("latest_run/RData/PCSF_subnet.RData")
+
 
 # convert to gene symbols
 library(biomaRt)
@@ -141,12 +142,6 @@ plot.PCSF(subnet, node_label_cex = 15)
 # enrich network using enrichR
 PCSF_enriched <- enrichment_analysis(subnet)
 plot.PCSFe(PCSF_enriched$subnet, edge_width = 8, node_size = 30, node_label_cex = 1)
-
-
-load("RData/LumA/filterByExp/GTEx/PCSF_subnet.RData")
-load("RData/LumB/filterByExp/GTEx/PCSF_subnet.RData")
-load("RData/Her2/filterByExp/GTEx/PCSF_subnet.RData")
-load("RData/basal/filterByExp/GTEx/PCSF_subnet.RData")
 
 
 # extract cluster data
