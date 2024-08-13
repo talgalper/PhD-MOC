@@ -77,8 +77,8 @@ colnames(wgcna_data_subset) <- gsub("-", ".", colnames(wgcna_data_subset))
 
 
 sampleTable <- sample_info
-sampleTable$sample <- gsub("-", ".", sampleTable$sample)
-sampleTable <- sampleTable[sampleTable$sample %in% colnames(wgcna_data_subset), ]
+#sampleTable$sample <- gsub("-", ".", sampleTable$sample)
+sampleTable <- sampleTable[sampleTable$sample %in% colnames(wgcna_data), ]
 sampleTable$state <- ifelse(sampleTable$group == "Control", "Healthy", "Tumour")
 colnames(sampleTable) <- c("Sample", "Subtype", "State")
 sampleTable <- subset(sampleTable, select = c("Sample", "State", "Subtype")) # reorder columns
@@ -87,11 +87,11 @@ rownames(sampleTable) <- NULL
 conditions1 = sort(unique(sampleTable[,2]))
 conditions2 = sort(unique(sampleTable[,3]))
 
-table(sampleTable$Sample %in% colnames(wgcna_data_subset)) # check for miss-matches
+table(sampleTable$Sample %in% colnames(wgcna_data)) # check for miss-matches
 
 # Construct the combined networks and all the sub-networks
-multiWGCNA_results <- constructNetworks(wgcna_data_subset, sampleTable, conditions1, conditions2,
-                                        networkType = "unsigned", power = 10,
+multiWGCNA_results <- constructNetworks(wgcna_data, sampleTable, conditions1, conditions2,
+                                        networkType = "signed",TOMType = "signed", power = 10,
                                         minModuleSize = 40, maxBlockSize = 45000,
                                         reassignThreshold = 0, minKMEtoStay = 0.7,
                                         mergeCutHeight = 0.10, numericLabels = TRUE,
