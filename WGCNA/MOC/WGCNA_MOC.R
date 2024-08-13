@@ -78,7 +78,7 @@ grid.arrange(a1, a2, nrow = 2)
 rm(a1, a2)
 
 save(sft, file = "MOC/RData/combined_sft.RData")
-
+load("MOC/RData/combined_sft.RData")
 
 
 
@@ -163,19 +163,19 @@ sample_info_subset$Consolidated_Stage <- sapply(sample_info_subset$Stage, consol
 traits.state <- binarizeCategoricalColumns.forPlots(sample_info_subset$Classification)
 traits.subtype <- binarizeCategoricalColumns.forPlots(sample_info_subset$Consolidated_Stage)
 traits <- cbind(traits.state, traits.subtype)
-rownames(traits) <- c(colnames(all_subtypes), colnames(GTEx_ENS))
+rownames(traits) <- c(colnames(MOC_data), colnames(BEN_data))
 traits <- subset(traits, select = c("data.control", "data.tumour", "data.lumA", "data.lumB", "data.Her2","data.basal", "data.GTEx")) # reorder columns
 
 moduleTrait_cor <- cor(bwnet$MEs, traits, use = "p")
-moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(all_wgcna_data))
+moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(MOC_data_norm))
 
 heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 
 heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
 
 CorLevelPlot(heatmap_data,
-             x = names(heatmap_data)[18:23],
-             y = names(heatmap_data)[1:17],
+             x = names(heatmap_data)[46:52],
+             y = names(heatmap_data)[2:45],
              col = c("blue1", "skyblue", "white", "pink", "red"))
 
 
