@@ -66,6 +66,7 @@ DE_data_geneSymbol <- merge(DE_data, ensembl_converted, by.x = "gene_id", by.y =
 DE_data_geneSymbol <- subset(DE_data_geneSymbol, select = c("external_gene_name", "logFC", "logFC_abs"))
 
 save(DE_data_geneSymbol, unmapped, unrecognised, file = "latest_run/RData/DE_data_geneSymbol.RData")
+load("latest_run/RData/DE_data_geneSymbol.RData")
 
 # get interaction data from STRING
 string_edge_data <- read.table("latest_run/intermediate/STRING network (physical) default edge - FULL.csv", header = T, sep = ",", stringsAsFactors = F)
@@ -123,7 +124,7 @@ set.seed(1234)
 # construct interactome
 ppi <- construct_interactome(final_df)
 # set terminals
-terminals <- setNames(as.numeric(DE_data_geneSymbol$logFC_abs), DE_data_geneSymbol$external_gene_name)
+terminals <- setNames(as.numeric(DE_data_geneSymbol$logFC), DE_data_geneSymbol$external_gene_name)
 
 # run PCSF with random noise
 start_time <- Sys.time()
@@ -133,8 +134,8 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
-save(subnet, file = "latest_run/RData/PCSF_subnet_FULL.RData")
-load("latest_run/RData/PCSF_subnet_FULL.RData")
+save(subnet, file = "latest_run/RData/PCSF_subnet_FULL(signed_logFC).RData")
+load("latest_run/RData/PCSF_subnet_FULL(signed_logFC).RData")
 
 
 # extract cluster data
@@ -153,7 +154,6 @@ rownames(df) <- 1:nrow(df)
 
 df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
-
 
 # network enrichment
 PCSF_enrich <- enrichment_analysis(subnet)
