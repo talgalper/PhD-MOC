@@ -42,6 +42,13 @@ BEN_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_s
 counts_filt <- filter_low_expr(tumour_matrix = MOC_data,
                                control_matrix = BEN_data)
 
+# perform DE if havent already
+DE_results <- DE_analysis(counts_matrix = counts_filt,
+                          sample_info = sample_info_subset)
+dif_exp <- DE_results$dif_exp
+
+save(dif_exp, file = "MOC/RData/MOC_dif_exp.RData")
+
 # normalisation (transposes matrix)
 MOC_data_norm <- vst_norm(counts_filt)
 
@@ -164,7 +171,6 @@ traits.state <- binarizeCategoricalColumns.forPlots(sample_info_subset$Classific
 traits.subtype <- binarizeCategoricalColumns.forPlots(sample_info_subset$Consolidated_Stage)
 traits <- cbind(traits.state, traits.subtype)
 rownames(traits) <- c(colnames(MOC_data), colnames(BEN_data))
-traits <- subset(traits, select = c("data.control", "data.tumour", "data.lumA", "data.lumB", "data.Her2","data.basal", "data.GTEx")) # reorder columns
 
 moduleTrait_cor <- cor(bwnet$MEs, traits, use = "p")
 moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(MOC_data_norm))
@@ -335,7 +341,7 @@ ggplot(data = KEGG_formatted, aes(x = module, y = Description,
 
 
 ## cross section of tumour modules and DE genes
-load("BRCA/RData/DE_subset/dif_exp.RData")
+load("MOC/RData/MOC_dif_exp.RData")
 
 DE_genes_bwnet <- bwnet$colors[names(bwnet$colors) %in% dif_exp$gene_id]
 DE_genes_bwnet <- as.data.frame(table(DE_genes_bwnet))
@@ -354,9 +360,9 @@ DE_genes <- dif_exp$gene_id
 tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
-save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/signed/venn_data.RData")
+save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "MOC/RData/venn_data.RData")
 
-kWithin[rownames(kWithin) %in% "ENSG00000141510", ]
+kWithin[rownames(kWithin) %in% "ENSG00000141510", ] #TP53
 
 load("BRCA/RData/all_default/venn_data.RData")
 library(VennDiagram)
@@ -376,7 +382,7 @@ venn.diagram(
   cat.fontsize = 10,  # set the font size for category labels
   cex = 1.5,  # increase the size of the circles
   margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "BRCA/RData/all_default/signed/consensus_genes.png",
+  filename = "MOC/RData/consensus_genes.png",
   disable.logging = TRUE
 )
 
@@ -391,6 +397,8 @@ genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name")
 
 
 
+GO <- enrichGO(common_genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+GO_formatted <- GO@result
 
 
 ###############################################################################
