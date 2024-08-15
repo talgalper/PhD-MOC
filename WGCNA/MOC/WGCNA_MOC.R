@@ -172,16 +172,222 @@ moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(MOC_d
 heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 
 heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
+heatmap_data <- heatmap_data[, -48] # remove duplucate BEN column
 
 CorLevelPlot(heatmap_data,
-             x = names(heatmap_data)[46:52],
+             x = names(heatmap_data)[46:51],
              y = names(heatmap_data)[2:45],
              col = c("blue1", "skyblue", "white", "pink", "red"))
 
 
 
+# intramodular connectivity
+colours <- labels2colors(bwnet$colors)
+kWithin <- intramodularConnectivity.fromExpr(MOC_data_norm, colours, power = 6)
+rownames(kWithin) <- colnames(MOC_data_norm)
+kWithin <- kWithin[order(-kWithin$kWithin), ]
+save(kWithin, file = "MOC/RData/all_kwithin.RData")
+load("MOC/RData/all_kwithin.RData")
+
+# Does the same thing as above (intra modular connectivity)
+module.membership.measure <- cor(bwnet$MEs, MOC_data_norm, use = 'p')
+module.membership.measure.pvals <- corPvalueStudent(module.membership.measure, nrow(MOC_data_norm))
+module.membership.measure.pvals <- as.data.frame(t(module.membership.measure.pvals))
+
+# gene significance
+gene.signf.corr <- cor(MOC_data_norm, traits$data.MOC, use = 'p')
+gene.signf.corr.pvals <- as.data.frame(corPvalueStudent(gene.signf.corr, nrow(MOC_data_norm)))
+gene.signf.corr.pvals <- rownames_to_column(gene.signf.corr.pvals)
+gene.signf.corr.pvals <- gene.signf.corr.pvals[order(gene.signf.corr.pvals$V1), ]
+rownames(gene.signf.corr.pvals) <- NULL
+colnames(gene.signf.corr.pvals) <- c("gene_id", "pvalue")
+
+# get top 10 genes for connectivity for each module
+top_connectivity_genes = list()
+for (module in unique(bwnet$colors)) {
+  moduleGenes = names(bwnet$colors)[bwnet$colors == module]
+  moduleKWithin = kWithin[moduleGenes, ]
+  topNumGenes <- ceiling(length(moduleGenes) * 0.10)
+  topModuleGenes = head(order(moduleKWithin$kWithin, decreasing = TRUE), topNumGenes)
+  top_connectivity_genes[[module]] = moduleGenes[topModuleGenes]
+  
+  rm(moduleGenes, module, topModuleGenes, topNumGenes)
+}
 
 
+library(reshape2)
+top_connectivity_genes <- melt(top_connectivity_genes)
+colnames(top_connectivity_genes) <- c("ensembl_id", "module")
+#top_connectivity_genes$DE <- top_connectivity_genes$ensembl_id %in% dif_exp$gene_id
+
+
+# perform GO and pathway analysis
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(progress)
+pb <- progress_bar$new(total = length(unique(bwnet$colors)))
+
+# run GO enrichment
+# turn this into a function at some point
+all_GO <- list()
+for (module in unique(bwnet$colors)) {
+  genes <- names(bwnet$colors)[bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+  
+  all_GO[[module]] <- GO
+  
+  rm(genes, GO, module)
+  pb$tick()
+}
+
+save(all_GO, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/MOC/WGCNA_GO_BP.RData")
+
+
+GO_formatted <- data.frame()
+for (i in seq_along(all_GO)) {
+  module <- all_GO[[i]]
+  module_name <- names(all_GO)[i]
+  
+  result <- module@result
+  result_top <- head(result, 5)
+  result_top$module <- rep(module_name, nrow(result_top))
+  result_top$`-log(p.adjust)` <- -log(result_top$p.adjust)
+  
+  GO_formatted <- rbind(GO_formatted, result_top)
+  
+  rm(module, i, result, result_top)
+}
+
+# Function to convert GeneRatio to numeric
+convert_gene_ratio <- function(gene_ratio) {
+  # Split the string by "/"
+  parts <- strsplit(gene_ratio, "/")[[1]]
+  # Convert the parts to numeric and calculate the ratio
+  ratio <- as.numeric(parts[1]) / as.numeric(parts[2])
+  return(ratio)
+}
+
+GO_formatted$GeneRatio.num <- sapply(GO_formatted$GeneRatio, convert_gene_ratio)
+save(GO_formatted, file = "BRCA/RData/all_default/signed/all_WGCNA_GO_BP.RData")
+
+ggplot(data = GO_formatted, aes(x = module, y = Description, 
+                                color = `p.adjust`, size = GeneRatio.num)) + 
+  geom_point() +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  labs(size = "Gene Ratio") +
+  ggtitle("GO enrichment analysis (BP)")
+
+
+
+## KEGG pwathway
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+pb <- progress_bar$new(total = length(unique(bwnet$colors)))
+
+all_KEGG <- list()
+for (module in unique(bwnet$colors)) {
+  genes <- names(bwnet$colors)[bwnet$colors %in% module]
+  genes_converted <- getBM(attributes = c("ensembl_gene_id", "entrezgene_id"), 
+                           filters = "ensembl_gene_id", 
+                           values = genes, 
+                           mart = ensembl,
+                           verbose = F)
+  
+  KEGG <- enrichKEGG(genes_converted$entrezgene_id, organism = "hsa", keyType = "ncbi-geneid")
+  
+  all_KEGG[[module]] <- KEGG
+  
+  rm(genes, genes_converted, KEGG, module)
+  pb$tick()
+}
+
+KEGG_formatted <- data.frame()
+for (i in seq_along(all_KEGG)) {
+  module <- all_KEGG[[i]]
+  module_name <- names(all_KEGG)[i]
+  
+  result <- module@result
+  result_top <- head(result, 5)
+  result_top$module <- rep(module_name, nrow(result_top))
+  result_top$`-log(p.adjust)` <- -log(result_top$p.adjust)
+  
+  KEGG_formatted <- rbind(KEGG_formatted, result_top)
+  
+  rm(module, i, result, result_top)
+}
+
+# uses convert_gene_ratio function
+KEGG_formatted$GeneRatio.num <- sapply(KEGG_formatted$GeneRatio, convert_gene_ratio)
+save(KEGG_formatted, file = "BRCA/RData/all_default/signed/all_WGCNA_KEGG.RData")
+
+ggplot(data = KEGG_formatted, aes(x = module, y = Description, 
+                                  color = `p.adjust`, size = GeneRatio.num)) + 
+  geom_point() +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  labs(size = "Gene Ratio") +
+  ggtitle("KEGG enrichment analysis")
+
+
+## cross section of tumour modules and DE genes
+load("BRCA/RData/DE_subset/dif_exp.RData")
+
+DE_genes_bwnet <- bwnet$colors[names(bwnet$colors) %in% dif_exp$gene_id]
+DE_genes_bwnet <- as.data.frame(table(DE_genes_bwnet))
+colnames(DE_genes_bwnet) <- c("module", "DE_genes")
+
+temp <- as.data.frame(table(bwnet$colors))
+colnames(temp) <- c("module", "total_size")
+DE_genes_bwnet <- merge(temp, DE_genes_bwnet, by = "module", all = T)
+DE_genes_bwnet[is.na(DE_genes_bwnet)] <- 0
+DE_genes_bwnet$`proportion(%)` <- DE_genes_bwnet$DE_genes/DE_genes_bwnet$total_size * 100
+DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
+
+
+## venn diagram for cross 
+DE_genes <- dif_exp$gene_id
+tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
+top_kwithin <- top_connectivity_genes$ensembl_id
+top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
+save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/signed/venn_data.RData")
+
+kWithin[rownames(kWithin) %in% "ENSG00000141510", ]
+
+load("BRCA/RData/all_default/venn_data.RData")
+library(VennDiagram)
+
+venn.diagram(
+  x = list(DE_genes = DE_genes, 
+           tumour_associated = tumour_associated, 
+           kwithin = top_kwithin,
+           top_tumour_membership = top_gene_membership),
+  category.names = c("DE genes", "Tumour associated", "Top10% Kwithin", "Top10% MM"),
+  col = "transparent",  # set the color of the intersections to transparent
+  fill = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for each category
+  alpha = 0.5,  # set the transparency level of the circles
+  cat.col = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for category labels
+  cat.fontfamily = "Arial",  # set the font family for category labels
+  cat.fontface = "bold",  # set the font face for category labels
+  cat.fontsize = 10,  # set the font size for category labels
+  cex = 1.5,  # increase the size of the circles
+  margin = 0.1,  # set the margin size (proportion of the plot)
+  filename = "BRCA/RData/all_default/signed/consensus_genes.png",
+  disable.logging = TRUE
+)
+
+
+common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
+
+genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
+                         filters = "ensembl_gene_id", 
+                         values = common_genes, 
+                         mart = ensembl,
+                         verbose = F)
 
 
 
