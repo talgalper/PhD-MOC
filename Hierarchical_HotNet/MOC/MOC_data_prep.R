@@ -2,8 +2,8 @@
 library(tidyverse)
 
 # load in data
-load("../../Documents/GitHub/PhD-MOC/BRCA_pipe/latest_run/RData/STRING_PPI_FULL.RData")
-load("../../Documents/GitHub/PhD-MOC/WGCNA/MOC/RData/MOC_dif_exp.RData")
+load("../BRCA_pipe/latest_run/RData/STRING_PPI_FULL.RData")
+load("../WGCNA/MOC/RData/MOC_dif_exp.RData")
 
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
@@ -15,6 +15,10 @@ ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name
 
 unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
 unrecognised <- dif_exp[!dif_exp$gene_id %in% ensembl_converted$ensembl_gene_id, ]
+
+novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
+novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
+pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
 
 ensembl_converted <- ensembl_converted[ensembl_converted$external_gene_name != "", ]
 
