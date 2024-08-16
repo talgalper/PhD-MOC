@@ -50,6 +50,9 @@ dif_exp <- DE_results$dif_exp
 save(dif_exp, file = "MOC/RData/MOC_dif_exp.RData")
 
 # normalisation (transposes matrix)
+counts_filt <- filter_low_expr(tumour_matrix = MOC_data,
+                               control_matrix = BEN_data)
+
 MOC_data_norm <- vst_norm(counts_filt)
 
 # plot PCA
@@ -356,9 +359,10 @@ DE_genes_bwnet$`proportion(%)` <- DE_genes_bwnet$DE_genes/DE_genes_bwnet$total_s
 DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
 
 
-## venn diagram for cross 
+## venn diagram for consensus genes 
+# need to change colour groups for tumour associated
 DE_genes <- dif_exp$gene_id
-tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
+tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("mediumpurple3", "lightgreen", "yellowgreen")] # modules here are sig associated to control group
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
 save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "MOC/RData/venn_data.RData")
@@ -383,7 +387,7 @@ venn.diagram(
   cat.fontsize = 10,  # set the font size for category labels
   cex = 1.5,  # increase the size of the circles
   margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "MOC/RData/consensus_genes.png",
+  filename = "../../../../Desktop/delete.png",
   disable.logging = TRUE
 )
 
