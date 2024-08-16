@@ -39,12 +39,12 @@ MOC_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_s
 BEN_data <- MOC_raw_counts_ENS[, colnames(MOC_raw_counts_ENS) %in% sample_info_subset$sample[sample_info_subset$group == "BEN"]]
 
 # QC
-counts_filt <- filter_low_expr(tumour_matrix = MOC_data,
-                               control_matrix = BEN_data)
+counts_filt <- filter_low_expr(disease_data = MOC_data,
+                               control_data = BEN_data)
 
 # perform DE if havent already
-DE_results <- DE_analysis(counts_matrix = counts_filt,
-                          sample_info = sample_info_subset)
+DE_results <- DE_analysis(counts_matrix = counts_filt$counts_filt,
+                          sample_info = counts_filt$sample_info)
 dif_exp <- DE_results$dif_exp
 
 save(dif_exp, file = "MOC/RData/MOC_dif_exp.RData")
@@ -364,7 +364,7 @@ save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "MOC/
 
 kWithin[rownames(kWithin) %in% "ENSG00000141510", ] #TP53
 
-load("BRCA/RData/all_default/venn_data.RData")
+load("MOC/RData/venn_data.RData")
 library(VennDiagram)
 
 venn.diagram(
@@ -399,6 +399,11 @@ genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name")
 
 GO <- enrichGO(common_genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
 GO_formatted <- GO@result
+
+
+
+
+
 
 
 ###############################################################################
