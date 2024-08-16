@@ -247,6 +247,7 @@ for (module in unique(bwnet$colors)) {
 }
 
 save(all_GO, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/MOC/WGCNA_GO_BP.RData")
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/MOC/WGCNA_GO_BP.RData")
 
 
 GO_formatted <- data.frame()
@@ -274,7 +275,7 @@ convert_gene_ratio <- function(gene_ratio) {
 }
 
 GO_formatted$GeneRatio.num <- sapply(GO_formatted$GeneRatio, convert_gene_ratio)
-save(GO_formatted, file = "BRCA/RData/all_default/signed/all_WGCNA_GO_BP.RData")
+save(GO_formatted, file = "MOC/RData/all_WGCNA_GO_BP.RData")
 
 ggplot(data = GO_formatted, aes(x = module, y = Description, 
                                 color = `p.adjust`, size = GeneRatio.num)) + 
@@ -374,9 +375,9 @@ venn.diagram(
            top_tumour_membership = top_gene_membership),
   category.names = c("DE genes", "Tumour associated", "Top10% Kwithin", "Top10% MM"),
   col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for each category
+  fill = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colours for each category
   alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for category labels
+  cat.col = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colours for category labels
   cat.fontfamily = "Arial",  # set the font family for category labels
   cat.fontface = "bold",  # set the font face for category labels
   cat.fontsize = 10,  # set the font size for category labels
