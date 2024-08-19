@@ -1,6 +1,7 @@
 library(PCSF)
 library(tidyverse)
 library(edgeR)
+library(WGCNA)
 
 # Load data
 load("RData/LumA/DE_data.RData")

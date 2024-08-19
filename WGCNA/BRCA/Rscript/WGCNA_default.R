@@ -339,7 +339,7 @@ DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
 
 ## venn diagram for cross 
 DE_genes <- dif_exp$gene_id
-tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
+tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are associated to control group
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
 save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/venn_data.RData")
@@ -373,6 +373,9 @@ genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name")
                          values = common_genes, 
                          mart = ensembl,
                          verbose = F)
+
+GO <- enrichGO(common_genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+GO <- GO@result
 
 ###############################################################################
 # Will now perform WGCNA on TCGA and GTEx groups separately for module     

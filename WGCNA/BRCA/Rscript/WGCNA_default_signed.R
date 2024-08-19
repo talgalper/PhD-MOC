@@ -347,7 +347,7 @@ save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA
 
 kWithin[rownames(kWithin) %in% "ENSG00000141510", ]
 
-load("BRCA/RData/all_default/venn_data.RData")
+load("BRCA/RData/all_default/signed/venn_data.RData")
 library(VennDiagram)
 
 venn.diagram(
