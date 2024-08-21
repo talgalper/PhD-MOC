@@ -345,7 +345,7 @@ top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
 save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/signed/venn_data.RData")
 
-kWithin[rownames(kWithin) %in% "ENSG00000141510", ]
+kWithin[rownames(kWithin) %in% "ENSG00000141510", ] # TP53
 
 load("BRCA/RData/all_default/signed/venn_data.RData")
 library(VennDiagram)

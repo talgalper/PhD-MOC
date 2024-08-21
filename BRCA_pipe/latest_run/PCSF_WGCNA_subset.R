@@ -2,42 +2,6 @@ library(PCSF)
 library(tidyverse)
 library(edgeR)
 
-# Load data
-load("RData/LumA/DE_data.RData")
-load("RData/LumB/DE_data.RData")
-load("RData/Her2/DE_data.RData")
-load("RData/basal/DE_data.RData")
-load("RData/TCGA_normal.RData")
-
-GTEx_data <- read.table("../BRCA_pipe/gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
-colnames(GTEx_data) <- GTEx_data[1, ]
-GTEx_data <- GTEx_data[-1, -1]
-rownames(GTEx_data) <- NULL
-
-# opt for having gene Ensembl IDs instead of gene names as rownames (same as TCGA)
-GTEx_ENS <- column_to_rownames(GTEx_data, "Name")
-rownames(GTEx_ENS) <- gsub("\\.\\d+", "", rownames(GTEx_ENS))
-GTEx_ENS <- GTEx_ENS[ , -1]
-rownames <- rownames(GTEx_ENS)
-GTEx_ENS <- as.data.frame(sapply(GTEx_ENS, as.numeric))
-rownames(GTEx_ENS) <- rownames
-rm(rownames, GTEx_data)
-GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
-
-# combine all tumour samples
-all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-
-# clean env
-rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-collectGarbage()
-
-# read in functions from "../BRCA_pipe/Rscript/DE_functions.R"
-counts_filt <- filter_low_expr(disease_data = all_subtypes, 
-                               control_data = GTEx_ENS)
-hist(log(as.matrix(counts_filt$counts_filt)))
-
-DE_results <- DE_analysis(counts_matrix = DE_counts_filt$counts_filt,
-                          sample_info = DE_counts_filt$sample_info)
 
 # load in DE results from WGCNA where we already did this analysis for BRCA
 load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
@@ -92,7 +56,7 @@ elapsed_time <- Sys.time() - start_time
 print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
-
+load("latest_run/RData/PCSF_subnet_WGCNAsubset.RData")
 
 
 # extract cluster data
@@ -139,3 +103,6 @@ top3_rows <- lapply(split_data, function(df) {
 
 # Combine the results back into a single data frame
 top3_rows_df <- do.call(rbind, top3_rows)
+
+
+

@@ -1,7 +1,9 @@
 library(tidyverse)
 library(igraph)
 
-STRING_net <- read_graph("../../../../Desktop/hierarchical-hotnet/STRING_hsa_physical_network.graphml", format = "graphml")
+STRING_net <- read_graph("../../../../Desktop/hierarchical-hotnet/STRING_hsa_physical_network.graphml", format = "graphml") # ubuntu
+STRING_net <- read_graph("../../../../OneDrive - RMIT University/PhD/large_git_files/HHnet/STRING_hsa_physical_network.graphml", format = "graphml") # MAC
+STRING_net <- as.undirected(STRING_net)
 
 hh_results <- read_lines("WGCNA_subset/results/clusters_STRING_MOC_logFC_scores_abs.tsv", skip = 7)
 hh_results <- str_split(hh_results, pattern = "\t")
@@ -39,10 +41,11 @@ neighbs <- flatten(neighbs)
 neighbs <- names(neighbs)
 neighbs <- unique(neighbs)
 
-clust1_net <- induced.subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
+clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
 V(clust1_net)$size <- scales::rescale(degree(clust1_net), c(1, 7))
 #clust1_net <- simplify(clust1_net)
-plot(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3)
+plot(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3, )
+
 
 # subset edges with experimental evidence
 #clust1_net_filt <- delete_edges(clust1_net, E(clust1_net)[!is.na(E(clust1_net)$`stringdb::experiments`) & E(clust1_net)$`stringdb::experiments` >= 0.4])
@@ -61,6 +64,8 @@ df <- data.frame(degree = degree(clust1_net),
                  source = V(clust1_net)$color)
 
 df$source <- ifelse(df$source == "tomato", "subnet", "STRING")
+df <- rownames_to_column(df)
+
 
 V(subnet)$name <- V(subnet)$`display name` <- V(subnet)$`display name`
 
