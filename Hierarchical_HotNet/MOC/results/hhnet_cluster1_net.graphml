@@ -17,6 +17,7 @@
   <key id="g_data version" for="graph" attr.name="data version" attr.type="string"/>
   <key id="g_uri" for="graph" attr.name="uri" attr.type="string"/>
   <key id="v_SUID" for="node" attr.name="SUID" attr.type="double"/>
+  <key id="v_shared name" for="node" attr.name="shared name" attr.type="string"/>
   <key id="v_name" for="node" attr.name="name" attr.type="string"/>
   <key id="v_selected" for="node" attr.name="selected" attr.type="boolean"/>
   <key id="v_stringdb::canonical name" for="node" attr.name="stringdb::canonical name" attr.type="string"/>
@@ -69,18 +70,8 @@
   <key id="v_tissue::urine" for="node" attr.name="tissue::urine" attr.type="double"/>
   <key id="v_id" for="node" attr.name="id" attr.type="string"/>
   <key id="v_color" for="node" attr.name="color" attr.type="string"/>
-  <key id="e_SUID" for="edge" attr.name="SUID" attr.type="double"/>
-  <key id="e_shared name" for="edge" attr.name="shared name" attr.type="string"/>
-  <key id="e_shared interaction" for="edge" attr.name="shared interaction" attr.type="string"/>
   <key id="e_name" for="edge" attr.name="name" attr.type="string"/>
-  <key id="e_selected" for="edge" attr.name="selected" attr.type="boolean"/>
-  <key id="e_interaction" for="edge" attr.name="interaction" attr.type="string"/>
-  <key id="e_stringdb::score" for="edge" attr.name="stringdb::score" attr.type="double"/>
-  <key id="e_stringdb::interspecies" for="edge" attr.name="stringdb::interspecies" attr.type="boolean"/>
-  <key id="e_stringdb::experiments" for="edge" attr.name="stringdb::experiments" attr.type="double"/>
-  <key id="e_stringdb::textmining" for="edge" attr.name="stringdb::textmining" attr.type="double"/>
-  <key id="e_stringdb::databases" for="edge" attr.name="stringdb::databases" attr.type="double"/>
-  <graph id="G" edgedefault="directed">
+  <graph id="G" edgedefault="undirected">
     <data key="g_shared name"></data>
     <data key="g_name"></data>
     <data key="g_selected">false</data>
@@ -93,7 +84,8 @@
     <data key="g_uri"></data>
     <node id="n0">
       <data key="v_SUID">56164</data>
-      <data key="v_name">MZT2A</data>
+      <data key="v_shared name">9606.ENSP00000311500</data>
+      <data key="v_name">9606.ENSP00000311500</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q6P582</data>
       <data key="v_display name">MZT2A</data>
@@ -140,7 +132,8 @@
     </node>
     <node id="n1">
       <data key="v_SUID">55195</data>
-      <data key="v_name">MCM10</data>
+      <data key="v_shared name">9606.ENSP00000418268</data>
+      <data key="v_name">9606.ENSP00000418268</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9P177</data>
       <data key="v_display name">MCM10</data>
@@ -193,7 +186,8 @@
     </node>
     <node id="n2">
       <data key="v_SUID">54256</data>
-      <data key="v_name">FAM83D</data>
+      <data key="v_shared name">9606.ENSP00000481465</data>
+      <data key="v_name">9606.ENSP00000481465</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9H4H8</data>
       <data key="v_display name">FAM83D</data>
@@ -243,7 +237,8 @@
     </node>
     <node id="n3">
       <data key="v_SUID">52870</data>
-      <data key="v_name">GINS4</data>
+      <data key="v_shared name">9606.ENSP00000276533</data>
+      <data key="v_name">9606.ENSP00000276533</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9BRT9</data>
       <data key="v_display name">GINS4</data>
@@ -294,7 +289,8 @@
     </node>
     <node id="n4">
       <data key="v_SUID">51469</data>
-      <data key="v_name">GADD45G</data>
+      <data key="v_shared name">9606.ENSP00000252506</data>
+      <data key="v_name">9606.ENSP00000252506</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O95257</data>
       <data key="v_display name">GADD45G</data>
@@ -349,7 +345,8 @@
     </node>
     <node id="n5">
       <data key="v_SUID">50308</data>
-      <data key="v_name">MELK</data>
+      <data key="v_shared name">9606.ENSP00000298048</data>
+      <data key="v_name">9606.ENSP00000298048</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q14680</data>
       <data key="v_display name">MELK</data>
@@ -404,7 +401,8 @@
     </node>
     <node id="n6">
       <data key="v_SUID">49417</data>
-      <data key="v_name">ZNF598</data>
+      <data key="v_shared name">9606.ENSP00000455308</data>
+      <data key="v_name">9606.ENSP00000455308</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q86UK7</data>
       <data key="v_display name">ZNF598</data>
@@ -457,7 +455,8 @@
     </node>
     <node id="n7">
       <data key="v_SUID">49285</data>
-      <data key="v_name">GADD45B</data>
+      <data key="v_shared name">9606.ENSP00000215631</data>
+      <data key="v_name">9606.ENSP00000215631</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O75293</data>
       <data key="v_display name">GADD45B</data>
@@ -512,7 +511,8 @@
     </node>
     <node id="n8">
       <data key="v_SUID">48607</data>
-      <data key="v_name">RAVER1</data>
+      <data key="v_shared name">9606.ENSP00000482486</data>
+      <data key="v_name">9606.ENSP00000482486</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q8IY67</data>
       <data key="v_display name">RAVER1</data>
@@ -562,7 +562,8 @@
     </node>
     <node id="n9">
       <data key="v_SUID">48592</data>
-      <data key="v_name">TPX2</data>
+      <data key="v_shared name">9606.ENSP00000300403</data>
+      <data key="v_name">9606.ENSP00000300403</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9ULW0</data>
       <data key="v_display name">TPX2</data>
@@ -617,7 +618,8 @@
     </node>
     <node id="n10">
       <data key="v_SUID">45313</data>
-      <data key="v_name">GINS2</data>
+      <data key="v_shared name">9606.ENSP00000253462</data>
+      <data key="v_name">9606.ENSP00000253462</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9Y248</data>
       <data key="v_display name">GINS2</data>
@@ -670,7 +672,8 @@
     </node>
     <node id="n11">
       <data key="v_SUID">43846</data>
-      <data key="v_name">PDE3A</data>
+      <data key="v_shared name">9606.ENSP00000351957</data>
+      <data key="v_name">9606.ENSP00000351957</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q14432</data>
       <data key="v_display name">PDE3A</data>
@@ -725,7 +728,8 @@
     </node>
     <node id="n12">
       <data key="v_SUID">39823</data>
-      <data key="v_name">CCNF</data>
+      <data key="v_shared name">9606.ENSP00000380256</data>
+      <data key="v_name">9606.ENSP00000380256</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">P41002</data>
       <data key="v_display name">CCNF</data>
@@ -779,7 +783,8 @@
     </node>
     <node id="n13">
       <data key="v_SUID">38296</data>
-      <data key="v_name">DLGAP5</data>
+      <data key="v_shared name">9606.ENSP00000247191</data>
+      <data key="v_name">9606.ENSP00000247191</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q15398</data>
       <data key="v_display name">DLGAP5</data>
@@ -832,7 +837,8 @@
     </node>
     <node id="n14">
       <data key="v_SUID">36562</data>
-      <data key="v_name">ASPM</data>
+      <data key="v_shared name">9606.ENSP00000356379</data>
+      <data key="v_name">9606.ENSP00000356379</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9NVS1</data>
       <data key="v_display name">ASPM</data>
@@ -886,7 +892,8 @@
     </node>
     <node id="n15">
       <data key="v_SUID">36454</data>
-      <data key="v_name">NDC80</data>
+      <data key="v_shared name">9606.ENSP00000261597</data>
+      <data key="v_name">9606.ENSP00000261597</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O14777</data>
       <data key="v_display name">NDC80</data>
@@ -941,7 +948,8 @@
     </node>
     <node id="n16">
       <data key="v_SUID">35752</data>
-      <data key="v_name">MKI67</data>
+      <data key="v_shared name">9606.ENSP00000357643</data>
+      <data key="v_name">9606.ENSP00000357643</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">P46013</data>
       <data key="v_display name">MKI67</data>
@@ -996,7 +1004,8 @@
     </node>
     <node id="n17">
       <data key="v_SUID">35458</data>
-      <data key="v_name">SKA3</data>
+      <data key="v_shared name">9606.ENSP00000319417</data>
+      <data key="v_name">9606.ENSP00000319417</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q8IX90</data>
       <data key="v_display name">SKA3</data>
@@ -1046,7 +1055,8 @@
     </node>
     <node id="n18">
       <data key="v_SUID">33349</data>
-      <data key="v_name">SPC24</data>
+      <data key="v_shared name">9606.ENSP00000465075</data>
+      <data key="v_name">9606.ENSP00000465075</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q8NBT2</data>
       <data key="v_display name">SPC24</data>
@@ -1092,7 +1102,8 @@
     </node>
     <node id="n19">
       <data key="v_SUID">31375</data>
-      <data key="v_name">REPIN1</data>
+      <data key="v_shared name">9606.ENSP00000417291</data>
+      <data key="v_name">9606.ENSP00000417291</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9BWE0</data>
       <data key="v_display name">REPIN1</data>
@@ -1145,7 +1156,8 @@
     </node>
     <node id="n20">
       <data key="v_SUID">29743</data>
-      <data key="v_name">WDR62</data>
+      <data key="v_shared name">9606.ENSP00000384792</data>
+      <data key="v_name">9606.ENSP00000384792</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O43379</data>
       <data key="v_display name">WDR62</data>
@@ -1199,7 +1211,8 @@
     </node>
     <node id="n21">
       <data key="v_SUID">29161</data>
-      <data key="v_name">SKA1</data>
+      <data key="v_shared name">9606.ENSP00000285116</data>
+      <data key="v_name">9606.ENSP00000285116</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q96BD8</data>
       <data key="v_display name">SKA1</data>
@@ -1251,7 +1264,8 @@
     </node>
     <node id="n22">
       <data key="v_SUID">28726</data>
-      <data key="v_name">GINS1</data>
+      <data key="v_shared name">9606.ENSP00000262460</data>
+      <data key="v_name">9606.ENSP00000262460</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q14691</data>
       <data key="v_display name">GINS1</data>
@@ -1302,7 +1316,8 @@
     </node>
     <node id="n23">
       <data key="v_SUID">25930</data>
-      <data key="v_name">HMMR</data>
+      <data key="v_shared name">9606.ENSP00000377492</data>
+      <data key="v_name">9606.ENSP00000377492</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O75330</data>
       <data key="v_display name">HMMR</data>
@@ -1357,7 +1372,8 @@
     </node>
     <node id="n24">
       <data key="v_SUID">24313</data>
-      <data key="v_name">CDC6</data>
+      <data key="v_shared name">9606.ENSP00000209728</data>
+      <data key="v_name">9606.ENSP00000209728</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q99741</data>
       <data key="v_display name">CDC6</data>
@@ -1412,7 +1428,8 @@
     </node>
     <node id="n25">
       <data key="v_SUID">20719</data>
-      <data key="v_name">CENPF</data>
+      <data key="v_shared name">9606.ENSP00000355922</data>
+      <data key="v_name">9606.ENSP00000355922</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">P49454</data>
       <data key="v_display name">CENPF</data>
@@ -1467,7 +1484,8 @@
     </node>
     <node id="n26">
       <data key="v_SUID">18892</data>
-      <data key="v_name">NUSAP1</data>
+      <data key="v_shared name">9606.ENSP00000499238</data>
+      <data key="v_name">9606.ENSP00000499238</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9NZ85</data>
       <data key="v_display name">NUSAP1</data>
@@ -1521,7 +1539,8 @@
     </node>
     <node id="n27">
       <data key="v_SUID">18886</data>
-      <data key="v_name">NUF2</data>
+      <data key="v_shared name">9606.ENSP00000271452</data>
+      <data key="v_name">9606.ENSP00000271452</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9BZD4</data>
       <data key="v_display name">NUF2</data>
@@ -1574,7 +1593,8 @@
     </node>
     <node id="n28">
       <data key="v_SUID">18745</data>
-      <data key="v_name">CCDC40</data>
+      <data key="v_shared name">9606.ENSP00000380679</data>
+      <data key="v_name">9606.ENSP00000380679</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q4G0X9</data>
       <data key="v_display name">CCDC40</data>
@@ -1622,7 +1642,8 @@
     </node>
     <node id="n29">
       <data key="v_SUID">15334</data>
-      <data key="v_name">SPC25</data>
+      <data key="v_shared name">9606.ENSP00000282074</data>
+      <data key="v_name">9606.ENSP00000282074</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9HBM1</data>
       <data key="v_display name">SPC25</data>
@@ -1668,7 +1689,8 @@
     </node>
     <node id="n30">
       <data key="v_SUID">10888</data>
-      <data key="v_name">MZT2B</data>
+      <data key="v_shared name">9606.ENSP00000386419</data>
+      <data key="v_name">9606.ENSP00000386419</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">B8ZZ87</data>
       <data key="v_display name">MZT2B</data>
@@ -1715,7 +1737,8 @@
     </node>
     <node id="n31">
       <data key="v_SUID">9562</data>
-      <data key="v_name">LRWD1</data>
+      <data key="v_shared name">9606.ENSP00000292616</data>
+      <data key="v_name">9606.ENSP00000292616</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9UFC0</data>
       <data key="v_display name">LRWD1</data>
@@ -1764,7 +1787,8 @@
     </node>
     <node id="n32">
       <data key="v_SUID">8506</data>
-      <data key="v_name">BUB1</data>
+      <data key="v_shared name">9606.ENSP00000302530</data>
+      <data key="v_name">9606.ENSP00000302530</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O43683</data>
       <data key="v_display name">BUB1</data>
@@ -1819,7 +1843,8 @@
     </node>
     <node id="n33">
       <data key="v_SUID">4090</data>
-      <data key="v_name">CDT1</data>
+      <data key="v_shared name">9606.ENSP00000301019</data>
+      <data key="v_name">9606.ENSP00000301019</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">Q9H211</data>
       <data key="v_display name">CDT1</data>
@@ -1873,7 +1898,8 @@
     </node>
     <node id="n34">
       <data key="v_SUID">1708</data>
-      <data key="v_name">CDC14B</data>
+      <data key="v_shared name">9606.ENSP00000364389</data>
+      <data key="v_name">9606.ENSP00000364389</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">O60729</data>
       <data key="v_display name">CDC14B</data>
@@ -1921,7 +1947,8 @@
     </node>
     <node id="n35">
       <data key="v_SUID">1087</data>
-      <data key="v_name">RRM2</data>
+      <data key="v_shared name">9606.ENSP00000353770</data>
+      <data key="v_name">9606.ENSP00000353770</data>
       <data key="v_selected">false</data>
       <data key="v_stringdb::canonical name">P31350</data>
       <data key="v_display name">RRM2</data>
@@ -1974,606 +2001,158 @@
       <data key="v_id">1087</data>
       <data key="v_color">tomato</data>
     </node>
-    <edge source="n0" target="n30">
-      <data key="e_SUID">407896</data>
-      <data key="e_shared name">9606.ENSP00000311500 (ppp) 9606.ENSP00000386419</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000311500 (ppp) 9606.ENSP00000386419</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.812</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.103</data>
-      <data key="e_stringdb::databases">0.8</data>
-    </edge>
-    <edge source="n3" target="n1">
-      <data key="e_SUID">303688</data>
-      <data key="e_shared name">9606.ENSP00000276533 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n1" target="n3">
       <data key="e_name">9606.ENSP00000276533 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.569</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.17</data>
-      <data key="e_stringdb::textmining">0.502</data>
     </edge>
-    <edge source="n3" target="n34">
-      <data key="e_SUID">303658</data>
-      <data key="e_shared name">9606.ENSP00000276533 (ppp) 9606.ENSP00000364389</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000276533 (ppp) 9606.ENSP00000364389</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.482</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.482</data>
-    </edge>
-    <edge source="n7" target="n4">
-      <data key="e_SUID">78070</data>
-      <data key="e_shared name">9606.ENSP00000215631 (ppp) 9606.ENSP00000252506</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n4" target="n7">
       <data key="e_name">9606.ENSP00000215631 (ppp) 9606.ENSP00000252506</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.928</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.314</data>
-      <data key="e_stringdb::databases">0.9</data>
     </edge>
     <edge source="n7" target="n8">
-      <data key="e_SUID">78016</data>
-      <data key="e_shared name">9606.ENSP00000215631 (ppp) 9606.ENSP00000482486</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000215631 (ppp) 9606.ENSP00000482486</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.611</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.611</data>
     </edge>
-    <edge source="n9" target="n6">
-      <data key="e_SUID">367336</data>
-      <data key="e_shared name">9606.ENSP00000300403 (ppp) 9606.ENSP00000455308</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n6" target="n9">
       <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000455308</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.524</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.524</data>
     </edge>
-    <edge source="n9" target="n16">
-      <data key="e_SUID">367345</data>
-      <data key="e_shared name">9606.ENSP00000300403 (ppp) 9606.ENSP00000357643</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000357643</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.599</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.292</data>
-      <data key="e_stringdb::textmining">0.457</data>
-    </edge>
-    <edge source="n9" target="n23">
-      <data key="e_SUID">367354</data>
-      <data key="e_shared name">9606.ENSP00000300403 (ppp) 9606.ENSP00000377492</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000377492</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.761</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.292</data>
-      <data key="e_stringdb::textmining">0.677</data>
-    </edge>
-    <edge source="n9" target="n35">
-      <data key="e_SUID">367315</data>
-      <data key="e_shared name">9606.ENSP00000300403 (ppp) 9606.ENSP00000353770</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000353770</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.438</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.438</data>
-    </edge>
-    <edge source="n10" target="n3">
-      <data key="e_SUID">177364</data>
-      <data key="e_shared name">9606.ENSP00000253462 (ppp) 9606.ENSP00000276533</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n3" target="n10">
       <data key="e_name">9606.ENSP00000253462 (ppp) 9606.ENSP00000276533</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.991</data>
-      <data key="e_stringdb::textmining">0.952</data>
-      <data key="e_stringdb::databases">0.8</data>
     </edge>
-    <edge source="n10" target="n22">
-      <data key="e_SUID">177361</data>
-      <data key="e_shared name">9606.ENSP00000253462 (ppp) 9606.ENSP00000262460</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000253462 (ppp) 9606.ENSP00000262460</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.972</data>
-      <data key="e_stringdb::textmining">0.954</data>
-      <data key="e_stringdb::databases">0.8</data>
-    </edge>
-    <edge source="n10" target="n34">
-      <data key="e_SUID">177214</data>
-      <data key="e_shared name">9606.ENSP00000253462 (ppp) 9606.ENSP00000364389</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000253462 (ppp) 9606.ENSP00000364389</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.42</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.421</data>
-    </edge>
-    <edge source="n11" target="n20">
-      <data key="e_SUID">525262</data>
-      <data key="e_shared name">9606.ENSP00000351957 (ppp) 9606.ENSP00000384792</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000351957 (ppp) 9606.ENSP00000384792</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.422</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.422</data>
-    </edge>
-    <edge source="n12" target="n26">
-      <data key="e_SUID">633325</data>
-      <data key="e_shared name">9606.ENSP00000380256 (ppp) 9606.ENSP00000499238</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000380256 (ppp) 9606.ENSP00000499238</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.457</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.457</data>
-    </edge>
-    <edge source="n13" target="n5">
-      <data key="e_SUID">157471</data>
-      <data key="e_shared name">9606.ENSP00000247191 (ppp) 9606.ENSP00000298048</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n5" target="n13">
       <data key="e_name">9606.ENSP00000247191 (ppp) 9606.ENSP00000298048</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.563</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.563</data>
     </edge>
-    <edge source="n13" target="n9">
-      <data key="e_SUID">157435</data>
-      <data key="e_shared name">9606.ENSP00000247191 (ppp) 9606.ENSP00000300403</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n9" target="n13">
       <data key="e_name">9606.ENSP00000247191 (ppp) 9606.ENSP00000300403</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.416</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.416</data>
     </edge>
     <edge source="n13" target="n14">
-      <data key="e_SUID">157447</data>
-      <data key="e_shared name">9606.ENSP00000247191 (ppp) 9606.ENSP00000356379</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000247191 (ppp) 9606.ENSP00000356379</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.489</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.489</data>
     </edge>
-    <edge source="n14" target="n20">
-      <data key="e_SUID">546544</data>
-      <data key="e_shared name">9606.ENSP00000356379 (ppp) 9606.ENSP00000384792</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000356379 (ppp) 9606.ENSP00000384792</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.798</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.292</data>
-      <data key="e_stringdb::textmining">0.727</data>
+    <edge source="n9" target="n16">
+      <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000357643</data>
     </edge>
     <edge source="n15" target="n17">
-      <data key="e_SUID">216019</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000319417</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000319417</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.72</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::databases">0.72</data>
     </edge>
     <edge source="n15" target="n18">
-      <data key="e_SUID">216157</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.725</data>
-      <data key="e_stringdb::textmining">0.983</data>
-      <data key="e_stringdb::databases">0.9</data>
+    </edge>
+    <edge source="n11" target="n20">
+      <data key="e_name">9606.ENSP00000351957 (ppp) 9606.ENSP00000384792</data>
+    </edge>
+    <edge source="n14" target="n20">
+      <data key="e_name">9606.ENSP00000356379 (ppp) 9606.ENSP00000384792</data>
     </edge>
     <edge source="n15" target="n21">
-      <data key="e_SUID">216094</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000285116</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000285116</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.83</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.421</data>
-      <data key="e_stringdb::databases">0.72</data>
+    </edge>
+    <edge source="n17" target="n21">
+      <data key="e_name">9606.ENSP00000285116 (ppp) 9606.ENSP00000319417</data>
+    </edge>
+    <edge source="n1" target="n22">
+      <data key="e_name">9606.ENSP00000262460 (ppp) 9606.ENSP00000418268</data>
+    </edge>
+    <edge source="n3" target="n22">
+      <data key="e_name">9606.ENSP00000262460 (ppp) 9606.ENSP00000276533</data>
+    </edge>
+    <edge source="n10" target="n22">
+      <data key="e_name">9606.ENSP00000253462 (ppp) 9606.ENSP00000262460</data>
+    </edge>
+    <edge source="n2" target="n23">
+      <data key="e_name">9606.ENSP00000377492 (ppp) 9606.ENSP00000481465</data>
+    </edge>
+    <edge source="n9" target="n23">
+      <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000377492</data>
+    </edge>
+    <edge source="n1" target="n24">
+      <data key="e_name">9606.ENSP00000209728 (ppp) 9606.ENSP00000418268</data>
+    </edge>
+    <edge source="n12" target="n24">
+      <data key="e_name">9606.ENSP00000209728 (ppp) 9606.ENSP00000380256</data>
     </edge>
     <edge source="n15" target="n25">
-      <data key="e_SUID">216052</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.752</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.154</data>
-      <data key="e_stringdb::databases">0.72</data>
     </edge>
-    <edge source="n15" target="n27">
-      <data key="e_SUID">216154</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000271452</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000271452</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.991</data>
-      <data key="e_stringdb::textmining">0.984</data>
-      <data key="e_stringdb::databases">0.9</data>
-    </edge>
-    <edge source="n15" target="n29">
-      <data key="e_SUID">216151</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000282074</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000282074</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.993</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.822</data>
-      <data key="e_stringdb::textmining">0.642</data>
-      <data key="e_stringdb::databases">0.9</data>
-    </edge>
-    <edge source="n15" target="n32">
-      <data key="e_SUID">216046</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000302530</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000302530</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.725</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.725</data>
-    </edge>
-    <edge source="n15" target="n33">
-      <data key="e_SUID">215974</data>
-      <data key="e_shared name">9606.ENSP00000261597 (ppp) 9606.ENSP00000301019</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000301019</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.497</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.292</data>
-      <data key="e_stringdb::textmining">0.32</data>
+    <edge source="n16" target="n25">
+      <data key="e_name">9606.ENSP00000355922 (ppp) 9606.ENSP00000357643</data>
     </edge>
     <edge source="n17" target="n25">
-      <data key="e_SUID">430228</data>
-      <data key="e_shared name">9606.ENSP00000319417 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000319417 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.9</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::databases">0.9</data>
-    </edge>
-    <edge source="n21" target="n17">
-      <data key="e_SUID">319978</data>
-      <data key="e_shared name">9606.ENSP00000285116 (ppp) 9606.ENSP00000319417</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000285116 (ppp) 9606.ENSP00000319417</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.965</data>
-      <data key="e_stringdb::textmining">0.977</data>
-      <data key="e_stringdb::databases">0.9</data>
     </edge>
     <edge source="n21" target="n25">
-      <data key="e_SUID">319954</data>
-      <data key="e_shared name">9606.ENSP00000285116 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000285116 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.9</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::databases">0.9</data>
     </edge>
-    <edge source="n22" target="n1">
-      <data key="e_SUID">230281</data>
-      <data key="e_shared name">9606.ENSP00000262460 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000262460 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.598</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.081</data>
-      <data key="e_stringdb::textmining">0.581</data>
+    <edge source="n12" target="n26">
+      <data key="e_name">9606.ENSP00000380256 (ppp) 9606.ENSP00000499238</data>
     </edge>
-    <edge source="n22" target="n3">
-      <data key="e_SUID">230371</data>
-      <data key="e_shared name">9606.ENSP00000262460 (ppp) 9606.ENSP00000276533</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000262460 (ppp) 9606.ENSP00000276533</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.991</data>
-      <data key="e_stringdb::textmining">0.969</data>
-      <data key="e_stringdb::databases">0.8</data>
+    <edge source="n15" target="n27">
+      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000271452</data>
     </edge>
-    <edge source="n22" target="n34">
-      <data key="e_SUID">230263</data>
-      <data key="e_shared name">9606.ENSP00000262460 (ppp) 9606.ENSP00000364389</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000262460 (ppp) 9606.ENSP00000364389</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.446</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.446</data>
-    </edge>
-    <edge source="n23" target="n2">
-      <data key="e_SUID">624619</data>
-      <data key="e_shared name">9606.ENSP00000377492 (ppp) 9606.ENSP00000481465</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000377492 (ppp) 9606.ENSP00000481465</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.764</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.666</data>
-      <data key="e_stringdb::textmining">0.324</data>
-    </edge>
-    <edge source="n24" target="n1">
-      <data key="e_SUID">74893</data>
-      <data key="e_shared name">9606.ENSP00000209728 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000209728 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.948</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.689</data>
-      <data key="e_stringdb::textmining">0.696</data>
-      <data key="e_stringdb::databases">0.5</data>
-    </edge>
-    <edge source="n24" target="n12">
-      <data key="e_SUID">74701</data>
-      <data key="e_shared name">9606.ENSP00000209728 (ppp) 9606.ENSP00000380256</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000209728 (ppp) 9606.ENSP00000380256</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.422</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.421</data>
-      <data key="e_stringdb::textmining">0.044</data>
-    </edge>
-    <edge source="n24" target="n33">
-      <data key="e_SUID">74962</data>
-      <data key="e_shared name">9606.ENSP00000209728 (ppp) 9606.ENSP00000301019</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000209728 (ppp) 9606.ENSP00000301019</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.921</data>
-      <data key="e_stringdb::textmining">0.984</data>
-      <data key="e_stringdb::databases">0.8</data>
-    </edge>
-    <edge source="n25" target="n16">
-      <data key="e_SUID">544795</data>
-      <data key="e_shared name">9606.ENSP00000355922 (ppp) 9606.ENSP00000357643</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000355922 (ppp) 9606.ENSP00000357643</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.448</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.292</data>
-      <data key="e_stringdb::textmining">0.253</data>
-    </edge>
-    <edge source="n27" target="n18">
-      <data key="e_SUID">289123</data>
-      <data key="e_shared name">9606.ENSP00000271452 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n18" target="n27">
       <data key="e_name">9606.ENSP00000271452 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.999</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.715</data>
-      <data key="e_stringdb::textmining">0.982</data>
-      <data key="e_stringdb::databases">0.9</data>
+    </edge>
+    <edge source="n2" target="n28">
+      <data key="e_name">9606.ENSP00000380679 (ppp) 9606.ENSP00000481465</data>
+    </edge>
+    <edge source="n15" target="n29">
+      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000282074</data>
+    </edge>
+    <edge source="n18" target="n29">
+      <data key="e_name">9606.ENSP00000282074 (ppp) 9606.ENSP00000465075</data>
     </edge>
     <edge source="n27" target="n29">
-      <data key="e_SUID">289120</data>
-      <data key="e_shared name">9606.ENSP00000271452 (ppp) 9606.ENSP00000282074</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000271452 (ppp) 9606.ENSP00000282074</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.987</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.816</data>
-      <data key="e_stringdb::textmining">0.353</data>
-      <data key="e_stringdb::databases">0.9</data>
+    </edge>
+    <edge source="n0" target="n30">
+      <data key="e_name">9606.ENSP00000311500 (ppp) 9606.ENSP00000386419</data>
+    </edge>
+    <edge source="n0" target="n31">
+      <data key="e_name">9606.ENSP00000292616 (ppp) 9606.ENSP00000311500</data>
+    </edge>
+    <edge source="n19" target="n31">
+      <data key="e_name">9606.ENSP00000292616 (ppp) 9606.ENSP00000417291</data>
+    </edge>
+    <edge source="n15" target="n32">
+      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000302530</data>
+    </edge>
+    <edge source="n18" target="n32">
+      <data key="e_name">9606.ENSP00000302530 (ppp) 9606.ENSP00000465075</data>
+    </edge>
+    <edge source="n25" target="n32">
+      <data key="e_name">9606.ENSP00000302530 (ppp) 9606.ENSP00000355922</data>
     </edge>
     <edge source="n27" target="n32">
-      <data key="e_SUID">289051</data>
-      <data key="e_shared name">9606.ENSP00000271452 (ppp) 9606.ENSP00000302530</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000271452 (ppp) 9606.ENSP00000302530</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.725</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.725</data>
-    </edge>
-    <edge source="n28" target="n2">
-      <data key="e_SUID">634051</data>
-      <data key="e_shared name">9606.ENSP00000380679 (ppp) 9606.ENSP00000481465</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000380679 (ppp) 9606.ENSP00000481465</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.437</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.437</data>
-    </edge>
-    <edge source="n29" target="n18">
-      <data key="e_SUID">313234</data>
-      <data key="e_shared name">9606.ENSP00000282074 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000282074 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.982</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.814</data>
-      <data key="e_stringdb::textmining">0.135</data>
-      <data key="e_stringdb::databases">0.9</data>
     </edge>
     <edge source="n29" target="n32">
-      <data key="e_SUID">313195</data>
-      <data key="e_shared name">9606.ENSP00000282074 (ppp) 9606.ENSP00000302530</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000282074 (ppp) 9606.ENSP00000302530</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.725</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.725</data>
     </edge>
-    <edge source="n31" target="n0">
-      <data key="e_SUID">337729</data>
-      <data key="e_shared name">9606.ENSP00000292616 (ppp) 9606.ENSP00000311500</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000292616 (ppp) 9606.ENSP00000311500</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.42</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.42</data>
+    <edge source="n1" target="n33">
+      <data key="e_name">9606.ENSP00000301019 (ppp) 9606.ENSP00000418268</data>
     </edge>
-    <edge source="n31" target="n19">
-      <data key="e_SUID">337771</data>
-      <data key="e_shared name">9606.ENSP00000292616 (ppp) 9606.ENSP00000417291</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000292616 (ppp) 9606.ENSP00000417291</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.72</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::databases">0.72</data>
+    <edge source="n15" target="n33">
+      <data key="e_name">9606.ENSP00000261597 (ppp) 9606.ENSP00000301019</data>
+    </edge>
+    <edge source="n24" target="n33">
+      <data key="e_name">9606.ENSP00000209728 (ppp) 9606.ENSP00000301019</data>
     </edge>
     <edge source="n31" target="n33">
-      <data key="e_SUID">337723</data>
-      <data key="e_shared name">9606.ENSP00000292616 (ppp) 9606.ENSP00000301019</data>
-      <data key="e_shared interaction">ppp</data>
       <data key="e_name">9606.ENSP00000292616 (ppp) 9606.ENSP00000301019</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.404</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.404</data>
     </edge>
-    <edge source="n32" target="n18">
-      <data key="e_SUID">375130</data>
-      <data key="e_shared name">9606.ENSP00000302530 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000302530 (ppp) 9606.ENSP00000465075</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.725</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.725</data>
+    <edge source="n3" target="n34">
+      <data key="e_name">9606.ENSP00000276533 (ppp) 9606.ENSP00000364389</data>
     </edge>
-    <edge source="n32" target="n25">
-      <data key="e_SUID">375085</data>
-      <data key="e_shared name">9606.ENSP00000302530 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000302530 (ppp) 9606.ENSP00000355922</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.657</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.657</data>
+    <edge source="n10" target="n34">
+      <data key="e_name">9606.ENSP00000253462 (ppp) 9606.ENSP00000364389</data>
     </edge>
-    <edge source="n33" target="n1">
-      <data key="e_SUID">369916</data>
-      <data key="e_shared name">9606.ENSP00000301019 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_shared interaction">ppp</data>
-      <data key="e_name">9606.ENSP00000301019 (ppp) 9606.ENSP00000418268</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.9</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.045</data>
-      <data key="e_stringdb::textmining">0.808</data>
-      <data key="e_stringdb::databases">0.5</data>
+    <edge source="n22" target="n34">
+      <data key="e_name">9606.ENSP00000262460 (ppp) 9606.ENSP00000364389</data>
     </edge>
-    <edge source="n35" target="n8">
-      <data key="e_SUID">531238</data>
-      <data key="e_shared name">9606.ENSP00000353770 (ppp) 9606.ENSP00000482486</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n8" target="n35">
       <data key="e_name">9606.ENSP00000353770 (ppp) 9606.ENSP00000482486</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.863</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::textmining">0.863</data>
     </edge>
-    <edge source="n35" target="n12">
-      <data key="e_SUID">531229</data>
-      <data key="e_shared name">9606.ENSP00000353770 (ppp) 9606.ENSP00000380256</data>
-      <data key="e_shared interaction">ppp</data>
+    <edge source="n9" target="n35">
+      <data key="e_name">9606.ENSP00000300403 (ppp) 9606.ENSP00000353770</data>
+    </edge>
+    <edge source="n12" target="n35">
       <data key="e_name">9606.ENSP00000353770 (ppp) 9606.ENSP00000380256</data>
-      <data key="e_selected">false</data>
-      <data key="e_interaction">ppp</data>
-      <data key="e_stringdb::score">0.685</data>
-      <data key="e_stringdb::interspecies">false</data>
-      <data key="e_stringdb::experiments">0.457</data>
-      <data key="e_stringdb::textmining">0.444</data>
     </edge>
   </graph>
 </graphml>

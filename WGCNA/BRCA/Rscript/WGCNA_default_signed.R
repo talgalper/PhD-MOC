@@ -166,8 +166,8 @@ heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
 
 CorLevelPlot(heatmap_data,
-             x = names(heatmap_data)[18:23],
-             y = names(heatmap_data)[1:17],
+             x = names(heatmap_data)[14:19],
+             y = names(heatmap_data)[1:13],
              col = c("blue1", "skyblue", "white", "pink", "red"))
 
 
@@ -340,7 +340,7 @@ DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
 
 ## venn diagram for cross 
 DE_genes <- dif_exp$gene_id
-tumour_associated <- names(bwnet$colors)[!bwnet$colors %in% c("tan", "salmon", "turquoise", "magenta", "pink")] # modules here are sig associated to control group
+tumour_associated <- names(bwnet$colors)[bwnet$colors %in% c("blue", "magenta", "brown", "yellow", "red", "greenyellow", "tan")]
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
 save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/signed/venn_data.RData")
@@ -372,6 +372,8 @@ venn.diagram(
 
 common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
 
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
                          filters = "ensembl_gene_id", 
                          values = common_genes, 
