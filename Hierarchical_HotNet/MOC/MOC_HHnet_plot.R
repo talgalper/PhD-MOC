@@ -33,13 +33,13 @@ plot.igraph(subnet, asp = 0, vertex.size = 2, edge.arrow.size = 0.3, vertex.labe
 neighbs <- neighborhood(
   STRING_net,
   order = 1,
-  nodes = hh_results[[1]]
+  nodes = V(subnet)$name
 )
 neighbs <- flatten(neighbs)
 neighbs <- names(neighbs)
 neighbs <- unique(neighbs)
 
-clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$`display name` %in% neighbs])
+clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
 V(clust1_net)$size <- scales::rescale(degree(clust1_net), c(1, 7))
 #clust1_net <- simplify(clust1_net)
 plot.igraph(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3)
@@ -56,20 +56,46 @@ write_graph(clust1_net, "MOC/results/hhnet_cluster1_netNeighs.graphml", format =
 write_graph(subnet, "MOC/results/hhnet_cluster1_net.graphml", format = "graphml")
 
 
-df <- data.frame(degree = degree(subnet),
+df <- data.frame(display.name = V(subnet)$`display name`,
+                 degree = degree(subnet),
                  betweenness = betweenness(subnet),
                  source = V(subnet)$color)
 df$source <- ifelse(df$source == "tomato", "subnet", "STRING")
-df <- rownames_to_column(df)
 df <- df[order(-df$degree), ]
 
 
-df <- data.frame(degree = degree(clust1_net),
+df <- data.frame(display.name = V(clust1_net)$`display name`,
+                 degree = degree(clust1_net),
                  betweenness = betweenness(clust1_net),
                  source = V(clust1_net)$color)
 df$source <- ifelse(df$source == "tomato", "subnet", "STRING")
-df <- rownames_to_column(df)
 df <- df[order(-df$degree), ]
+
+
+# add druggability data
+Fpocket_scores <- read.csv("../Druggability_analysis/Fpocket/results_2024.05/fpocket_druggability.csv")
+
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+IDs_converted <- getBM(attributes = c( "uniprotswissprot", "external_gene_name", "description"), 
+                       filters = "uniprotswissprot", 
+                       values = Fpocket_scores$uniprot_id, 
+                       mart = ensembl)
+
+unmapped <- IDs_converted[IDs_converted$external_gene_name == "", ]
+unrecognised <- Fpocket_scores[!Fpocket_scores$uniprot_id %in% IDs_converted$uniprotswissprot, ]
+
+IDs_converted <- IDs_converted[IDs_converted$external_gene_name != "", ]
+
+novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
+novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
+pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
+
+
+
+
+
 
 
 
