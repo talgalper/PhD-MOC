@@ -220,10 +220,10 @@ plot_PCA <- function(expr_data, sample_info, plot_tree = T, output_plot_data = T
   pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
   pca_data <- as.data.frame(pca_data)
   
-  # Merge sample-stage mapping with PCA data
+  # Merge sample mapping with PCA data
   pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = "sample")
   
-  # Create a custom color palette for stages
+  # Create a custom colour palette for stages
   library(RColorBrewer)
   groups <- unique(sample_info[ ,2])
   num_colors <- length(groups)
