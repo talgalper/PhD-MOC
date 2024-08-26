@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Set the paths for your data, intermediate, and results directories
-# IMPORTANT: Make sure to double checkl and update these paths
-data=$PWD/WGCNA_subset/data
-intermediate=$PWD/WGCNA_subset/intermediate
-results=$PWD/WGCNA_subset/results
+# IMPORTANT: Make sure to double check and update these paths
+data=$PWD/MOC/DE/data
+intermediate=$PWD/MOC/DE/intermediate
+results=$PWD/MOC/DE/results
 
 # Create directories
 mkdir -p $data
@@ -13,9 +13,9 @@ mkdir -p $results
 
 # Set the name of your network and score file
 network=STRING
-score=WGCNA_logFC_scores_abs
+score=MOC_GTEx_logFC_abs
 
-# Set the filenames for your input files
+# Filenames for your input files
 index_gene_file=gene_index.tsv
 edge_list_file=edge_list_index.tsv
 score_file=logFC_scores_abs.tsv
