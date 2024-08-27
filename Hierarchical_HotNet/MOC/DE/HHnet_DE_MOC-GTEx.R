@@ -112,9 +112,44 @@ write_tsv(DE_data_abs, "MOC/DE/data/logFC_scores_abs.tsv", col_names = F)
 
 
 
+library(tidyverse)
+library(igraph)
 
 
 
+STRING_net <- read_graph("../../../../OneDrive - RMIT University/PhD/large_git_files/HHnet/STRING_hsa_physical_network.graphml", format = "graphml") # ubuntu
+STRING_net <- as.undirected(STRING_net)
+
+hh_results <- read_lines("MOC/DE/results/clusters_STRING_MOC_GTEx_logFC_abs.tsv", skip = 7)
+hh_results <- str_split(hh_results, pattern = "\t")
+
+# colour cluster members
+V(STRING_net)$color <- ifelse(V(STRING_net)$`display name` %in% hh_results[[1]], "tomato", "white")
+
+# subnetwork cluster
+subnet <- induced_subgraph(graph = STRING_net, V(STRING_net)$`display name` %in% hh_results[[1]])
+plot.igraph(subnet, asp = 0, vertex.size = 2, edge.arrow.size = 0.3, vertex.label.dist = 1, vertex.label = V(subnet)$`display name`)
+
+
+write_graph(clust1_net, "MOC/DE/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
+write_graph(subnet, "MOC/DE/results/hhnet_cluster1_net.graphml", format = "graphml")
+
+
+
+df_subnet <- data.frame(display.name = V(subnet)$`display name`,
+                        degree = degree(subnet),
+                        betweenness = betweenness(subnet),
+                        source = V(subnet)$color)
+df_subnet$source <- ifelse(df_subnet$source == "tomato", "subnet", "STRING")
+df_subnet <- df_subnet[order(-df_subnet$degree), ]
+
+
+df_subnetNeighs <- data.frame(display.name = V(clust1_net)$`display name`,
+                              degree = degree(clust1_net),
+                              betweenness = betweenness(clust1_net),
+                              source = V(clust1_net)$color)
+df_subnetNeighs$source <- ifelse(df_subnetNeighs$source == "tomato", "subnet", "STRING")
+df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
 
 
 
