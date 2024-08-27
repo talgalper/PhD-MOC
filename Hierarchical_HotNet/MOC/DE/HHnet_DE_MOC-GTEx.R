@@ -1,4 +1,3 @@
-library(PCSF)
 library(tidyverse)
 library(edgeR)
 
@@ -130,6 +129,20 @@ V(STRING_net)$color <- ifelse(V(STRING_net)$`display name` %in% hh_results[[1]],
 subnet <- induced_subgraph(graph = STRING_net, V(STRING_net)$`display name` %in% hh_results[[1]])
 plot.igraph(subnet, asp = 0, vertex.size = 2, edge.arrow.size = 0.3, vertex.label.dist = 1, vertex.label = V(subnet)$`display name`)
 
+
+# add direct neighbors of cluster nodes
+neighbs <- neighborhood(
+  STRING_net,
+  order = 1,
+  nodes = V(subnet)$name
+)
+neighbs <- flatten(neighbs)
+neighbs <- names(neighbs)
+neighbs <- unique(neighbs)
+
+clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
+V(clust1_net)$size <- scales::rescale(degree(clust1_net), c(1, 7))
+plot.igraph(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3)
 
 write_graph(clust1_net, "MOC/DE/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
 write_graph(subnet, "MOC/DE/results/hhnet_cluster1_net.graphml", format = "graphml")
