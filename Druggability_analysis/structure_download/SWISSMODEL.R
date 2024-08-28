@@ -7,8 +7,8 @@ meta <- read.table("../../../../Desktop/SWISS-MODEL_Repository/INDEX", sep = "\t
 # subset structure with highest qmeandisco_global score for each uniprot ID
 meta_subset <- meta
 meta_subset$uniprot_id <- sub("-\\d+$", "", meta_subset$UniProtKB_ac)
-meta_subset <- meta_subset[order(-meta_subset$qmeandisco_global), ]
-meta_subset <- meta_subset[!duplicated(meta_subset$uniprot_id), ]
+#meta_subset <- meta_subset[order(-meta_subset$qmeandisco_global), ]
+#meta_subset <- meta_subset[!duplicated(meta_subset$uniprot_id), ]
 
 
 # function to split uniprot ID into paired chars
@@ -38,7 +38,41 @@ for (string in meta_subset$uniprot_id) {
   pb$tick()
 }
 
+
+library(progress)
+pb <- progress_bar$new(
+  format = "  Copying files [:bar] :percent eta: :eta",
+  total = length(unique(meta_subset$uniprot_id)), clear = FALSE)
 # move selected structures to new directory, with fancy new progress bar
+for (i in seq_along(unique(meta_subset$uniprot_id))) {
+  uniprot_id <- unique(meta_subset$uniprot_id)[i]
+  dir <- file.path("../../../../Desktop/SWISS-MODEL_Repository", 
+                   loc_id[[uniprot_id]][1], 
+                   loc_id[[uniprot_id]][2], 
+                   loc_id[[uniprot_id]][3], 
+                   "swissmodel")
+  files <- list.files(dir, full.names = TRUE)
+  
+  # Create a directory for each Uniprot ID in the output directory
+  output_dir <- file.path("../../../../Desktop/SWISSMODEL_Fpocket/structures", uniprot_id)
+  if (!dir.exists(output_dir)) {
+    dir.create(output_dir, recursive = TRUE)
+  }
+  # Loop over each file in the directory and move it to the corresponding Uniprot ID folder
+  for (file in files) {
+    file.copy(file, file.path(output_dir, basename(file)))
+  }
+  
+  rm(uniprot_id, dir, files, i, file, output_dir)
+  pb$tick()
+}
+rm(pb)
+
+
+
+
+
+## This code selects for structures with highest qmeandisco_global score indicated earlier
 library(progress)
 pb <- progress_bar$new(
   format = "  Copying files [:bar] :percent eta: :eta",
@@ -59,8 +93,3 @@ for (i in seq_along(meta_subset$uniprot_id)) {
   pb$tick()
 }
 rm(pb)
-
-
-
-
-
