@@ -158,6 +158,18 @@ traits <- subset(traits, select = c("data.control", "data.tumour", "data.lumA", 
 
 moduleTrait_cor <- cor(bwnet$MEs, traits, use = "p")
 moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(all_wgcna_data))
+colnames(moduleTrait_cor_pvals) <- gsub("data.", "", colnames(moduleTrait_cor_pvals))
+moduleTrait_cor_pvals <- moduleTrait_cor_pvals[, -7]
+
+# heatmap of P values
+library(pheatmap)
+pval_labels <- matrix(sprintf("%.2e", moduleTrait_cor_pvals), nrow=nrow(moduleTrait_cor_pvals)) # 2 d.p
+pheatmap(
+  moduleTrait_cor_pvals,
+  display_numbers = pval_labels,
+  cluster_rows = FALSE,
+  cluster_cols = FALSE
+)
 
 heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 
