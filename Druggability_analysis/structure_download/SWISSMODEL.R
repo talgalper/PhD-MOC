@@ -42,7 +42,7 @@ for (string in meta_subset$uniprot_id) {
 }
 
 
-## This code moces pdbs by coordinate ID from meta_subset
+## This code moves pdbs by coordinate ID from meta_subset
 library(progress)
 pb <- progress_bar$new(
   format = "  Copying files [:bar] :percent eta: :eta",
