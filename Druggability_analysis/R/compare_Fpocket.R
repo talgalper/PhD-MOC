@@ -1,4 +1,3 @@
-library(tidyverse)
 library(ggplot2)
 
 Fpocket_AF <- read.csv("Fpocket/results_2024.05/fpocket_druggability.csv")

@@ -1,4 +1,3 @@
-library(tidyverse)
 library(ggplot2)
 
 PocketMiner_AF <- read.csv("PocketMiner/results/pocketminer_results_4.0.csv")
