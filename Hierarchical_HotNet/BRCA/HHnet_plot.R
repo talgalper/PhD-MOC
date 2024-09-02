@@ -65,10 +65,12 @@ df_subnet <- df_subnet[order(-df_subnet$degree), ]
 df_subnetNeighs <- data.frame(display.name = V(clust1_net)$`display name`,
                               degree = degree(clust1_net),
                               betweenness = betweenness(clust1_net),
+                              closeness = closeness(clust1_net),
+                              eigen_centrality = eigen_centrality(clust1_net)$vector,
                               source = V(clust1_net)$color)
 df_subnetNeighs$source <- ifelse(df_subnetNeighs$source == "tomato", "subnet", "STRING")
 df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
-
+rownames(df_subnetNeighs) <- NULL
 
 # add druggability data
 Fpocket_scores <- read.csv("../Druggability_analysis/Fpocket/results_2024.05/fpocket_druggability.csv")
