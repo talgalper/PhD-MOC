@@ -19,7 +19,6 @@ Fpocket_data <- rbind(Fpocket_AF, Fpocket_SM)
 # plot distribution of druggability scores
 ggplot(Fpocket_data, aes(x=method, y=druggability, fill=method)) +
   geom_boxplot() +
-  geom_jitter(width=0.2, alpha=0.5) +
   labs(title="Comparison of Druggability Scores between SWISSMODEL and AlphaFold",
        x="Method", y="Druggability Score") +
   theme_minimal()
@@ -27,7 +26,7 @@ ggplot(Fpocket_data, aes(x=method, y=druggability, fill=method)) +
 ggplot(Fpocket_data, aes(x=druggability, fill=method)) +
   geom_density(alpha=0.5) +
   labs(title="Density Plot of Druggability Scores",
-       x="Druggability Score", y="Density") +
+       x="Fpocket Score", y="Density") +
   theme_minimal()
 
 
@@ -38,12 +37,9 @@ Fpocket_data_common <- Fpocket_data[Fpocket_data$uniprot_id %in% common, ]
 
 ggplot(Fpocket_data_common, aes(x=method, y=druggability, fill=method)) +
   geom_boxplot() +
-  geom_jitter(width=0.2, alpha=0.5) +
   labs(title="Comparison of Druggability Scores between SWISSMODEL and AlphaFold",
-       x="Method", y="Druggability Score") +
+       x="Method", y="Fpocket Score") +
   theme_minimal()
-
-wilcox.test(druggability ~ method, data = Fpocket_data_common)
 
 
 
@@ -52,6 +48,18 @@ AF_data <- Fpocket_data_common[Fpocket_data_common$method == "AF", ]
 merged_data <- merge(SM_data, AF_data, by = "uniprot_id", suffixes = c("_SM", "_AF"))
 merged_data$difference <- abs(merged_data$druggability_SM - merged_data$druggability_AF)
 merged_data <- merged_data[order(-merged_data$difference), ]
+
+
+library(nortest)
+hist(Fpocket_data_common$druggability)
+ad.test(Fpocket_data_common$druggability)
+
+SM_data <- SM_data[order(SM_data$uniprot_id), ]
+AF_data <- AF_data[order(AF_data$uniprot_id), ]
+
+wilcox.test(AF_data$druggability, SM_data$druggability, paired = T)
+
+
 
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")

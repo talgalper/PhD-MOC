@@ -21,7 +21,7 @@ PocketMiner_SM <- PocketMiner_SM[, -1]
 PocketMiner_data <- rbind(PocketMiner_AF, PocketMiner_SM)
 
 
-# plot distribution of druggble vs undruggable proteins
+# plot distribution of druggble vs undruggable p\roteins
 temp <- merge(Fpocket_data, PocketMiner_data, by = "uniprot_id", all = T)
 colnames(temp)[4] <- "CP_score"
 temp$druggability[is.na(temp$druggability)] <- 0
@@ -55,3 +55,26 @@ ggplot(temp, aes(x=highest_score, color=source)) +
   geom_vline(xintercept = 0.7, color = "green", linetype = "dashed", size = 1) +
   geom_vline(xintercept = 0.5, color = "red", linetype = "dashed", size = 1) +
   theme_minimal()
+
+
+library(VennDiagram)
+
+AF_data <- merge(Fpocket_AF, PocketMiner_AF, by = "uniprot_id")
+AF_data <- subset(AF_data, select = c("uniprot_id", "druggability", "max_hit"))
+AF_data$highest_score <- pmax(AF_data$druggability, AF_data$max_hit)
+AF_data$source <- ifelse(AF_data$highest_score == AF_data$druggability, "Fpocket", "PocketMiner")
+
+SM_data <- merge(Fpocket_SM, PocketMiner_SM, by = "uniprot_id")
+SM_data <- subset(SM_data, select = c("uniprot_id", "druggability", "max_hit"))
+SM_data$highest_score <- pmax(SM_data$druggability, SM_data$max_hit)
+SM_data$source <- ifelse(SM_data$highest_score == SM_data$druggability, "Fpocket", "PocketMiner")
+
+temp <- merge(AF_data, SM_data, by = "uniprot_id")
+
+
+
+table(duplicated(temp$uniprot_id))
+
+
+
+

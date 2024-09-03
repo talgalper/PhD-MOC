@@ -57,6 +57,8 @@ write_graph(subnet, "results/hhnet_cluster1_net.graphml", format = "graphml")
 df_subnet <- data.frame(display.name = V(subnet)$`display name`,
                         degree = degree(subnet),
                         betweenness = betweenness(subnet),
+                        closeness = closeness(subnet),
+                        eigen_centrality = eigen_centrality(subnet)$vector,
                         source = V(subnet)$color)
 df_subnet$source <- ifelse(df_subnet$source == "tomato", "subnet", "STRING")
 df_subnet <- df_subnet[order(-df_subnet$degree), ]
@@ -72,25 +74,71 @@ df_subnetNeighs$source <- ifelse(df_subnetNeighs$source == "tomato", "subnet", "
 df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
 rownames(df_subnetNeighs) <- NULL
 
+
+
+library(RobustRankAggreg)
+RRA <- aggregateRanks(list(degree = df_subnetNeighs$display.name[order(-df_subnetNeighs$degree)],
+                           betweenness = df_subnetNeighs$display.name[order(-df_subnetNeighs$betweenness)],
+                           closeness = df_subnetNeighs$display.name[order(-df_subnetNeighs$closeness)],
+                           eigen_centrality = df_subnetNeighs$display.name[order(-df_subnetNeighs$eigen_centrality)]))
+
+
+
+
+df_subnetNeighs_edge <- as_data_frame(clust1_net, what = "edges")
+df_subnetNeighs_edge$edge_betweenness <- edge_betweenness(clust1_net)
+
+edge_connectivity_values <- sapply(E(clust1_net), function(e) {
+  vertices <- ends(clust1_net, e)
+  edge_connectivity(clust1_net, source = vertices[1], target = vertices[2])
+})
+
+df_subnetNeighs_edge$edge_connectivity <- edge_connectivity_values
+
+
 # add druggability data
-Fpocket_scores <- read.csv("../Druggability_analysis/Fpocket/results_2024.05/fpocket_druggability.csv")
+drug_scores <- read.csv("../Druggability_analysis/data_general/druggability_source.csv", row.names = 1)
 
-library(biomaRt)
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+# already created file for this so no need to run again
+#library(biomaRt)
+#ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+#
+#IDs_converted <- getBM(attributes = c( "uniprotswissprot", "external_gene_name", "description"), 
+#                       filters = "uniprotswissprot", 
+#                       values = drug_scores$uniprot_id, 
+#                       mart = ensembl)
+#
+#unmapped <- IDs_converted[IDs_converted$external_gene_name == "", ]
+#unrecognised <- drug_scores[!drug_scores$uniprot_id %in% IDs_converted$uniprotswissprot, ]
+#
+#IDs_converted <- IDs_converted[IDs_converted$external_gene_name != "", ]
+#
+#novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
+#novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
+#pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
+#
+#IDs_converted$description <- gsub("\\s*\\[.*?\\]", "", IDs_converted$description)
+#
+#drug_scores <- merge(IDs_converted, drug_scores, by.x = "uniprotswissprot", by.y = "uniprot_id", all.y = T)
+#
+#write.csv(drug_scores, "../Druggability_analysis/data_general/druggability_source.csv")
 
-IDs_converted <- getBM(attributes = c( "uniprotswissprot", "external_gene_name", "description"), 
-                       filters = "uniprotswissprot", 
-                       values = Fpocket_scores$uniprot_id, 
-                       mart = ensembl)
 
-unmapped <- IDs_converted[IDs_converted$external_gene_name == "", ]
-unrecognised <- Fpocket_scores[!Fpocket_scores$uniprot_id %in% IDs_converted$uniprotswissprot, ]
 
-IDs_converted <- IDs_converted[IDs_converted$external_gene_name != "", ]
 
-novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
-novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
-pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

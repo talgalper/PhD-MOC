@@ -19,7 +19,6 @@ PocketMiner_data <- rbind(PocketMiner_AF, PocketMiner_SM)
 # plot distribution of druggability scores
 ggplot(PocketMiner_data, aes(x=method, y=max_hit, fill=method)) +
   geom_boxplot() +
-  geom_jitter(width=0.2, alpha=0.5) +
   labs(title="Comparison of Cryptic Pocket Scores between SWISSMODEL and AlphaFold",
        x="Method", y="Druggability Score") +
   theme_minimal()
@@ -39,12 +38,9 @@ PocketMiner_data_common <- PocketMiner_data_common[, -3]
 
 ggplot(PocketMiner_data_common, aes(x=method, y=max_hit, fill=method)) +
   geom_boxplot() +
-  geom_jitter(width=0.2, alpha=0.5) +
   labs(title="Comparison of Cryptic Pocket Scores between SWISSMODEL and AlphaFold",
-       x="Method", y="Druggability Score") +
+       x="Method", y="PocketMiner Score") +
   theme_minimal()
-
-wilcox.test(max_hit ~ method, data = PocketMiner_data_common)
 
 
 
@@ -53,6 +49,17 @@ AF_data <- PocketMiner_data_common[PocketMiner_data_common$method == "AF", ]
 merged_data <- merge(SM_data, AF_data, by = "uniprot_id", suffixes = c("_SM", "_AF"))
 merged_data$difference <- abs(merged_data$max_hit_SM - merged_data$max_hit_AF)
 merged_data <- merged_data[order(-merged_data$difference), ]
+
+library(nortest)
+hist(PocketMiner_data_common$max_hit)
+ad.test(PocketMiner_data_common$max_hit)
+
+SM_data <- SM_data[order(SM_data$uniprot_id), ]
+AF_data <- AF_data[order(AF_data$uniprot_id), ]
+
+wilcox.test(AF_data$max_hit, SM_data$max_hit, paired = T)
+
+
 
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
