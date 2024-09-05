@@ -2,7 +2,6 @@ library(tidyverse)
 library(igraph)
 
 STRING_net <- read_graph("../../../../OneDrive - RMIT University/PhD/large_git_files/HHnet/STRING_hsa_physical_network.graphml", format = "graphml")
-STRING_net <- as.undirected(STRING_net)
 
 hh_results <- read_lines("BRCA/results/clusters_STRING_logFC_scores_abs.tsv", skip = 7)
 hh_results <- str_split(hh_results, pattern = "\t")
@@ -50,8 +49,11 @@ plot(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3)
 #plot(clust1_net_filt, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3)
 
 
-write_graph(clust1_net, "results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
-write_graph(subnet, "results/hhnet_cluster1_net.graphml", format = "graphml")
+write_graph(clust1_net, "BRCA/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
+write_graph(subnet, "BRCA/results/hhnet_cluster1_net.graphml", format = "graphml")
+
+clust1_net <- read_graph("BRCA/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
+subnet <- read_graph("BRCA/results/hhnet_cluster1_net.graphml", format = "graphml")
 
 
 df_subnet <- data.frame(display.name = V(subnet)$`display name`,
@@ -73,6 +75,78 @@ df_subnetNeighs <- data.frame(display.name = V(clust1_net)$`display name`,
 df_subnetNeighs$source <- ifelse(df_subnetNeighs$source == "tomato", "subnet", "STRING")
 df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
 rownames(df_subnetNeighs) <- NULL
+write.csv(df_subnet, "BRCA/results/df_subnet.csv")
+write.csv(df_subnetNeighs, "BRCA/results/df_subnetNeighs.csv")
+
+
+
+# network metrics of known BRCA targets
+df_subnet <- read.csv("BRCA/results/df_subnet.csv")
+df_subnetNeighs <- read.csv("BRCA/results/df_subnetNeighs.csv", row.names = 1)
+
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- unique(targets$drugBank_target)
+
+df_subnet <- df_subnet[df_subnet$display.name %in% targets, ]
+df_subnetNeighs <- df_subnetNeighs[df_subnetNeighs$display.name %in% targets, ]
+
+
+# plot the neighbours of the known targets
+neighbs <- neighborhood(
+  clust1_net,
+  order = 1,
+  nodes = df_subnetNeighs$display.name
+)
+neighbs <- flatten(neighbs)
+neighbs <- names(neighbs)
+neighbs <- unique(neighbs)
+
+temp <- induced_subgraph(clust1_net, V(clust1_net)[V(clust1_net)$name %in% neighbs])
+temp <- as.undirected(temp)
+
+V(temp)$color <- ifelse(V(temp)$name %in% df_subnetNeighs$display.name, "blue", V(temp)$color)
+
+plot(temp, asp = 0, vertex.label = NA, edge.arrow.size = 0.3)
+
+temp_experimental <- delete_edges(temp, E(temp)[!is.na(E(temp)$`stringdb::experiments`) & E(temp)$`stringdb::experiments` >= 0.4])
+temp_experimental <- induced_subgraph(temp_experimental, V(temp_experimental)[degree(temp_experimental) > 0]) # remove nodes with degree = 0
+temp_experimental <- as.undirected(temp_experimental)
+
+plot(temp_experimental, asp = 0, vertex.label = NA, edge.arrow.size = 0.3)
+
+
+df_temp <- data.frame(display.name = V(temp)$`display name`,
+                              degree = degree(temp),
+                              betweenness = betweenness(temp),
+                              closeness = closeness(temp),
+                              eigen_centrality = eigen_centrality(temp)$vector,
+                              source = V(temp)$color)
+
+df_tempExperimental <- data.frame(display.name = V(temp_experimental)$`display name`,
+                      degree = degree(temp_experimental),
+                      betweenness = betweenness(temp_experimental),
+                      closeness = closeness(temp_experimental),
+                      eigen_centrality = eigen_centrality(temp_experimental)$vector,
+                      source = V(temp_experimental)$color)
+
+
+
+
+
+important_nodes <- which(V(temp)$color == c("tomato", "blue"))
+other_nodes <- which(V(temp)$color != c("tomato", "blue"))
+
+# Reorder nodes so that important nodes are plotted last
+new_order <- c(other_nodes, important_nodes)
+
+# Plot the graph, with reordered vertices
+plot(temp, vertex.label = NA, asp = 0, edge.arrow.size = 0.3,
+     vertex.color = V(temp)$color[new_order], layout = layout_with_fr(temp)[new_order, ])
+
+
+
+
+
 
 
 
@@ -81,8 +155,8 @@ RRA <- aggregateRanks(list(degree = df_subnetNeighs$display.name[order(-df_subne
                            betweenness = df_subnetNeighs$display.name[order(-df_subnetNeighs$betweenness)],
                            closeness = df_subnetNeighs$display.name[order(-df_subnetNeighs$closeness)],
                            eigen_centrality = df_subnetNeighs$display.name[order(-df_subnetNeighs$eigen_centrality)]))
-
-
+rownames(RRA) <- NULL
+RRA <- RRA[RRA$Name %in% targets, ]
 
 
 df_subnetNeighs_edge <- as_data_frame(clust1_net, what = "edges")
