@@ -166,3 +166,10 @@ enrichment_table <- data.frame(
   PValue = enrichment_results$P.value,
   Adjusted_Pvalue = enrichment_results$Adjusted.P.value,
   Genes = enrichment_results$Genes)
+
+
+
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- unique(targets$drugBank_target)
+
+temp <- df[df$gene_id %in% targets, ]
