@@ -58,22 +58,34 @@ clust1_net <- delete_vertex_attr(clust1_net, "shared name")
 write_graph(clust1_net, "WGCNA_subset/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
 write_graph(subnet, "WGCNA_subset/results/hhnet_cluster1_net.graphml", format = "graphml")
 
+clust1_net <- read_graph("WGCNA_subset/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
+subnet <- read_graph("WGCNA_subset/results/hhnet_cluster1_net.graphml", format = "graphml")
 
-df <- data.frame(degree = degree(clust1_net),
-                 betweenness = betweenness(clust1_net),
-                 source = V(clust1_net)$color)
+df_subnet <- data.frame(display.name = V(subnet)$`display name`,
+                        degree = degree(subnet),
+                        betweenness = betweenness(subnet),
+                        closeness = closeness(subnet),
+                        eigen_centrality = eigen_centrality(subnet)$vector,
+                        source = V(subnet)$color)
+df_subnet$source <- ifelse(df_subnet$source == "tomato", "subnet", "STRING")
+df_subnet <- df_subnet[order(-df_subnet$degree), ]
 
-df$source <- ifelse(df$source == "tomato", "subnet", "STRING")
-df <- rownames_to_column(df)
+df_subnetNeighs <- data.frame(display.name = V(clust1_net)$`display name`,
+                              degree = degree(clust1_net),
+                              betweenness = betweenness(clust1_net),
+                              closeness = closeness(clust1_net),
+                              eigen_centrality = eigen_centrality(clust1_net)$vector,
+                              source = V(clust1_net)$color)
+df_subnetNeighs$source <- ifelse(df_subnetNeighs$source == "tomato", "subnet", "STRING")
+df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
+rownames(df_subnetNeighs) <- NULL
 
 
-V(subnet)$name <- V(subnet)$`display name` <- V(subnet)$`display name`
 
-df <- data.frame(degree = degree(subnet),
-                 betweenness = betweenness(subnet),
-                 source = V(subnet)$color)
-df$source <- ifelse(df$source == "tomato", "subnet", "STRING")
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- unique(targets$drugBank_target)
 
-
+df_subnet <- df_subnet[df_subnet$display.name %in% targets, ]
+df_subnetNeighs <- df_subnetNeighs[df_subnetNeighs$display.name %in% targets, ]
 
 

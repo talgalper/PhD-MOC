@@ -221,10 +221,14 @@ colnames(top_connectivity_genes) <- c("ensembl_id", "module")
 
 
 # perform GO and pathway analysis
+load("BRCA/RData/all_default/all_bwnet.RData")
+
 library(clusterProfiler)
 library(org.Hs.eg.db)
 library(progress)
-pb <- progress_bar$new(total = length(unique(bwnet$colors)))
+pb <- progress_bar$new(
+  format = "  Performing GO Analysis [:bar] :percent eta: :eta",
+  total = length(unique(bwnet$colors)), clear = FALSE)
 
 # run GO enrichment
 # turn this into a function at some point
@@ -254,7 +258,7 @@ for (i in seq_along(all_GO)) {
   
   GO_formatted <- rbind(GO_formatted, result_top)
   
-  rm(module, i, result, result_top)
+  rm(module, i, result, result_top, module_name)
 }
 
 # Function to convert GeneRatio to numeric

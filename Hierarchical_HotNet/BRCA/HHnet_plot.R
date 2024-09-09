@@ -145,6 +145,10 @@ plot(temp, vertex.label = NA, asp = 0, edge.arrow.size = 0.3,
 
 
 
+GO <- enrichGO(V(subnet)$name, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "BP")
+GO_formatted <- GO@result
+GO2 <- enrichGO(V(clust1_net)$name, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "BP")
+GO2_formatted <- GO2@result
 
 
 

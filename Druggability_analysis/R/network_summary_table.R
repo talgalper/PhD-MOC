@@ -36,7 +36,7 @@ rownames(HHnet_result) <- NULL
 
 
 # load in a format PCSF subnet data
-load("../BRCA_pipe/latest_run/RData/PCSF_subnet_FULL(signed_logFC).RData")
+load("../BRCA_pipe/latest_run/RData/PCSF_subnet_FULL.RData")
 
 clust <- components(subnet)
 PCSF_result <- data.frame(gene_id = names(clust$membership), cluster = factor(clust$membership))
@@ -63,7 +63,10 @@ load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
 # load in and format WGCNA data
 load("../WGCNA/BRCA/RData/all_default/signed/all_kwithin.RData")
 load("../WGCNA/BRCA/RData/all_default/signed/all_bwnet.RData")
-load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/TCGA_GTEx_filt_norm.RData")
+
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/TCGA_GTEx_filt_norm.RData") # Mac
+load("../../../../Desktop/WGCNA_BRCA_large_files/TCGA_GTEx_filt_norm.RData") # Ubunut
+
 load("../WGCNA/BRCA/RData/all_default/signed/venn_data.RData")
 
 library(biomaRt)
@@ -93,7 +96,10 @@ tumour_associated <- merge(tumour_associated, WGCNAsigned_modules, by.x = "tumou
 
 
 # combine all the data for the FDA drug targets
-master <- data.frame(target = FDA_drug_targets)
+targets <- read.csv("data_general/target_all_dbs.csv")
+targets <- unique(targets$drugBank_target)
+
+master <- data.frame(target = targets)
 master <- merge(master, WGCNAsigned_modules, by.x = "target", by.y = "external_gene_name", all.x = T)
 master <- subset(master, select = c("target", "ensembl_id", "description", "module"))
 master <- merge(master, HHnet_result, by.x = "target", by.y = "gene_id", all.x = T)
