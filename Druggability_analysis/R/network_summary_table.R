@@ -56,7 +56,7 @@ rownames(PCSF_result) <- NULL
 
 
 
-# load in and convert DE data to gebe symbols
+# load in and convert DE data to gene symbols
 load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
 
 
