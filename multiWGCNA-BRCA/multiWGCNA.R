@@ -83,6 +83,7 @@ sampleTable$state <- ifelse(sampleTable$group == "Control", "Healthy", "Tumour")
 colnames(sampleTable) <- c("Sample", "Subtype", "State")
 sampleTable <- subset(sampleTable, select = c("Sample", "State", "Subtype")) # reorder columns
 rownames(sampleTable) <- NULL
+sampleTable$sample <- gsub("-", ".", sampleTable$sample)
 
 conditions1 = sort(unique(sampleTable[,2]))
 conditions2 = sort(unique(sampleTable[,3]))
