@@ -81,10 +81,13 @@ unchanged <- temp2$uniprot_id[!temp2$uniprot_id %in% c(D_ND, ND_D)]
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
-name_converted <- getBM(attributes = c("external_gene_name", "uniprot_gn_id", "description"), 
-                           filters = "external_gene_name", 
-                           values = FDA_drug_targets, 
-                           mart = ensembl)
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+FDA_drug_targets <- unique(targets$drugBank_target)
+
+#name_converted <- getBM(attributes = c("external_gene_name", "uniprot_gn_id", "description"), 
+#                           filters = "external_gene_name", 
+#                           values = FDA_drug_targets, 
+#                           mart = ensembl)
 
 
 
