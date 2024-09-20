@@ -65,7 +65,7 @@ load("../WGCNA/BRCA/RData/all_default/signed/all_kwithin.RData")
 load("../WGCNA/BRCA/RData/all_default/signed/all_bwnet.RData")
 
 load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/TCGA_GTEx_filt_norm.RData") # Mac
-load("../../../../Desktop/WGCNA_BRCA_large_files/TCGA_GTEx_filt_norm.RData") # Ubunut
+load("../../../../Desktop/WGCNA_BRCA_large_files/TCGA_GTEx_filt_norm.RData") # Ubuntu
 
 load("../WGCNA/BRCA/RData/all_default/signed/venn_data.RData")
 

@@ -177,29 +177,6 @@ df_subnetNeighs_edge$edge_connectivity <- edge_connectivity_values
 # add druggability data
 drug_scores <- read.csv("../Druggability_analysis/data_general/druggability_source.csv", row.names = 1)
 
-# already created file for this so no need to run again
-#library(biomaRt)
-#ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-#
-#IDs_converted <- getBM(attributes = c( "uniprotswissprot", "external_gene_name", "description"), 
-#                       filters = "uniprotswissprot", 
-#                       values = drug_scores$uniprot_id, 
-#                       mart = ensembl)
-#
-#unmapped <- IDs_converted[IDs_converted$external_gene_name == "", ]
-#unrecognised <- drug_scores[!drug_scores$uniprot_id %in% IDs_converted$uniprotswissprot, ]
-#
-#IDs_converted <- IDs_converted[IDs_converted$external_gene_name != "", ]
-#
-#novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
-#novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
-#pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
-#
-#IDs_converted$description <- gsub("\\s*\\[.*?\\]", "", IDs_converted$description)
-#
-#drug_scores <- merge(IDs_converted, drug_scores, by.x = "uniprotswissprot", by.y = "uniprot_id", all.y = T)
-#
-#write.csv(drug_scores, "../Druggability_analysis/data_general/druggability_source.csv")
 
 
 

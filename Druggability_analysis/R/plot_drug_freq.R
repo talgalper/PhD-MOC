@@ -39,6 +39,8 @@ temp$source <- ifelse(temp$highest_score == temp$druggability,
                     temp$Fpocket_method, 
                     temp$PocketMiner_method)
 
+write.csv(temp, "data_general/druggability_scores.csv", row.names = F)
+
 # density plot
 ggplot(temp, aes(x=highest_score, fill=source)) +
   geom_density(alpha=0.5) +
