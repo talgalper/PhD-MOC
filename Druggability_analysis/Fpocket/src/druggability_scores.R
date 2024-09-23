@@ -60,6 +60,9 @@ files <- list.files("results/scores/")
 results <- data.frame(file_id = character(),
                       uniprot_id = character(),
                       ID = character(),
+                      hydrophobicity_score = logical(),
+                      volume_score = logical(),
+                      alpha_max_dist = logical(),
                       pocket = logical(),
                       druggability = logical(),
                       stringsAsFactors = FALSE)
@@ -98,10 +101,22 @@ for (i in seq_along(files)) {
   # Count the number of values above 0.4 in row 2
   num_drug_pockets <- sum(data[2,] >= 0.4)
   
+  hydrophobicity_score <- which.max(data["\tDruggability Score", ])
+  hydrophobicity_score <- data["\tHydrophobicity score", hydrophobicity_score]
+  
+  volume_score <- which.max(data["\tDruggability Score", ])
+  volume_score <- data["\tVolume score", volume_score]
+
+  alpha_max_dist <- which.max(data["\tDruggability Score", ])
+  alpha_max_dist <- data["\tCent. of mass - Alpha Sphere max dist", alpha_max_dist]
+  
   # Add the results to the data frame
   results <- rbind(results, data.frame(file_id = file_id,
                                        uniprot_id = uniprot_id,
                                        ID = id,
+                                       hydrophobicity_score = hydrophobicity_score,
+                                       volume_score = volume_score,
+                                       alpha_max_dist = alpha_max_dist,
                                        pocket = pocket_max,
                                        druggability = druggability_max,
                                        num_drug_pockets = num_drug_pockets))
@@ -117,7 +132,7 @@ results_master <- merge(results, af_struct_conf[c("file_id", "struct_score")], b
 results_master <- results_master[order(-results_master$druggability), ]
 
 
-write_csv(results_master, "results/fpocket_druggability.csv")
+write_csv(results_master, "results/fpocket_druggability_full.csv")
 
 
 

@@ -60,6 +60,9 @@ files <- list.files("results/scores/")
 results <- data.frame(file_id = character(),
                       uniprot_id = character(),
                       ID = character(),
+                      hydrophobicity_score = logical(),
+                      volume_score = logical(),
+                      alpha_max_dist = logical(),
                       pocket = logical(),
                       druggability = logical(),
                       stringsAsFactors = FALSE)
@@ -67,14 +70,15 @@ results <- data.frame(file_id = character(),
 # Loop through each file
 for (i in seq_along(files)) {
   file <- files[i]
-
+  
   if (file.size(paste0("results/scores/", file)) == 0) {
-    print(paste0("File ", i, " of ", length(files), " has no pockets", ": ", file))
+    print(paste0("File ", i, " of ", length(files), " is empty, skipping", ": ", file))
     next
   }
   
   print(paste0("Formatting file ", i, " of ", length(files), ": ", file))
   
+  #
   split_name <- strsplit(file, split = "-")
   split_name <- unlist(split_name)
   id <- paste0(split_name[2], "-", split_name[3])
@@ -97,17 +101,30 @@ for (i in seq_along(files)) {
   # Count the number of values above 0.4 in row 2
   num_drug_pockets <- sum(data[2,] >= 0.4)
   
+  hydrophobicity_score <- which.max(data["\tDruggability Score", ])
+  hydrophobicity_score <- data["\tHydrophobicity score", hydrophobicity_score]
+  
+  volume_score <- which.max(data["\tDruggability Score", ])
+  volume_score <- data["\tVolume score", volume_score]
+  
+  alpha_max_dist <- which.max(data["\tDruggability Score", ])
+  alpha_max_dist <- data["\tCent. of mass - Alpha Sphere max dist", alpha_max_dist]
+  
   # Add the results to the data frame
   results <- rbind(results, data.frame(file_id = file_id,
                                        uniprot_id = uniprot_id,
                                        ID = id,
+                                       hydrophobicity_score = hydrophobicity_score,
+                                       volume_score = volume_score,
+                                       alpha_max_dist = alpha_max_dist,
                                        pocket = pocket_max,
                                        druggability = druggability_max,
                                        num_drug_pockets = num_drug_pockets))
 }
 
+
 # read in results from af_struct_conf.R
-af_struct_conf <- read.csv("results/af_struct_score.csv")
+af_struct_conf <- read.csv("results/SWISSMODEL_struct_score.csv")
 
 # add the structure confidence score to the final df
 results_master <- merge(af_struct_conf, results, by.x = "uniprot_id",  by.y = "file_id")
@@ -117,7 +134,7 @@ results_master <- results_master[, -c(2,3,4,6,7)]
 results_master <- results_master[order(-results_master$druggability), ]
 rownames(results_master) <- NULL
 
-write_csv(results_master, "results/fpocket_druggability.csv")
+write_csv(results_master, "results/fpocket_druggability_full.csv")
 
 
 
