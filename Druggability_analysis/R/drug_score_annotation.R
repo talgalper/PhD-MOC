@@ -37,3 +37,17 @@ pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
 drug_scores <- merge(IDs_converted, drug_scores, by.x = "uniprot_gn_id", by.y = "uniprot_id", all.y = T)
 
 write.csv(drug_scores, "data_general/druggability_scores_annot.csv", row.names = F)
+
+
+drug_scores <- read.csv("data_general/druggability_scores_annot.csv")
+AF_Fpocket <- read.csv("Fpocket/results_2024.05/fpocket_druggability_full.csv")
+SM_Fpocket <- read.csv("Fpocket/SWISSMODEL/fpocket_druggability_full.csv")
+
+AKT <- c(
+"P31749",
+"P31751",
+"Q9Y243"
+)
+
+AKT_AF <- AF_Fpocket[AF_Fpocket$uniprot_id %in% AKT, ]
+AKT_SM <- SM_Fpocket[SM_Fpocket$uniprot_id %in% AKT, ]
