@@ -2,7 +2,7 @@ library(igraph)
 library(tidyverse)
 
 
-BioSNAP_edgelist <- read_tsv("../../../../Downloads/ChG-Miner_miner-chem-gene.tsv")
+BioSNAP_edgelist <- read_tsv("data_general/ChG-Miner_miner-chem-gene.tsv")
 DrugBank <- read.csv("DrugBank/DrugBank_targets_ENS.csv")
 DrugBank <- DrugBank[!is.na(DrugBank$DrugBank_ID), ]
 
