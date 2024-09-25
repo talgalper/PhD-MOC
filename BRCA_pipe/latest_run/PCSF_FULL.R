@@ -112,9 +112,9 @@ load("latest_run/RData/STRING_PPI_FULL.RData")
 
 
 # try PCSF with logFC scores from WGCNA results
-load("../WGCNA/BRCA/RData/all_default/venn_data.RData")
-common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
-DE_data_subset <- DE_data[DE_data$gene_id %in% common_genes, ]
+#load("../WGCNA/BRCA/RData/all_default/venn_data.RData")
+#common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
+#DE_data_subset <- DE_data[DE_data$gene_id %in% common_genes, ]
 
 
 
