@@ -2,8 +2,8 @@
 library(tidyverse)
 
 # load in BRCA data
-load("../../Documents/GitHub/PhD-MOC/BRCA_pipe/latest_run/RData/STRING_PPI_FULL.RData")
-load("../../Documents/GitHub/PhD-MOC/BRCA_pipe/latest_run/RData/DE_data_geneSymbol.RData")
+load("../BRCA_pipe/latest_run/RData/STRING_PPI_FULL.RData")
+load("../BRCA_pipe/latest_run/RData/DE_data_geneSymbol.RData")
 
 final_df <- final_df[, -3]
 
