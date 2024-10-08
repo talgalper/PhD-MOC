@@ -12,6 +12,7 @@ filter_low_expr <- function(disease_data, control_data) {
   sample_info$group <- factor(sample_info$group, levels = c("control", "disease"))
   
   counts_filt <- filterByExpr(merged_df, group = sample_info$group)
+  print(table(counts_filt))
   counts_filt <- merged_df[counts_filt, ]
   
   low_exp_genes <- merged_df[!rownames(merged_df) %in% rownames(counts_filt), ]

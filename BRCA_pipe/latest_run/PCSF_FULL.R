@@ -29,15 +29,37 @@ all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_u
 
 # clean env
 rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-collectGarbage()
+gc()
 
 # read in functions from "../BRCA_pipe/Rscript/DE_functions.R"
 counts_filt <- filter_low_expr(disease_data = all_subtypes, 
                                control_data = GTEx_ENS)
 hist(log(as.matrix(counts_filt$counts_filt)))
 
-DE_results <- DE_analysis(counts_matrix = DE_counts_filt$counts_filt,
-                          sample_info = DE_counts_filt$sample_info)
+DE_results <- DE_analysis(counts_matrix = counts_filt$counts_filt,
+                          sample_info = counts_filt$sample_info)
+
+save(DE_results, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results.RData")
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results.RData")
+
+logPValue <- -log(DE_results$dif_exp$PValue)
+logPValue[logPValue==Inf] <- 0
+dif_exp$logPValue <- logPValue
+
+library(EnhancedVolcano)
+EnhancedVolcano(
+  dif_exp,
+  lab = dif_exp$gene_id,
+  x = "logFC",
+  y = "logPValue",
+  labSize = 3,
+  pCutoff = 1e-02,
+  title = "BRCA DE: TCGA vs GTEx",
+  legendPosition = "right",
+  drawConnectors = T,
+  max.overlaps = 100
+)
+
 
 # load in DE results from WGCNA where we already did this analysis for BRCA
 load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")

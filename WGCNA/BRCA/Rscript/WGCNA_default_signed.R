@@ -192,7 +192,7 @@ gene.signf.corr.pvals <- gene.signf.corr.pvals[order(gene.signf.corr.pvals$V1), 
 rownames(gene.signf.corr.pvals) <- NULL
 colnames(gene.signf.corr.pvals) <- c("gene_id", "pvalue")
 
-# get top 10 genes for connectivity for each non-preserved module
+# get top 10% genes for connectivity for each non-preserved module
 top_connectivity_genes = list()
 for (module in unique(bwnet$colors)) {
   moduleGenes = names(bwnet$colors)[bwnet$colors == module]
@@ -383,6 +383,18 @@ genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name")
                          values = common_genes, 
                          mart = ensembl,
                          verbose = F)
+
+GO <- enrichGO(common_genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+GO <- GO@result
+
+
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- targets[, c(2:4)]
+targets <- targets[!duplicated(targets$ensembl_gene_id), ]
+
+temp <- targets[targets$ensembl_gene_id %in% common_genes, ]
+
+targets$drugBank_target[targets$ensembl_gene_id %in% tumour_associated]
 
 ###############################################################################
 # Will now perform WGCNA on TCGA and GTEx groups separately for module     
@@ -763,8 +775,6 @@ save(control_GO, tumour_GO, file = "BRCA/RData/all_default/signed/split_GO_data.
 
 
 
-
-
 temp <- control_GO[control_GO$module %in% "green", ]
 temp2 <- tumour_GO[tumour_GO$module %in% "green", ]
 
@@ -786,7 +796,127 @@ common_modules <- temp[temp$ID %in% temp2$ID, ]
 
 
 
+# master table of all preservation statistics
+z.pres <- preserved_modules$preservation$Z$ref.Control$inColumnsAlsoPresentIn.Tumour
+z.qual <- preserved_modules$quality$Z$ref.Control$inColumnsAlsoPresentIn.Tumour
+m.pres <- preserved_modules$preservation$observed$ref.Control$inColumnsAlsoPresentIn.Tumour
+m.qual <- preserved_modules$quality$observed$ref.Control$inColumnsAlsoPresentIn.Tumour
 
 
+
+
+
+# cross section of tumour modules and DE genes
+load("BRCA/RData/DE_subset/dif_exp.RData")
+
+DE_genes_bwnet <- bwnet$colors[names(bwnet$colors) %in% dif_exp$gene_id]
+DE_genes_bwnet <- as.data.frame(table(DE_genes_bwnet))
+colnames(DE_genes_bwnet) <- c("module", "DE_genes")
+
+temp <- as.data.frame(table(bwnet$colors))
+colnames(temp) <- c("module", "total_size")
+DE_genes_bwnet <- merge(temp, DE_genes_bwnet, by = "module", all = T)
+DE_genes_bwnet[is.na(DE_genes_bwnet)] <- 0
+DE_genes_bwnet$`proportion(%)` <- DE_genes_bwnet$DE_genes/DE_genes_bwnet$total_size * 100
+DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
+
+
+
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- targets[, c(2:4)]
+targets <- targets[!duplicated(targets$ensembl_gene_id), ]
+
+temp <- as.data.frame(control_bwnet$colors[names(control_bwnet$colors) %in% targets$ensembl_gene_id])
+temp2 <- as.data.frame(tumour_bwnet$colors[names(tumour_bwnet$colors) %in% targets$ensembl_gene_id])
+
+temp <- merge(temp, temp2, by = "row.names")
+colnames(temp) <- c("gene", "control_bwnet", "tumour_bwnet")
+temp <- merge(targets, temp, by.x = "ensembl_gene_id", by.y = "gene")
+
+# matches gene ensembl to GO term
+#match_genes_return_id <- function(geneID, temp_genes) {
+#  # Split the geneID string by '/'
+#  gene_list <- unlist(strsplit(geneID, "/"))
+#  # Find the matched gene(s)
+#  matched_genes <- gene_list[gene_list %in% temp_genes]
+#  # If any match is found, return the matched gene(s), otherwise return NA
+#  if (length(matched_genes) > 0) {
+#    return(paste(matched_genes, collapse = "/"))  # Collapse multiple matches into a string
+#  } else {
+#    return(NA)
+#  }
+#}
+#
+## apply function to control GO
+#matched_genes <- sapply(control_GO_formatted$geneID, match_genes_return_id, temp$ensembl_gene_id)
+#temp3 <- control_GO_formatted[!is.na(matched_genes), ]
+#temp3$matched_gene <- matched_genes[!is.na(matched_genes)]
+#
+## apply function to tumour GO
+#matched_genes <- sapply(tumour_GO$geneID, match_genes_return_id, temp$ensembl_gene_id)
+#temp4 <- tumour_GO[!is.na(matched_genes), ]
+#temp4$matched_gene <- matched_genes[!is.na(matched_genes)]
+
+
+
+
+# redo GO to get FULL results for tumour and healthy
+pb <- progress_bar$new(
+  format = "  Performing GO Analysis [:bar] :percent eta: :eta",
+  total = length(unique(control_bwnet$colors)), clear = FALSE)
+control_GO <- list()
+for (module in unique(control_bwnet$colors)) {
+  genes <- names(control_bwnet$colors)[control_bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+  
+  control_GO[[module]] <- GO
+  
+  rm(genes, GO, module)
+  pb$tick()
+}
+
+pb <- progress_bar$new(
+  format = "  Performing GO Analysis [:bar] :percent eta: :eta",
+  total = length(unique(tumour_bwnet$colors)), clear = FALSE)
+tumour_GO <- list()
+for (module in unique(tumour_bwnet$colors)) {
+  genes <- names(tumour_bwnet$colors)[tumour_bwnet$colors %in% module]
+  GO <- enrichGO(genes, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+  
+  tumour_GO[[module]] <- GO
+  
+  rm(genes, GO, module)
+  pb$tick()
+}
+
+
+
+control_GO_formatted <- data.frame()
+for (i in seq_along(control_GO)) {
+  module <- control_GO[[i]]
+  module_name <- names(control_GO)[i]
+  
+  result <- module@result
+  result$module <- rep(module_name, nrow(result))
+  result$`-log(p.adjust)` <- -log(result$p.adjust)
+  
+  control_GO_formatted <- rbind(control_GO_formatted, result)
+  
+  rm(module, i, result, module_name)
+}
+
+tumour_GO_formatted <- data.frame()
+for (i in seq_along(tumour_GO)) {
+  module <- tumour_GO[[i]]
+  module_name <- names(tumour_GO)[i]
+  
+  result <- module@result
+  result$module <- rep(module_name, nrow(result))
+  result$`-log(p.adjust)` <- -log(result$p.adjust)
+  
+  tumour_GO_formatted <- rbind(tumour_GO_formatted, result)
+  
+  rm(module, i, result, module_name)
+}
 
 
