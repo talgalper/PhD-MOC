@@ -24,17 +24,47 @@ rownames(GTEx_ENS) <- rownames
 rm(rownames, GTEx_data)
 GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
 
+control_info <- data.frame(sample = colnames(GTEx_ENS),
+                           group = rep("control", ncol(GTEx_ENS)))
+lumA_info <- data.frame(sample = colnames(LumA_unstranded),
+                        group = rep("lumA", ncol(LumA_unstranded)))
+lumB_info <- data.frame(sample = colnames(LumB_unstranded),
+                        group = rep("lumB", ncol(LumB_unstranded)))
+her2_info <- data.frame(sample = colnames(Her2_unstranded),
+                        group = rep("Her2", ncol(Her2_unstranded)))
+basal_info <- data.frame(sample = colnames(Basal_unstranded),
+                         group = rep("basal", ncol(Basal_unstranded)))
+PCA_sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
+
 # combine all tumour samples
 all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 
 # clean env
 rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+rm(control_info, lumA_info, lumB_info, her2_info, basal_info)
 gc()
+
+hist(log(as.matrix(all_subtypes)), 
+     xlab = "log(raw counts)"
+)
 
 # read in functions from "../BRCA_pipe/Rscript/DE_functions.R"
 counts_filt <- filter_low_expr(disease_data = all_subtypes, 
                                control_data = GTEx_ENS)
-hist(log(as.matrix(counts_filt$counts_filt)))
+
+hist(log(as.matrix(counts_filt$counts_filt)),
+     xlab = "log(raw counts)"
+)
+
+
+PCA_data <- cpm(as.matrix(counts_filt$counts_filt), log = T)
+PCA_data <- t(PCA_data)
+
+PCA <- plot_PCA(expr_data = PCA_data, 
+                sample_info = counts_filt$sample_info,
+                plot_tree = F,
+                output_plot_data = T)
+
 
 DE_results <- DE_analysis(counts_matrix = counts_filt$counts_filt,
                           sample_info = counts_filt$sample_info)
@@ -42,22 +72,24 @@ DE_results <- DE_analysis(counts_matrix = counts_filt$counts_filt,
 save(DE_results, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results.RData")
 load("../../../../OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results.RData")
 
-logPValue <- -log(DE_results$dif_exp$PValue)
-logPValue[logPValue==Inf] <- 0
-dif_exp$logPValue <- logPValue
+data <- DE_results$toptags$table
+data$PValue[data$PValue == 0] <- min(data$PValue[data$PValue!=0])
+logPValue <- -log10(data$PValue)
+data$logPValue <- logPValue
 
 library(EnhancedVolcano)
 EnhancedVolcano(
-  dif_exp,
-  lab = dif_exp$gene_id,
+  data,
+  lab = NA,
   x = "logFC",
-  y = "logPValue",
+  y = "PValue",
   labSize = 3,
   pCutoff = 1e-02,
+  FCcutoff = 1,
   title = "BRCA DE: TCGA vs GTEx",
   legendPosition = "right",
-  drawConnectors = T,
-  max.overlaps = 100
+  ylim = c(0, max(data$logPValue)),
+  drawConnectors = T
 )
 
 
