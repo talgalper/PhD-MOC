@@ -175,7 +175,7 @@ df_subnetNeighs_edge$edge_connectivity <- edge_connectivity_values
 
 
 # add druggability data
-drug_scores <- read.csv("../Druggability_analysis/data_general/druggability_source.csv", row.names = 1)
+drug_scores <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
 
 
 

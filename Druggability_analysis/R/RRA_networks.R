@@ -2,7 +2,7 @@ library(igraph)
 library(tidyverse)
 library(PCSF)
 
-druggability <- read.csv("data_general/druggability_source.csv", row.names = 1)
+druggability <- read.csv("data_general/druggability_scores_annot.csv")
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- unique(targets$drugBank_target)
@@ -146,3 +146,93 @@ max_score <- max(results)
 best_combinations_indices <- which(results == max_score)
 best_combinations <- metric_combinations[best_combinations_indices]
 best_combinations
+
+
+
+
+
+
+### 2.0 version that tabulates results ###
+# read in metrics object from before
+library(RobustRankAggreg)
+
+# Function to compute RRA for a given set of metrics and count top 100 targets
+evaluate_combination <- function(selected_metrics, targets) {
+  RRA <- aggregateRanks(selected_metrics)
+  rownames(RRA) <- NULL
+  RRA <- RRA[RRA$Name %in% targets, ]
+  RRA$rank <- as.integer(rownames(RRA))
+  
+  # Count how many targets are in the top 100
+  sum(RRA$rank <= 100)
+}
+
+# Get all combinations of metrics
+metric_names <- names(metrics)
+n_metrics <- length(metric_names)
+
+# Create an empty list to hold the results
+results_list <- list()
+
+# Index for results_list
+idx <- 1
+
+for (k in 1:n_metrics) {
+  combs <- combn(metric_names, k, simplify = FALSE)
+  for (combination in combs) {
+    selected_metrics <- metrics[combination]
+    count <- evaluate_combination(selected_metrics, targets)
+    # Store the combination and count
+    results_list[[idx]] <- list(Combination = combination, Targets_in_Top_100 = count)
+    idx <- idx + 1
+  }
+}
+
+# Now create a data frame from results_list
+results_df <- do.call(rbind, lapply(results_list, function(res) {
+  included <- setNames(as.integer(metric_names %in% res$Combination), metric_names)
+  Combination <- paste(res$Combination, collapse = ', ')
+  c(included, Combination = Combination, Targets_in_Top_100 = res$Targets_in_Top_100)
+}))
+
+# Convert to data frame
+results_df <- as.data.frame(results_df, stringsAsFactors = FALSE)
+
+# Convert columns to appropriate types
+for (col in metric_names) {
+  results_df[[col]] <- as.integer(results_df[[col]])
+}
+results_df$Targets_in_Top_100 <- as.integer(results_df$Targets_in_Top_100)
+
+# View the tabulated results
+print(results_df)
+
+
+
+### alternative result format ###
+
+# Function to compute RRA for a given set of metrics and get ranks of targets
+evaluate_combination <- function(selected_metrics, targets, combination_name) {
+  RRA <- aggregateRanks(selected_metrics)
+  RRA$Rank <- 1:nrow(RRA)  # Add Rank column
+  target_ranks <- RRA[RRA$Name %in% targets, c("Name", "Rank")]
+  target_ranks$Combination <- combination_name
+  return(target_ranks)
+}
+
+# Get all combinations of metrics
+metric_combinations <- unlist(
+  lapply(1:length(metrics), function(x) combn(names(metrics), x, simplify = FALSE)),
+  recursive = FALSE
+)
+
+# Evaluate each combination and store results
+results_list <- lapply(metric_combinations, function(metric_names) {
+  selected_metrics <- metrics[metric_names]
+  combination_name <- paste(metric_names, collapse = ", ")
+  evaluate_combination(selected_metrics, targets, combination_name)
+})
+
+# Combine all results into a single data frame
+results_df <- do.call(rbind, results_list)
+
