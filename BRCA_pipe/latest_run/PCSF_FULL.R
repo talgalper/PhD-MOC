@@ -98,6 +98,14 @@ load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 
+# number of targets in DE data
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- targets[, c(2,4)]
+targets <- targets[!duplicated(targets$ensembl_gene_id), ]
+temp <- DE_data[DE_data$gene_id %in% unique(targets$ensembl_gene_id), ]
+temp <- merge(targets, temp, by.x = "ensembl_gene_id", by.y = "gene_id")
+
+
 # convert to gene symbols
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
