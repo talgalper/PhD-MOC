@@ -160,7 +160,7 @@ load("latest_run/RData/STRING_PPI_FULL.RData")
 #STRING_aliases <- read.table("../../../../OneDrive - RMIT University/PhD/large_git_files/9606.protein.aliases.v12.0.txt", header = T, "\t", fill = T)
 #STRING_aliases <- STRING_aliases[STRING_aliases$source == "Ensembl_gene", ]
 #
-## Replace with preffered name
+## Replace with preferred name
 #STRING_updated <- STRING_full
 #STRING_updated <- STRING_updated[STRING_updated$experiments != 0, ]
 #STRING_updated <- STRING_updated[STRING_updated$combined_score >= 200, ]

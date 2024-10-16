@@ -31,19 +31,19 @@ targets_annot <- merge(targets_annot, OpenTargets, by = "drugName", all.x = T)
 
 # subset drug terms based unique gene targets
 #targets_annot <- targets_annot[!duplicated(targets_annot$drugName) | !duplicated(targets_annot$drugBank_target) | is.na(targets_annot$symbol), ]
-colnames(targets_annot)[11] <- "OpenTarget_target" # rename column "symbol"
+colnames(targets_annot)[12] <- "OpenTarget_target" # rename column "symbol"
 
 # merge with DGIdb data
 targets_annot <- merge(targets_annot, DGIdb, by.x = "drugName", by.y = "drug_name", all.x = T)
-colnames(targets_annot)[18] <- "DGIdb_target" # rename column "symbol"
-targets_annot <- targets_annot[, -16] # remove gene_claimn_name
+colnames(targets_annot)[19] <- "DGIdb_target" # rename column "gene_name"
+targets_annot <- targets_annot[, -17] # remove gene_claim_name
 
 # subset drug terms based unique gene targets across all db's
 rows_with_na <- apply(targets_annot[, c("drugName", "drugBank_target", "OpenTarget_target", "DGIdb_target")], 1, function(x) any(is.na(x)))
 unique_rows <- !duplicated(targets_annot[!rows_with_na, c("drugName", "drugBank_target", "OpenTarget_target", "DGIdb_target")])
 targets_annot_unique <- rbind(targets_annot[rows_with_na, ], targets_annot[!rows_with_na, ][unique_rows, ])
 
-# remove non anti-neplastic and small mocule drugs
+# remove non anti-neoplastic and small molecule drugs
 targets_annot_unique <- targets_annot_unique[
   (targets_annot_unique$anti_neoplastic != FALSE | is.na(targets_annot_unique$anti_neoplastic)) & 
     (!(targets_annot_unique$type %in% c("Antibody", "Antibody drug conjugate")) | is.na(targets_annot_unique$type)), ]
