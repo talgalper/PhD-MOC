@@ -56,22 +56,20 @@ NA_genes <- rownames(CNV_scores)[rowSums(is.na(CNV_scores)) == ncol(CNV_scores)]
 CNV_scores <- CNV_scores[!rownames(CNV_scores) %in% NA_genes, ]
 
 
-CNV_plot_data <- CNV_scores
-CNV_plot_data$gene <- rownames(CNV_plot_data)
-CNV_plot_data <- melt(CNV_plot_data, id.vars = "gene")  # Convert to long format
+gene_summary <- CNV_scores
+gene_summary$gene <- rownames(gene_summary)
+gene_summary <- melt(gene_summary, id.vars = "gene")  # Convert to long format
+gene_summary <- na.omit(gene_summary)
 
 # Categorize CNV values
-CNV_plot_data$type <- ifelse(CNV_plot_data$value > 2, "Gain", 
-                             ifelse(CNV_plot_data$value < 2, "Loss", "Neutral"))
+gene_summary$type <- ifelse(gene_summary$value > 2, "Gain", 
+                             ifelse(gene_summary$value < 2, "Loss", "Neutral"))
 
-
-ggplot(cnv_data_melt, aes(x = variable, y = gene, fill = type)) +
-  geom_tile(color = "white") +  # Create a tile for each sample and gene
-  scale_fill_manual(values = c("Gain" = "red", "Loss" = "green", "Neutral" = "grey")) +  # Color mapping
-  theme_minimal() +  # Minimal theme
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),  # Rotate sample names
-        axis.text.y = element_text(size = 7)) +  # Adjust text size for readability
-  labs(x = "Samples", y = "Genes", fill = "Type")
+gene_summary <- group_by(gene_summary, gene)
+gene_summary <- summarise(gene_summary, alterations = sum(value != 2))
+gene_summary <- arrange(gene_summary, desc(alterations))
+gene_summary$total_samples <- ncol(CNV_scores)
+gene_summary$alterations_perc <- gene_summary$alterations/gene_summary$total_samples * 100
 
 
 
