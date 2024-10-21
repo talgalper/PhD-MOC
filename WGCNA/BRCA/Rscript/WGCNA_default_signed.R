@@ -794,16 +794,14 @@ temp <- rbind(temp, temp3)
 common_modules <- temp[temp$ID %in% temp2$ID, ]
 
 
-
-
 # master table of all preservation statistics
 z.pres <- preserved_modules$preservation$Z$ref.Control$inColumnsAlsoPresentIn.Tumour
 z.qual <- preserved_modules$quality$Z$ref.Control$inColumnsAlsoPresentIn.Tumour
 m.pres <- preserved_modules$preservation$observed$ref.Control$inColumnsAlsoPresentIn.Tumour
 m.qual <- preserved_modules$quality$observed$ref.Control$inColumnsAlsoPresentIn.Tumour
 
-
-
+temp <- cbind(z.pres, z.qual, m.pres, m.qual)
+temp <- temp[, -c(15,22,36)]
 
 
 # cross section of tumour modules and DE genes
