@@ -55,21 +55,48 @@ rownames(CNV_scores) <- gsub("\\.\\d+", "", rownames(CNV_scores))
 NA_genes <- rownames(CNV_scores)[rowSums(is.na(CNV_scores)) == ncol(CNV_scores)]
 CNV_scores <- CNV_scores[!rownames(CNV_scores) %in% NA_genes, ]
 
+cnv_summary <- data.frame(
+  gene = rownames(CNV_scores),  # Gene names
+  num_gain = rowSums(CNV_scores > 2, na.rm = T),  # Count of gains for each gene
+  num_loss = rowSums(CNV_scores < 2, na.rm = T),  # Count of losses for each gene
+  num_none = rowSums(CNV_scores == 2, na.rm = T), # Count of neutral/no alterations for each gene
+  NA_samples = rowSums(is.na(CNV_scores)) # Count the number of NA samples
+)
 
-gene_summary <- CNV_scores
-gene_summary$gene <- rownames(gene_summary)
-gene_summary <- melt(gene_summary, id.vars = "gene")  # Convert to long format
-gene_summary <- na.omit(gene_summary)
+cnv_summary$total_alterations <- cnv_summary$num_gain + cnv_summary$num_loss
+cnv_summary$alterations_percentage <- (cnv_summary$total_alterations / (cnv_summary$total_alterations + cnv_summary$num_none)) * 100
 
-# Categorize CNV values
-gene_summary$type <- ifelse(gene_summary$value > 2, "Gain", 
-                             ifelse(gene_summary$value < 2, "Loss", "Neutral"))
 
-gene_summary <- group_by(gene_summary, gene)
-gene_summary <- summarise(gene_summary, alterations = sum(value != 2))
-gene_summary <- arrange(gene_summary, desc(alterations))
-gene_summary$total_samples <- ncol(CNV_scores)
-gene_summary$alterations_perc <- gene_summary$alterations/gene_summary$total_samples * 100
+
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description"), 
+                           filters = "ensembl_gene_id", 
+                           values = cnv_summary$gene, 
+                           mart = ensembl)
+ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
+
+unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
+unrecognised <- cnv_summary[!cnv_summary$gene %in% ensembl_converted$ensembl_gene_id, ]
+
+ensembl_converted <- ensembl_converted[ensembl_converted$external_gene_name != "", ]
+
+novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
+novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
+pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
+
+cnv_summary_geneSymbol <- merge(ensembl_converted, cnv_summary, by.x = "ensembl_gene_id", by.y = "gene")
+cnv_summary_geneSymbol <- arrange(cnv_summary_geneSymbol, desc(cnv_summary_geneSymbol$total_alterations))
+
+save(cnv_summary_geneSymbol, unmapped, unrecognised, novel_proteins, novel_transcripts, pseudogene, file = "RData/BRCA_CNV_summary.RData")
+
+
+
+
+
+
+
 
 
 
