@@ -26,7 +26,7 @@ maf <- read.maf(SNV_data)
 
 plotmafSummary(maf = maf, rmOutlier = TRUE, addStat = 'median', dashboard = TRUE)
 
-oncoplot(maf = maf, top = 10, removeNonMutated = TRUE)
+DriverGenePathway(maf = maf, top = 10, removeNonMutated = TRUE)
 
 #clincial <- GDCquery_clinic(project = "TCGA-BRCA", type = "clinical")
 
@@ -36,13 +36,14 @@ CNV_query <- GDCquery(
   project = "TCGA-BRCA", 
   data.category = "Copy Number Variation", 
   access = "open",
-  #data.type = "Gene Level Copy Number",
   sample.type = "Primary Tumor"
 )
 
 CNV_query_data <- getResults(CNV_query)
 
-save(CNV_query, CNV_query_data, file = "RData/BRCA_CNV_geneLevelData.RData")
+CNV_query_data_details <- lapply(CNV_query_data, table)
+
+save(CNV_query, CNV_query_data, CNV_query_data_details, file = "RData/BRCA_CNV_query.RData")
 
 GDCdownload(CNV_query)
 

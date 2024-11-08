@@ -1,0 +1,25 @@
+INFO [2024-11-08 17:20:33] $x
+INFO [2024-11-08 17:20:33] list(gene_projection = gene_projection, gene_betabinomial = gene_betabinomial, 
+INFO [2024-11-08 17:20:33]     gene_fisher = gene_fisher, gene_lrt = gene_lrt, gene_ct = gene_ct)
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $filename
+INFO [2024-11-08 17:20:33] NULL
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $fill
+INFO [2024-11-08 17:20:33] pal_npg()(5)
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $cat.col
+INFO [2024-11-08 17:20:33] pal_npg()(5)
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $cat.cex
+INFO [2024-11-08 17:20:33] [1] 1
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $cat.pos
+INFO [2024-11-08 17:20:33] [1] 0
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $cat.dist
+INFO [2024-11-08 17:20:33] [1] 0.07
+INFO [2024-11-08 17:20:33] 
+INFO [2024-11-08 17:20:33] $cat.fontfamily
+INFO [2024-11-08 17:20:33] [1] "serif"
+INFO [2024-11-08 17:20:33] 
