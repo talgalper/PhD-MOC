@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+# IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-# IMPORTANT: Make sure to double check and update these paths
-data=$PWD/MOC/DE/data
-intermediate=$PWD/MOC/DE/intermediate
-results=$PWD/MOC/DE/results
+data=$PWD/BRCA_CNV/data
+intermediate=$PWD/BRCA_CNV/intermediate
+results=$PWD/BRCA_CNV/results
 
 # Create directories
 mkdir -p $data
@@ -13,12 +13,12 @@ mkdir -p $results
 
 # Set the name of your network and score file
 network=STRING
-score=MOC_GTEx_logFC_abs
+score=BRCA_CNV
 
 # Filenames for your input files
 index_gene_file=gene_index.tsv
 edge_list_file=edge_list_index.tsv
-score_file=logFC_scores_abs.tsv
+score_file=CNV_scores.tsv
 
 num_permutations=100
 
