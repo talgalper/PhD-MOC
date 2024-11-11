@@ -2,9 +2,9 @@
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-data=$PWD/BRCA_CNV/data
-intermediate=$PWD/BRCA_CNV/intermediate
-results=$PWD/BRCA_CNV/results
+data=$PWD/BRCA/data
+intermediate=$PWD/BRCA/intermediate
+results=$PWD/BRCA/results
 
 # Create directories
 mkdir -p $data
@@ -13,12 +13,12 @@ mkdir -p $results
 
 # Set the name of your network and score file
 network=STRING
-score=BRCA_CNV
+score=BRCA_logFC
 
 # Filenames for your input files
 index_gene_file=gene_index.tsv
 edge_list_file=edge_list_index.tsv
-score_file=CNV_scores.tsv
+score_file=logFC_scores_abs.tsv
 
 num_permutations=100
 
@@ -27,7 +27,8 @@ num_permutations=100
 # https://www.gnu.org/software/parallel/. You can change the num_cores variable
 # to specify the number of cores for your system.
 
-num_cores=8
+##### MAKE SURE THIS IS CORRECT #####
+num_cores=16
 
 mkdir -p $intermediate/"$network"
 mkdir -p $intermediate/"$network"_"$score"
