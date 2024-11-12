@@ -56,6 +56,8 @@ rownames(CNV_scores) <- gsub("\\.\\d+", "", rownames(CNV_scores))
 NA_genes <- rownames(CNV_scores)[rowSums(is.na(CNV_scores)) == ncol(CNV_scores)]
 CNV_scores <- CNV_scores[!rownames(CNV_scores) %in% NA_genes, ]
 
+save(CNV_scores, file = "~/OneDrive - RMIT University/PhD/large_git_files/TCGA_CNV/geneLevel_CNV_NAfilt.RData")
+
 cnv_summary <- data.frame(
   gene = rownames(CNV_scores),  # Gene names
   num_gain = rowSums(CNV_scores > 2, na.rm = T),  # Count of gains for each gene
@@ -72,7 +74,7 @@ cnv_summary$alterations_percentage <- (cnv_summary$total_alterations / (cnv_summ
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
-ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description"), 
+ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
                            filters = "ensembl_gene_id", 
                            values = cnv_summary$gene, 
                            mart = ensembl)
@@ -81,7 +83,7 @@ ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$descrip
 unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
 unrecognised <- cnv_summary[!cnv_summary$gene %in% ensembl_converted$ensembl_gene_id, ]
 
-ensembl_converted <- ensembl_converted[ensembl_converted$external_gene_name != "", ]
+#ensembl_converted <- ensembl_converted[ensembl_converted$external_gene_name != "", ]
 
 novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
 novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
