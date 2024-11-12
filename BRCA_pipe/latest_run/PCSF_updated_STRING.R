@@ -7,7 +7,8 @@ load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 
-STRING_edge <- fread("latest_run/intermediate/STRING_physical_ENSG.csv")
+STRING_edge <- fread("latest_run/intermediate/STRING_physical_ENSG.csv", data.table = F)
+
 
 # set seed for reproducibility 
 set.seed(1234)
