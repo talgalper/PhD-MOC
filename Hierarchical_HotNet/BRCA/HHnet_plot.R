@@ -181,15 +181,15 @@ library(clusterProfiler)
 subnet_GO <- enrichGO(V(subnet)$name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
 subnet_GO_formatted <- subnet_GO@result
 subnet_GO_formatted <- simplify(subnet_GO)
-subnet_GO_formatted <- GO_formatted@result
+subnet_GO_formatted <- subnet_GO_formatted@result
 
 subnetNeighs_GO <- enrichGO(V(clust1_net)$name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
-subnetNeighs_GO_formatted <- GO2@result
+subnetNeighs_GO_formatted <- subnetNeighs_GO@result
 subnetNeighs_GO_formatted <- simplify(subnetNeighs_GO)
-subnetNeighs_GO_formatted <- subnet_GO_formatted@result
+subnetNeighs_GO_formatted <- subnetNeighs_GO_formatted@result
 
 save(subnet_GO, subnetNeighs_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_GO.RData")
-
+load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_GO.RData")
 
 library(RobustRankAggreg)
 RRA <- aggregateRanks(list(degree = df_subnetNeighs$display.name[order(-df_subnetNeighs$degree)],
