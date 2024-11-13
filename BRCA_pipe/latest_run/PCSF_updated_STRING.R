@@ -46,3 +46,24 @@ rownames(df) <- 1:nrow(df)
 
 df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
+
+
+
+# add gene symbols
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
+                           filters = "ensembl_gene_id", 
+                           values = df$gene_id, 
+                           mart = ensembl)
+ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
+
+unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
+unrecognised <- df[!df$gene_id %in% ensembl_converted$ensembl_gene_id, ]
+
+df <- merge.data.table(ensembl_converted, df, by.x = "ensembl_gene_id", by.y = "gene_id", all.y = T)
+df <- df[order(-df$degree_centrality), ]
+rownames(df) <- NULL
+
+
