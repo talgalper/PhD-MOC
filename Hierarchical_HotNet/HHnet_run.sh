@@ -2,9 +2,9 @@
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-data=$PWD/BRCA/data
-intermediate=$PWD/BRCA/intermediate
-results=$PWD/BRCA/results
+data=$PWD/BRCA/STN_filt/data
+intermediate=$PWD/BRCA/STN_filt/intermediate
+results=$PWD/BRCA/STN_filt/results
 
 # Create directories
 mkdir -p $data
