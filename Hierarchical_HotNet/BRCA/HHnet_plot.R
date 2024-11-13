@@ -5,7 +5,7 @@ library(data.table)
 STRING_net <- fread("STRING_data/STRING_physical_ENSG.csv")
 STRING_net <- graph_from_data_frame(STRING_net, directed = F)
 
-hh_results <- read_lines("BRCA/results/clusters_STRING_BRCA_logFC.tsv", skip = 7)
+hh_results <- read_lines("BRCA/STN_filt/results/clusters_STRING_BRCA_logFC.tsv", skip = 7)
 hh_results <- str_split(hh_results, pattern = "\t")
 
 #sum(hh_results[[1]] %in% V(STRING_net)$`display name`) 
@@ -30,23 +30,7 @@ V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[1]], "tomato",
 subnet <- induced_subgraph(graph = STRING_net, V(STRING_net)$name %in% hh_results[[1]])
 set.seed(1234)
 plot.igraph(subnet, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3, edge.curved = F)
-
-# add direct neighbors of cluster nodes
-V(STRING_net)$name <- V(STRING_net)$name
-neighbs <- neighborhood(
-  STRING_net,
-  order = 1,
-  nodes = hh_results[[1]]
-)
-neighbs <- flatten(neighbs)
-neighbs <- names(neighbs)
-neighbs <- unique(neighbs)
-
-clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
-V(clust1_net)$size <- scales::rescale(degree(clust1_net), c(1, 7))
-#clust1_net <- simplify(clust1_net) # pretty sure gets rid of all extra data from STRING/Cytoscape
-set.seed(1234)
-plot(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3, edge.curved = F)
+ 
 
 # subset edges with experimental evidence
 #clust1_net_filt <- delete_edges(clust1_net, E(clust1_net)[!is.na(E(clust1_net)$`stringdb::experiments`) & E(clust1_net)$`stringdb::experiments` >= 0.4])

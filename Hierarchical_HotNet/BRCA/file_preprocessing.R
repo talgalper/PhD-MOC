@@ -15,13 +15,13 @@ edge_list_index <- data.frame(from = match(STRING_edge$protein1_ENSG, gene_index
                               to = match(STRING_edge$protein2_ENSG, gene_index$ensembl_id))
 
 # create score file
-load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
+load("../BRCA_pipe/latest_run/RData/STN_filt/dif_exp.RData")
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 DE_data_abs <- subset(DE_data, select = c("gene_id", "logFC_abs"))
 
 
-fwrite(gene_index, "BRCA/data/gene_index.tsv", col.names = F, sep = "\t")
-fwrite(edge_list_index, "BRCA/data/edge_list_index.tsv", col.names = F, sep = "\t")
-fwrite(DE_data_abs, "BRCA/data/logFC_scores_abs.tsv", col.names = F, sep = "\t")
+fwrite(gene_index, "BRCA/data/STN_filt/gene_index.tsv", col.names = F, sep = "\t")
+fwrite(edge_list_index, "BRCA/data/STN_filt/edge_list_index.tsv", col.names = F, sep = "\t")
+fwrite(DE_data_abs, "BRCA/data/STN_filt/logFC_scores_abs.tsv", col.names = F, sep = "\t")
 
