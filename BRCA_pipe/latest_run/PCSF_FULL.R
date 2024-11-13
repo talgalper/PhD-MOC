@@ -36,6 +36,12 @@ basal_info <- data.frame(sample = colnames(Basal_unstranded),
                          group = rep("basal", ncol(Basal_unstranded)))
 PCA_sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
 
+# add sample type to sample_info
+load("RData/TCGA_query.RData")
+common <- common[, c(1,3)]
+PCA_sample_info <- merge(PCA_sample_info, common, by.x = "sample", by.y = "cases", all.x = T)
+PCA_sample_info$sample_type <- ifelse(is.na(PCA_sample_info$sample_type), "Healthy", PCA_sample_info$sample_type)
+
 # combine all tumour samples
 all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 
@@ -56,21 +62,67 @@ hist(log(as.matrix(counts_filt$counts_filt)),
      xlab = "log(raw counts)"
 )
 
+## plot PCA
+plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
+  # convert expression data frame into CPM normalised + transposed matrix
+  PCA_data <- cpm(as.matrix(expr_data), log = T)
+  PCA_data <- t(PCA_data)
+  
+  pca <- prcomp(PCA_data, scale. = T, center = T)
+  pca_data <- pca$x
+  pca_var <- pca$sdev^2
+  
+  pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+  pca_data <- as.data.frame(pca_data)
+  
+  # Merge sample mapping with PCA data
+  pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = "sample")
+  
+  # Create a custom colour palette for stages
+  library(RColorBrewer)
+  groups <- unique(sample_info[ ,2])
+  num_colors <- length(groups)
+  colours <- brewer.pal(n = num_colors, name = "Dark2")
+  names(colours) <- groups
+  
+  # Create the PCA plot with color mapping
+  library(ggrepel)
+  PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = group, shape = sample_type)) +
+    geom_point() +
+    #geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # opt for point labels
+    scale_color_manual(values = colours) + 
+    theme_bw() +
+    labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+         y = paste0('PC2: ', pca_var_perc[2], ' %'))
+  print(PCA_plot)
+  
+  if (output_plot_data == T) {
+    return(list(PCA_plot = PCA_plot, plot_data = pca_data))
+  }
+}
 
-PCA_data <- cpm(as.matrix(counts_filt$counts_filt), log = T)
-PCA_data <- t(PCA_data)
+PCA_plot <- plot_PCA(expr_data = counts_filt$counts_filt, 
+                     sample_info = PCA_sample_info, 
+                     output_plot_data = T)
 
-PCA <- plot_PCA(expr_data = PCA_data, 
-                sample_info = counts_filt$sample_info,
-                plot_tree = F,
-                output_plot_data = T)
+# remove solid tissue normal samples and re-plot PCA
+STN_samples <- PCA_sample_info$sample[PCA_sample_info$sample_type == "Solid Tissue Normal"]
+expr_data_filt <- counts_filt$counts_filt[, !colnames(counts_filt$counts_filt) %in% STN_samples]
+PCA_sample_info_filt <- PCA_sample_info[!PCA_sample_info$sample %in% STN_samples, ]
 
+PCA_plot_filt <- plot_PCA(expr_data = expr_data_filt, 
+                          sample_info = PCA_sample_info_filt, 
+                          output_plot_data = T)
 
-DE_results <- DE_analysis(counts_matrix = counts_filt$counts_filt,
-                          sample_info = counts_filt$sample_info)
+save(PCA_plot, PCA_plot_filt, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
 
-save(DE_results, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results.RData")
-load("../../../../OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results.RData")
+## perform DE
+sample_info_filt <- counts_filt$sample_info[!counts_filt$sample_info$sample %in% STN_samples, ]
+DE_results <- DE_analysis(counts_matrix = expr_data_filt,
+                          sample_info = sample_info_filt)
+
+save(DE_results, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results_STNfilt.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results_STNfilt.RData")
 
 data <- DE_results$toptags$table
 data$PValue[data$PValue == 0] <- min(data$PValue[data$PValue!=0])
@@ -94,7 +146,8 @@ EnhancedVolcano(
 
 
 # load in DE results from WGCNA where we already did this analysis for BRCA
-load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
+#load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
+dif_exp <- DE_results$dif_exp
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 
@@ -102,8 +155,9 @@ DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- targets[, c(2,4)]
 targets <- targets[!duplicated(targets$ensembl_gene_id), ]
-temp <- DE_data[DE_data$gene_id %in% unique(targets$ensembl_gene_id), ]
+temp <- DE_results$hits[DE_results$hits$gene_id %in% unique(targets$ensembl_gene_id), ]
 temp <- merge(targets, temp, by.x = "ensembl_gene_id", by.y = "gene_id")
+
 
 
 # convert to gene symbols
@@ -114,6 +168,7 @@ ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name
                            filters = "ensembl_gene_id", 
                            values = DE_data$gene_id, 
                            mart = ensembl)
+ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
 
 unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
 unrecognised <- DE_data[!DE_data$gene_id %in% ensembl_converted$ensembl_gene_id, ]

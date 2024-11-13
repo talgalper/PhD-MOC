@@ -3,7 +3,7 @@ library(PCSF)
 
 
 # load in DE results from WGCNA where we already did this analysis for BRCA
-load("../WGCNA/BRCA/RData/DE_subset/dif_exp.RData")
+load("latest_run/RData/STN_filt/dif_exp.RData")
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 
