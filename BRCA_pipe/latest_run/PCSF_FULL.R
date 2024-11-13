@@ -115,6 +115,7 @@ PCA_plot_filt <- plot_PCA(expr_data = expr_data_filt,
                           output_plot_data = T)
 
 save(PCA_plot, PCA_plot_filt, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
 
 ## perform DE
 sample_info_filt <- counts_filt$sample_info[!counts_filt$sample_info$sample %in% STN_samples, ]
@@ -123,6 +124,9 @@ DE_results <- DE_analysis(counts_matrix = expr_data_filt,
 
 save(DE_results, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results_STNfilt.RData")
 load("~/OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results_STNfilt.RData")
+
+# get DE counts summary
+print(summary(decideTests(DE_results$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
 
 data <- DE_results$toptags$table
 data$PValue[data$PValue == 0] <- min(data$PValue[data$PValue!=0])
@@ -287,9 +291,9 @@ enrichment_table <- data.frame(
 
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
-targets <- unique(targets$drugBank_target)
+targets <- unique(targets$ensembl_gene_id)
 
-temp <- df[df$gene_id %in% targets, ]
+temp <- df[df$ensembl_gene_id %in% targets, ]
 
 targets[!targets %in% df$gene_id]
 

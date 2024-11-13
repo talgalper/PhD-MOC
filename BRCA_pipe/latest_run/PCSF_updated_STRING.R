@@ -25,8 +25,8 @@ print(elapsed_time)
 
 plot.PCSF(subnet, node_label_cex = 15)
 
-save(subnet, file = "latest_run/RData/PCSF_updated_STRING.RData")
-load("latest_run/RData/PCSF_updated_STRING.RData")
+save(subnet, file = "latest_run/RData/STN_filt/PCSF_updated_STRING.RData")
+load("latest_run/RData/STN_filt/PCSF_updated_STRING.RData")
 
 
 
@@ -66,4 +66,5 @@ df <- merge.data.table(ensembl_converted, df, by.x = "ensembl_gene_id", by.y = "
 df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
 
+save(df, file = "latest_run/RData/STN_filt/PCSF_results.RData")
 
