@@ -48,6 +48,7 @@ all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_u
 # clean env
 rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
 rm(control_info, lumA_info, lumB_info, her2_info, basal_info)
+rm(clinical, common, query_TCGA, subtypes)
 gc()
 
 hist(log(as.matrix(all_subtypes)), 
@@ -105,12 +106,16 @@ PCA_plot <- plot_PCA(expr_data = counts_filt$counts_filt,
                      sample_info = PCA_sample_info, 
                      output_plot_data = T)
 
+
 # remove solid tissue normal samples and re-plot PCA
 STN_samples <- PCA_sample_info$sample[PCA_sample_info$sample_type == "Solid Tissue Normal"]
-expr_data_filt <- counts_filt$counts_filt[, !colnames(counts_filt$counts_filt) %in% STN_samples]
+# remove STN samples from original data and re-filter low count genes
+expr_data_filt <- filter_low_expr(disease_data = all_subtypes[, !colnames(all_subtypes) %in% STN_samples], 
+                                  control_data = GTEx_ENS)
+
 PCA_sample_info_filt <- PCA_sample_info[!PCA_sample_info$sample %in% STN_samples, ]
 
-PCA_plot_filt <- plot_PCA(expr_data = expr_data_filt, 
+PCA_plot_filt <- plot_PCA(expr_data = expr_data_filt$counts_filt, 
                           sample_info = PCA_sample_info_filt, 
                           output_plot_data = T)
 
@@ -118,8 +123,8 @@ save(PCA_plot, PCA_plot_filt, file = "~/OneDrive - RMIT University/PhD/large_git
 load("~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
 
 ## perform DE
-sample_info_filt <- counts_filt$sample_info[!counts_filt$sample_info$sample %in% STN_samples, ]
-DE_results <- DE_analysis(counts_matrix = expr_data_filt,
+sample_info_filt <- expr_data_filt$sample_info[!expr_data_filt$sample_info$sample %in% STN_samples, ]
+DE_results <- DE_analysis(counts_matrix = expr_data_filt$counts_filt,
                           sample_info = sample_info_filt)
 
 save(DE_results, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/DE_results_STNfilt.RData")
@@ -154,6 +159,8 @@ EnhancedVolcano(
 dif_exp <- DE_results$dif_exp
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
+
+save(dif_exp, file = "latest_run/RData/STN_filt/dif_exp.RData")
 
 # number of targets in DE data
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
