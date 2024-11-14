@@ -32,6 +32,23 @@ set.seed(1234)
 plot.igraph(subnet, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3, edge.curved = F)
  
 
+# add direct neighbors of cluster nodes
+neighbs <- neighborhood(
+  STRING_net,
+  order = 1,
+  nodes = hh_results[[1]]
+)
+neighbs <- flatten(neighbs)
+neighbs <- names(neighbs)
+neighbs <- unique(neighbs)
+
+clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
+V(clust1_net)$size <- scales::rescale(degree(clust1_net), c(1, 7))
+#clust1_net <- simplify(clust1_net) # pretty sure gets rid of all extra data from STRING/Cytoscape
+set.seed(1234)
+plot.igraph(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3, edge.curved = F)
+
+
 # subset edges with experimental evidence
 #clust1_net_filt <- delete_edges(clust1_net, E(clust1_net)[!is.na(E(clust1_net)$`stringdb::experiments`) & E(clust1_net)$`stringdb::experiments` >= 0.4])
 #plot(clust1_net_filt, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3)
