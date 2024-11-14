@@ -1,0 +1,2 @@
+Results generated here are STN samples removed from the counts filtered data.
+New data removes samples from original data then performs filtering for low counts

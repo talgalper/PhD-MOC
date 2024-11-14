@@ -38,13 +38,6 @@ mkdir -p $intermediate/"$network"_"$score"
 #f2py -c fortran_module.f95 -m fortran_module > /dev/null
 #cd ..
 
-# Construct similarity matrix
-echo "Construct similarity matrix..."
-python src/construct_similarity_matrix.py \
-    -i   $data/"$edge_list_file" \
-    -o   $intermediate/"$network"/similarity_matrix.h5 \
-    -bof $intermediate/"$network"/beta.txt
-
 # Permute scores
 echo "Permuting scores..."
 cp $data/"$score_file" $intermediate/"$network"_"$score"/scores_0.tsv

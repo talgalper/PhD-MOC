@@ -21,7 +21,7 @@ DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 DE_data_abs <- subset(DE_data, select = c("gene_id", "logFC_abs"))
 
 
-fwrite(gene_index, "BRCA/data/STN_filt/gene_index.tsv", col.names = F, sep = "\t")
-fwrite(edge_list_index, "BRCA/data/STN_filt/edge_list_index.tsv", col.names = F, sep = "\t")
-fwrite(DE_data_abs, "BRCA/data/STN_filt/logFC_scores_abs.tsv", col.names = F, sep = "\t")
+fwrite(gene_index, "BRCA/STN_filt/data/gene_index.tsv", col.names = F, sep = "\t")
+fwrite(edge_list_index, "BRCA/STN_filt/data/edge_list_index.tsv", col.names = F, sep = "\t")
+fwrite(DE_data_abs, "BRCA/STN_filt/data/updated_DE/logFC_scores_abs.tsv", col.names = F, sep = "\t")
 
