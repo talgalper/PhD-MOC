@@ -4,6 +4,8 @@ library(tidyverse)
 # load in BRCA data
 STRING_edge <- fread("STRING_data/STRING_physical_ENSG.csv") 
 STRING_edge <- STRING_edge[, -3]
+STRING_edge <- STRING_edge[!duplicated(t(apply(STRING_edge, 1, sort))), ]
+
 
 # create index and indexed edge list
 gene_index <- as.data.frame(unique(c(STRING_edge$protein1_ENSG, STRING_edge$protein2_ENSG)))
