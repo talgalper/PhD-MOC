@@ -129,8 +129,8 @@ fwrite(df_subnetNeighs, "BRCA/STN_filt/results/df_subnetNeighs.csv")
 
 
 # network metrics of known BRCA targets
-df_subnet <- fread("BRCA/results/df_subnet.csv")
-df_subnetNeighs <- fread("BRCA/results/df_subnetNeighs.csv")
+df_subnet <- fread("BRCA/STN_filt/results/df_subnet.csv")
+df_subnetNeighs <- fread("BRCA/STN_filt/results/df_subnetNeighs.csv")
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- unique(targets$ensembl_gene_id)
