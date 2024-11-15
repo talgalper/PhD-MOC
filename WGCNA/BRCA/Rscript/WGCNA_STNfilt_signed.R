@@ -106,7 +106,7 @@ grid.arrange(a1, a2, nrow = 2)
 rm(a1, a2)
 
 save(sft, file = "BRCA/RData/STN_filt/combined_sft.RData")
-
+load("BRCA/RData/STN_filt/combined_sft.RData")
 
 # RESTART R AND LOAD WGCNA ONLY
 library(WGCNA)
@@ -171,12 +171,14 @@ moduleTrait_cor_pvals <- corPvalueStudent(moduleTrait_cor, nSamples = nrow(all_w
 heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 
 heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
+colnames(heatmap_data) <- gsub("data.", "", colnames(heatmap_data))
 
 CorLevelPlot(heatmap_data,
              x = names(heatmap_data)[13:18],
              y = names(heatmap_data)[1:12],
              col = c("blue1", "skyblue", "white", "pink", "red"))
 
+save(heatmap_data, file = "BRCA/RData/STN_filt/heatmap_data.RData")
 
 # intramodular connectivity
 colours <- labels2colors(bwnet$colors)
@@ -335,7 +337,7 @@ ggplot(data = KEGG_formatted, aes(x = module, y = Description,
 
 
 ## cross section of tumour modules and DE genes
-load("BRCA/RData/DE_subset/dif_exp.RData")
+load("../BRCA_pipe/latest_run/RData/STN_filt/dif_exp.RData")
 
 DE_genes_bwnet <- bwnet$colors[names(bwnet$colors) %in% dif_exp$gene_id]
 DE_genes_bwnet <- as.data.frame(table(DE_genes_bwnet))
@@ -351,34 +353,42 @@ DE_genes_bwnet <- DE_genes_bwnet[order(-DE_genes_bwnet$`proportion(%)`), ]
 
 ## venn diagram for cross 
 DE_genes <- dif_exp$gene_id
-tumour_associated <- names(bwnet$colors)[bwnet$colors %in% c("blue", "magenta", "brown", "yellow", "red", "greenyellow", "tan")]
+tumour_associated <- names(bwnet$colors)[bwnet$colors %in% c("blue", "magenta","green", "brown", "yellow", "pink", "greenyellow")]
 top_kwithin <- top_connectivity_genes$ensembl_id
 top_gene_membership <- gene.signf.corr.pvals$gene_id[1:(length(gene.signf.corr.pvals$gene_id) * 0.1)]
-save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/all_default/signed/venn_data.RData")
+save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA/RData/STN_filt/venn_data.RData")
 
 kWithin[rownames(kWithin) %in% "ENSG00000141510", ] # TP53
 
 load("BRCA/RData/all_default/signed/venn_data.RData")
-library(VennDiagram)
 
-venn.diagram(
-  x = list(DE_genes = DE_genes, 
-           tumour_associated = tumour_associated, 
-           kwithin = top_kwithin,
-           top_tumour_membership = top_gene_membership),
-  category.names = c("DE genes", "Tumour associated", "Top10% Kwithin", "Top10% MM"),
-  col = "transparent",  # set the color of the intersections to transparent
-  fill = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for each category
-  alpha = 0.5,  # set the transparency level of the circles
-  cat.col = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for category labels
-  cat.fontfamily = "Arial",  # set the font family for category labels
-  cat.fontface = "bold",  # set the font face for category labels
-  cat.fontsize = 10,  # set the font size for category labels
-  cex = 1.5,  # increase the size of the circles
-  margin = 0.1,  # set the margin size (proportion of the plot)
-  filename = "BRCA/RData/all_default/signed/consensus_genes.png",
-  disable.logging = TRUE
-)
+library(ggVennDiagram)
+ggVennDiagram(x = list(`DE genes` = DE_genes, 
+                       `Tumour Associated` = tumour_associated, 
+                       `Top10% kWithin` = top_kwithin,
+                       `Top10% MM` = top_gene_membership))
+
+
+
+#library(VennDiagram)
+#venn.diagram(
+#  x = list(`DE genes` = DE_genes, 
+#           `Tumour Associated` = tumour_associated, 
+#           `Top kWithin` = top_kwithin,
+#           `Top Membership Pvalue` = top_gene_membership),
+#  category.names = c("DE genes", "Tumour associated", "Top10% Kwithin", "Top10% MM"),
+#  col = "transparent",  # set the color of the intersections to transparent
+#  fill = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for each category
+#  alpha = 0.5,  # set the transparency level of the circles
+#  cat.col = c("dodgerblue", "goldenrod1", "lightcoral", "mediumseagreen"),  # set colors for category labels
+#  cat.fontfamily = "Arial",  # set the font family for category labels
+#  cat.fontface = "bold",  # set the font face for category labels
+#  cat.fontsize = 10,  # set the font size for category labels
+#  cex = 1.5,  # increase the size of the circles
+#  margin = 0.1,  # set the margin size (proportion of the plot)
+#  filename = "BRCA/RData/all_default/signed/consensus_genes.png",
+#  disable.logging = TRUE
+#)
 
 
 common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
