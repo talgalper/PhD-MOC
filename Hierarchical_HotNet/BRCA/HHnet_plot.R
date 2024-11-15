@@ -3,9 +3,8 @@ library(igraph)
 library(data.table)
 
 STRING_net <- fread("STRING_data/STRING_physical_ENSG.csv")
+STRING_net <- STRING_net[!duplicated(t(apply(STRING_net, 1, sort))), ] # get rid of doubled up edges i.e. (a,b) (b,a) same edge weight
 STRING_net <- graph_from_data_frame(STRING_net, directed = F)
-
-STRING_net_unique <- STRING_net[!duplicated(t(apply(STRING_net, 1, sort))), ]
 
 
 hh_results <- read_lines("BRCA/STN_filt/results/clusters_STRING_BRCA_logFC.tsv", skip = 7)
@@ -23,7 +22,7 @@ V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[4]], "maroon1"
 V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[5]], "gold", V(STRING_net)$color)
 V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[6]], "orchid", V(STRING_net)$color)
 V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[7]], "cyan", V(STRING_net)$color)
-V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[8]], "darkorange", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[8]], "yellowgreen", V(STRING_net)$color)
 V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[9]], "mediumseagreen", V(STRING_net)$color)
 V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[10]], "saddlebrown", V(STRING_net)$color)
 
