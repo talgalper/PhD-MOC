@@ -8,6 +8,7 @@ DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 
 STRING_edge <- fread("latest_run/intermediate/STRING_physical_ENSG.csv", data.table = F)
+STRING_edge <- STRING_edge[!duplicated(t(apply(STRING_edge, 1, sort))), ]
 
 
 # set seed for reproducibility 
