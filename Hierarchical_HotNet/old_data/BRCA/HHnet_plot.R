@@ -1,7 +1,7 @@
 library(tidyverse)
 library(igraph)
 
-STRING_net <- read_graph("../../../../OneDrive - RMIT University/PhD/large_git_files/HHnet/STRING_hsa_physical_network.graphml", format = "graphml")
+STRING_net <- read_graph("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/old/STRING_hsa_physical_network.graphml", format = "graphml")
 
 hh_results <- read_lines("BRCA/results/clusters_STRING_logFC_scores_abs.tsv", skip = 7)
 hh_results <- str_split(hh_results, pattern = "\t")

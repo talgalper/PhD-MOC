@@ -5,13 +5,29 @@ library(data.table)
 STRING_net <- fread("STRING_data/STRING_physical_ENSG.csv")
 STRING_net <- graph_from_data_frame(STRING_net, directed = F)
 
+STRING_net_unique <- STRING_net[!duplicated(t(apply(STRING_net, 1, sort))), ]
+
+
 hh_results <- read_lines("BRCA/STN_filt/results/clusters_STRING_BRCA_logFC.tsv", skip = 7)
 hh_results <- str_split(hh_results, pattern = "\t")
+
+top <- unlist(hh_results[1:10])
 
 #sum(hh_results[[1]] %in% V(STRING_net)$`display name`) 
 
 # colour cluster members
 V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[1]], "tomato", "white")
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[2]], "springgreen", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[3]], "royalblue", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[4]], "maroon1", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[5]], "gold", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[6]], "orchid", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[7]], "cyan", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[8]], "darkorange", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[9]], "mediumseagreen", V(STRING_net)$color)
+V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[10]], "saddlebrown", V(STRING_net)$color)
+
+
 
 #idx <- unique(c(
 #  which(V(STRING_net)$color == "tomato"),
@@ -27,16 +43,15 @@ V(STRING_net)$color <- ifelse(V(STRING_net)$name %in% hh_results[[1]], "tomato",
 
 
 # subnetwork cluster
-subnet <- induced_subgraph(graph = STRING_net, V(STRING_net)$name %in% hh_results[[1]])
+subnet <- induced_subgraph(graph = STRING_net, V(STRING_net)$name %in% top)
 set.seed(1234)
-plot.igraph(subnet, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3, edge.curved = F)
- 
+plot.igraph(subnet, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3)
 
 # add direct neighbors of cluster nodes
 neighbs <- neighborhood(
   STRING_net,
   order = 1,
-  nodes = hh_results[[1]]
+  nodes = top
 )
 neighbs <- flatten(neighbs)
 neighbs <- names(neighbs)
@@ -54,11 +69,11 @@ plot.igraph(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3, edge.
 #plot(clust1_net_filt, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3)
 
 
-write_graph(clust1_net, "BRCA/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
-write_graph(subnet, "BRCA/results/hhnet_cluster1_net.graphml", format = "graphml")
+write_graph(clust1_net, "BRCA/STN_filt/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
+write_graph(subnet, "BRCA/STN_filt/results/hhnet_cluster1_net.graphml", format = "graphml")
 
-clust1_net <- read_graph("BRCA/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
-subnet <- read_graph("BRCA/results/hhnet_cluster1_net.graphml", format = "graphml")
+clust1_net <- read_graph("BRCA/STN_filt/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
+subnet <- read_graph("BRCA/STN_filt/results/hhnet_cluster1_net.graphml", format = "graphml")
 
 
 df_subnet <- data.frame(ENSG = V(subnet)$name,
@@ -66,8 +81,8 @@ df_subnet <- data.frame(ENSG = V(subnet)$name,
                         betweenness = betweenness(subnet),
                         closeness = closeness(subnet),
                         eigen_centrality = eigen_centrality(subnet)$vector,
-                        source = V(subnet)$color)
-df_subnet$source <- ifelse(df_subnet$source == "tomato", "subnet", "STRING")
+                        cluster = V(subnet)$color)
+df_subnet$source <- ifelse(df_subnet$cluster != "white", "subnet", "STRING")
 
 
 library(biomaRt)
@@ -93,8 +108,8 @@ df_subnetNeighs <- data.frame(ENSG = V(clust1_net)$name,
                               betweenness = betweenness(clust1_net),
                               closeness = closeness(clust1_net),
                               eigen_centrality = eigen_centrality(clust1_net)$vector,
-                              source = V(clust1_net)$color)
-df_subnetNeighs$source <- ifelse(df_subnetNeighs$source == "tomato", "subnet", "STRING")
+                              cluster = V(clust1_net)$color)
+df_subnetNeighs$source <- ifelse(df_subnetNeighs$cluster != "white", "subnet", "STRING")
 
 ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
                            filters = "ensembl_gene_id", 
@@ -109,20 +124,22 @@ df_subnetNeighs <- merge.data.table(ensembl_converted, df_subnetNeighs, by.x = "
 df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
 rownames(df_subnetNeighs) <- NULL
 
-fwrite(df_subnet, "BRCA/results/df_subnet.csv")
-fwrite(df_subnetNeighs, "BRCA/results/df_subnetNeighs.csv")
+fwrite(df_subnet, "BRCA/STN_filt/results/df_subnet.csv")
+fwrite(df_subnetNeighs, "BRCA/STN_filt/results/df_subnetNeighs.csv")
 
 
 
 # network metrics of known BRCA targets
-df_subnet <- read.csv("BRCA/results/df_subnet.csv")
-df_subnetNeighs <- read.csv("BRCA/results/df_subnetNeighs.csv", row.names = 1)
+df_subnet <- fread("BRCA/results/df_subnet.csv")
+df_subnetNeighs <- fread("BRCA/results/df_subnetNeighs.csv")
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- unique(targets$ensembl_gene_id)
 
 df_subnet_targets <- df_subnet[df_subnet$ensembl_gene_id %in% targets, ]
 df_subnetNeighs_targets <- df_subnetNeighs[df_subnetNeighs$ensembl_gene_id %in% targets, ]
+
+
 
 
 # plot the neighbours of the known targets
@@ -178,19 +195,51 @@ plot(temp, vertex.label = NA, asp = 0, edge.arrow.size = 0.3,
      vertex.color = V(temp)$color[new_order], layout = layout_with_fr(temp)[new_order, ])
 
 
-library(clusterProfiler)
-subnet_GO <- enrichGO(V(subnet)$name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
-subnet_GO_formatted <- subnet_GO@result
-subnet_GO_formatted <- simplify(subnet_GO)
-subnet_GO_formatted <- subnet_GO_formatted@result
 
-subnetNeighs_GO <- enrichGO(V(clust1_net)$name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
-subnetNeighs_GO_formatted <- subnetNeighs_GO@result
-subnetNeighs_GO_formatted <- simplify(subnetNeighs_GO)
-subnetNeighs_GO_formatted <- subnetNeighs_GO_formatted@result
+library(clusterProfiler)
+library(progress)
+pb <- progress_bar$new(
+  format = "  Performing GO Analysis [:bar] :percent eta: :eta",
+  total = 10
+)
+
+all_GO <- list()
+clust_no <- 1
+for (cluster in hh_results[1:10]) {
+  GO <- enrichGO(cluster, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+  all_GO[[clust_no]] <- GO
+  clust_no <- clust_no + 1
+  rm(GO, cluster)
+  pb$tick()
+}
+rm(clust_no, pb)
+
+GO_formatted <- data.frame()
+clust_no <- 1
+for (cluster in all_GO) {
+  result <- cluster@result
+  result_top <- head(result, 5)
+  result_top$cluster <- rep(clust_no, nrow(result_top))
+  
+  GO_formatted <- rbind(GO_formatted, result_top)
+  rm(result_top, result)
+  clust_no <- clust_no + 1
+}
+rm(clust_no)
+
+
+GO <- enrichGO(unlist(hh_results[1]), OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+GO <- simplify(GO)
+GO <- GO@result
+
+
+
 
 save(subnet_GO, subnetNeighs_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_GO.RData")
 load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_GO.RData")
+
+
+
 
 library(RobustRankAggreg)
 RRA <- aggregateRanks(list(degree = df_subnetNeighs$display.name[order(-df_subnetNeighs$degree)],
@@ -226,13 +275,53 @@ drug_scores <- read.csv("../Druggability_analysis/data_general/druggability_scor
 
 
 
+# add direct neighbors of cluster nodes
+neighbs <- neighborhood(
+  STRING_net,
+  order = 1,
+  nodes = hh_results[[3]]
+)
+neighbs <- flatten(neighbs)
+neighbs <- names(neighbs)
+neighbs <- unique(neighbs)
+
+clust1_net <- induced_subgraph(STRING_net, V(STRING_net)[V(STRING_net)$name %in% neighbs])
+V(clust1_net)$size <- scales::rescale(degree(clust1_net), c(1, 7))
+#clust1_net <- simplify(clust1_net) # pretty sure gets rid of all extra data from STRING/Cytoscape
+set.seed(1234)
+plot.igraph(clust1_net, asp = 0, vertex.label = NA, edge.arrow.size = 0.3, edge.curved = F)
+
+
+
+df_subnetNeighs <- data.frame(ENSG = V(clust1_net)$name,
+                              degree = degree(clust1_net),
+                              betweenness = betweenness(clust1_net),
+                              closeness = closeness(clust1_net),
+                              eigen_centrality = eigen_centrality(clust1_net)$vector,
+                              cluster = V(clust1_net)$color)
+df_subnetNeighs$source <- ifelse(df_subnetNeighs$cluster != "white", "subnet", "STRING")
+
+ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
+                           filters = "ensembl_gene_id", 
+                           values = df_subnetNeighs$ENSG, 
+                           mart = ensembl)
+ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
+
+unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
+unrecognised <- df_subnetNeighs[!df_subnetNeighs$ENSG %in% ensembl_converted$ensembl_gene_id, ]
+df_subnetNeighs <- merge.data.table(ensembl_converted, df_subnetNeighs, by.x = "ensembl_gene_id", by.y = "ENSG", all.y = T)
+
+df_subnetNeighs <- df_subnetNeighs[order(-df_subnetNeighs$degree), ]
+rownames(df_subnetNeighs) <- NULL
 
 
 
 
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- unique(targets$ensembl_gene_id)
 
-
-
+df_subnet_targets <- df_subnet[df_subnet$ensembl_gene_id %in% targets, ]
+df_subnetNeighs_targets <- df_subnetNeighs[df_subnetNeighs$ensembl_gene_id %in% targets, ]
 
 
 

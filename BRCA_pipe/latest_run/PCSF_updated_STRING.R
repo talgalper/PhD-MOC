@@ -68,3 +68,13 @@ rownames(df) <- NULL
 
 save(df, file = "latest_run/RData/STN_filt/PCSF_results.RData")
 
+
+
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- targets[, c(2,4)]
+targets <- targets[!duplicated(targets$ensembl_gene_id), ]
+
+temp <- df[df$ensembl_gene_id %in% targets$ensembl_gene_id, ]
+
+
+
