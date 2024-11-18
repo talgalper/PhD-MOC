@@ -258,7 +258,11 @@ fwrite(subnetNeighs_GO, "BRCA/STN_filt/results/subnetNeighs_GO.csv")
 
 
 
+BRCA_markers <- c("ERBB2", "TP53", "BRCA1", "BRCA2", "ESR1", "PGR", "PIK3CA", "PTEN",
+                  "MYC", "GATA3", "CDH1", "AKT1", "CCND1", "FGFR1", "MUC1", "EGFR",
+                  "NOTCH1", "KRAS", "BCL2", "MAPK1")
 
+temp <- df_subnetNeighs[df_subnetNeighs$external_gene_name %in% BRCA_markers, ]
 
 
 
