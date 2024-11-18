@@ -199,14 +199,14 @@ library(clusterProfiler)
 library(progress)
 pb <- progress_bar$new(
   format = "  Performing GO Analysis [:bar] :percent eta: :eta",
-  total = 10
+  total = 18
 )
 
-all_GO <- list()
+cluster_GO <- list()
 clust_no <- 1
-for (cluster in hh_results[1:10]) {
+for (cluster in hh_results[1:18]) {
   GO <- enrichGO(cluster, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
-  all_GO[[clust_no]] <- GO
+  cluster_GO[[clust_no]] <- GO
   clust_no <- clust_no + 1
   rm(GO, cluster)
   pb$tick()
@@ -215,9 +215,9 @@ rm(clust_no, pb)
 
 GO_formatted <- data.frame()
 clust_no <- 1
-for (cluster in all_GO) {
+for (cluster in cluster_GO) {
   result <- cluster@result
-  result_top <- head(result, 5)
+  result_top <- head(result, 10)
   result_top$cluster <- rep(clust_no, nrow(result_top))
   
   GO_formatted <- rbind(GO_formatted, result_top)
@@ -226,16 +226,38 @@ for (cluster in all_GO) {
 }
 rm(clust_no)
 
+GO_formatted$color <- ifelse(GO_formatted$cluster == 1, "tomato", "")
+GO_formatted$color <- ifelse(GO_formatted$cluster == 2, "springgreen", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 3, "royalblue", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 4, "maroon1", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 5, "gold", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 6, "orchid", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 7, "cyan", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 8, "yellowgreen", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 9, "mediumseagreen", GO_formatted$color)
+GO_formatted$color <- ifelse(GO_formatted$cluster == 10, "saddlebrown", GO_formatted$color)
 
-GO <- enrichGO(unlist(hh_results[1]), OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
-GO <- simplify(GO)
-GO <- GO@result
+save(cluster_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_cluster_GO.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_cluster_GO.RData")
+fwrite(GO_formatted, "BRCA/STN_filt/results/subnet_cluster_GO.csv")
+
+
+
+subnet_GO <- enrichGO(df_subnet$ensembl_gene_id, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+subnet_GO <- simplify(subnet_GO)
+subnet_GO <- subnet_GO@result
+
+subnetNeighs_GO <- enrichGO(df_subnetNeighs$ensembl_gene_id, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+subnetNeighs_GO <- simplify(subnetNeighs_GO)
+subnetNeighs_GO <- subnetNeighs_GO@result
+
+fwrite(subnet_GO, "BRCA/STN_filt/results/subnet_GO.csv")
+fwrite(subnetNeighs_GO, "BRCA/STN_filt/results/subnetNeighs_GO.csv")
 
 
 
 
-save(subnet_GO, subnetNeighs_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_GO.RData")
-load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_GO.RData")
+
 
 
 
