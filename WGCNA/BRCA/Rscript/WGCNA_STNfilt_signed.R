@@ -438,7 +438,6 @@ load("../BRCA_pipe/RData/Her2/DE_data.RData")
 load("../BRCA_pipe/RData/basal/DE_data.RData")
 load("../BRCA_pipe/RData/TCGA_normal.RData")
 
-# load data
 GTEx_data <- read.table("../BRCA_pipe/gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
 colnames(GTEx_data) <- GTEx_data[1, ]
 GTEx_data <- GTEx_data[-1, -1]
@@ -454,8 +453,35 @@ rownames(GTEx_ENS) <- rownames
 rm(rownames, GTEx_data)
 GTEx_ENS[] <- lapply(GTEx_ENS, function(x){as.integer(x)})
 
+control_info <- data.frame(sample = colnames(GTEx_ENS),
+                           group = rep("control", ncol(GTEx_ENS)))
+lumA_info <- data.frame(sample = colnames(LumA_unstranded),
+                        group = rep("lumA", ncol(LumA_unstranded)))
+lumB_info <- data.frame(sample = colnames(LumB_unstranded),
+                        group = rep("lumB", ncol(LumB_unstranded)))
+her2_info <- data.frame(sample = colnames(Her2_unstranded),
+                        group = rep("Her2", ncol(Her2_unstranded)))
+basal_info <- data.frame(sample = colnames(Basal_unstranded),
+                         group = rep("basal", ncol(Basal_unstranded)))
+sample_info <- rbind(control_info, lumA_info, lumB_info, her2_info, basal_info)
+
+# add sample type to sample_info
+load("../BRCA_pipe/RData/TCGA_query.RData")
+common <- common[, c(1,3)]
+sample_info <- merge(sample_info, common, by.x = "sample", by.y = "cases", all.x = T)
+sample_info$sample_type <- ifelse(is.na(sample_info$sample_type), "Healthy", sample_info$sample_type)
+
 # combine all tumour samples
 all_subtypes <- cbind(LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+
+# clean env
+rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
+rm(control_info, lumA_info, lumB_info, her2_info, basal_info)
+rm(clinical, common, query_TCGA, subtypes)
+collectGarbage()
+
+STN_samples <- sample_info$sample[sample_info$sample_type == "Solid Tissue Normal"]
+all_subtypes <- all_subtypes[, !colnames(all_subtypes) %in% STN_samples]
 
 # QC + combines tumour and control samples
 counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
@@ -466,35 +492,6 @@ counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
 tumour_data <- vst_norm(counts_df = counts_filt$tumour)
 control_data <- vst_norm(counts_df = counts_filt$control)
 
-# plot PCA
-control_info <- data.frame(sample = colnames(GTEx_ENS),
-                           group = rep("control", ncol(GTEx_ENS)))
-
-lumA_info <- data.frame(sample = colnames(LumA_unstranded),
-                        group = rep("lumA", ncol(LumA_unstranded)))
-lumB_info <- data.frame(sample = colnames(LumB_unstranded),
-                        group = rep("lumB", ncol(LumB_unstranded)))
-her2_info <- data.frame(sample = colnames(Her2_unstranded),
-                        group = rep("Her2", ncol(Her2_unstranded)))
-basal_info <- data.frame(sample = colnames(Basal_unstranded),
-                         group = rep("basal", ncol(Basal_unstranded)))
-tumour_info <- rbind(lumA_info, lumB_info, her2_info, basal_info)
-
-# clean env
-rm(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_unstranded, Basal_unstranded)
-rm(lumA_info, lumB_info, her2_info, basal_info)
-collectGarbage()
-
-# plot PCA
-PCA_tumour <- plot_PCA(expr_data = tumour_data,
-                       sample_info = tumour_info,
-                       plot_tree = T,
-                       output_plot_data = T)
-
-PCA_control <- plot_PCA(expr_data = control_data,
-                        sample_info = control_info,
-                        plot_tree = T,
-                        output_plot_data = T)
 
 
 # choose soft thresholding power
@@ -528,14 +525,14 @@ pick_power <- function(WGCNA_data) {
 tumour_sft <- pick_power(tumour_data)
 control_sft <- pick_power(control_data)
 
-save(tumour_sft, file = "BRCA/RData/all_default/signed/tumour_sft.RData")
-save(control_sft, file = "BRCA/RData/all_default/signed/control_sft.RData")
+save(tumour_sft, file = "BRCA/RData/STN_filt/tumour_sft.RData")
+save(control_sft, file = "BRCA/RData/STN_filt/control_sft.RData")
 
 
 # RESTART R AND LOAD WGCNA ONLY
 library(WGCNA)
 library(doParallel)
-nCores = 8
+nCores = 16
 registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
@@ -569,11 +566,11 @@ network_modules <- function(WGCNA_data, Power) {
 tumour_bwnet <- network_modules(tumour_data, Power = 12)
 control_bwnet <- network_modules(control_data, Power = 12)
 
-save(tumour_bwnet, file = "BRCA/RData/all_default/signed/tumour_bwnet.RData")
-save(control_bwnet, file = "BRCA/RData/all_default/signed/control_bwnet.RData")
+save(tumour_bwnet, file = "BRCA/RData/STN_filt/tumour_bwnet.RData")
+save(control_bwnet, file = "BRCA/RData/STN_filt/control_bwnet.RData")
 
-load("BRCA/RData/all_default/signed/tumour_bwnet.RData")
-load("BRCA/RData/all_default/signed/control_bwnet.RData")
+load("BRCA/RData/STN_filt/tumour_bwnet.RData")
+load("BRCA/RData/STN_filt/control_bwnet.RData")
 
 
 # module preservation analysis
@@ -585,7 +582,7 @@ multicolour <- list(Control = control_bwnet$colors,
 # RESTART R AND LOAD WGCNA ONLY
 library(WGCNA)
 library(doParallel)
-nCores = 8
+nCores = 16
 registerDoParallel(cores = nCores)
 enableWGCNAThreads(nThreads = nCores)
 WGCNAnThreads()
@@ -609,8 +606,8 @@ end_time - start_time
 # plot results
 modulePreservation_plt <- plot_preserved_modules(preserved_modules)
 
-save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/all_default/signed/modulePreservation(n=100).RData")
-load("BRCA/RData/all_default/signed/modulePreservation(n=100).RData")
+save(preserved_modules, modulePreservation_plt, file = "BRCA/RData/STN_filt/modulePreservation(n=100).RData")
+load("BRCA/RData/STN_filt/modulePreservation(n=100).RData")
 
 library(reshape2)
 # non preserved modules
@@ -620,16 +617,16 @@ non_preserved_modules <- plot_data[plot_data$medianRank.pres > 8 & plot_data$Zsu
 
 # non preserved genes common with rest of data: kwithin, MM, DE, tumour associated.
 non_preserved_genes <- names(control_bwnet$colors)[control_bwnet$colors %in% non_preserved_modules$cluster]
-non_preserved_common <- non_preserved_genes[non_preserved_genes %in% common_genes]
+#non_preserved_common <- non_preserved_genes[non_preserved_genes %in% common_genes]
 
-library(biomaRt)
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), 
-                         filters = "ensembl_gene_id", 
-                         values = non_preserved_common, 
-                         mart = ensembl,
-                         verbose = F)
-
+#library(biomaRt)
+#ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+#genes_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
+#                         filters = "ensembl_gene_id", 
+#                         values = non_preserved_common, 
+#                         mart = ensembl,
+#                         verbose = F)
+#genes_converted$description <- gsub("\\[.*?\\", "", genes_converted$description)
 
 # plot cross-tabulation
 cross_tab_counts <- preserved_modules$accuracy$observedCounts$ref.Control$inColumnsAlsoPresentIn.Tumour
