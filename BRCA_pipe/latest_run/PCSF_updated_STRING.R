@@ -75,6 +75,7 @@ PCSF_GO <- enrichGO(df$ensembl_gene_id, OrgDb = "org.Hs.eg.db", keyType = "ENSEM
 PCSF_GO <- simplify(PCSF_GO)
 PCSF_GO <- PCSF_GO@result
 
+save(PCSF_GO, file = "latest_run/RData/STN_filt/PCSF_GO.RData")
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- targets[, c(2,4)]
