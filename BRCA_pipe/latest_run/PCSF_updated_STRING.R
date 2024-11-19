@@ -68,7 +68,12 @@ df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
 
 save(df, file = "latest_run/RData/STN_filt/PCSF_results.RData")
+load("latest_run/RData/STN_filt/PCSF_results.RData")
 
+library(clusterProfiler)
+PCSF_GO <- enrichGO(df$ensembl_gene_id, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+PCSF_GO <- simplify(PCSF_GO)
+PCSF_GO <- PCSF_GO@result
 
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
