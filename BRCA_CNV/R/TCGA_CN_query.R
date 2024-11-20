@@ -3,6 +3,7 @@ library(SummarizedExperiment)
 library(maftools)
 library(tidyverse)
 library(reshape2)
+library(data.table)
 
 
 getProjectSummary("TCGA-BRCA")
@@ -73,31 +74,19 @@ cnv_summary$NA_percentage <- (cnv_summary$NA_samples / ncol(CNV_scores)) * 100
 
 cnv_summary_filt <- cnv_summary[cnv_summary$NA_percentage <= 10, ]
 
-save(cnv_summary_filt, file = "RData/BRCA_CNV_alterationsPerc.RData")
-
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
                            filters = "ensembl_gene_id", 
-                           values = cnv_summary$gene, 
+                           values = cnv_summary_filt$gene, 
                            mart = ensembl)
 ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
 
+cnv_summary_filt <- merge.data.table(ensembl_converted, cnv_summary_filt, by.x = "ensembl_gene_id", by.y = "gene", all.y = T)
 
-unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
-unrecognised <- cnv_summary[!cnv_summary$gene %in% ensembl_converted$ensembl_gene_id, ]
+save(cnv_summary_filt, file = "RData/BRCA_CNV_alterationsPerc.RData")
 
-#ensembl_converted <- ensembl_converted[ensembl_converted$external_gene_name != "", ]
-
-novel_transcripts <- unmapped[grep("novel transcript", unmapped$description), ]
-novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
-pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
-
-cnv_summary_geneSymbol <- merge(ensembl_converted, cnv_summary, by.x = "ensembl_gene_id", by.y = "gene")
-cnv_summary_geneSymbol <- arrange(cnv_summary_geneSymbol, desc(cnv_summary_geneSymbol$total_alterations))
-
-save(cnv_summary_geneSymbol, unmapped, unrecognised, novel_proteins, novel_transcripts, pseudogene, file = "RData/BRCA_CNV_summary.RData")
 
 
 
