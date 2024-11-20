@@ -57,6 +57,7 @@ NA_genes <- rownames(CNV_scores)[rowSums(is.na(CNV_scores)) == ncol(CNV_scores)]
 CNV_scores <- CNV_scores[!rownames(CNV_scores) %in% NA_genes, ]
 
 save(CNV_scores, file = "~/OneDrive - RMIT University/PhD/large_git_files/TCGA_CNV/geneLevel_CNV_NAfilt.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/TCGA_CNV/geneLevel_CNV_NAfilt.RData")
 
 cnv_summary <- data.frame(
   gene = rownames(CNV_scores),  # Gene names
@@ -68,8 +69,11 @@ cnv_summary <- data.frame(
 
 cnv_summary$total_alterations <- cnv_summary$num_gain + cnv_summary$num_loss
 cnv_summary$alterations_percentage <- (cnv_summary$total_alterations / (cnv_summary$total_alterations + cnv_summary$num_none)) * 100
+cnv_summary$NA_percentage <- (cnv_summary$NA_samples / ncol(CNV_scores)) * 100
 
+cnv_summary_filt <- cnv_summary[cnv_summary$NA_percentage <= 10, ]
 
+save(cnv_summary_filt, file = "RData/BRCA_CNV_alterationsPerc.RData")
 
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
@@ -79,6 +83,7 @@ ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name
                            values = cnv_summary$gene, 
                            mart = ensembl)
 ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
+
 
 unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
 unrecognised <- cnv_summary[!cnv_summary$gene %in% ensembl_converted$ensembl_gene_id, ]
