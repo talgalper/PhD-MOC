@@ -220,7 +220,7 @@ colnames(top_connectivity_genes) <- c("ensembl_id", "module")
 
 
 # perform GO and pathway analysis
-load("BRCA/RData/all_default/signed/all_bwnet.RData")
+load("BRCA/RData/STN_filt/all_bwnet.RData")
 
 library(clusterProfiler)
 library(org.Hs.eg.db)
@@ -243,7 +243,7 @@ for (module in unique(bwnet$colors)) {
 }
 
 save(all_GO, file = "../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/all_WGCNA_GO_BP_signed.RData")
-
+load("../../../../OneDrive - RMIT University/PhD/large_git_files/WGCNA/all_WGCNA_GO_BP_signed.RData")
 
 GO_formatted <- data.frame()
 for (i in seq_along(all_GO)) {
@@ -270,7 +270,7 @@ convert_gene_ratio <- function(gene_ratio) {
 }
 
 GO_formatted$GeneRatio.num <- sapply(GO_formatted$GeneRatio, convert_gene_ratio)
-save(GO_formatted, file = "BRCA/RData/all_default/signed/all_WGCNA_GO_BP.RData")
+save(GO_formatted, file = "BRCA/RData/STN_filt/all_WGCNA_GO_BP.RData")
 
 ggplot(data = GO_formatted, aes(x = module, y = Description, 
                                 color = `p.adjust`, size = GeneRatio.num)) + 
@@ -528,6 +528,8 @@ control_sft <- pick_power(control_data)
 save(tumour_sft, file = "BRCA/RData/STN_filt/tumour_sft.RData")
 save(control_sft, file = "BRCA/RData/STN_filt/control_sft.RData")
 
+load("BRCA/RData/STN_filt/tumour_sft.RData")
+load("BRCA/RData/STN_filt/control_sft.RData")
 
 # RESTART R AND LOAD WGCNA ONLY
 library(WGCNA)
@@ -782,7 +784,7 @@ GO_analysis <- function(bwnet) {
 control_GO <- GO_analysis(control_bwnet)
 tumour_GO <- GO_analysis(tumour_bwnet)
 
-save(control_GO, tumour_GO, file = "BRCA/RData/all_default/signed/split_GO_data.RData")
+save(control_GO, tumour_GO, file = "BRCA/RData/STN_filt/split_GO_data.RData")
 
 
 
