@@ -413,6 +413,39 @@ temp <- targets[targets$ensembl_gene_id %in% common_genes, ]
 
 targets$drugBank_target[targets$ensembl_gene_id %in% tumour_associated]
 
+
+library(data.table)
+library(igraph)
+STRING <- fread("../Hierarchical_HotNet/STRING_data/STRING_physical_ENSG.csv")
+STRING <- STRING[!duplicated(t(apply(STRING, 1, sort))), ] # get rid of doubled up edges i.e. (a,b) (b,a) same edge weight
+STRING <- graph_from_data_frame(STRING, directed = F)
+
+subnet <- induced_subgraph(graph = STRING, V(STRING)$name %in% common_genes)
+set.seed(1234)
+plot.igraph(subnet, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3)
+
+df_subnet <- data.frame(ENSG = V(subnet)$name,
+                        degree = degree(subnet),
+                        betweenness = betweenness(subnet),
+                        closeness = closeness(subnet),
+                        eigen_centrality = eigen_centrality(subnet)$vector)
+
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
+                           filters = "ensembl_gene_id", 
+                           values = df_subnet$ENSG, 
+                           mart = ensembl)
+ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
+
+unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
+unrecognised <- df_subnet[!df_subnet$ENSG %in% ensembl_converted$ensembl_gene_id, ]
+
+df_subnet <- merge.data.table(ensembl_converted, df_subnet, by.x = "ensembl_gene_id", by.y = "ENSG", all.y = T)
+df_subnet <- df_subnet[order(-df_subnet$degree), ]
+rownames(df_subnet) <- NULL
+
 ###############################################################################
 # Will now perform WGCNA on TCGA and GTEx groups separately for module     
 # preservation analysis                                                    
