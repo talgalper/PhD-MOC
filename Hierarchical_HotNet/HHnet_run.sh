@@ -28,7 +28,7 @@ num_permutations=100
 # to specify the number of cores for your system.
 
 ##### MAKE SURE THIS IS CORRECT #####
-num_cores=16
+num_cores=32
 
 mkdir -p $intermediate/"$network"
 mkdir -p $intermediate/"$network"_"$score"
