@@ -23,7 +23,7 @@ ggplot(PocketMiner_data, aes(x=method, y=max_hit, fill=method)) +
        x="Method", y="Druggability Score") +
   theme_minimal()
 
-ggplot(PocketMiner_data, aes(x=druggability, fill=method)) +
+ggplot(PocketMiner_data, aes(x=max_hit, fill=method)) +
   geom_density(alpha=0.5) +
   labs(title="Density Plot of Druggability Scores",
        x="Druggability Score", y="Density") +
