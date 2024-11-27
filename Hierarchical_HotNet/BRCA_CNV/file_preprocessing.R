@@ -18,7 +18,8 @@ edge_list_index <- data.frame(from = match(STRING_edge$protein1_ENSG, gene_index
 # create score file
 load("../BRCA_CNV/RData/BRCA_CNV_alterationsPerc.RData")
 cnv_summary_filt <- subset(cnv_summary_filt, select = c("ensembl_gene_id", "alterations_percentage"))
-cnv_summary_filt <- cnv_summary_filt[cnv_summary_filt$ensembl_gene_id %in% gene_index$ensembl_id, ]
+cnv_summary_filt <- cnv_summary_filt[cnv_summary_filt$ensembl_gene_id %in% gene_index$ensembl_id, ] # keep genes present in both PPI and CNV
+cnv_summary_filt$alterations_percentage <- cnv_summary_filt$alterations_percentage / 100 # convert to 0-1
 
 fwrite(gene_index, "BRCA_CNV/data/gene_index.tsv", col.names = F, sep = "\t")
 fwrite(edge_list_index, "BRCA_CNV/data/edge_list_index.tsv", col.names = F, sep = "\t")
