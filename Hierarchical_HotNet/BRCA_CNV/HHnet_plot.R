@@ -199,7 +199,7 @@ library(clusterProfiler)
 library(progress)
 pb <- progress_bar$new(
   format = "  Performing GO Analysis [:bar] :percent eta: :eta",
-  total = 18
+  total = 10
 )
 
 cluster_GO <- list()

@@ -1,0 +1,583 @@
+ensembl_gene_id,external_gene_name,description,gene_biotype,degree,betweenness,closeness,eigen_centrality,cluster,source
+ENSG00000172954,LCLAT1,lysocardiolipin acyltransferase 1 ,protein_coding,12,435.244444444444,0.00173913043478261,1,royalblue,subnet
+ENSG00000204961,PCDHA9,protocadherin alpha 9 ,protein_coding,12,305.996428571429,0.0131578947368421,8.96996091624173e-16,maroon1,subnet
+ENSG00000176454,LPCAT4,lysophosphatidylcholine acyltransferase 4 ,protein_coding,10,126.222222222222,0.00157728706624606,0.678614016964007,royalblue,subnet
+ENSG00000086696,HSD17B2,hydroxysteroid 17-beta dehydrogenase 2 ,protein_coding,9,12517.8333333333,0.000851063829787234,2.18348445638062e-16,tomato,subnet
+ENSG00000117215,PLA2G2D,phospholipase A2 group IID ,protein_coding,9,296.666666666667,0.00168350168350168,3.623513210914e-15,springgreen,subnet
+ENSG00000132196,HSD17B7,hydroxysteroid 17-beta dehydrogenase 7 ,protein_coding,9,4150.25,0.000753012048192771,1.69964019209634e-16,tomato,subnet
+ENSG00000143797,MBOAT2,membrane bound O-acyltransferase domain containing 2 ,protein_coding,9,88.3000000000001,0.00172413793103448,0.862922413616047,royalblue,subnet
+ENSG00000154269,ENPP3,ectonucleotide pyrophosphatase/phosphodiesterase 3 ,protein_coding,9,1366.5,0.00216919739696312,4.4607643694964e-16,springgreen,subnet
+ENSG00000172197,MBOAT1,membrane bound O-acyltransferase domain containing 1 ,protein_coding,9,88.3000000000001,0.00172413793103448,0.862922413616047,royalblue,subnet
+ENSG00000197594,ENPP1,ectonucleotide pyrophosphatase/phosphodiesterase 1 ,protein_coding,9,1366.5,0.00216919739696312,5.0669708094536e-16,springgreen,subnet
+ENSG00000250120,PCDHA10,protocadherin alpha 10 ,protein_coding,9,54.9619047619048,0.0103092783505155,7.71429863819359e-16,maroon1,subnet
+ENSG00000253910,PCDHGB2,"protocadherin gamma subfamily B, 2 ",protein_coding,9,220.169047619048,0.0121951219512195,4.23683256841551e-16,maroon1,subnet
+ENSG00000262576,PCDHGA4,"protocadherin gamma subfamily A, 4 ",protein_coding,9,106.551190476191,0.0105263157894737,4.12549217569931e-16,maroon1,subnet
+ENSG00000026652,AGPAT4,1-acylglycerol-3-phosphate O-acyltransferase 4 ,protein_coding,8,41.1111111111111,0.00171526586620926,0.774790059428768,royalblue,subnet
+ENSG00000069764,PLA2G10,phospholipase A2 group X ,protein_coding,8,3.33333333333333,0.00148367952522255,3.42220692141877e-15,springgreen,subnet
+ENSG00000087253,LPCAT2,lysophosphatidylcholine acyltransferase 2 ,protein_coding,8,43.6888888888889,0.00157232704402516,0.483134477335675,royalblue,subnet
+ENSG00000123739,PLA2G12A,phospholipase A2 group XIIA ,protein_coding,8,133.333333333333,0.00167785234899329,3.35815492021575e-15,springgreen,subnet
+ENSG00000136960,ENPP2,ectonucleotide pyrophosphatase/phosphodiesterase 2 ,protein_coding,8,1021,0.00191570881226054,1.70652831776631e-15,springgreen,subnet
+ENSG00000153395,LPCAT1,lysophosphatidylcholine acyltransferase 1 ,protein_coding,8,43.6888888888889,0.00157232704402516,0.483134477335675,royalblue,subnet
+ENSG00000160216,AGPAT3,1-acylglycerol-3-phosphate O-acyltransferase 3 ,protein_coding,8,41.1111111111111,0.00171526586620926,0.774790059428768,royalblue,subnet
+ENSG00000166123,GPT2,glutamic--pyruvic transaminase 2 ,protein_coding,8,1428.6,0.0023696682464455,5.14796036714064e-07,royalblue,subnet
+ENSG00000169692,AGPAT2,1-acylglycerol-3-phosphate O-acyltransferase 2 ,protein_coding,8,73,0.00171232876712329,0.748114792704062,royalblue,subnet
+ENSG00000170890,PLA2G1B,phospholipase A2 group IB ,protein_coding,8,133.333333333333,0.00167785234899329,3.35815492021575e-15,springgreen,subnet
+ENSG00000188784,PLA2G2E,phospholipase A2 group IIE ,protein_coding,8,3.33333333333333,0.00148367952522255,3.26665206135428e-15,springgreen,subnet
+ENSG00000196139,AKR1C3,aldo-keto reductase family 1 member C3 ,protein_coding,8,10235.3333333333,0.000831946755407654,1.6250204595983e-16,tomato,subnet
+ENSG00000204310,AGPAT1,1-acylglycerol-3-phosphate O-acyltransferase 1 ,protein_coding,8,1045,0.00188679245283019,0.748546504420726,royalblue,subnet
+ENSG00000249158,PCDHA11,protocadherin alpha 11 ,protein_coding,8,23.552380952381,0.0102040816326531,7.16260073720659e-16,maroon1,subnet
+ENSG00000050393,MCUR1,mitochondrial calcium uniporter regulator 1 ,protein_coding,7,21,0.0121951219512195,4.84464745706363e-16,saddlebrown,subnet
+ENSG00000100078,PLA2G3,phospholipase A2 group III ,protein_coding,7,0,0.0014792899408284,3.12024748717594e-15,springgreen,subnet
+ENSG00000109929,SC5D,sterol-C5-desaturase ,protein_coding,7,3173.58333333334,0.000670690811535882,1.67292556273194e-16,tomato,subnet
+ENSG00000127472,PLA2G5,phospholipase A2 group V ,protein_coding,7,0,0.0014792899408284,3.04704520008677e-15,springgreen,subnet
+ENSG00000138109,CYP2C9,cytochrome P450 family 2 subfamily C member 9 ,protein_coding,7,2739.66666666667,0.000672494956287828,5.9185012784587e-18,tomato,subnet
+ENSG00000155189,AGPAT5,1-acylglycerol-3-phosphate O-acyltransferase 5 ,protein_coding,7,0,0.00170940170940171,0.73729113608249,royalblue,subnet
+ENSG00000155970,MICU3,mitochondrial calcium uptake family member 3 ,protein_coding,7,105,0.0147058823529412,5.34925355471079e-16,saddlebrown,subnet
+ENSG00000158786,PLA2G2F,phospholipase A2 group IIF ,protein_coding,7,0,0.0014792899408284,3.32155377667116e-15,springgreen,subnet
+ENSG00000158850,B4GALT3,"beta-1,4-galactosyltransferase 3 ",protein_coding,7,4439,0.000543478260869565,5.84221051812653e-18,tomato,subnet
+ENSG00000165996,HACD1,3-hydroxyacyl-CoA dehydratase 1 ,protein_coding,7,263.999999999999,0.000348796651552145,1.81584153456727e-16,tomato,subnet
+ENSG00000188921,HACD4,3-hydroxyacyl-CoA dehydratase 4 ,protein_coding,7,263.999999999999,0.000348796651552145,1.66646803218027e-16,tomato,subnet
+ENSG00000204967,PCDHA4,protocadherin alpha 4 ,protein_coding,7,18.3619047619048,0.0101010101010101,6.47025293402434e-16,maroon1,subnet
+ENSG00000206527,HACD2,3-hydroxyacyl-CoA dehydratase 2 ,protein_coding,7,263.999999999999,0.000348796651552145,1.76915114528876e-16,tomato,subnet
+ENSG00000005059,MCUB,mitochondrial calcium uniporter dominant negative subunit beta ,protein_coding,6,0,0.0120481927710843,4.67665392712266e-16,saddlebrown,subnet
+ENSG00000025423,HSD17B6,hydroxysteroid 17-beta dehydrogenase 6 ,protein_coding,6,737.833333333333,0.000791765637371338,1.8222390275376e-16,tomato,subnet
+ENSG00000088827,SIGLEC1,sialic acid binding Ig like lectin 1 ,protein_coding,6,154.5,0.00869565217391304,4.02247155424797e-17,gold,subnet
+ENSG00000095906,NUBP2,"NUBP iron-sulfur cluster assembly factor 2, cytosolic ",protein_coding,6,1454,0.00230414746543779,0.00207531067041171,royalblue,subnet
+ENSG00000104951,IL4I1,interleukin 4 induced 1 ,protein_coding,6,287.4,0.00231481481481482,1.19280096010425e-06,royalblue,subnet
+ENSG00000107745,MICU1,mitochondrial calcium uptake 1 ,protein_coding,6,0,0.0120481927710843,4.69407878794101e-16,saddlebrown,subnet
+ENSG00000110921,MVK,mevalonate kinase ,protein_coding,6,623.5,0.00138888888888889,8.99569609529652e-17,springgreen,subnet
+ENSG00000112874,NUDT12,nudix hydrolase 12 ,protein_coding,6,426,0.00186219739292365,2.37907433039808e-16,springgreen,subnet
+ENSG00000130643,CALY,calcyon neuron specific vesicular protein ,protein_coding,6,154.5,0.00869565217391304,1.43520301873109e-17,gold,subnet
+ENSG00000134716,CYP2J2,cytochrome P450 family 2 subfamily J member 2 ,protein_coding,6,1576.33333333333,0.000599520383693046,4.88132435442271e-17,tomato,subnet
+ENSG00000147571,CRH,corticotropin releasing hormone ,protein_coding,6,115.75,0.00040650406504065,1.18428946172262e-16,tomato,subnet
+ENSG00000149927,DOC2A,double C2 domain alpha ,protein_coding,6,1210,0.00153374233128834,9.3510068790347e-17,springgreen,subnet
+ENSG00000151414,NEK7,NIMA related kinase 7 ,protein_coding,6,6888,0.00079428117553614,7.35416739516251e-17,tomato,subnet
+ENSG00000156026,MCU,mitochondrial calcium uniporter ,protein_coding,6,0,0.0120481927710843,5.01442815221674e-16,saddlebrown,subnet
+ENSG00000163281,GNPDA2,glucosamine-6-phosphate deaminase 2 ,protein_coding,6,1188,0.00065402223675605,3.94379683491079e-17,tomato,subnet
+ENSG00000163794,UCN,urocortin ,protein_coding,6,115.75,0.00040650406504065,9.99815092118814e-17,tomato,subnet
+ENSG00000165487,MICU2,mitochondrial calcium uptake 2 ,protein_coding,6,0,0.0120481927710843,4.46755559730252e-16,saddlebrown,subnet
+ENSG00000165609,NUDT5,nudix hydrolase 5 ,protein_coding,6,263,0.0120481927710843,0,yellowgreen,subnet
+ENSG00000171017,LRRC8E,leucine rich repeat containing 8 VRAC subunit E ,protein_coding,6,181,0.00480769230769231,2.12021336088743e-17,orchid,subnet
+ENSG00000178473,UCN3,urocortin 3 ,protein_coding,6,115.75,0.00040650406504065,1.35352493186374e-16,tomato,subnet
+ENSG00000183172,SMDT1,single-pass membrane protein with aspartate rich tail 1 ,protein_coding,6,0,0.0120481927710843,4.54681637446084e-16,saddlebrown,subnet
+ENSG00000196344,ADH7,"alcohol dehydrogenase 7 (class IV), mu or sigma polypeptide ",protein_coding,6,1560,0.000393081761006289,6.41304165672648e-17,tomato,subnet
+ENSG00000197147,LRRC8B,leucine rich repeat containing 8 VRAC subunit B ,protein_coding,6,45.5,0.00431034482758621,2.9745049490519e-17,orchid,subnet
+ENSG00000204963,PCDHA7,protocadherin alpha 7 ,protein_coding,6,33.102380952381,0.01,5.49303099602729e-16,maroon1,subnet
+ENSG00000205864,KRTAP5-6,keratin associated protein 5-6 ,protein_coding,6,151.666666666667,0.0114942528735632,2.47260295006202e-17,cyan,subnet
+ENSG00000212122,TSSK1B,testis specific serine kinase 1B ,protein_coding,6,376,0.00884955752212389,1.11002484682453e-16,gold,subnet
+ENSG00000248144,ADH1C,"alcohol dehydrogenase 1C (class I), gamma polypeptide ",protein_coding,6,2470,0.000423370025402202,6.4847062836218e-17,tomato,subnet
+ENSG00000253159,PCDHGA12,"protocadherin gamma subfamily A, 12 ",protein_coding,6,55.3154761904762,0.0113636363636364,4.14667008346315e-16,maroon1,subnet
+ENSG00000057149,SERPINB3,serpin family B member 3 ,protein_coding,5,7102,0.000685400959561344,7.70863422765275e-17,tomato,subnet
+ENSG00000072756,TRNT1,tRNA nucleotidyl transferase 1 ,protein_coding,5,298.5,0.00138121546961326,8.47144235009842e-17,springgreen,subnet
+ENSG00000079462,PAFAH1B3,platelet activating factor acetylhydrolase 1b catalytic subunit 3 ,protein_coding,5,0,0.00142247510668563,0.282200468702213,royalblue,subnet
+ENSG00000100033,PRODH,proline dehydrogenase 1 ,protein_coding,5,53,0.00833333333333333,2.00730150210539e-17,yellowgreen,subnet
+ENSG00000107902,LHPP,phospholysine phosphohistidine inorganic pyrophosphate phosphatase ,protein_coding,5,1857,0.00189753320683112,1.20830239992649e-16,springgreen,subnet
+ENSG00000108786,HSD17B1,hydroxysteroid 17-beta dehydrogenase 1 ,protein_coding,5,725,0.000791139240506329,2.04909591543054e-16,tomato,subnet
+ENSG00000111684,LPCAT3,lysophosphatidylcholine acyltransferase 3 ,protein_coding,5,1.33333333333333,0.00155763239875389,0.430556236260917,royalblue,subnet
+ENSG00000113552,GNPDA1,glucosamine-6-phosphate deaminase 1 ,protein_coding,5,203,0.000579374275782155,3.04291397419116e-17,tomato,subnet
+ENSG00000119408,NEK6,NIMA related kinase 6 ,protein_coding,5,3711,0.000705218617771509,5.2724270920426e-17,tomato,subnet
+ENSG00000120053,GOT1,glutamic-oxaloacetic transaminase 1 ,protein_coding,5,340.2,0.00242718446601942,1.2072932570297e-06,royalblue,subnet
+ENSG00000121578,B4GALT4,"beta-1,4-galactosyltransferase 4 ",protein_coding,5,202,0.000490918016691213,0,tomato,subnet
+ENSG00000123684,LPGAT1,lysophosphatidylglycerol acyltransferase 1 ,protein_coding,5,73,0.00156494522691706,0.343444869299328,royalblue,subnet
+ENSG00000125166,GOT2,glutamic-oxaloacetic transaminase 2 ,protein_coding,5,340.2,0.00242718446601942,1.20729325703808e-06,royalblue,subnet
+ENSG00000133731,IMPA1,inositol monophosphatase 1 ,protein_coding,5,122,0.0087719298245614,1.17346166916524e-16,yellowgreen,subnet
+ENSG00000133935,ERG28,ergosterol biosynthesis 28 homolog ,protein_coding,5,132.333333333333,0.0006635700066357,1.2913923181741e-16,tomato,subnet
+ENSG00000134014,ELP3,elongator acetyltransferase complex subunit 3 ,protein_coding,5,1288,0.00154083204930663,8.8910422136748e-17,springgreen,subnet
+ENSG00000143811,PYCR2,pyrroline-5-carboxylate reductase 2 ,protein_coding,5,56,0.0101010101010101,0,yellowgreen,subnet
+ENSG00000145040,UCN2,urocortin 2 ,protein_coding,5,0.25,0.000376222723852521,1.23658341676931e-16,tomato,subnet
+ENSG00000145708,CRHBP,corticotropin releasing hormone binding protein ,protein_coding,5,1182,0.000441501103752759,1.0040350010704e-16,tomato,subnet
+ENSG00000158006,PAFAH2,platelet activating factor acetylhydrolase 2 ,protein_coding,5,0,0.00142247510668563,0.282200468702213,royalblue,subnet
+ENSG00000160688,FLAD1,flavin adenine dinucleotide synthetase 1 ,protein_coding,5,1726,0.00201612903225806,1.75285164006493e-16,springgreen,subnet
+ENSG00000165138,ANKS6,ankyrin repeat and sterile alpha motif domain containing 6 ,protein_coding,5,107.5,0.000696378830083565,2.93443714176492e-17,tomato,subnet
+ENSG00000166228,PCBD1,pterin-4 alpha-carbinolamine dehydratase 1 ,protein_coding,5,284,0.00666666666666667,1.07312312941395e-16,orchid,subnet
+ENSG00000168000,BSCL2,"BSCL2 lipid droplet biogenesis associated, seipin ",protein_coding,5,1774,0.000597014925373134,1.14178643195115e-16,tomato,subnet
+ENSG00000168092,PAFAH1B2,platelet activating factor acetylhydrolase 1b catalytic subunit 2 ,protein_coding,5,0,0.00142247510668563,0.282200468702213,royalblue,subnet
+ENSG00000168096,ANKS3,ankyrin repeat and sterile alpha motif domain containing 3 ,protein_coding,5,107.5,0.000696378830083565,3.42220671198535e-17,tomato,subnet
+ENSG00000169154,GOT1L1,glutamic-oxaloacetic transaminase 1 like 1 ,protein_coding,5,340.2,0.00242718446601942,1.20729325703399e-06,royalblue,subnet
+ENSG00000171492,LRRC8D,leucine rich repeat containing 8 VRAC subunit D ,protein_coding,5,14.5,0.00429184549356223,0,orchid,subnet
+ENSG00000172955,ADH6,alcohol dehydrogenase 6 (class V) ,protein_coding,5,0,0.000391849529780564,4.38163933137555e-17,tomato,subnet
+ENSG00000183010,PYCR1,pyrroline-5-carboxylate reductase 1 ,protein_coding,5,56,0.0101010101010101,0,yellowgreen,subnet
+ENSG00000187758,ADH1A,"alcohol dehydrogenase 1A (class I), alpha polypeptide ",protein_coding,5,0,0.000391849529780564,4.94939588914958e-17,tomato,subnet
+ENSG00000196616,ADH1B,"alcohol dehydrogenase 1B (class I), beta polypeptide ",protein_coding,5,0,0.000391849529780564,3.41322223628571e-17,tomato,subnet
+ENSG00000198099,ADH4,"alcohol dehydrogenase 4 (class II), pi polypeptide ",protein_coding,5,0,0.000391849529780564,3.76035071796744e-17,tomato,subnet
+ENSG00000198650,TAT,tyrosine aminotransferase ,protein_coding,5,1365,0.00246913580246914,5.32944347804637e-06,royalblue,subnet
+ENSG00000204962,PCDHA8,protocadherin alpha 8 ,protein_coding,5,3.25,0.00793650793650794,3.94096736754606e-16,maroon1,subnet
+ENSG00000239886,KRTAP9-2,keratin associated protein 9-2 ,protein_coding,5,239,0.0116279069767442,4.59550223945518e-17,cyan,subnet
+ENSG00000253485,PCDHGA5,"protocadherin gamma subfamily A, 5 ",protein_coding,5,3.08333333333333,0.00862068965517241,2.34788829744627e-16,maroon1,subnet
+ENSG00000253537,PCDHGA7,"protocadherin gamma subfamily A, 7 ",protein_coding,5,27.4476190476191,0.00952380952380953,2.03857467835549e-16,maroon1,subnet
+ENSG00000254221,PCDHGB1,"protocadherin gamma subfamily B, 1 ",protein_coding,5,46.4154761904762,0.0103092783505155,2.11555681986833e-16,maroon1,subnet
+ENSG00000255408,PCDHA3,protocadherin alpha 3 ,protein_coding,5,22.15,0.0099009900990099,4.84723884662123e-16,maroon1,subnet
+ENSG00000261934,PCDHGA9,"protocadherin gamma subfamily A, 9 ",protein_coding,5,9.16071428571428,0.00884955752212389,2.17891182663862e-16,maroon1,subnet
+ENSG00000262209,PCDHGB3,"protocadherin gamma subfamily B, 3 ",protein_coding,5,174.851190476191,0.0102040816326531,2.07735616345888e-16,maroon1,subnet
+ENSG00000263715,LINC02210-CRHR1,LINC02210-CRHR1 readthrough ,protein_coding,5,49.5,0.000406338886631451,8.56466640264368e-17,tomato,subnet
+ENSG00000001630,CYP51A1,cytochrome P450 family 51 subfamily A member 1 ,protein_coding,4,202.25,0.000592417061611374,8.38607379620533e-17,tomato,subnet
+ENSG00000052802,MSMO1,methylsterol monooxygenase 1 ,protein_coding,4,0.25,0.000662690523525514,7.15423526816868e-17,tomato,subnet
+ENSG00000068615,REEP1,receptor accessory protein 1 ,protein_coding,4,202,0.000584795321637427,6.91137234363631e-17,tomato,subnet
+ENSG00000079459,FDFT1,farnesyl-diphosphate farnesyltransferase 1 ,protein_coding,4,121.333333333333,0.000663129973474801,9.91637240522608e-17,tomato,subnet
+ENSG00000079739,PGM1,phosphoglucomutase 1 ,protein_coding,4,475,0.00138888888888889,2.81938748620854e-12,royalblue,subnet
+ENSG00000080298,RFX3,regulatory factor X3 ,protein_coding,4,89,0.000809061488673139,8.99434533093281e-17,springgreen,subnet
+ENSG00000104524,PYCR3,pyrroline-5-carboxylate reductase 3 ,protein_coding,4,1,0.00826446280991736,0,yellowgreen,subnet
+ENSG00000105552,BCAT2,branched chain amino acid transaminase 2 ,protein_coding,4,352.7,0.0021505376344086,1.94881540766815e-07,royalblue,subnet
+ENSG00000106113,CRHR2,corticotropin releasing hormone receptor 2 ,protein_coding,4,0,0.000376081233546446,8.98911639524792e-17,tomato,subnet
+ENSG00000106538,RARRES2,retinoic acid receptor responder 2 ,protein_coding,4,815,0.00181488203266788,1.21418181746057e-09,royalblue,subnet
+ENSG00000108602,ALDH3A1,aldehyde dehydrogenase 3 family member A1 ,protein_coding,4,3860,0.000563063063063063,9.03277743504785e-17,tomato,subnet
+ENSG00000110080,ST3GAL4,"ST3 beta-galactoside alpha-2,3-sialyltransferase 4 ",protein_coding,4,1191,0.000342231348391513,1.06266711234448e-16,tomato,subnet
+ENSG00000114904,NEK4,NIMA related kinase 4 ,protein_coding,4,3075,0.000629722921914358,7.20838144368462e-17,tomato,subnet
+ENSG00000117411,B4GALT2,"beta-1,4-galactosyltransferase 2 ",protein_coding,4,0,0.000490677134445535,0,tomato,subnet
+ENSG00000118276,B4GALT6,"beta-1,4-galactosyltransferase 6 ",protein_coding,4,0,0.000490677134445535,0,tomato,subnet
+ENSG00000118402,ELOVL4,ELOVL fatty acid elongase 4 ,protein_coding,4,1372,0.000373831775700935,1.14105995976409e-16,tomato,subnet
+ENSG00000123989,CHPF,chondroitin polymerizing factor ,protein_coding,4,129,0.00925925925925926,8.57140321487826e-17,mediumseagreen,subnet
+ENSG00000125505,MBOAT7,membrane bound O-acyltransferase domain containing 7 ,protein_coding,4,73,0.0015527950310559,0.331069548286204,royalblue,subnet
+ENSG00000126467,TSKS,testis specific serine kinase substrate ,protein_coding,4,257,0.0072463768115942,7.1357319508712e-17,gold,subnet
+ENSG00000128059,PPAT,phosphoribosyl pyrophosphate amidotransferase ,protein_coding,4,187.5,0.0113636363636364,4.38458872462223e-17,yellowgreen,subnet
+ENSG00000128309,MPST,mercaptopyruvate sulfurtransferase ,protein_coding,4,175,0.00132978723404255,9.51665170039732e-17,springgreen,subnet
+ENSG00000129654,FOXJ1,forkhead box J1 ,protein_coding,4,421,0.000867302688638335,1.01231191540125e-16,springgreen,subnet
+ENSG00000136802,LRRC8A,leucine rich repeat containing 8 VRAC subunit A ,protein_coding,4,0,0.00427350427350427,0,orchid,subnet
+ENSG00000138061,CYP1B1,cytochrome P450 family 1 subfamily B member 1 ,protein_coding,4,1560,0.000668896321070234,4.37739154159948e-17,tomato,subnet
+ENSG00000138115,CYP2C8,cytochrome P450 family 2 subfamily C member 8 ,protein_coding,4,205.333333333333,0.000597371565113501,2.74741963955481e-18,tomato,subnet
+ENSG00000140263,SORD,sorbitol dehydrogenase ,protein_coding,4,247.5,0.00127551020408163,4.36639721554467e-13,royalblue,subnet
+ENSG00000140465,CYP1A1,cytochrome P450 family 1 subfamily A member 1 ,protein_coding,4,4606.5,0.000754716981132075,4.77831430701405e-17,tomato,subnet
+ENSG00000142544,CTU1,cytosolic thiouridylase subunit 1 ,protein_coding,4,1701,0.00167785234899329,4.68502567916327e-17,springgreen,subnet
+ENSG00000145284,SCD5,stearoyl-CoA desaturase 5 ,protein_coding,4,0,0.000326157860404436,8.93684181279289e-17,tomato,subnet
+ENSG00000145982,FARS2,"phenylalanyl-tRNA synthetase 2, mitochondrial ",protein_coding,4,59,0.00980392156862745,1.21371749742968e-16,saddlebrown,subnet
+ENSG00000147408,CSGALNACT1,chondroitin sulfate N-acetylgalactosaminyltransferase 1 ,protein_coding,4,112,0.00813008130081301,1.09100661515524e-16,mediumseagreen,subnet
+ENSG00000149485,FADS1,fatty acid desaturase 1 ,protein_coding,4,0,0.000326157860404436,1.28636277451361e-16,tomato,subnet
+ENSG00000151005,TKTL2,transketolase like 2 ,protein_coding,4,128,0.00769230769230769,1.10822007299501e-16,cyan,subnet
+ENSG00000151474,FRMD4A,FERM domain containing 4A ,protein_coding,4,5713,0.000717875089734386,6.46071917554014e-17,tomato,subnet
+ENSG00000151632,AKR1C2,aldo-keto reductase family 1 member C2 ,protein_coding,4,8828,0.000793021411578113,7.02064117800431e-17,tomato,subnet
+ENSG00000153246,PLA2R1,phospholipase A2 receptor 1 ,protein_coding,4,88,0.00147492625368732,1.48234631355573e-15,springgreen,subnet
+ENSG00000154813,DPH3,diphthamide biosynthesis 3 ,protein_coding,4,260,0.00136798905608755,1.04860190996454e-16,springgreen,subnet
+ENSG00000158470,B4GALT5,"beta-1,4-galactosyltransferase 5 ",protein_coding,4,0,0.000490677134445535,0,tomato,subnet
+ENSG00000158485,CD1B,CD1b molecule ,protein_coding,4,96,0.00568181818181818,8.97779826399723e-17,maroon1,subnet
+ENSG00000158669,GPAT4,glycerol-3-phosphate acyltransferase 4 ,protein_coding,4,600,0.000534473543559594,7.85960594703531e-17,tomato,subnet
+ENSG00000159131,GART,"phosphoribosylglycinamide formyltransferase, phosphoribosylglycinamide synthetase, phosphoribosylaminoimidazole synthetase ",protein_coding,4,80.5,0.0103092783505155,5.22662691646057e-17,yellowgreen,subnet
+ENSG00000159445,THEM4,thioesterase superfamily member 4 ,protein_coding,4,213,0.00205761316872428,7.97412038785112e-08,royalblue,subnet
+ENSG00000160180,TFF3,trefoil factor 3 ,protein_coding,4,269.5,0.00662251655629139,1.09146793269231e-16,orchid,subnet
+ENSG00000164219,PGGT1B,protein geranylgeranyltransferase type I subunit beta ,protein_coding,4,190,0.00636942675159236,7.18460725286756e-17,gold,subnet
+ENSG00000165476,REEP3,receptor accessory protein 3 ,protein_coding,4,5046,0.000650618087182824,6.70126655178618e-17,tomato,subnet
+ENSG00000167118,URM1,ubiquitin related modifier 1 ,protein_coding,4,498,0.0014903129657228,6.07453266937233e-17,springgreen,subnet
+ENSG00000168476,REEP4,receptor accessory protein 4 ,protein_coding,4,4450,0.000593119810201661,3.88918559720723e-17,tomato,subnet
+ENSG00000168522,FNTA,"farnesyltransferase, CAAX box, subunit alpha ",protein_coding,4,94,0.00552486187845304,8.7001045193017e-17,gold,subnet
+ENSG00000168785,TSPAN5,tetraspanin 5 ,protein_coding,4,998,0.0005941770647653,1.07020470578589e-16,tomato,subnet
+ENSG00000169550,MUC15,"mucin 15, cell surface associated ",protein_coding,4,187,0.00471698113207547,1.22362044359316e-16,orchid,subnet
+ENSG00000170373,CST1,cystatin SN ,protein_coding,4,602,0.000496277915632754,9.92775021767362e-17,tomato,subnet
+ENSG00000170522,ELOVL6,ELOVL fatty acid elongase 6 ,protein_coding,4,0,0.000326157860404436,1.01342355238112e-16,tomato,subnet
+ENSG00000171488,LRRC8C,leucine rich repeat containing 8 VRAC subunit C ,protein_coding,4,0,0.00427350427350427,0,orchid,subnet
+ENSG00000173457,PPP1R14B,protein phosphatase 1 regulatory inhibitor subunit 14B ,protein_coding,4,1405,0.00238663484486874,0.000278903128559008,royalblue,subnet
+ENSG00000178700,DHFR2,dihydrofolate reductase 2 ,protein_coding,4,600.5,0.00032071840923669,1.11936651410785e-16,tomato,subnet
+ENSG00000179918,SEPHS2,selenophosphate synthetase 2 ,protein_coding,4,141,0.00806451612903226,1.00179034522819e-16,yellowgreen,subnet
+ENSG00000182919,C11orf54,chromosome 11 open reading frame 54 ,protein_coding,4,9673,0.000746825989544436,7.64177969745906e-17,tomato,subnet
+ENSG00000187134,AKR1C1,aldo-keto reductase family 1 member C1 ,protein_coding,4,2980,0.000766283524904215,1.14605808841108e-16,tomato,subnet
+ENSG00000187140,FOXD3,forkhead box D3 ,protein_coding,4,174,0.00172711571675302,1.03798555520974e-16,springgreen,subnet
+ENSG00000197408,CYP2B6,cytochrome P450 family 2 subfamily B member 6 ,protein_coding,4,396.166666666667,0.000597371565113501,2.39565329834612e-17,tomato,subnet
+ENSG00000197705,KLHL14,kelch like family member 14 ,protein_coding,4,1484,0.0018450184501845,8.24955461922891e-17,springgreen,subnet
+ENSG00000197977,ELOVL2,ELOVL fatty acid elongase 2 ,protein_coding,4,0,0.000326157860404436,1.22376347334571e-16,tomato,subnet
+ENSG00000204970,PCDHA1,protocadherin alpha 1 ,protein_coding,4,1.95238095238095,0.008,3.57674309731235e-16,maroon1,subnet
+ENSG00000206075,SERPINB5,serpin family B member 5 ,protein_coding,4,2313,0.000659195781147001,7.32431069723312e-17,tomato,subnet
+ENSG00000213416,KRTAP4-12,keratin associated protein 4-12 ,protein_coding,4,161.666666666667,0.0102040816326531,4.14648983409805e-17,cyan,subnet
+ENSG00000213930,GALT,galactose-1-phosphate uridylyltransferase ,protein_coding,4,1870,0.00208768267223382,1.95015467948496e-16,springgreen,subnet
+ENSG00000244537,KRTAP4-2,keratin associated protein 4-2 ,protein_coding,4,42.3333333333333,0.00925925925925926,5.08243365188987e-17,cyan,subnet
+ENSG00000251664,PCDHA12,protocadherin alpha 12 ,protein_coding,4,0.25,0.008,4.18670258421504e-16,maroon1,subnet
+ENSG00000255307,OR52B2,olfactory receptor family 52 subfamily B member 2 ,protein_coding,4,403,0.000412881915772089,1.2396445946998e-16,tomato,subnet
+ENSG00000255974,CYP2A6,cytochrome P450 family 2 subfamily A member 6 ,protein_coding,4,203.833333333333,0.00053475935828877,3.9082351487148e-17,tomato,subnet
+ENSG00000276547,PCDHGB5,"protocadherin gamma subfamily B, 5 ",protein_coding,4,0.851190476190476,0.00961538461538462,1.55557094021005e-16,maroon1,subnet
+ENSG00000278535,DHRS11,dehydrogenase/reductase 11 ,protein_coding,4,0,0.00074019245003701,1.30290068478429e-16,tomato,subnet
+ENSG00000008394,MGST1,microsomal glutathione S-transferase 1 ,protein_coding,3,78,0.0072463768115942,7.36230072829886e-17,cyan,subnet
+ENSG00000023171,GRAMD1B,GRAM domain containing 1B ,protein_coding,3,25,0.00606060606060606,8.68732871761514e-17,mediumseagreen,subnet
+ENSG00000033100,CHPF2,chondroitin polymerizing factor 2 ,protein_coding,3,153,0.0102040816326531,7.12372621380299e-17,mediumseagreen,subnet
+ENSG00000038274,MAT2B,methionine adenosyltransferase 2 non-catalytic beta subunit ,protein_coding,3,174,0.00113250283125708,7.48513484114302e-17,springgreen,subnet
+ENSG00000042317,SPATA7,spermatogenesis associated 7 ,protein_coding,3,600,0.000505561172901921,9.12159946564468e-17,tomato,subnet
+ENSG00000060982,BCAT1,branched chain amino acid transaminase 1 ,protein_coding,3,7.69999999999999,0.00212765957446809,1.91965270493013e-07,royalblue,subnet
+ENSG00000064601,CTSA,cathepsin A ,protein_coding,3,144,0.0102040816326531,8.15780461212865e-17,mediumseagreen,subnet
+ENSG00000064652,SNX24,sorting nexin 24 ,protein_coding,3,168,0.00746268656716418,5.69466725190095e-17,gold,subnet
+ENSG00000066322,ELOVL1,ELOVL fatty acid elongase 1 ,protein_coding,3,1560,0.000402090872537193,7.56358292935502e-17,tomato,subnet
+ENSG00000068120,COASY,Coenzyme A synthase ,protein_coding,3,88,0.00183150183150183,1.38398074027965e-16,springgreen,subnet
+ENSG00000077327,SPAG6,sperm associated antigen 6 ,protein_coding,3,403,0.000506072874493927,8.3521214613365e-17,tomato,subnet
+ENSG00000078070,MCCC1,methylcrotonyl-CoA carboxylase subunit 1 ,protein_coding,3,1951,0.000543183052688756,9.7393240839498e-17,tomato,subnet
+ENSG00000078795,PKD2L2,"polycystin 2 like 2, transient receptor potential cation channel ",protein_coding,3,600.5,0.000604229607250755,7.47123694279892e-17,tomato,subnet
+ENSG00000081842,PCDHA6,protocadherin alpha 6 ,protein_coding,3,0.333333333333333,0.0078125,2.7394561954257e-16,maroon1,subnet
+ENSG00000086475,SEPHS1,selenophosphate synthetase 1 ,protein_coding,3,147,0.0091743119266055,5.36308330151878e-17,yellowgreen,subnet
+ENSG00000087903,RFX2,regulatory factor X2 ,protein_coding,3,88,0.000808407437348424,7.19838181343885e-17,springgreen,subnet
+ENSG00000097021,ACOT7,acyl-CoA thioesterase 7 ,protein_coding,3,73,0.00179856115107914,2.05569073997586e-08,royalblue,subnet
+ENSG00000100842,EFS,embryonal Fyn-associated substrate ,protein_coding,3,195,0.00757575757575758,6.87345469486967e-17,gold,subnet
+ENSG00000101441,CST4,cystatin S ,protein_coding,3,1560,0.000548546352166758,5.24106388809553e-17,tomato,subnet
+ENSG00000103154,NECAB2,N-terminal EF-hand calcium binding protein 2 ,protein_coding,3,402,0.000618811881188119,6.27498336224864e-17,tomato,subnet
+ENSG00000103241,FOXF1,forkhead box F1 ,protein_coding,3,990,0.000533049040511727,9.52916908342618e-17,tomato,subnet
+ENSG00000103245,CIAO3,cytosolic iron-sulfur assembly component 3 ,protein_coding,3,145,0.00198807157057654,0.000274029652264373,royalblue,subnet
+ENSG00000103876,FAH,fumarylacetoacetate hydrolase ,protein_coding,3,34.5,0.00127064803049555,4.30089459758967e-13,royalblue,subnet
+ENSG00000104331,BPNT2,"3'(2'), 5'-bisphosphate nucleotidase 2 ",protein_coding,3,27,0.0072463768115942,8.28049005109565e-17,yellowgreen,subnet
+ENSG00000104808,DHDH,dihydrodiol dehydrogenase ,protein_coding,3,2670,0.000676132521974307,9.47274485584228e-17,tomato,subnet
+ENSG00000104889,RNASEH2A,ribonuclease H2 subunit A ,protein_coding,3,1080,0.00202020202020202,0.099371111994997,royalblue,subnet
+ENSG00000105141,CASP14,caspase 14 ,protein_coding,3,3395,0.000514933058702369,7.85289755996529e-17,tomato,subnet
+ENSG00000108242,CYP2C18,cytochrome P450 family 2 subfamily C member 18 ,protein_coding,3,89,0.000662251655629139,0,tomato,subnet
+ENSG00000109618,SEPSECS,Sep (O-phosphoserine) tRNA:Sec (selenocysteine) tRNA synthase ,protein_coding,3,27,0.00591715976331361,8.41396564429902e-17,yellowgreen,subnet
+ENSG00000113492,AGXT2,alanine--glyoxylate aminotransferase 2 ,protein_coding,3,189,0.00208333333333333,1.15170365071302e-07,royalblue,subnet
+ENSG00000114646,CSPG5,chondroitin sulfate proteoglycan 5 ,protein_coding,3,139,0.0091743119266055,9.19201689266668e-17,mediumseagreen,subnet
+ENSG00000115042,FAHD2A,fumarylacetoacetate hydrolase domain containing 2A ,protein_coding,3,145,0.00117233294255569,5.77233781874477e-14,royalblue,subnet
+ENSG00000116120,FARSB,phenylalanyl-tRNA synthetase subunit beta ,protein_coding,3,85,0.0113636363636364,9.9983830432323e-17,saddlebrown,subnet
+ENSG00000118894,EEF2KMT,eukaryotic elongation factor 2 lysine methyltransferase ,protein_coding,3,284,0.00188679245283019,2.57470932775872e-08,royalblue,subnet
+ENSG00000119915,ELOVL3,ELOVL fatty acid elongase 3 ,protein_coding,3,1930,0.000434404865334492,9.24856491978674e-17,tomato,subnet
+ENSG00000119927,GPAM,"glycerol-3-phosphate acyltransferase, mitochondrial ",protein_coding,3,0,0.000482858522452921,4.52871733436331e-17,tomato,subnet
+ENSG00000122787,AKR1D1,aldo-keto reductase family 1 member D1 ,protein_coding,3,796,0.00072463768115942,1.07871215323201e-16,tomato,subnet
+ENSG00000124217,MOCS3,molybdenum cofactor synthesis 3 ,protein_coding,3,174,0.00132978723404255,6.75312837586947e-17,springgreen,subnet
+ENSG00000125245,GPR18,G protein-coupled receptor 18 ,protein_coding,3,3982,0.000618811881188119,6.79960127071948e-17,tomato,subnet
+ENSG00000125820,NKX2-2,NK2 homeobox 2 ,protein_coding,3,202,0.000482392667631452,9.22385864787185e-17,tomato,subnet
+ENSG00000125877,ITPA,inosine triphosphatase ,protein_coding,3,88,0.00183150183150183,1.48978092083822e-16,springgreen,subnet
+ENSG00000127554,GFER,"growth factor, augmenter of liver regeneration ",protein_coding,3,649,0.00165562913907285,1.60371477450601e-10,royalblue,subnet
+ENSG00000130948,HSD17B3,hydroxysteroid 17-beta dehydrogenase 3 ,protein_coding,3,0,0.000775795190069822,7.87311200308002e-17,tomato,subnet
+ENSG00000131459,GFPT2,glutamine-fructose-6-phosphate transaminase 2 ,protein_coding,3,0,0.000578703703703704,8.98629406170918e-18,tomato,subnet
+ENSG00000132330,SCLY,selenocysteine lyase ,protein_coding,3,229,0.00568181818181818,9.06498774279739e-17,orchid,subnet
+ENSG00000132563,REEP2,receptor accessory protein 2 ,protein_coding,3,0,0.000584453535943892,2.86351136762622e-17,tomato,subnet
+ENSG00000134077,THUMPD3,THUMP domain containing 3 ,protein_coding,3,160,0.0163934426229508,1.49889546342012e-16,saddlebrown,subnet
+ENSG00000136104,RNASEH2B,ribonuclease H2 subunit B ,protein_coding,3,1144,0.00215982721382289,0.014821306011484,royalblue,subnet
+ENSG00000136573,BLK,"BLK proto-oncogene, Src family tyrosine kinase ",protein_coding,3,151,0.00645161290322581,9.64933396375674e-17,gold,subnet
+ENSG00000136682,ZNG1B,Zn regulated GTPase metalloprotein activator 1B ,protein_coding,3,602,0.000560538116591928,7.86779043068992e-17,tomato,subnet
+ENSG00000137273,FOXF2,forkhead box F2 ,protein_coding,3,1182,0.000593824228028504,5.38615576752776e-17,tomato,subnet
+ENSG00000137601,NEK1,NIMA related kinase 1 ,protein_coding,3,100.5,0.000459347726228755,9.70583095504102e-17,tomato,subnet
+ENSG00000138678,GPAT3,glycerol-3-phosphate acyltransferase 3 ,protein_coding,3,0,0.000482858522452921,5.4473965002579e-17,tomato,subnet
+ENSG00000139330,KERA,keratocan ,protein_coding,3,88,0.00160771704180064,8.58554167911085e-17,springgreen,subnet
+ENSG00000139515,PDX1,pancreatic and duodenal homeobox 1 ,protein_coding,3,402,0.000482625482625483,9.35455721869672e-17,tomato,subnet
+ENSG00000139637,MYG1,MYG1 exonuclease ,protein_coding,3,1880,0.00199600798403194,9.45767830263419e-17,springgreen,subnet
+ENSG00000139921,TMX1,thioredoxin related transmembrane protein 1 ,protein_coding,3,109,0.00806451612903226,9.2962150604721e-17,mediumseagreen,subnet
+ENSG00000140479,PCSK6,proprotein convertase subtilisin/kexin type 6 ,protein_coding,3,800,0.000468164794007491,9.10097827548376e-17,tomato,subnet
+ENSG00000141012,GALNS,galactosamine (N-acetyl)-6-sulfatase ,protein_coding,3,168,0.0108695652173913,7.7323100794659e-17,mediumseagreen,subnet
+ENSG00000143198,MGST3,microsomal glutathione S-transferase 3 ,protein_coding,3,28,0.00613496932515337,9.99662890368713e-17,cyan,subnet
+ENSG00000149735,GPHA2,glycoprotein hormone subunit alpha 2 ,protein_coding,3,985,0.00216919739696312,6.80149115858716e-08,royalblue,subnet
+ENSG00000151224,MAT1A,methionine adenosyltransferase 1A ,protein_coding,3,340,0.00125,5.82320907085837e-17,springgreen,subnet
+ENSG00000155530,LRGUK,leucine rich repeats and guanylate kinase domain containing ,protein_coding,3,403,0.000506072874493927,8.90606722789043e-17,tomato,subnet
+ENSG00000155761,SPAG17,sperm associated antigen 17 ,protein_coding,3,1191,0.000562429696287964,1.02325200659869e-16,tomato,subnet
+ENSG00000157064,NMNAT2,nicotinamide nucleotide adenylyltransferase 2 ,protein_coding,3,0,0.0018450184501845,1.45260788442575e-16,springgreen,subnet
+ENSG00000157470,FAM81A,family with sequence similarity 81 member A ,protein_coding,3,796,0.000449438202247191,9.14098146544175e-17,tomato,subnet
+ENSG00000158473,CD1D,CD1d molecule ,protein_coding,3,0,0.00480769230769231,6.3211645228848e-17,maroon1,subnet
+ENSG00000158477,CD1A,CD1a molecule ,protein_coding,3,0,0.00480769230769231,6.38968197627544e-17,maroon1,subnet
+ENSG00000158481,CD1C,CD1c molecule ,protein_coding,3,0,0.00480769230769231,6.2062484035215e-17,maroon1,subnet
+ENSG00000159267,HLCS,holocarboxylase synthetase ,protein_coding,3,95,0.00540540540540541,8.75874576628924e-17,gold,subnet
+ENSG00000160226,CFAP410,cilia and flagella associated protein 410 ,protein_coding,3,100.5,0.000459347726228755,8.81122388752014e-17,tomato,subnet
+ENSG00000160602,NEK8,NIMA related kinase 8 ,protein_coding,3,0,0.000685871056241427,6.10572603249395e-18,tomato,subnet
+ENSG00000162390,ACOT11,acyl-CoA thioesterase 11 ,protein_coding,3,91,0.0138888888888889,9.93228236428258e-17,saddlebrown,subnet
+ENSG00000162729,IGSF8,immunoglobulin superfamily member 8 ,protein_coding,3,124,0.00862068965517241,6.16129292354685e-17,cyan,subnet
+ENSG00000163131,CTSS,cathepsin S ,protein_coding,3,2319,0.000610873549175321,4.67784054472049e-17,tomato,subnet
+ENSG00000163206,SMCP,sperm mitochondria associated cysteine rich protein ,protein_coding,3,58.3333333333334,0.0108695652173913,0,cyan,subnet
+ENSG00000163909,HEYL,hes related family bHLH transcription factor with YRPW motif like ,protein_coding,3,33,0.00543478260869565,6.45342019115187e-17,gold,subnet
+ENSG00000165841,CYP2C19,cytochrome P450 family 2 subfamily C member 19 ,protein_coding,3,1.16666666666667,0.000593471810089021,0,tomato,subnet
+ENSG00000167261,DPEP2,dipeptidase 2 ,protein_coding,3,199,0.010989010989011,7.84281405815324e-17,mediumseagreen,subnet
+ENSG00000168418,KCNG4,potassium voltage-gated channel modifier subfamily G member 4 ,protein_coding,3,600,0.000496277915632754,7.9658669233936e-17,tomato,subnet
+ENSG00000169509,CRCT1,cysteine rich C-terminal 1 ,protein_coding,3,35,0.00840336134453782,4.57369052535737e-17,cyan,subnet
+ENSG00000169764,UGP2,UDP-glucose pyrophosphorylase 2 ,protein_coding,3,0,0.00194931773879142,1.44688895574691e-16,springgreen,subnet
+ENSG00000170385,SLC30A1,solute carrier family 30 member 1 ,protein_coding,3,48,0.00694444444444444,8.99274689371716e-17,mediumseagreen,subnet
+ENSG00000170502,NUDT9,nudix hydrolase 9 ,protein_coding,3,132,0.0103092783505155,3.91817489992086e-17,yellowgreen,subnet
+ENSG00000171722,SPATA46,spermatogenesis associated 46 ,protein_coding,3,120,0.00632911392405063,9.4858678893886e-17,gold,subnet
+ENSG00000174177,CTU2,cytosolic thiouridylase subunit 2 ,protein_coding,3,63,0.00151745068285281,2.17273912554264e-17,springgreen,subnet
+ENSG00000175198,PCCA,propionyl-CoA carboxylase subunit alpha ,protein_coding,3,1187,0.000492368291482029,7.69868021564362e-17,tomato,subnet
+ENSG00000176490,DIRAS1,DIRAS family GTPase 1 ,protein_coding,3,602,0.000634517766497462,9.58838308419631e-17,tomato,subnet
+ENSG00000178075,GRAMD1C,GRAM domain containing 1C ,protein_coding,3,69,0.00699300699300699,1.02163175225883e-16,mediumseagreen,subnet
+ENSG00000178921,PFAS,phosphoribosylformylglycinamidine synthase ,protein_coding,3,72,0.0102040816326531,3.61083392740262e-17,yellowgreen,subnet
+ENSG00000180098,TRNAU1AP,tRNA selenocysteine 1 associated protein 1 ,protein_coding,3,75,0.00689655172413793,9.040744992098e-17,yellowgreen,subnet
+ENSG00000180817,PPA1,inorganic pyrophosphatase 1 ,protein_coding,3,1674,0.00178571428571429,5.33077873433032e-17,springgreen,subnet
+ENSG00000182674,KCNB2,potassium voltage-gated channel subfamily B member 2 ,protein_coding,3,403,0.000451875282422052,9.3422832266039e-17,tomato,subnet
+ENSG00000183671,CMKLR2,chemerin chemokine-like receptor 2 ,protein_coding,3,899,0.00198412698412698,8.98957621645732e-09,royalblue,subnet
+ENSG00000184956,MUC6,"mucin 6, oligomeric mucus/gel-forming ",protein_coding,3,220,0.00598802395209581,7.99385964954194e-17,orchid,subnet
+ENSG00000186281,GPAT2,"glycerol-3-phosphate acyltransferase 2, mitochondrial ",protein_coding,3,0,0.000482858522452921,5.66936015074335e-17,tomato,subnet
+ENSG00000187048,CYP4A11,cytochrome P450 family 4 subfamily A member 11 ,protein_coding,3,402,0.000536193029490617,5.05921039575719e-17,tomato,subnet
+ENSG00000189077,TMEM120A,transmembrane protein 120A ,protein_coding,3,403,0.000490677134445535,4.7248234631327e-17,tomato,subnet
+ENSG00000196407,THEM5,thioesterase superfamily member 5 ,protein_coding,3,69,0.00204918032786885,7.85683796284706e-08,royalblue,subnet
+ENSG00000197355,UAP1L1,UDP-N-acetylglucosamine pyrophosphorylase 1 like 1 ,protein_coding,3,240,0.00641025641025641,6.50462584954688e-17,orchid,subnet
+ENSG00000198108,CHSY3,chondroitin sulfate synthase 3 ,protein_coding,3,9,0.0087719298245614,5.91393275912854e-17,mediumseagreen,subnet
+ENSG00000198380,GFPT1,glutamine--fructose-6-phosphate transaminase 1 ,protein_coding,3,0,0.000578703703703704,5.23733815816774e-19,tomato,subnet
+ENSG00000198754,OXCT2,3-oxoacid CoA-transferase 2 ,protein_coding,3,402,0.000490436488474743,1.00023105812161e-16,tomato,subnet
+ENSG00000198788,MUC2,"mucin 2, oligomeric mucus/gel-forming ",protein_coding,3,11.5,0.00568181818181818,6.71041056192647e-17,orchid,subnet
+ENSG00000204386,NEU1,neuraminidase 1 ,protein_coding,3,48,0.00961538461538462,7.95852639693848e-17,mediumseagreen,subnet
+ENSG00000204969,PCDHA2,protocadherin alpha 2 ,protein_coding,3,0,0.0078125,2.88019545588157e-16,maroon1,subnet
+ENSG00000205277,MUC12,"mucin 12, cell surface associated ",protein_coding,3,31,0.00416666666666667,9.13874490126559e-17,orchid,subnet
+ENSG00000205867,KRTAP5-2,keratin associated protein 5-2 ,protein_coding,3,55,0.00909090909090909,6.48818354675757e-17,cyan,subnet
+ENSG00000206203,TSSK2,testis specific serine kinase 2 ,protein_coding,3,253,0.008,3.25148584190057e-17,gold,subnet
+ENSG00000215182,MUC5AC,"mucin 5AC, oligomeric mucus/gel-forming ",protein_coding,3,218.5,0.00632911392405063,6.7242561925478e-17,orchid,subnet
+ENSG00000215455,KRTAP10-1,keratin associated protein 10-1 ,protein_coding,3,28,0.0101010101010101,2.45449007315171e-17,cyan,subnet
+ENSG00000221837,KRTAP10-9,keratin associated protein 10-9 ,protein_coding,3,194,0.0104166666666667,6.14851811940088e-17,cyan,subnet
+ENSG00000223573,TINCR,TINCR ubiquitin domain containing ,protein_coding,3,2303,0.000471698113207547,8.32239739094021e-17,tomato,subnet
+ENSG00000228716,DHFR,dihydrofolate reductase ,protein_coding,3,0.5,0.000301386377335744,7.72216900665291e-17,tomato,subnet
+ENSG00000250799,PRODH2,proline dehydrogenase 2 ,protein_coding,3,0,0.00806451612903226,0,yellowgreen,subnet
+ENSG00000253305,PCDHGB6,"protocadherin gamma subfamily B, 6 ",protein_coding,3,34,0.0104166666666667,2.4571287710382e-16,maroon1,subnet
+ENSG00000253731,PCDHGA6,"protocadherin gamma subfamily A, 6 ",protein_coding,3,0,0.00847457627118644,1.45153558529847e-16,maroon1,subnet
+ENSG00000253767,PCDHGA8,"protocadherin gamma subfamily A, 8 ",protein_coding,3,0,0.0078740157480315,1.64470580516543e-16,maroon1,subnet
+ENSG00000253846,PCDHGA10,"protocadherin gamma subfamily A, 10 ",protein_coding,3,0,0.00943396226415094,3.39087791525e-16,maroon1,subnet
+ENSG00000253953,PCDHGB4,"protocadherin gamma subfamily B, 4 ",protein_coding,3,0,0.00925925925925926,1.30842833093652e-16,maroon1,subnet
+ENSG00000254122,PCDHGB7,"protocadherin gamma subfamily B, 7 ",protein_coding,3,7.24404761904762,0.010989010989011,2.73869665021054e-16,maroon1,subnet
+ENSG00000257365,FNTB,"farnesyltransferase, CAAX box, subunit beta ",protein_coding,3,64,0.00476190476190476,7.69994232317925e-17,gold,subnet
+ENSG00000266967,AARSD1,alanyl-tRNA synthetase domain containing 1 ,protein_coding,3,1393,0.0024390243902439,3.69083319000911e-05,royalblue,subnet
+ENSG00000002549,LAP3,leucine aminopeptidase 3 ,protein_coding,2,0,0.000301295570955107,5.49044119937722e-17,tomato,subnet
+ENSG00000003393,ALS2,alsin Rho guanine nucleotide exchange factor ALS2 ,protein_coding,2,0,0.000420521446593776,6.02558589248863e-17,tomato,subnet
+ENSG00000006534,ALDH3B1,aldehyde dehydrogenase 3 family member B1 ,protein_coding,2,0,0.000505816894284269,5.40990692724662e-17,tomato,subnet
+ENSG00000011638,LDAF1,lipid droplet assembly factor 1 ,protein_coding,2,202,0.000533333333333333,4.86093753778341e-17,tomato,subnet
+ENSG00000015532,XYLT2,xylosyltransferase 2 ,protein_coding,2,2820,0.000497017892644135,1.09976587079362e-17,tomato,subnet
+ENSG00000023909,GCLM,glutamate-cysteine ligase modifier subunit ,protein_coding,2,202,0.000484261501210654,4.3964571551235e-17,tomato,subnet
+ENSG00000054983,GALC,galactosylceramidase ,protein_coding,2,73,0.00166389351081531,3.34332646211607e-09,royalblue,subnet
+ENSG00000066654,THUMPD1,THUMP domain containing 1 ,protein_coding,2,105,0.0147058823529412,7.59852384179477e-17,saddlebrown,subnet
+ENSG00000067798,NAV3,neuron navigator 3 ,protein_coding,2,202,0.000440140845070423,5.56072960938743e-17,tomato,subnet
+ENSG00000074706,IPCEF1,interaction protein for cytohesin exchange factors 1 ,protein_coding,2,202,0.000558347292015634,5.40115902711925e-17,tomato,subnet
+ENSG00000076555,ACACB,acetyl-CoA carboxylase beta ,protein_coding,2,33,0.00462962962962963,5.9263602476213e-17,gold,subnet
+ENSG00000081760,AACS,acetoacetyl-CoA synthetase ,protein_coding,2,0,0.000446428571428571,6.51887817333633e-17,tomato,subnet
+ENSG00000083720,OXCT1,3-oxoacid CoA-transferase 1 ,protein_coding,2,0,0.000446428571428571,6.61767664720273e-17,tomato,subnet
+ENSG00000085871,MGST2,microsomal glutathione S-transferase 2 ,protein_coding,2,0,0.00609756097560976,6.83551859381224e-17,cyan,subnet
+ENSG00000092200,RPGRIP1,RPGR interacting protein 1 ,protein_coding,2,796,0.000561167227833895,5.13560374574281e-17,tomato,subnet
+ENSG00000099256,PRTFDC1,phosphoribosyl transferase domain containing 1 ,protein_coding,2,73,0.00166389351081531,3.34332646576795e-09,royalblue,subnet
+ENSG00000100055,CYTH4,cytohesin 4 ,protein_coding,2,402,0.000628535512256443,6.2822786264935e-17,tomato,subnet
+ENSG00000100124,ANKRD54,ankyrin repeat domain 54 ,protein_coding,2,33,0.00537634408602151,6.28137086925215e-17,gold,subnet
+ENSG00000100416,TRMU,tRNA mitochondrial 2-thiouridylase ,protein_coding,2,790,0.00127713920817369,6.02799612639601e-17,springgreen,subnet
+ENSG00000100600,LGMN,legumain ,protein_coding,2,202,0.000491400491400491,5.63098637003278e-17,tomato,subnet
+ENSG00000101290,CDS2,CDP-diacylglycerol synthase 2 ,protein_coding,2,60,0.00378787878787879,6.62154447220731e-17,orchid,subnet
+ENSG00000101439,CST3,cystatin C ,protein_coding,2,402,0.000544959128065395,4.77325867143958e-17,tomato,subnet
+ENSG00000102763,VWA8,von Willebrand factor A domain containing 8 ,protein_coding,2,88,0.00160513643659711,5.9762804693894e-17,springgreen,subnet
+ENSG00000103274,NUBP1,"NUBP iron-sulfur cluster assembly factor 1, cytosolic ",protein_coding,2,0,0.00197628458498024,0.000303906738874948,royalblue,subnet
+ENSG00000103335,PIEZO1,piezo type mechanosensitive ion channel component 1 (Er blood group) ,protein_coding,2,202,0.000531067445565587,6.76431408411189e-17,tomato,subnet
+ENSG00000103489,XYLT1,xylosyltransferase 1 ,protein_coding,2,2646,0.000457456541628545,3.26763601011931e-17,tomato,subnet
+ENSG00000104522,GFUS,GDP-L-fucose synthase ,protein_coding,2,88,0.00103199174406605,6.35330889918403e-17,springgreen,subnet
+ENSG00000107593,PKD2L1,"polycystin 2 like 1, transient receptor potential cation channel ",protein_coding,2,0.5,0.00048661800486618,7.07217183548701e-17,tomato,subnet
+ENSG00000108479,GALK1,galactokinase 1 ,protein_coding,2,2112,0.000602772754671489,5.85986493761119e-17,tomato,subnet
+ENSG00000108578,BLMH,bleomycin hydrolase ,protein_coding,2,0,0.00160513643659711,5.63314474865891e-17,springgreen,subnet
+ENSG00000108963,DPH1,diphthamide biosynthesis 1 ,protein_coding,2,0,0.00122249388753056,5.80601044176915e-17,springgreen,subnet
+ENSG00000112304,ACOT13,acyl-CoA thioesterase 13 ,protein_coding,2,88,0.00123456790123457,3.41136329649413e-17,springgreen,subnet
+ENSG00000112773,TENT5A,terminal nucleotidyltransferase 5A ,protein_coding,2,648,0.00108108108108108,6.68563142296655e-17,springgreen,subnet
+ENSG00000115507,OTX1,orthodenticle homeobox 1 ,protein_coding,2,28,0.00819672131147541,5.65879170506379e-17,cyan,subnet
+ENSG00000115828,QPCT,glutaminyl-peptide cyclotransferase ,protein_coding,2,0,0.00197628458498024,0.000303906738874961,royalblue,subnet
+ENSG00000117143,UAP1,UDP-N-acetylglucosamine pyrophosphorylase 1 ,protein_coding,2,231,0.00606060606060606,6.45758841221806e-17,orchid,subnet
+ENSG00000120327,PCDHB14,protocadherin beta 14 ,protein_coding,2,0,0.00934579439252336,2.56391189246345e-16,maroon1,subnet
+ENSG00000122378,PRXL2A,peroxiredoxin like 2A ,protein_coding,2,1372,0.000366032210834553,4.95049148774521e-17,tomato,subnet
+ENSG00000122870,BICC1,BicC family RNA binding protein 1 ,protein_coding,2,0,0.000610873549175321,0,tomato,subnet
+ENSG00000123119,NECAB1,N-terminal EF-hand calcium binding protein 1 ,protein_coding,2,0,0.000550357732526142,5.90770209487016e-17,tomato,subnet
+ENSG00000125967,NECAB3,N-terminal EF-hand calcium binding protein 3 ,protein_coding,2,0,0.000550357732526142,6.43780137779628e-17,tomato,subnet
+ENSG00000131126,TEX101,testis expressed 101 ,protein_coding,2,25,0.00740740740740741,7.41874242470256e-17,mediumseagreen,subnet
+ENSG00000131873,CHSY1,chondroitin sulfate synthase 1 ,protein_coding,2,0,0.00757575757575758,3.77687548723006e-17,mediumseagreen,subnet
+ENSG00000132005,RFX1,regulatory factor X1 ,protein_coding,2,0,0.000807102502017756,4.42692747340599e-17,springgreen,subnet
+ENSG00000132016,BRME1,break repair meiotic recombinase recruitment factor 1 ,protein_coding,2,138,0.00892857142857143,5.99782568735984e-17,cyan,subnet
+ENSG00000132570,PCBD2,pterin-4 alpha-carbinolamine dehydratase 2 ,protein_coding,2,0,0.00555555555555556,3.7688619273523e-17,orchid,subnet
+ENSG00000132746,ALDH3B2,aldehyde dehydrogenase 3 family member B2 ,protein_coding,2,0,0.000505816894284269,5.58749047124821e-17,tomato,subnet
+ENSG00000132768,DPH2,diphthamide biosynthesis 2 ,protein_coding,2,0,0.00122249388753056,5.17256040034185e-17,springgreen,subnet
+ENSG00000133106,EPSTI1,epithelial stromal interaction 1 ,protein_coding,2,0,0.00124378109452736,0,springgreen,subnet
+ENSG00000135148,TRAFD1,TRAF-type zinc finger domain containing 1 ,protein_coding,2,574,0.001001001001001,6.75880202070626e-17,springgreen,subnet
+ENSG00000135297,MTO1,mitochondrial tRNA translation optimization 1 ,protein_coding,2,720,0.00117233294255569,6.30646740969e-17,springgreen,subnet
+ENSG00000136235,GPNMB,glycoprotein nmb ,protein_coding,2,64,0.00543478260869565,7.61830462178866e-17,gold,subnet
+ENSG00000137106,GRHPR,glyoxylate and hydroxypyruvate reductase ,protein_coding,2,528,0.00151285930408472,2.08450396368367e-11,royalblue,subnet
+ENSG00000137441,FGFBP2,fibroblast growth factor binding protein 2 ,protein_coding,2,21,0.010989010989011,6.48862094335893e-17,saddlebrown,subnet
+ENSG00000138777,PPA2,inorganic pyrophosphatase 2 ,protein_coding,2,0,0.00170357751277683,4.31354663514653e-17,springgreen,subnet
+ENSG00000139517,LNX2,ligand of numb-protein X 2 ,protein_coding,2,192,0.00523560209424084,2.60444735881331e-17,orchid,subnet
+ENSG00000139908,TSSK4,testis specific serine kinase 4 ,protein_coding,2,0,0.00680272108843537,7.90504220884815e-19,gold,subnet
+ENSG00000141096,DPEP3,dipeptidase 3 ,protein_coding,2,48,0.00892857142857143,6.57328797399297e-17,mediumseagreen,subnet
+ENSG00000141279,NPEPPS,aminopeptidase puromycin sensitive ,protein_coding,2,0,0.00381679389312977,0,orchid,subnet
+ENSG00000141401,IMPA2,inositol monophosphatase 2 ,protein_coding,2,0,0.00719424460431655,3.90123547915956e-17,yellowgreen,subnet
+ENSG00000141524,TMC6,transmembrane channel like 6 ,protein_coding,2,0,0.00595238095238095,5.76052943644922e-17,mediumseagreen,subnet
+ENSG00000143416,SELENBP1,selenium binding protein 1 ,protein_coding,2,1560,0.000529941706412295,5.63405480233108e-17,tomato,subnet
+ENSG00000144233,AMMECR1L,AMMECR1 like ,protein_coding,2,0,0.00537634408602151,3.24509705392184e-17,gold,subnet
+ENSG00000145293,ENOPH1,enolase-phosphatase 1 ,protein_coding,2,73,0.00179533213644524,1.03546008452121e-08,royalblue,subnet
+ENSG00000148215,OR5C1,olfactory receptor family 5 subfamily C member 1 ,protein_coding,2,0,0.000412541254125413,6.35019949044308e-17,tomato,subnet
+ENSG00000149582,TMEM25,transmembrane protein 25 ,protein_coding,2,202,0.000428082191780822,6.8168741082336e-17,tomato,subnet
+ENSG00000153113,CAST,calpastatin ,lncRNA,2,0,0.00413223140495868,6.41015661087699e-17,gold,subnet
+ENSG00000155324,GRAMD2B,GRAM domain containing 2B ,protein_coding,2,0,0.00602409638554217,6.2474855929221e-17,mediumseagreen,subnet
+ENSG00000156345,CDK20,cyclin dependent kinase 20 ,protein_coding,2,498,0.000930232558139535,5.73444588237397e-17,springgreen,subnet
+ENSG00000156958,GALK2,galactokinase 2 ,protein_coding,2,202,0.000595592614651578,6.73706046910624e-17,tomato,subnet
+ENSG00000157734,SNX22,sorting nexin 22 ,protein_coding,2,0,0.00617283950617284,5.42160960328616e-17,gold,subnet
+ENSG00000158683,PKD1L1,"polycystin 1 like 1, transient receptor potential channel interacting ",protein_coding,2,100.5,0.000539083557951483,5.06956867835773e-17,tomato,subnet
+ENSG00000159753,CARMIL2,capping protein regulator and myosin 1 linker 2 ,protein_coding,2,0,0.0015015015015015,5.75645914829643e-17,springgreen,subnet
+ENSG00000160062,ZBTB8A,zinc finger and BTB domain containing 8A ,protein_coding,2,21,0.00925925925925926,6.68181280467964e-17,saddlebrown,subnet
+ENSG00000160181,TFF2,trefoil factor 2 ,protein_coding,2,207,0.00555555555555556,5.18554156097249e-17,orchid,subnet
+ENSG00000162066,AMDHD2,amidohydrolase domain containing 2 ,protein_coding,2,0,0.000578368999421631,1.32885155299509e-17,tomato,subnet
+ENSG00000162365,CYP4A22,cytochrome P450 family 4 subfamily A member 22 ,protein_coding,2,0,0.000535618639528656,1.58638100744307e-17,tomato,subnet
+ENSG00000162377,COA7,cytochrome c oxidase assembly factor 7 ,protein_coding,2,1372,0.000481927710843373,5.73683567285309e-17,tomato,subnet
+ENSG00000162426,SLC45A1,solute carrier family 45 member 1 ,protein_coding,2,0,0.0015015015015015,5.54557365326415e-17,springgreen,subnet
+ENSG00000162526,TSSK3,testis specific serine kinase 3 ,protein_coding,2,0,0.00680272108843537,2.81772939798737e-18,gold,subnet
+ENSG00000163012,ZSWIM2,zinc finger SWIM-type containing 2 ,protein_coding,2,28,0.00641025641025641,6.0623999657211e-17,cyan,subnet
+ENSG00000163518,FCRL4,Fc receptor like 4 ,protein_coding,2,192,0.00512820512820513,5.59826041165396e-17,orchid,subnet
+ENSG00000163624,CDS1,CDP-diacylglycerol synthase 1 ,protein_coding,2,87,0.00421940928270042,7.67633911835963e-17,orchid,subnet
+ENSG00000163931,TKT,transketolase ,protein_coding,2,28,0.00641025641025641,6.34304466077193e-17,cyan,subnet
+ENSG00000164172,MOCS2,molybdenum cofactor synthesis 2 ,protein_coding,2,88,0.00119331742243437,5.10224105595149e-17,springgreen,subnet
+ENSG00000164181,ELOVL7,ELOVL fatty acid elongase 7 ,protein_coding,2,0,0.000400801603206413,5.78120316185948e-17,tomato,subnet
+ENSG00000164379,FOXQ1,forkhead box Q1 ,protein_coding,2,0,0.000591715976331361,3.80745393106565e-17,tomato,subnet
+ENSG00000164509,IL31RA,interleukin 31 receptor A ,protein_coding,2,33,0.00465116279069768,6.76225547912024e-17,gold,subnet
+ENSG00000164535,DAGLB,diacylglycerol lipase beta ,protein_coding,2,202,0.000531067445565587,7.40337486876532e-17,tomato,subnet
+ENSG00000165023,DIRAS2,DIRAS family GTPase 2 ,protein_coding,2,202,0.000563063063063063,7.13514388451641e-17,tomato,subnet
+ENSG00000166855,CLPX,caseinolytic mitochondrial matrix peptidase chaperone subunit X ,protein_coding,2,73,0.00202839756592292,6.68475919403552e-08,royalblue,subnet
+ENSG00000167487,KLHL26,kelch like family member 26 ,protein_coding,2,88,0.00159235668789809,6.29350229454389e-17,springgreen,subnet
+ENSG00000167600,CYP2S1,cytochrome P450 family 2 subfamily S member 1 ,protein_coding,2,0,0.000533902829684997,1.45947455189622e-17,tomato,subnet
+ENSG00000167895,TMC8,transmembrane channel like 8 ,protein_coding,2,0,0.00595238095238095,6.48584193465263e-17,mediumseagreen,subnet
+ENSG00000168246,UBTD2,ubiquitin domain containing 2 ,protein_coding,2,202,0.000451467268623025,7.00649104366451e-17,tomato,subnet
+ENSG00000168906,MAT2A,methionine adenosyltransferase 2A ,protein_coding,2,0,0.00112994350282486,4.82235990121203e-17,springgreen,subnet
+ENSG00000169442,CD52,CD52 molecule ,protein_coding,2,124,0.00675675675675676,5.78520737620106e-17,maroon1,subnet
+ENSG00000169718,DUS1L,dihydrouridine synthase 1 like ,protein_coding,2,0,0.00172117039586919,4.93972464634937e-17,springgreen,subnet
+ENSG00000170222,ADPRM,"ADP-ribose/CDP-alcohol diphosphatase, manganese dependent ",protein_coding,2,0,0.00970873786407767,2.77560458091416e-18,yellowgreen,subnet
+ENSG00000170271,FAXDC2,fatty acid hydroxylase domain containing 2 ,protein_coding,2,0,0.000654878847413229,5.60357623984637e-17,tomato,subnet
+ENSG00000172497,ACOT12,acyl-CoA thioesterase 12 ,protein_coding,2,40,0.0112359550561798,7.19024734530467e-17,saddlebrown,subnet
+ENSG00000172530,BANP,BTG3 associated nuclear protein ,protein_coding,2,21,0.00826446280991736,6.90512100138067e-17,saddlebrown,subnet
+ENSG00000172922,RNASEH2C,ribonuclease H2 subunit C ,protein_coding,2,0,0.00194174757281553,0.0145862438737781,royalblue,subnet
+ENSG00000173702,MUC13,"mucin 13, cell surface associated ",protein_coding,2,0,0.004149377593361,7.27045508535286e-17,orchid,subnet
+ENSG00000174600,CMKLR1,chemerin chemokine-like receptor 1 ,protein_coding,2,0,0.00160513643659711,1.77803793507957e-10,royalblue,subnet
+ENSG00000174915,PTDSS2,phosphatidylserine synthase 2 ,protein_coding,2,31,0.00341296928327645,7.96679451837946e-17,orchid,subnet
+ENSG00000176463,SLCO3A1,solute carrier organic anion transporter family member 3A1 ,protein_coding,2,2431,0.000763941940412529,6.32829442198918e-17,tomato,subnet
+ENSG00000176890,TYMS,thymidylate synthetase ,protein_coding,2,0,0.000301295570955107,4.58918737067339e-17,tomato,subnet
+ENSG00000178093,TSSK6,testis specific serine kinase 6 ,protein_coding,2,0,0.00680272108843537,0,gold,subnet
+ENSG00000178761,FAM219B,family with sequence similarity 219 member B ,protein_coding,2,858,0.0013986013986014,4.18311498967395e-17,springgreen,subnet
+ENSG00000179115,FARSA,phenylalanyl-tRNA synthetase subunit alpha ,protein_coding,2,0,0.00952380952380953,6.69030849331168e-17,saddlebrown,subnet
+ENSG00000179630,LACC1,laccase domain containing 1 ,protein_coding,2,1746,0.000587889476778366,7.64086421706147e-17,tomato,subnet
+ENSG00000179988,PSTK,phosphoseryl-tRNA kinase ,protein_coding,2,0,0.00588235294117647,4.87564135765063e-17,yellowgreen,subnet
+ENSG00000183044,ABAT,4-aminobutyrate aminotransferase ,protein_coding,2,0,0.00116822429906542,1.10733691293485e-13,royalblue,subnet
+ENSG00000183077,AFMID,arylformamidase ,protein_coding,2,0,0.00595238095238095,3.65027271495801e-17,orchid,subnet
+ENSG00000186115,CYP4F2,cytochrome P450 family 4 subfamily F member 2 ,protein_coding,2,402,0.000484966052376334,5.64120628562225e-17,tomato,subnet
+ENSG00000186204,CYP4F12,cytochrome P450 family 4 subfamily F member 12 ,protein_coding,2,202,0.000442086648983201,7.06474017363473e-17,tomato,subnet
+ENSG00000186529,CYP4F3,cytochrome P450 family 4 subfamily F member 3 ,protein_coding,2,600,0.000536480686695279,3.58375356482549e-17,tomato,subnet
+ENSG00000188997,KCTD21,potassium channel tetramerization domain containing 21 ,protein_coding,2,1224,0.00167785234899329,3.91210464937004e-17,springgreen,subnet
+ENSG00000197696,NMB,neuromedin B ,protein_coding,2,25,0.0078740157480315,6.40714338598439e-17,mediumseagreen,subnet
+ENSG00000198610,AKR1C4,aldo-keto reductase family 1 member C4 ,protein_coding,2,0,0.000746268656716418,4.88781657238511e-17,tomato,subnet
+ENSG00000198951,NAGA,alpha-N-acetylgalactosaminidase ,protein_coding,2,202,0.000428082191780822,6.38857518527168e-17,tomato,subnet
+ENSG00000203697,CAPN8,calpain 8 ,protein_coding,2,0,0.00413223140495868,6.04627734327664e-17,gold,subnet
+ENSG00000206073,SERPINB4,serpin family B member 4 ,protein_coding,2,0,0.000610500610500611,2.8213011519597e-17,tomato,subnet
+ENSG00000213903,LTB4R,leukotriene B4 receptor ,protein_coding,2,0,0.00160513643659711,1.77803796800643e-10,royalblue,subnet
+ENSG00000215126,ZNG1F,Zn regulated GTPase metalloprotein activator 1F ,protein_coding,2,202,0.000504032258064516,6.59351230557529e-17,tomato,subnet
+ENSG00000239900,ADSL,adenylosuccinate lyase ,protein_coding,2,0,0.00943396226415094,1.52698544178249e-17,yellowgreen,subnet
+ENSG00000240184,PCDHGC3,"protocadherin gamma subfamily C, 3 ",protein_coding,2,150,0.00819672131147541,5.98359667697659e-17,maroon1,subnet
+ENSG00000244411,KRTAP5-7,keratin associated protein 5-7 ,protein_coding,2,0,0.00900900900900901,4.09865940245366e-18,cyan,subnet
+ENSG00000254245,PCDHGA3,"protocadherin gamma subfamily A, 3 ",protein_coding,2,0,0.0078125,1.14843236531987e-16,maroon1,subnet
+ENSG00000255561,FDXACB1,ferredoxin-fold anticodon binding domain containing 1 ,protein_coding,2,96,0.012987012987013,6.1025339180672e-17,saddlebrown,subnet
+ENSG00000256235,SMIM3,small integral membrane protein 3 ,protein_coding,2,202,0.000533333333333333,5.51282611961381e-17,tomato,subnet
+ENSG00000275395,FCGBP,Fc gamma binding protein ,protein_coding,2,9.5,0.00591715976331361,4.84781574927861e-17,orchid,subnet
+ENSG00000275410,HNF1B,HNF1 homeobox B ,protein_coding,2,0,0.00555555555555556,4.30834812744972e-17,orchid,subnet
+ENSG00000277481,PKD1L3,"polycystin 1 like 3, transient receptor potential channel interacting ",protein_coding,2,100.5,0.000539083557951483,5.46994433645016e-17,tomato,subnet
+ENSG00000001084,GCLC,glutamate-cysteine ligase catalytic subunit ,protein_coding,1,0,0.000441111601235112,3.34568029132951e-17,tomato,subnet
+ENSG00000002587,HS3ST1,heparan sulfate-glucosamine 3-sulfotransferase 1 ,protein_coding,1,0,0.000446627958910228,0,tomato,subnet
+ENSG00000006625,GGCT,gamma-glutamylcyclotransferase ,protein_coding,1,0,0.00483091787439614,3.82967257554972e-17,orchid,subnet
+ENSG00000008226,DLEC1,DLEC1 cilia and flagella associated protein ,protein_coding,1,0,0.000459136822773186,4.19487330096264e-17,tomato,subnet
+ENSG00000011028,MRC2,mannose receptor C-type 2 ,protein_coding,1,0,0.00130548302872063,2.12744146852905e-16,springgreen,subnet
+ENSG00000013375,PGM3,phosphoglucomutase 3 ,protein_coding,1,0,0.00158730158730159,1.32263365980434e-09,royalblue,subnet
+ENSG00000053254,FOXN3,forkhead box N3 ,protein_coding,1,0,0.000755287009063444,2.60631867867876e-17,springgreen,subnet
+ENSG00000067064,IDI1,isopentenyl-diphosphate delta isomerase 1 ,protein_coding,1,0,0.00140646976090014,3.10430597348367e-17,springgreen,subnet
+ENSG00000070214,SLC44A1,solute carrier family 44 member 1 ,protein_coding,1,0,0.00380228136882129,5.72963814873302e-19,orchid,subnet
+ENSG00000077585,GPR137B,G protein-coupled receptor 137B ,protein_coding,1,0,0.00135135135135135,1.07731156721371e-17,springgreen,subnet
+ENSG00000079150,FKBP7,FKBP prolyl isomerase 7 ,protein_coding,1,0,0.00892857142857143,3.42887803915664e-17,saddlebrown,subnet
+ENSG00000079689,SCGN,"secretagogin, EF-hand calcium binding protein ",protein_coding,1,0,0.00135135135135135,2.93946790712038e-18,springgreen,subnet
+ENSG00000080200,CRYBG3,crystallin beta-gamma domain containing 3 ,protein_coding,1,0,0.00684931506849315,6.68311288407545e-18,gold,subnet
+ENSG00000085449,WDFY1,WD repeat and FYVE domain containing 1 ,protein_coding,1,0,0.00107991360691145,7.39672947567399e-15,royalblue,subnet
+ENSG00000087589,CASS4,Cas scaffold protein family member 4 ,protein_coding,1,0,0.00606060606060606,2.16229348091955e-17,gold,subnet
+ENSG00000089351,GRAMD1A,GRAM domain containing 1A ,protein_coding,1,0,0.00526315789473684,3.24544583921731e-17,mediumseagreen,subnet
+ENSG00000093010,COMT,catechol-O-methyltransferase ,protein_coding,1,0,0.00680272108843537,8.18316222809268e-18,yellowgreen,subnet
+ENSG00000093144,ECHDC1,ethylmalonyl-CoA decarboxylase 1 ,protein_coding,1,0,0.000447828034034931,3.02139507044874e-17,tomato,subnet
+ENSG00000103381,CPPED1,calcineurin like phosphoesterase domain containing 1 ,protein_coding,1,0,0.00510204081632653,2.98176269283905e-17,yellowgreen,subnet
+ENSG00000105388,CEACAM5,CEA cell adhesion molecule 5 ,protein_coding,1,0,0.00058173356602676,2.68117687038997e-17,tomato,subnet
+ENSG00000106609,TMEM248,transmembrane protein 248 ,protein_coding,1,0,0.000530503978779841,2.67080932963224e-17,tomato,subnet
+ENSG00000108825,PTGES3L-AARSD1,PTGES3L-AARSD1 readthrough ,protein_coding,1,0,0.00203252032520325,3.56253867055513e-05,royalblue,subnet
+ENSG00000109099,PMP22,peripheral myelin protein 22 ,protein_coding,1,0,0.000481463649494463,2.92082688713813e-17,tomato,subnet
+ENSG00000109101,FOXN1,forkhead box N1 ,protein_coding,1,0,0.00684931506849315,7.9167379290691e-18,gold,subnet
+ENSG00000109654,TRIM2,tripartite motif containing 2 ,protein_coding,1,0,0.00418410041841004,2.69577409696959e-18,orchid,subnet
+ENSG00000110315,RNF141,ring finger protein 141 ,protein_coding,1,0,0.0004510599909788,2.43046449964898e-17,tomato,subnet
+ENSG00000110455,ACCS,1-aminocyclopropane-1-carboxylate synthase homolog (inactive) ,protein_coding,1,0,0.000518672199170125,2.72108754524665e-18,tomato,subnet
+ENSG00000111144,LTA4H,leukotriene A4 hydrolase ,protein_coding,1,0,0.000531632110579479,3.35678660985142e-17,tomato,subnet
+ENSG00000112499,SLC22A2,solute carrier family 22 member 2 ,protein_coding,1,0,0.0015220700152207,0.0955596264836343,royalblue,subnet
+ENSG00000112852,PCDHB2,protocadherin beta 2 ,protein_coding,1,0,0.00862068965517241,6.08384547559496e-17,maroon1,subnet
+ENSG00000117448,AKR1A1,aldo-keto reductase family 1 member A1 ,protein_coding,1,0,0.000577700751010976,2.85209381003941e-18,tomato,subnet
+ENSG00000120093,HOXB3,homeobox B3 ,protein_coding,1,0,0.00043956043956044,2.7656854340277e-17,tomato,subnet
+ENSG00000120306,CYSTM1,cysteine rich transmembrane module containing 1 ,protein_coding,1,0,0.00671140939597315,3.14051767912118e-17,mediumseagreen,subnet
+ENSG00000121064,SCPEP1,serine carboxypeptidase 1 ,protein_coding,1,0,0.00709219858156028,2.59831233497201e-17,yellowgreen,subnet
+ENSG00000121897,LIAS,lipoic acid synthetase ,protein_coding,1,0,0.0045662100456621,3.41468308501748e-17,gold,subnet
+ENSG00000123106,CCDC91,coiled-coil domain containing 91 ,protein_coding,1,0,0.00123762376237624,1.0766762858297e-17,springgreen,subnet
+ENSG00000124134,KCNS1,potassium voltage-gated channel modifier subfamily S member 1 ,protein_coding,1,0,0.00041407867494824,3.75775741559139e-17,tomato,subnet
+ENSG00000124615,MOCS1,molybdenum cofactor synthesis 1 ,protein_coding,1,0,0.00107991360691145,3.24804516320344e-17,springgreen,subnet
+ENSG00000125656,CLPP,caseinolytic mitochondrial matrix peptidase proteolytic subunit ,protein_coding,1,0,0.00176678445229682,8.53870420640266e-09,royalblue,subnet
+ENSG00000125741,OPA3,outer mitochondrial membrane lipid metabolism regulator OPA3 ,protein_coding,1,0,0.00769230769230769,5.10224498282817e-17,maroon1,subnet
+ENSG00000125827,TMX4,thioredoxin related transmembrane protein 4 ,protein_coding,1,0,0.00675675675675676,2.46517465600926e-17,mediumseagreen,subnet
+ENSG00000126243,LRFN3,leucine rich repeat and fibronectin type III domain containing 3 ,protein_coding,1,0,0.000320102432778489,3.31405828848328e-17,tomato,subnet
+ENSG00000128311,TST,thiosulfate sulfurtransferase ,protein_coding,1,0,0.00119047619047619,2.04050384379182e-17,springgreen,subnet
+ENSG00000128951,DUT,deoxyuridine triphosphatase ,protein_coding,1,0,0.00157728706624606,2.93809960875484e-17,springgreen,subnet
+ENSG00000129158,SERGEF,secretion regulating guanine nucleotide exchange factor ,protein_coding,1,0,0.00122100122100122,2.68422539475288e-17,springgreen,subnet
+ENSG00000130005,GAMT,guanidinoacetate N-methyltransferase ,protein_coding,1,0,0.00813008130081301,2.82156517987694e-17,saddlebrown,subnet
+ENSG00000130313,PGLS,6-phosphogluconolactonase ,protein_coding,1,0,0.00709219858156028,2.63628343252236e-17,yellowgreen,subnet
+ENSG00000134253,TRIM45,tripartite motif containing 45 ,protein_coding,1,0,0.0020703933747412,4.71444549007276e-06,royalblue,subnet
+ENSG00000134780,DAGLA,diacylglycerol lipase alpha ,protein_coding,1,0,0.000479616306954437,2.84305585791489e-17,tomato,subnet
+ENSG00000135392,DNAJC14,DnaJ heat shock protein family (Hsp40) member C14 ,protein_coding,1,0,0.00694444444444444,2.68617526706676e-17,cyan,subnet
+ENSG00000135547,HEY2,hes related family bHLH transcription factor with YRPW motif 2 ,protein_coding,1,0,0.00460829493087558,2.21925086590568e-17,gold,subnet
+ENSG00000135577,NMBR,neuromedin B receptor ,protein_coding,1,0,0.00657894736842105,3.39641566884636e-17,mediumseagreen,subnet
+ENSG00000137266,SLC22A23,solute carrier family 22 member 23 ,protein_coding,1,0,0.00135135135135135,7.11459301169554e-18,springgreen,subnet
+ENSG00000137500,CCDC90B,coiled-coil domain containing 90B ,protein_coding,1,0,0.00970873786407767,8.17929668682674e-17,saddlebrown,subnet
+ENSG00000138131,LOXL4,lysyl oxidase like 4 ,protein_coding,1,0,0.00662251655629139,3.20030102932227e-17,yellowgreen,subnet
+ENSG00000138308,PLA2G12B,phospholipase A2 group XIIB ,protein_coding,1,0,0.00163934426229508,2.07025218174064e-16,springgreen,subnet
+ENSG00000139291,TMEM19,transmembrane protein 19 ,protein_coding,1,0,0.00053276505061268,2.43271101547988e-17,tomato,subnet
+ENSG00000139428,MMAB,metabolism of cobalamin associated B ,protein_coding,1,0,0.00169779286926995,3.07481774748339e-17,springgreen,subnet
+ENSG00000141179,PCTP,phosphatidylcholine transfer protein ,protein_coding,1,0,0.00111358574610245,2.70864216859203e-17,springgreen,subnet
+ENSG00000143105,KCNA10,potassium voltage-gated channel subfamily A member 10 ,protein_coding,1,0,0.000523012552301255,1.55365460802489e-17,tomato,subnet
+ENSG00000144199,FAHD2B,fumarylacetoacetate hydrolase domain containing 2B ,protein_coding,1,0,0.00107991360691145,7.39390022135018e-15,royalblue,subnet
+ENSG00000144452,ABCA12,ATP binding cassette subfamily A member 12 ,protein_coding,1,0,0.000430663221360896,3.13333978622234e-17,tomato,subnet
+ENSG00000148288,GBGT1,"globoside alpha-1,3-N-acetylgalactosaminyltransferase 1 (FORS blood group) ",protein_coding,1,0,0.000394011032308905,2.9182026183184e-17,tomato,subnet
+ENSG00000149313,AASDHPPT,aminoadipate-semialdehyde dehydrogenase-phosphopantetheinyl transferase ,protein_coding,1,0,0.00401606425702811,3.33238459747481e-17,gold,subnet
+ENSG00000151413,NUBPL,"NUBP iron-sulfur cluster assembly factor, mitochondrial ",protein_coding,1,0,0.0019723865877712,0.000265087543296967,royalblue,subnet
+ENSG00000153574,RPIA,ribose 5-phosphate isomerase A ,protein_coding,1,0,0.0016260162601626,2.78384491138218e-17,springgreen,subnet
+ENSG00000154864,PIEZO2,piezo type mechanosensitive ion channel component 2 ,protein_coding,1,0,0.000479616306954437,3.38044293311217e-17,tomato,subnet
+ENSG00000156804,FBXO32,F-box protein 32 ,protein_coding,1,0,0.00058173356602676,3.38062396485443e-17,tomato,subnet
+ENSG00000158270,COLEC12,collectin subfamily member 12 ,protein_coding,1,0,0.00746268656716418,3.2731094895429e-17,mediumseagreen,subnet
+ENSG00000160285,LSS,lanosterol synthase ,protein_coding,1,0,0.000529100529100529,2.140028679061e-17,tomato,subnet
+ENSG00000160325,CACFD1,calcium channel flower domain containing 1 ,protein_coding,1,0,0.000481463649494463,2.6230939873605e-17,tomato,subnet
+ENSG00000160886,LY6K,lymphocyte antigen 6 family member K ,protein_coding,1,0,0.00625,3.14157484289255e-17,mediumseagreen,subnet
+ENSG00000162813,BPNT1,"3'(2'), 5'-bisphosphate nucleotidase 1 ",protein_coding,1,0,0.00606060606060606,2.91668694757348e-17,yellowgreen,subnet
+ENSG00000162814,SPATA17,spermatogenesis associated 17 ,protein_coding,1,0,0.000459136822773186,3.26236637680914e-17,tomato,subnet
+ENSG00000162975,KCNF1,potassium voltage-gated channel modifier subfamily F member 1 ,protein_coding,1,0,0.00041407867494824,3.59788962836315e-17,tomato,subnet
+ENSG00000163075,CFAP221,cilia and flagella associated protein 221 ,protein_coding,1,0,0.000459136822773186,3.41515279555874e-17,tomato,subnet
+ENSG00000163141,BNIPL,BCL2 interacting protein like ,protein_coding,1,0,0.00147710487444609,2.04848952776313e-11,royalblue,subnet
+ENSG00000164024,METAP1,methionyl aminopeptidase 1 ,protein_coding,1,0,0.000503524672708963,3.25753946475794e-17,tomato,subnet
+ENSG00000164434,FABP7,fatty acid binding protein 7 ,protein_coding,1,0,0.00632911392405063,3.87152261893287e-17,cyan,subnet
+ENSG00000166224,SGPL1,sphingosine-1-phosphate lyase 1 ,protein_coding,1,0,0.00139470013947001,0.0422888073900847,royalblue,subnet
+ENSG00000166797,CIAO2A,cytosolic iron-sulfur assembly component 2A ,protein_coding,1,0,0.00173611111111111,3.50028785304285e-05,royalblue,subnet
+ENSG00000166833,NAV2,neuron navigator 2 ,protein_coding,1,0,0.000404203718674212,3.41468552919001e-17,tomato,subnet
+ENSG00000167220,HDHD2,haloacid dehalogenase like hydrolase domain containing 2 ,protein_coding,1,0,0.0016260162601626,3.85636743431648e-17,springgreen,subnet
+ENSG00000169299,PGM2,phosphoglucomutase 2 ,protein_coding,1,0,0.00126103404791929,3.60144100767564e-13,royalblue,subnet
+ENSG00000169570,DTWD2,DTW domain containing 2 ,protein_coding,1,0,0.000457456541628545,3.27849512970853e-17,tomato,subnet
+ENSG00000169635,HIC2,HIC ZBTB transcriptional repressor 2 ,protein_coding,1,0,0.00775193798449612,3.51268096913066e-17,saddlebrown,subnet
+ENSG00000169826,CSGALNACT2,chondroitin sulfate N-acetylgalactosaminyltransferase 2 ,protein_coding,1,0,0.00675675675675676,2.76127141333277e-17,mediumseagreen,subnet
+ENSG00000169876,MUC17,"mucin 17, cell surface associated ",protein_coding,1,0,0.003690036900369,3.45515567219414e-17,orchid,subnet
+ENSG00000170037,CNTROB,"centrobin, centriole duplication and spindle assembly protein ",protein_coding,1,0,0.00157728706624606,2.52347727953883e-17,springgreen,subnet
+ENSG00000170291,ELP5,elongator acetyltransferase complex subunit 5 ,protein_coding,1,0,0.00135685210312076,1.32007631982891e-17,springgreen,subnet
+ENSG00000170537,TMC7,transmembrane channel like 7 ,protein_coding,1,0,0.00458715596330275,3.52621931112914e-17,gold,subnet
+ENSG00000170801,HTRA3,HtrA serine peptidase 3 ,protein_coding,1,0,0.000394011032308905,3.16229078446161e-17,tomato,subnet
+ENSG00000171201,SMR3B,submaxillary gland androgen regulated protein 3B ,protein_coding,1,0,0.000413736036408771,2.82558560845683e-17,tomato,subnet
+ENSG00000171425,ZNF581,zinc finger protein 581 ,protein_coding,1,0,0.000505561172901921,3.66009964230599e-17,tomato,subnet
+ENSG00000171794,UTF1,undifferentiated embryonic cell transcription factor 1 ,protein_coding,1,0,0.00584795321637427,2.14437050142288e-17,gold,subnet
+ENSG00000172927,MYEOV,myeloma overexpressed ,protein_coding,1,0,0.00148367952522255,4.27056183693797e-10,royalblue,subnet
+ENSG00000173818,ENDOV,endonuclease V ,protein_coding,1,0,0.00662251655629139,2.1280054739942e-17,yellowgreen,subnet
+ENSG00000174482,LINGO2,leucine rich repeat and Ig domain containing 2 ,protein_coding,1,0,0.0054945054945055,1.97576610600404e-17,orchid,subnet
+ENSG00000174607,UGT8,UDP glycosyltransferase 8 ,protein_coding,1,0,0.00148367952522255,4.27056183878806e-10,royalblue,subnet
+ENSG00000175315,CST6,cystatin E/M ,protein_coding,1,0,0.000447027268663388,3.13929876801336e-17,tomato,subnet
+ENSG00000176396,EID2,EP300 interacting inhibitor of differentiation 2 ,protein_coding,1,0,0.00140845070422535,3.31429788590988e-17,springgreen,subnet
+ENSG00000176485,PLAAT3,phospholipase A and acyltransferase 3 ,protein_coding,1,0,0.00163934426229508,2.21894432739051e-16,springgreen,subnet
+ENSG00000177202,SPACA4,sperm acrosome associated 4 ,protein_coding,1,0,0.00123762376237624,4.48746014985271e-19,springgreen,subnet
+ENSG00000178498,DTX3,deltex E3 ubiquitin ligase 3 ,protein_coding,1,0,0.00173611111111111,3.50028785304255e-05,royalblue,subnet
+ENSG00000178814,OPLAH,"5-oxoprolinase, ATP-hydrolysing ",protein_coding,1,0,0.00523560209424084,3.65835221122917e-17,cyan,subnet
+ENSG00000178917,ZNF852,zinc finger protein 852 ,protein_coding,1,0,0.00038109756097561,3.2591277405473e-17,tomato,subnet
+ENSG00000179600,GPHB5,glycoprotein hormone subunit beta 5 ,protein_coding,1,0,0.00187265917602996,8.68781050523968e-09,royalblue,subnet
+ENSG00000182541,LIMK2,LIM domain kinase 2 ,protein_coding,1,0,0.00203252032520325,3.56253867055509e-05,royalblue,subnet
+ENSG00000183570,PCBP3,poly(rC) binding protein 3 ,protein_coding,1,0,0.000946073793755913,3.03039954995479e-17,springgreen,subnet
+ENSG00000183662,TAFA1,TAFA chemokine like family member 1 ,protein_coding,1,0,0.00173310225303293,1.14827372389035e-09,royalblue,subnet
+ENSG00000183808,RBM12B,RNA binding motif protein 12B ,protein_coding,1,0,0.00584795321637427,2.37706420136757e-17,gold,subnet
+ENSG00000185002,RFX6,regulatory factor X6 ,protein_coding,1,0,0.000754716981132075,2.28515798806201e-17,springgreen,subnet
+ENSG00000185090,MANEAL,mannosidase endo-alpha like ,protein_coding,1,0,0.000320102432778489,2.55786619651306e-17,tomato,subnet
+ENSG00000186526,CYP4F8,cytochrome P450 family 4 subfamily F member 8 ,protein_coding,1,0,0.000405844155844156,3.84656228272035e-17,tomato,subnet
+ENSG00000187123,LYPD6,LY6/PLAUR domain containing 6 ,protein_coding,1,0,0.00140449438202247,0.0438695555121139,royalblue,subnet
+ENSG00000187244,BCAM,basal cell adhesion molecule (Lutheran blood group) ,protein_coding,1,0,0.00543478260869565,2.65457644858132e-17,cyan,subnet
+ENSG00000187630,DHRS4L2,dehydrogenase/reductase 4 like 2 ,protein_coding,1,0,0.00158982511923688,2.62581414349427e-09,royalblue,subnet
+ENSG00000187980,PLA2G2C,phospholipase A2 group IIC ,protein_coding,1,0,0.00163934426229508,2.19034968399631e-16,springgreen,subnet
+ENSG00000188001,TPRG1,tumor protein p63 regulated 1 ,protein_coding,1,0,0.000446428571428571,2.09715093185395e-17,tomato,subnet
+ENSG00000188042,ARL4C,ADP ribosylation factor like GTPase 4C ,protein_coding,1,0,0.000562429696287964,3.49159440488176e-17,tomato,subnet
+ENSG00000188321,ZNF559,zinc finger protein 559 ,protein_coding,1,0,0.0078740157480315,7.73946931899821e-18,cyan,subnet
+ENSG00000188735,TMEM120B,transmembrane protein 120B ,protein_coding,1,0,0.000446428571428571,2.0660711089859e-17,tomato,subnet
+ENSG00000196118,CFAP119,cilia and flagella associated protein 119 ,protein_coding,1,0,0.000459136822773186,3.9866670556042e-17,tomato,subnet
+ENSG00000196263,ZNF471,zinc finger protein 471 ,protein_coding,1,0,0.00704225352112676,3.08568647292201e-17,saddlebrown,subnet
+ENSG00000196865,NHLRC2,NHL repeat containing 2 ,protein_coding,1,0,0.00543478260869565,3.27646375429734e-17,cyan,subnet
+ENSG00000197429,IPP,intracisternal A particle-promoted polypeptide ,protein_coding,1,0,0.00139664804469274,3.14273002554464e-17,springgreen,subnet
+ENSG00000197838,CYP2A13,cytochrome P450 family 2 subfamily A member 13 ,protein_coding,1,0,0.000482625482625483,1.16297207348046e-17,tomato,subnet
+ENSG00000198271,KRTAP4-5,keratin associated protein 4-5 ,protein_coding,1,0,0.00680272108843537,2.2513027490262e-17,cyan,subnet
+ENSG00000203783,PRR9,proline rich 9 ,protein_coding,1,0,0.00123152709359606,3.90767862302435e-18,springgreen,subnet
+ENSG00000204178,MACO1,macoilin 1 ,protein_coding,1,0,0.0072463768115942,2.39820011609169e-17,cyan,subnet
+ENSG00000204671,IL31,interleukin 31 ,protein_coding,1,0,0.00403225806451613,3.24901274489003e-17,gold,subnet
+ENSG00000212900,KRTAP3-2,keratin associated protein 3-2 ,protein_coding,1,0,0.00666666666666667,3.27223300488169e-17,cyan,subnet
+ENSG00000213901,SLC23A3,solute carrier family 23 member 3 ,protein_coding,1,0,0.00680272108843537,6.94616860393459e-18,yellowgreen,subnet
+ENSG00000214160,ALG3,"ALG3 alpha-1,3- mannosyltransferase ",protein_coding,1,0,0.00158730158730159,2.97116216517939e-17,springgreen,subnet
+ENSG00000227345,PARG,poly(ADP-ribose) glycohydrolase ,protein_coding,1,0,0.00909090909090909,0,yellowgreen,subnet
+ENSG00000240849,PEDS1,plasmanylethanolamine desaturase 1 ,protein_coding,1,0,0.00119047619047619,2.68493048727798e-17,springgreen,subnet
+ENSG00000241123,KRTAP10-5,keratin associated protein 10-5 ,protein_coding,1,0,0.00735294117647059,1.34448348890483e-17,cyan,subnet
+ENSG00000241598,KRTAP5-4,keratin associated protein 5-4 ,protein_coding,1,0,0.0072463768115942,2.98073397011411e-17,cyan,subnet
+ENSG00000241878,PISD,phosphatidylserine decarboxylase ,protein_coding,1,0,0.00308641975308642,4.11814388129729e-17,orchid,subnet
+ENSG00000242852,ZNF709,zinc finger protein 709 ,protein_coding,1,0,0.00038109756097561,3.31109233998085e-17,tomato,subnet
+ENSG00000288520,"",novel protein,protein_coding,1,0,0.000501756146512795,3.67560882132813e-17,tomato,subnet
