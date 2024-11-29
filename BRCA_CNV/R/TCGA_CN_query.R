@@ -4,6 +4,7 @@ library(maftools)
 library(tidyverse)
 library(reshape2)
 library(data.table)
+library(DriverGenePathway)
 
 
 getProjectSummary("TCGA-BRCA")
@@ -30,7 +31,6 @@ plotmafSummary(maf = maf, rmOutlier = TRUE, addStat = 'median', dashboard = TRUE
 DriverGenePathway(maf = maf, top = 10, removeNonMutated = TRUE)
 
 #clincial <- GDCquery_clinic(project = "TCGA-BRCA", type = "clinical")
-
 
 
 CNV_query <- GDCquery(
@@ -91,6 +91,7 @@ save(cnv_summary_filt, file = "RData/BRCA_CNV_alterationsPerc.RData")
 
 
 
+COSMIC <- fread("~/OneDrive - RMIT University/PhD/large_git_files/Cosmic_CompleteCNA_v100_GRCh38.tsv", sep = "\t")
 
 
 
