@@ -9,7 +9,8 @@ required_modules = [
     'numpy',
     'tqdm',
     'nltk',
-    'argparse'
+    'argparse',
+    'pickle'
 ]
 
 # Function to check for required modules
@@ -43,6 +44,8 @@ import nltk
 from nltk.corpus import words
 import argparse
 import urllib.parse
+import pickle
+import os
 
 # Ensure the NLTK 'words' corpus is downloaded
 try:
@@ -50,7 +53,7 @@ try:
 except LookupError:
     print("Downloading NLTK 'words' corpus...")
     nltk.download('words')
-    print(f'Download location: {nltk.data.find('corpora/words')}')
+print(f'Download location: {nltk.data.find("corpora/words")}')
 
 def get_citation_count(search_query):
     """
@@ -92,7 +95,7 @@ def get_gene_citations(input_file, cosmic_file, out_filename):
         if 'description' not in df.columns:
             raise ValueError("Input file must contain 'description' column")
 
-        # **Print the number of genes to process**
+        # Print the number of genes to process
         print(f"Number of genes to process: {len(df)}")
         
         # Create PubMed_search term and swap small gene names with description    
@@ -114,8 +117,27 @@ def get_gene_citations(input_file, cosmic_file, out_filename):
         # Initialise results DataFrame
         results = pd.DataFrame(columns=['external_gene_name', 'description', 'search_id', 'MeSH_count'])
         
+        # Check if checkpoint file exists
+        checkpoint_file = 'checkpoint.pkl'
+        if os.path.exists(checkpoint_file):
+            print("\nCheckpoint file found. Resuming from last saved point...")
+            with open(checkpoint_file, 'rb') as f:
+                results = pickle.load(f)
+            # Get the list of genes already processed
+            processed_genes = set(results['external_gene_name'])
+            # Filter out already processed genes
+            df = df[~df['external_gene_name'].isin(processed_genes)]
+            print(f"Number of genes remaining to process: {len(df)}")
+        else:
+            # Initialize results DataFrame
+            results = pd.DataFrame(columns=['external_gene_name', 'description', 'search_id', 'MeSH_count'])
+            processed_genes = set()
+
         # Get citations
         print("\nQuerying PubMed citations...")
+        checkpoint_interval = 100  # Save checkpoint every 100 iterations
+        iteration = 0
+
         for index, row in tqdm(df.iterrows(), total=len(df)):
             gene = row['PubMed_search']
             external_gene_name = row['external_gene_name']
@@ -128,6 +150,17 @@ def get_gene_citations(input_file, cosmic_file, out_filename):
                 'search_id': [gene], 
                 'MeSH_count': [MeSH_count]
             })], ignore_index=True)
+            
+            iteration += 1
+            # Save checkpoint at specified intervals
+            if iteration % checkpoint_interval == 0:
+                with open(checkpoint_file, 'wb') as f:
+                    pickle.dump(results, f)
+
+        # Save final checkpoint after loop completion
+        with open(checkpoint_file, 'wb') as f:
+            pickle.dump(results, f)
+        print("Checkpoint file saved.")
         
         # Check for missing entries and update score
         def update_nan_values(count_results):
@@ -211,7 +244,7 @@ def get_gene_citations(input_file, cosmic_file, out_filename):
         results_TIAB['description_count'] = results_TIAB['description_count'].astype('Int64')
         
         # Read COSMIC hallmark genes from the provided file
-        COSMIC_hallmark_genes_df = pd.read_csv(cosmic_file)
+        COSMIC_hallmark_genes_df = pd.read_csv(cosmic_file, sep='\t')
         COSMIC_hallmark_genes = COSMIC_hallmark_genes_df['GENE_SYMBOL'].tolist()
         COSMIC_hallmark_genes = list(set(COSMIC_hallmark_genes))
 
@@ -238,6 +271,11 @@ def get_gene_citations(input_file, cosmic_file, out_filename):
         results_TIAB.to_csv(output_file, index=False)
         print(f"\nResults saved to: {output_file}")
         
+        # Remove the checkpoint file after successful completion
+        if os.path.exists(checkpoint_file):
+            os.remove(checkpoint_file)
+            print("Checkpoint file removed.")
+            
         return results_TIAB
         
     except Exception as e:
