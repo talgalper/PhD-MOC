@@ -1,0 +1,3484 @@
+external_gene_name,description,search_id,MeSH_count,andGene_count,description_count,best_score
+RPS27A,ribosomal protein S27a ,RPS27A,29,,,29
+UBC,ubiquitin C ,UBC,600,,,600
+UBA52,ubiquitin A-52 residue ribosomal protein fusion product 1 ,UBA52,28,,,28
+TP53,tumor protein p53 ,TP53,16784,,,16784
+UBB,ubiquitin B ,UBB,35,,,35
+EGFR,epidermal growth factor receptor ,EGFR,39912,,,39912
+SRC,"SRC proto-oncogene, non-receptor tyrosine kinase ",SRC,7664,,,7664
+CTNNB1,catenin beta 1 ,CTNNB1,2150,,,2150
+H4C6,H4 clustered histone 6 ,H4C6,2,,,2
+HSP90AA1,heat shock protein 90 alpha family class A member 1 ,HSP90AA1,187,,,187
+EP300,E1A binding protein p300 ,EP300,446,,,446
+FN1,fibronectin 1 ,FN1,644,,,644
+GRB2,growth factor receptor bound protein 2 ,GRB2,693,,,693
+ESR1,estrogen receptor 1 ,ESR1,1702,,,1702
+BRCA1,BRCA1 DNA repair associated ,BRCA1,14103,,,14103
+HDAC1,histone deacetylase 1 ,HDAC1,1295,,,1295
+CREBBP,CREB binding protein ,CREBBP,422,,,422
+HSP90AB1,heat shock protein 90 alpha family class B member 1 ,HSP90AB1,78,,,78
+NPM1,nucleophosmin 1 ,NPM1,1985,,,1985
+STAT3,signal transducer and activator of transcription 3 ,STAT3,11755,,,11755
+PIK3R1,phosphoinositide-3-kinase regulatory subunit 1 ,PIK3R1,391,,,391
+HSPA8,heat shock protein family A (Hsp70) member 8 ,HSPA8,97,,,97
+HSPA4,heat shock protein family A (Hsp70) member 4 ,HSPA4,42,,,42
+BRD4,bromodomain containing 4 ,BRD4,1074,,,1074
+PTPN11,protein tyrosine phosphatase non-receptor type 11 ,PTPN11,599,,,599
+SHC1,SHC adaptor protein 1 ,SHC1,76,,,76
+GNB1,G protein subunit beta 1 ,GNB1,27,,,27
+FYN,"FYN proto-oncogene, Src family tyrosine kinase ",FYN,450,,,450
+MDM2,MDM2 proto-oncogene ,MDM2,5513,,,5513
+ACTB,actin beta ,ACTB,325,,,325
+AKT1,AKT serine/threonine kinase 1 ,AKT1,2400,,,2400
+APP,amyloid beta precursor protein ,APP,1642,,,1642
+SQSTM1,sequestosome 1 ,SQSTM1,649,,,649
+SMAD3,SMAD family member 3 ,SMAD3,1374,,,1374
+GNG2,G protein subunit gamma 2 ,GNG2,15,,,15
+JUN,"Jun proto-oncogene, AP-1 transcription factor subunit ",JUN,6808,69,4,69
+LRRK2,leucine rich repeat kinase 2 ,LRRK2,101,,,101
+CD44,CD44 molecule (IN blood group) ,CD44,8492,,,8492
+SMARCA4,"SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily a, member 4 ",SMARCA4,759,,,759
+H3C12,H3 clustered histone 12 ,H3C12,0,,,0
+CDC42,cell division cycle 42 ,CDC42,1203,,,1203
+H3C13,H3 clustered histone 13 ,H3C13,1,,,1
+CAV1,caveolin 1 ,CAV1,839,,,839
+TRAF6,TNF receptor associated factor 6 ,TRAF6,374,,,374
+PIK3CA,"phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha ",PIK3CA,5537,,,5537
+MYC,"MYC proto-oncogene, bHLH transcription factor ",MYC,22277,,,22277
+H2AX,H2A.X variant histone ,H2AX,1897,,,1897
+ARRB1,arrestin beta 1 ,ARRB1,37,,,37
+RACK1,receptor for activated C kinase 1 ,RACK1,182,,,182
+CLTC,clathrin heavy chain ,CLTC,74,,,74
+STAT1,signal transducer and activator of transcription 1 ,STAT1,2027,,,2027
+CXCR4,C-X-C motif chemokine receptor 4 ,CXCR4,4213,,,4213
+CDK1,cyclin dependent kinase 1 ,CDK1,1935,,,1935
+CDH1,cadherin 1 ,CDH1,2226,,,2226
+HDAC2,histone deacetylase 2 ,HDAC2,559,,,559
+KAT2B,lysine acetyltransferase 2B ,KAT2B,39,,,39
+TP53BP1,tumor protein p53 binding protein 1 ,TP53BP1,61,,,61
+RBBP4,"RB binding protein 4, chromatin remodeling factor ",RBBP4,52,,,52
+RBX1,ring-box 1 ,RBX1,125,,,125
+JAK2,Janus kinase 2 ,JAK2,4258,,,4258
+ARRB2,arrestin beta 2 ,ARRB2,26,,,26
+CALM3,calmodulin 3 ,CALM3,8,,,8
+RHOA,ras homolog family member A ,RHOA,2174,,,2174
+H3-3B,H3.3 histone B ,H3-3B,5,,,5
+ERBB2,erb-b2 receptor tyrosine kinase 2 ,ERBB2,6651,,,6651
+H2BC12,H2B clustered histone 12 ,H2BC12,1,,,1
+CDK2,cyclin dependent kinase 2 ,CDK2,3084,,,3084
+ITGB1,integrin subunit beta 1 ,ITGB1,292,,,292
+H3-4,"H3.4 histone, cluster member ",H3-4,4,,,4
+VCL,vinculin ,VCL,93,,,93
+H2AC8,H2A clustered histone 8 ,H2AC8,0,,,0
+RBBP7,"RB binding protein 7, chromatin remodeling factor ",RBBP7,21,,,21
+PIK3R2,phosphoinositide-3-kinase regulatory subunit 2 ,PIK3R2,67,,,67
+TRAF2,TNF receptor associated factor 2 ,TRAF2,389,,,389
+TLR4,toll like receptor 4 ,TLR4,1541,,,1541
+H3C1,H3 clustered histone 1 ,H3C1,3,,,3
+SYK,spleen associated tyrosine kinase ,SYK,740,,,740
+PTK2,protein tyrosine kinase 2 ,PTK2,182,,,182
+EZH2,enhancer of zeste 2 polycomb repressive complex 2 subunit ,EZH2,3515,,,3515
+LYN,"LYN proto-oncogene, Src family tyrosine kinase ",LYN,567,,,567
+YWHAZ,tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein zeta ,YWHAZ,135,,,135
+FAU,FAU ubiquitin like and ribosomal protein S30 fusion ,FAU,30,,,30
+AR,androgen receptor ,androgen receptor ,11187,,,11187
+HIF1A,hypoxia inducible factor 1 subunit alpha ,HIF1A,794,,,794
+TJP1,tight junction protein 1 ,TJP1,36,,,36
+PLCG1,phospholipase C gamma 1 ,PLCG1,82,,,82
+SMAD2,SMAD family member 2 ,SMAD2,1686,,,1686
+SMAD4,SMAD family member 4 ,SMAD4,2380,,,2380
+CALML5,calmodulin like 5 ,CALML5,19,,,19
+MAPK1,mitogen-activated protein kinase 1 ,MAPK1,440,,,440
+CALML3,calmodulin like 3 ,CALML3,13,,,13
+H2AC20,H2A clustered histone 20 ,H2AC20,0,,,0
+EEF1A1,eukaryotic translation elongation factor 1 alpha 1 ,EEF1A1,88,,,88
+SOX2,SRY-box transcription factor 2 ,SOX2,3188,,,3188
+CHUK,component of inhibitor of nuclear factor kappa B kinase complex ,CHUK,33,,,33
+RB1,RB transcriptional corepressor 1 ,RB1,3419,,,3419
+CUL1,cullin 1 ,CUL1,170,,,170
+CALML4,calmodulin like 4 ,CALML4,1,,,1
+RAC1,Rac family small GTPase 1 ,RAC1,1962,,,1962
+EGF,epidermal growth factor ,EGF,9535,,,9535
+DDB1,damage specific DNA binding protein 1 ,DDB1,127,,,127
+CALML6,calmodulin like 6 ,CALML6,2,,,2
+RUVBL1,RuvB like AAA ATPase 1 ,RUVBL1,55,,,55
+YWHAB,tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein beta ,YWHAB,21,,,21
+DCTN1,dynactin subunit 1 ,DCTN1,32,,,32
+CCR5,C-C motif chemokine receptor 5 ,CCR5,596,,,596
+JAK1,Janus kinase 1 ,JAK1,1125,,,1125
+PLK1,polo like kinase 1 ,PLK1,1217,,,1217
+LARP7,"La ribonucleoprotein 7, transcriptional regulator ",LARP7,12,,,12
+TNF,tumor necrosis factor ,TNF,16620,,,16620
+EZR,ezrin ,EZR,89,,,89
+SIRT1,sirtuin 1 ,SIRT1,1448,,,1448
+UBE2I,ubiquitin conjugating enzyme E2 I ,UBE2I,19,,,19
+ITGB3,integrin subunit beta 3 ,ITGB3,152,,,152
+VCP,valosin containing protein ,VCP,246,,,246
+PRKN,parkin RBR E3 ubiquitin protein ligase ,PRKN,35,,,35
+MAPT,microtubule associated protein tau ,MAPT,91,,,91
+H4C14,H4 clustered histone 14 ,H4C14,0,,,0
+HSPA5,heat shock protein family A (Hsp70) member 5 ,HSPA5,137,,,137
+UBE2D1,ubiquitin conjugating enzyme E2 D1 ,UBE2D1,8,,,8
+KAT5,lysine acetyltransferase 5 ,KAT5,55,,,55
+HRAS,"HRas proto-oncogene, GTPase ",HRAS,2484,,,2484
+H4C3,H4 clustered histone 3 ,H4C3,1,,,1
+H4C9,H4 clustered histone 9 ,H4C9,0,,,0
+KDM1A,lysine demethylase 1A ,KDM1A,185,,,185
+IKBKB,inhibitor of nuclear factor kappa B kinase subunit beta ,IKBKB,84,,,84
+CHD4,chromodomain helicase DNA binding protein 4 ,CHD4,84,,,84
+PARP1,poly(ADP-ribose) polymerase 1 ,PARP1,2367,,,2367
+CENPS,centromere protein S ,CENPS,14,,,14
+H4C16,H4 histone 16 ,H4C16,0,,,0
+IKBKG,inhibitor of nuclear factor kappa B kinase regulatory subunit gamma ,IKBKG,17,,,17
+H4C13,H4 clustered histone 13 ,H4C13,0,,,0
+H4C2,H4 clustered histone 2 ,H4C2,1,,,1
+XIAP,X-linked inhibitor of apoptosis ,XIAP,2084,,,2084
+RPS6,ribosomal protein S6 ,RPS6,153,,,153
+H4C8,H4 clustered histone 8 ,H4C8,1,,,1
+CENPX,centromere protein X ,CENPX,2,,,2
+H4C11,H4 clustered histone 11 ,H4C11,1,,,1
+H4C12,H4 clustered histone 12 ,H4C12,0,,,0
+H4C15,H4 clustered histone 15 ,H4C15,0,,,0
+H4C5,H4 clustered histone 5 ,H4C5,0,,,0
+H4C4,H4 clustered histone 4 ,H4C4,2,,,2
+H4C1,H4 clustered histone 1 ,H4C1,0,,,0
+TGFB1,transforming growth factor beta 1 ,TGFB1,533,,,533
+IGF1R,insulin like growth factor 1 receptor ,IGF1R,2585,,,2585
+GNAI1,G protein subunit alpha i1 ,GNAI1,21,,,21
+IQGAP1,IQ motif containing GTPase activating protein 1 ,IQGAP1,204,,,204
+CCNA2,cyclin A2 ,CCNA2,311,,,311
+GNAQ,G protein subunit alpha q ,GNAQ,485,,,485
+ATP6V0C,ATPase H+ transporting V0 subunit c ,ATP6V0C,13,,,13
+H3C14,H3 clustered histone 14 ,H3C14,1,,,1
+FLNA,filamin A ,FLNA,175,,,175
+SKP1,S-phase kinase associated protein 1 ,SKP1,252,,,252
+FGF2,fibroblast growth factor 2 ,FGF2,1179,,,1179
+DNMT1,DNA methyltransferase 1 ,DNMT1,1538,,,1538
+RPS3,ribosomal protein S3 ,RPS3,41,,,41
+B2M,beta-2-microglobulin ,B2M,505,,,505
+RANBP2,RAN binding protein 2 ,RANBP2,84,,,84
+TNFRSF1A,TNF receptor superfamily member 1A ,TNFRSF1A,69,,,69
+CDKN1A,cyclin dependent kinase inhibitor 1A ,CDKN1A,1059,,,1059
+STRN,striatin ,STRN,75,,,75
+RPA1,replication protein A1 ,RPA1,72,,,72
+ACTG1,actin gamma 1 ,ACTG1,38,,,38
+MSN,moesin ,MSN,397,,,397
+GNAS,GNAS complex locus ,GNAS,682,,,682
+CCNB1,cyclin B1 ,CCNB1,493,,,493
+RPS16,ribosomal protein S16 ,RPS16,14,,,14
+ALB,albumin ,ALB,919,4,15572,15572
+TRIM28,tripartite motif containing 28 ,TRIM28,128,,,128
+CCR2,C-C motif chemokine receptor 2 ,CCR2,557,,,557
+CXCR2,C-X-C motif chemokine receptor 2 ,CXCR2,673,,,673
+ISG15,ISG15 ubiquitin like modifier ,ISG15,214,,,214
+NTRK1,neurotrophic receptor tyrosine kinase 1 ,NTRK1,593,,,593
+CCL5,C-C motif chemokine ligand 5 ,CCL5,794,,,794
+YWHAE,tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein epsilon ,YWHAE,140,,,140
+LCK,"LCK proto-oncogene, Src family tyrosine kinase ",LCK,439,,,439
+H3-5,H3.5 histone ,H3-5,6,,,6
+XRCC6,X-ray repair cross complementing 6 ,XRCC6,57,,,57
+TGFBR1,transforming growth factor beta receptor 1 ,TGFBR1,313,,,313
+KDR,kinase insert domain receptor ,KDR,967,,,967
+KIF5B,kinesin family member 5B ,KIF5B,175,,,175
+CCR3,C-C motif chemokine receptor 3 ,CCR3,132,,,132
+FANCE,FA complementation group E ,FANCE,29,,,29
+DLG4,discs large MAGUK scaffold protein 4 ,DLG4,9,,,9
+RPS8,ribosomal protein S8 ,RPS8,6,,,6
+SNCA,synuclein alpha ,SNCA,63,,,63
+SP1,Sp1 transcription factor ,SP1,2937,,,2937
+CCR1,C-C motif chemokine receptor 1 ,CCR1,240,,,240
+MTOR,mechanistic target of rapamycin kinase ,MTOR,18371,,,18371
+RPA3,replication protein A3 ,RPA3,38,,,38
+CXCL12,C-X-C motif chemokine ligand 12 ,CXCL12,2017,,,2017
+RPA2,replication protein A2 ,RPA2,61,,,61
+C3,complement C3 ,complement C3 ,178,,,178
+TLN1,talin 1 ,TLN1,46,,,46
+RPS3A,ribosomal protein S3A ,RPS3A,7,,,7
+RUNX1,RUNX family transcription factor 1 ,RUNX1,2253,,,2253
+RPS7,ribosomal protein S7 ,RPS7,17,,,17
+DAXX,death domain associated protein ,DAXX,329,,,329
+KAT2A,lysine acetyltransferase 2A ,KAT2A,54,,,54
+BIRC2,baculoviral IAP repeat containing 2 ,BIRC2,72,,,72
+SDC1,syndecan 1 ,SDC1,196,,,196
+STAT5A,signal transducer and activator of transcription 5A ,STAT5A,336,,,336
+BECN1,beclin 1 ,BECN1,281,,,281
+PCNA,proliferating cell nuclear antigen ,PCNA,5254,,,5254
+YY1,YY1 transcription factor ,YY1,643,,,643
+TBP,TATA-box binding protein ,TBP,325,,,325
+CSNK1A1,casein kinase 1 alpha 1 ,CSNK1A1,37,,,37
+ATP6V0B,ATPase H+ transporting V0 subunit b ,ATP6V0B,5,,,5
+CCR7,C-C motif chemokine receptor 7 ,CCR7,839,,,839
+SKP2,S-phase kinase associated protein 2 ,SKP2,913,,,913
+NOTCH1,notch receptor 1 ,NOTCH1,3440,,,3440
+CXCR1,C-X-C motif chemokine receptor 1 ,CXCR1,349,,,349
+BTRC,beta-transducin repeat containing E3 ubiquitin protein ligase ,BTRC,42,,,42
+FGFR1,fibroblast growth factor receptor 1 ,FGFR1,1808,,,1808
+RPS5,ribosomal protein S5 ,RPS5,14,,,14
+CD40,CD40 molecule ,CD40,2097,,,2097
+RPS19,ribosomal protein S19 ,RPS19,18,,,18
+RPS11,ribosomal protein S11 ,RPS11,8,,,8
+IRS1,insulin receptor substrate 1 ,IRS1,652,,,652
+RPS9,ribosomal protein S9 ,RPS9,19,,,19
+RPS17,ribosomal protein S17 ,RPS17,7,,,7
+CXCR3,C-X-C motif chemokine receptor 3 ,CXCR3,660,,,660
+TYK2,tyrosine kinase 2 ,TYK2,215,,,215
+RPS13,ribosomal protein S13 ,RPS13,10,,,10
+VWF,von Willebrand factor ,VWF,649,,,649
+CENPA,centromere protein A ,CENPA,136,,,136
+RPS2,ribosomal protein S2 ,RPS2,20,,,20
+CRK,"CRK proto-oncogene, adaptor protein ",CRK,259,,,259
+FOS,"Fos proto-oncogene, AP-1 transcription factor subunit ",FOS,2922,,,2922
+H3C15,H3 clustered histone 15 ,H3C15,0,,,0
+CD74,CD74 molecule ,CD74,462,,,462
+DDX5,DEAD-box helicase 5 ,DDX5,135,,,135
+CCND1,cyclin D1 ,CCND1,2755,,,2755
+RPS12,ribosomal protein S12 ,RPS12,14,,,14
+KLC1,kinesin light chain 1 ,KLC1,15,,,15
+CCR6,C-C motif chemokine receptor 6 ,CCR6,294,,,294
+RPS24,ribosomal protein S24 ,RPS24,15,,,15
+RPTOR,regulatory associated protein of MTOR complex 1 ,RPTOR,41,,,41
+BUB1B,BUB1 mitotic checkpoint serine/threonine kinase B ,BUB1B,210,,,210
+NCK1,NCK adaptor protein 1 ,NCK1,45,,,45
+EEF2,eukaryotic translation elongation factor 2 ,EEF2,123,,,123
+RPSA,ribosomal protein SA ,RPSA,33,,,33
+RPS14,ribosomal protein S14 ,RPS14,26,,,26
+RPS4X,ribosomal protein S4 X-linked ,RPS4X,6,,,6
+RPS18,ribosomal protein S18 ,RPS18,16,,,16
+RPS28,ribosomal protein S28 ,RPS28,8,,,8
+NR3C1,nuclear receptor subfamily 3 group C member 1 ,NR3C1,167,,,167
+NUDCD1,NudC domain containing 1 ,NUDCD1,11,,,11
+UBE2D2,ubiquitin conjugating enzyme E2 D2 ,UBE2D2,10,,,10
+BRCA2,BRCA2 DNA repair associated ,BRCA2,8561,,,8561
+ATP6V0D1,ATPase H+ transporting V0 subunit d1 ,ATP6V0D1,5,,,5
+CX3CR1,C-X3-C motif chemokine receptor 1 ,CX3CR1,231,,,231
+RPS27,ribosomal protein S27 ,RPS27,18,,,18
+P4HB,prolyl 4-hydroxylase subunit beta ,P4HB,65,,,65
+RPS23,ribosomal protein S23 ,RPS23,8,,,8
+ATP6V1B1,ATPase H+ transporting V1 subunit B1 ,ATP6V1B1,8,,,8
+RPS25,ribosomal protein S25 ,RPS25,6,,,6
+LGALS3,galectin 3 ,LGALS3,126,,,126
+PML,PML nuclear body scaffold ,PML,2778,,,2778
+GJA1,gap junction protein alpha 1 ,GJA1,61,,,61
+SOCS1,suppressor of cytokine signaling 1 ,SOCS1,593,,,593
+HBA2,hemoglobin subunit alpha 2 ,HBA2,17,,,17
+HSPA1B,heat shock protein family A (Hsp70) member 1B ,HSPA1B,52,,,52
+H3-7,H3.7 histone (putative) ,H3-7,2,,,2
+RPS20,ribosomal protein S20 ,RPS20,18,,,18
+TPR,"translocated promoter region, nuclear basket protein ",TPR,283,,,283
+VTN,vitronectin ,VTN,32,,,32
+PPP2CA,protein phosphatase 2 catalytic subunit alpha ,PPP2CA,32,,,32
+KMT2A,lysine methyltransferase 2A ,KMT2A,707,,,707
+CREB1,cAMP responsive element binding protein 1 ,CREB1,375,,,375
+ATP6V1F,ATPase H+ transporting V1 subunit F ,ATP6V1F,2,,,2
+TRAF3,TNF receptor associated factor 3 ,TRAF3,172,,,172
+ATP6V1B2,ATPase H+ transporting V1 subunit B2 ,ATP6V1B2,7,,,7
+PF4,platelet factor 4 ,PF4,160,,,160
+SIN3A,SIN3 transcription regulator family member A ,SIN3A,92,,,92
+AURKB,aurora kinase B ,AURKB,289,,,289
+RPS26,ribosomal protein S26 ,RPS26,7,,,7
+CAPZB,capping actin protein of muscle Z-line subunit beta ,CAPZB,8,,,8
+RNF31,ring finger protein 31 ,RNF31,21,,,21
+ATP6V1E1,ATPase H+ transporting V1 subunit E1 ,ATP6V1E1,5,,,5
+RPS15A,ribosomal protein S15a ,RPS15A,28,,,28
+ITGAV,integrin subunit alpha V ,ITGAV,127,,,127
+CXCL11,C-X-C motif chemokine ligand 11 ,CXCL11,262,,,262
+SUZ12,SUZ12 polycomb repressive complex 2 subunit ,SUZ12,353,,,353
+CCR8,C-C motif chemokine receptor 8 ,CCR8,101,,,101
+ATP6V1H,ATPase H+ transporting V1 subunit H ,ATP6V1H,3,,,3
+YBX1,Y-box binding protein 1 ,YBX1,234,,,234
+PRKACA,protein kinase cAMP-activated catalytic subunit alpha ,PRKACA,164,,,164
+MAPK3,mitogen-activated protein kinase 3 ,MAPK3,179,,,179
+EIF4G1,eukaryotic translation initiation factor 4 gamma 1 ,EIF4G1,51,,,51
+RPS15,ribosomal protein S15 ,RPS15,23,,,23
+BCL11A,BCL11 transcription factor A ,BCL11A,111,,,111
+CDK4,cyclin dependent kinase 4 ,CDK4,6048,,,6048
+YAP1,Yes1 associated transcriptional regulator ,YAP1,1242,,,1242
+FANCD2,FA complementation group D2 ,FANCD2,320,,,320
+POLR2G,RNA polymerase II subunit G ,POLR2G,1,,,1
+HTT,huntingtin ,HTT,131,,,131
+ATP6V1D,ATPase H+ transporting V1 subunit D ,ATP6V1D,2,,,2
+E2F1,E2F transcription factor 1 ,E2F1,2228,,,2228
+CDC20,cell division cycle 20 ,CDC20,448,,,448
+PIK3R3,phosphoinositide-3-kinase regulatory subunit 3 ,PIK3R3,87,,,87
+RPS10,ribosomal protein S10 ,RPS10,7,,,7
+RIPK1,receptor interacting serine/threonine kinase 1 ,RIPK1,232,,,232
+TGFBR2,transforming growth factor beta receptor 2 ,TGFBR2,426,,,426
+CXCL8,C-X-C motif chemokine ligand 8 ,CXCL8,759,,,759
+CCL11,C-C motif chemokine ligand 11 ,CCL11,90,,,90
+SOCS3,suppressor of cytokine signaling 3 ,SOCS3,494,,,494
+ATP5PO,ATP synthase peripheral stalk subunit OSCP ,ATP5PO,0,,,0
+MYH9,myosin heavy chain 9 ,MYH9,158,,,158
+FBXW7,F-box and WD repeat domain containing 7 ,FBXW7,806,,,806
+ATP6V1A,ATPase H+ transporting V1 subunit A ,ATP6V1A,9,,,9
+CAPZA1,capping actin protein of muscle Z-line subunit alpha 1 ,CAPZA1,20,,,20
+CCL21,C-C motif chemokine ligand 21 ,CCL21,315,,,315
+TPM3,tropomyosin 3 ,TPM3,193,,,193
+FOXO1,forkhead box O1 ,FOXO1,1210,,,1210
+CXCR5,C-X-C motif chemokine receptor 5 ,CXCR5,301,,,301
+ATP6V0E2,ATPase H+ transporting V0 subunit e2 ,ATP6V0E2,2,,,2
+RPS21,ribosomal protein S21 ,RPS21,7,,,7
+STAT5B,signal transducer and activator of transcription 5B ,STAT5B,351,,,351
+CCR10,C-C motif chemokine receptor 10 ,CCR10,79,,,79
+SUMO2,small ubiquitin like modifier 2 ,SUMO2,81,,,81
+OCLN,occludin ,OCLN,55,,,55
+HBA1,hemoglobin subunit alpha 1 ,HBA1,27,,,27
+VAMP2,vesicle associated membrane protein 2 ,VAMP2,31,,,31
+GNB5,G protein subunit beta 5 ,GNB5,6,,,6
+SMAD7,SMAD family member 7 ,SMAD7,467,,,467
+GATA3,GATA binding protein 3 ,GATA3,1508,,,1508
+APOA1,apolipoprotein A1 ,APOA1,204,,,204
+APOE,apolipoprotein E ,APOE,476,,,476
+CCNA1,cyclin A1 ,CCNA1,114,,,114
+ATP6V1G1,ATPase H+ transporting V1 subunit G1 ,ATP6V1G1,6,,,6
+SEC31A,"SEC31 homolog A, COPII coat complex component ",SEC31A,18,,,18
+HSPG2,heparan sulfate proteoglycan 2 ,HSPG2,54,,,54
+TAF1,TATA-box binding protein associated factor 1 ,TAF1,42,,,42
+ATP6V0D2,ATPase H+ transporting V0 subunit d2 ,ATP6V0D2,9,,,9
+SMARCA5,"SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily a, member 5 ",SMARCA5,63,,,63
+PRKCA,protein kinase C alpha ,PRKCA,128,,,128
+CXCR6,C-X-C motif chemokine receptor 6 ,CXCR6,169,,,169
+CCR9,C-C motif chemokine receptor 9 ,CCR9,90,,,90
+FAM20C,FAM20C golgi associated secretory pathway kinase ,FAM20C,16,,,16
+TBK1,TANK binding kinase 1 ,TBK1,216,,,216
+EHMT2,euchromatic histone lysine methyltransferase 2 ,EHMT2,94,,,94
+CBFB,core-binding factor subunit beta ,CBFB,343,,,343
+AURKA,aurora kinase A ,AURKA,826,,,826
+TRADD,TNFRSF1A associated via death domain ,TRADD,126,,,126
+PIK3CG,"phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit gamma ",PIK3CG,68,,,68
+HSPA9,heat shock protein family A (Hsp70) member 9 ,HSPA9,56,,,56
+RAF1,"Raf-1 proto-oncogene, serine/threonine kinase ",RAF1,1053,,,1053
+CDK9,cyclin dependent kinase 9 ,CDK9,391,,,391
+MDC1,mediator of DNA damage checkpoint 1 ,MDC1,147,,,147
+EPHA2,EPH receptor A2 ,EPHA2,717,,,717
+LAMTOR1,"late endosomal/lysosomal adaptor, MAPK and MTOR activator 1 ",LAMTOR1,19,,,19
+CXCL10,C-X-C motif chemokine ligand 10 ,CXCL10,953,,,953
+ERCC4,"ERCC excision repair 4, endonuclease catalytic subunit ",ERCC4,163,,,163
+RPS27L,ribosomal protein S27 like ,RPS27L,6,,,6
+IGKV1D-33,immunoglobulin kappa variable 1D-33 ,IGKV1D-33,1,,,1
+IGKV1-33,immunoglobulin kappa variable 1-33 ,IGKV1-33,3,,,3
+CASP8,caspase 8 ,CASP8,544,,,544
+MAPK8,mitogen-activated protein kinase 8 ,MAPK8,94,,,94
+UBE2D3,ubiquitin conjugating enzyme E2 D3 ,UBE2D3,16,,,16
+TCIRG1,"T cell immune regulator 1, ATPase H+ transporting V0 subunit a3 ",TCIRG1,15,,,15
+GNB3,G protein subunit beta 3 ,GNB3,29,,,29
+GNB4,G protein subunit beta 4 ,GNB4,13,,,13
+TLR2,toll like receptor 2 ,TLR2,627,,,627
+ESR2,estrogen receptor 2 ,ESR2,223,,,223
+VAV1,vav guanine nucleotide exchange factor 1 ,VAV1,132,,,132
+ATP5F1A,ATP synthase F1 subunit alpha ,ATP5F1A,4,,,4
+PPIB,peptidylprolyl isomerase B ,PPIB,23,,,23
+TPM4,tropomyosin 4 ,TPM4,63,,,63
+BCL2,BCL2 apoptosis regulator ,BCL2,31085,,,31085
+RPS29,ribosomal protein S29 ,RPS29,9,,,9
+ATP6V1G2,ATPase H+ transporting V1 subunit G2 ,ATP6V1G2,4,,,4
+CFTR,CF transmembrane conductance regulator ,CFTR,313,,,313
+CD9,CD9 molecule ,CD9,704,,,704
+PLAUR,"plasminogen activator, urokinase receptor ",PLAUR,96,,,96
+ERCC1,"ERCC excision repair 1, endonuclease non-catalytic subunit ",ERCC1,1619,,,1619
+ATP6V0A1,ATPase H+ transporting V0 subunit a1 ,ATP6V0A1,5,,,5
+TSG101,tumor susceptibility 101 ,TSG101,167,,,167
+CDKN1B,cyclin dependent kinase inhibitor 1B ,CDKN1B,484,,,484
+HTRA2,HtrA serine peptidase 2 ,HTRA2,124,,,124
+LAMTOR2,"late endosomal/lysosomal adaptor, MAPK and MTOR activator 2 ",LAMTOR2,9,,,9
+GNGT1,G protein subunit gamma transducin 1 ,GNGT1,9,,,9
+PPARG,peroxisome proliferator activated receptor gamma ,PPARG,354,,,354
+CUL4A,cullin 4A ,CUL4A,125,,,125
+ATP6V1C2,ATPase H+ transporting V1 subunit C2 ,ATP6V1C2,8,,,8
+CENPC,centromere protein C ,CENPC,13,,,13
+PARD3,par-3 family cell polarity regulator ,PARD3,39,,,39
+ATP6V1C1,ATPase H+ transporting V1 subunit C1 ,ATP6V1C1,15,,,15
+CCT8,chaperonin containing TCP1 subunit 8 ,CCT8,8,,,8
+BRAF,"B-Raf proto-oncogene, serine/threonine kinase ",BRAF,16882,,,16882
+GNB2,G protein subunit beta 2 ,GNB2,14,,,14
+PLCG2,phospholipase C gamma 2 ,PLCG2,96,,,96
+CAPZA2,capping actin protein of muscle Z-line subunit alpha 2 ,CAPZA2,11,,,11
+BIRC3,baculoviral IAP repeat containing 3 ,BIRC3,262,,,262
+TFRC,transferrin receptor ,TFRC,146,,,146
+ITGB5,integrin subunit beta 5 ,ITGB5,45,,,45
+APOB,apolipoprotein B ,APOB,367,,,367
+LAMTOR3,"late endosomal/lysosomal adaptor, MAPK and MTOR activator 3 ",LAMTOR3,12,,,12
+ATP5F1B,ATP synthase F1 subunit beta ,ATP5F1B,3,,,3
+CLU,clusterin ,CLU,247,,,247
+TFG,trafficking from ER to golgi regulator ,TFG,171,,,171
+RUNX2,RUNX family transcription factor 2 ,RUNX2,670,,,670
+MAP3K7,mitogen-activated protein kinase kinase kinase 7 ,MAP3K7,69,,,69
+THBS1,thrombospondin 1 ,THBS1,325,,,325
+CDKN2A,cyclin dependent kinase inhibitor 2A ,CDKN2A,4697,,,4697
+ATP5MC3,ATP synthase membrane subunit c locus 3 ,ATP5MC3,4,,,4
+FANCC,FA complementation group C ,FANCC,110,,,110
+ATP5MC1,ATP synthase membrane subunit c locus 1 ,ATP5MC1,0,,,0
+A2M,alpha-2-macroglobulin ,A2M,80,,,80
+FANCA,FA complementation group A ,FANCA,216,,,216
+CALM1,calmodulin 1 ,CALM1,29,,,29
+VDAC1,voltage dependent anion channel 1 ,VDAC1,184,,,184
+UBL4A,ubiquitin like 4A ,UBL4A,5,,,5
+FZR1,fizzy and cell division cycle 20 related 1 ,FZR1,19,,,19
+CD81,CD81 molecule ,CD81,386,,,386
+PTPN6,protein tyrosine phosphatase non-receptor type 6 ,PTPN6,70,,,70
+GNAI2,G protein subunit alpha i2 ,GNAI2,35,,,35
+SUMO1,small ubiquitin like modifier 1 ,SUMO1,198,,,198
+CANX,calnexin ,CANX,17,,,17
+ITGB3BP,integrin subunit beta 3 binding protein ,ITGB3BP,9,,,9
+GNG4,G protein subunit gamma 4 ,GNG4,21,,,21
+CALR,calreticulin ,CALR,501,,,501
+ATP6V1E2,ATPase H+ transporting V1 subunit E2 ,ATP6V1E2,0,,,0
+EEF1G,eukaryotic translation elongation factor 1 gamma ,EEF1G,14,,,14
+DCN,decorin ,DCN,178,,,178
+MCM2,minichromosome maintenance complex component 2 ,MCM2,434,,,434
+ICAM1,intercellular adhesion molecule 1 ,ICAM1,2237,,,2237
+CCL2,C-C motif chemokine ligand 2 ,CCL2,1346,,,1346
+KRT18,keratin 18 ,KRT18,66,,,66
+ATP6V0E1,ATPase H+ transporting V0 subunit e1 ,ATP6V0E1,2,,,2
+TJP2,tight junction protein 2 ,TJP2,15,,,15
+GNG11,G protein subunit gamma 11 ,GNG11,22,,,22
+RPS4Y1,ribosomal protein S4 Y-linked 1 ,RPS4Y1,5,,,5
+LAMTOR5,"late endosomal/lysosomal adaptor, MAPK and MTOR activator 5 ",LAMTOR5,13,,,13
+NGF,nerve growth factor ,NGF,997,,,997
+RC3H1,ring finger and CCCH-type domains 1 ,RC3H1,4,,,4
+KNL1,kinetochore scaffold 1 ,KNL1,18,,,18
+FANCI,FA complementation group I ,FANCI,80,,,80
+CXCL1,C-X-C motif chemokine ligand 1 ,CXCL1,699,,,699
+BUB1,BUB1 mitotic checkpoint serine/threonine kinase ,BUB1,302,,,302
+GNG5,G protein subunit gamma 5 ,GNG5,13,,,13
+SMURF1,SMAD specific E3 ubiquitin protein ligase 1 ,SMURF1,98,,,98
+FANCG,FA complementation group G ,FANCG,70,,,70
+CDC27,cell division cycle 27 ,CDC27,56,,,56
+RCOR1,REST corepressor 1 ,RCOR1,13,,,13
+FGF1,fibroblast growth factor 1 ,FGF1,313,,,313
+GNA13,G protein subunit alpha 13 ,GNA13,72,,,72
+NCOA3,nuclear receptor coactivator 3 ,NCOA3,101,,,101
+BMP2,bone morphogenetic protein 2 ,BMP2,552,,,552
+GNG13,G protein subunit gamma 13 ,GNG13,3,,,3
+ATP5MC2,ATP synthase membrane subunit c locus 2 ,ATP5MC2,0,,,0
+CXCL9,C-X-C motif chemokine ligand 9 ,CXCL9,561,,,561
+PRKACB,protein kinase cAMP-activated catalytic subunit beta ,PRKACB,60,,,60
+SH3KBP1,SH3 domain containing kinase binding protein 1 ,SH3KBP1,5,,,5
+FGF17,fibroblast growth factor 17 ,FGF17,16,,,16
+CTBP1,C-terminal binding protein 1 ,CTBP1,127,,,127
+GNG3,G protein subunit gamma 3 ,GNG3,4,,,4
+GNGT2,G protein subunit gamma transducin 2 ,GNGT2,5,,,5
+GNG8,G protein subunit gamma 8 ,GNG8,4,,,4
+GNG12,G protein subunit gamma 12 ,GNG12,15,,,15
+GNG7,G protein subunit gamma 7 ,GNG7,25,,,25
+CCR4,C-C motif chemokine receptor 4 ,CCR4,589,,,589
+IGKV2D-28,immunoglobulin kappa variable 2D-28 ,IGKV2D-28,0,,,0
+GNG10,G protein subunit gamma 10 ,GNG10,4,,,4
+RPS4Y2,ribosomal protein S4 Y-linked 2 ,RPS4Y2,0,,,0
+CD4,CD4 molecule ,CD4,21097,,,21097
+LCP2,lymphocyte cytosolic protein 2 ,LCP2,21,,,21
+NEDD4L,NEDD4 like E3 ubiquitin protein ligase ,NEDD4L,74,,,74
+XRCC5,X-ray repair cross complementing 5 ,XRCC5,101,,,101
+SNW1,SNW domain containing 1 ,SNW1,12,,,12
+CENPI,centromere protein I ,CENPI,12,,,12
+CCNE1,cyclin E1 ,CCNE1,544,,,544
+PLOD3,"procollagen-lysine,2-oxoglutarate 5-dioxygenase 3 ",PLOD3,35,,,35
+COL7A1,collagen type VII alpha 1 chain ,COL7A1,44,,,44
+VASP,vasodilator stimulated phosphoprotein ,VASP,128,,,128
+RBCK1,RANBP2-type and C3HC4-type zinc finger containing 1 ,RBCK1,27,,,27
+KIF23,kinesin family member 23 ,KIF23,84,,,84
+NTRK2,neurotrophic receptor tyrosine kinase 2 ,NTRK2,236,,,236
+DOCK1,dedicator of cytokinesis 1 ,DOCK1,32,,,32
+ATP5F1C,ATP synthase F1 subunit gamma ,ATP5F1C,2,,,2
+CDH2,cadherin 2 ,CDH2,240,,,240
+XCR1,X-C motif chemokine receptor 1 ,XCR1,46,,,46
+LAMTOR4,"late endosomal/lysosomal adaptor, MAPK and MTOR activator 4 ",LAMTOR4,6,,,6
+CD247,CD247 molecule ,CD247,38,,,38
+H2AC4,H2A clustered histone 4 ,H2AC4,1,,,1
+ERBB3,erb-b2 receptor tyrosine kinase 3 ,ERBB3,1201,,,1201
+ELAVL1,ELAV like RNA binding protein 1 ,ELAVL1,125,,,125
+FGF10,fibroblast growth factor 10 ,FGF10,84,,,84
+SLC9A1,solute carrier family 9 member A1 ,SLC9A1,22,,,22
+ATP5F1D,ATP synthase F1 subunit delta ,ATP5F1D,3,,,3
+SNU13,small nuclear ribonucleoprotein 13 ,SNU13,1,,,1
+CENPT,centromere protein T ,CENPT,3,,,3
+BMPR1A,bone morphogenetic protein receptor type 1A ,BMPR1A,195,,,195
+ACVR2B,activin A receptor type 2B ,ACVR2B,33,,,33
+LRP1,LDL receptor related protein 1 ,LRP1,200,,,200
+HJURP,Holliday junction recognition protein ,HJURP,67,,,67
+VHL,von Hippel-Lindau tumor suppressor ,VHL,3386,,,3386
+G3BP1,G3BP stress granule assembly factor 1 ,G3BP1,94,,,94
+GNA12,G protein subunit alpha 12 ,GNA12,20,,,20
+CENPU,centromere protein U ,CENPU,19,,,19
+MRPS11,mitochondrial ribosomal protein S11 ,MRPS11,4,,,4
+RXRA,retinoid X receptor alpha ,RXRA,83,,,83
+HLA-E,"major histocompatibility complex, class I, E ",HLA-E,268,,,268
+FCGR3A,Fc gamma receptor IIIa ,FCGR3A,106,,,106
+RNASEK,ribonuclease K ,RNASEK,3,,,3
+VIM,vimentin ,VIM,789,20,14566,14566
+FGF4,fibroblast growth factor 4 ,FGF4,171,,,171
+DYNLL1,dynein light chain LC8-type 1 ,DYNLL1,16,,,16
+FOXM1,forkhead box M1 ,FOXM1,1344,,,1344
+COPS5,COP9 signalosome subunit 5 ,COPS5,30,,,30
+AFDN,"afadin, adherens junction formation factor ",AFDN,17,,,17
+CDCA8,cell division cycle associated 8 ,CDCA8,93,,,93
+IL6,interleukin 6 ,IL6,14223,,,14223
+EIF4A3,eukaryotic translation initiation factor 4A3 ,EIF4A3,116,,,116
+EIF2A,eukaryotic translation initiation factor 2A ,EIF2A,46,,,46
+SERPINH1,serpin family H member 1 ,SERPINH1,57,,,57
+NCAM1,neural cell adhesion molecule 1 ,NCAM1,91,,,91
+CASP3,caspase 3 ,CASP3,529,,,529
+CENPH,centromere protein H ,CENPH,24,,,24
+ATP6AP2,ATPase H+ transporting accessory protein 2 ,ATP6AP2,19,,,19
+ATP6V0A2,ATPase H+ transporting V0 subunit a2 ,ATP6V0A2,4,,,4
+CAV3,caveolin 3 ,CAV3,60,,,60
+FANCM,FA complementation group M ,FANCM,86,,,86
+DVL2,dishevelled segment polarity protein 2 ,DVL2,131,,,131
+SERPINA1,serpin family A member 1 ,SERPINA1,99,,,99
+CCL26,C-C motif chemokine ligand 26 ,CCL26,40,,,40
+KMT2C,lysine methyltransferase 2C ,KMT2C,287,,,287
+ITIH4,inter-alpha-trypsin inhibitor heavy chain 4 ,ITIH4,40,,,40
+DHX29,DExH-box helicase 29 ,DHX29,5,,,5
+KIF2A,kinesin family member 2A ,KIF2A,42,,,42
+CRKL,"CRK like proto-oncogene, adaptor protein ",CRKL,260,,,260
+FGF8,fibroblast growth factor 8 ,FGF8,94,,,94
+CUL2,cullin 2 ,CUL2,57,,,57
+CSF3,colony stimulating factor 3 ,CSF3,49,,,49
+KPNB1,karyopherin subunit beta 1 ,KPNB1,34,,,34
+PDGFRB,platelet derived growth factor receptor beta ,PDGFRB,516,,,516
+UBE3A,ubiquitin protein ligase E3A ,UBE3A,31,,,31
+BIRC6,baculoviral IAP repeat containing 6 ,BIRC6,57,,,57
+CD80,CD80 molecule ,CD80,1302,,,1302
+ACVR2A,activin A receptor type 2A ,ACVR2A,50,,,50
+FGF5,fibroblast growth factor 5 ,FGF5,56,,,56
+KIF2C,kinesin family member 2C ,KIF2C,98,,,98
+EML4,EMAP like 4 ,EML4,1006,,,1006
+DYNC1LI1,dynein cytoplasmic 1 light intermediate chain 1 ,DYNC1LI1,7,,,7
+KDM6A,lysine demethylase 6A ,KDM6A,265,,,265
+PPBP,pro-platelet basic protein ,PPBP,30,,,30
+TUBA1A,tubulin alpha 1a ,TUBA1A,12,,,12
+ATR,ATR serine/threonine kinase ,ATR,1742,,,1742
+SHARPIN,SHANK associated RH domain interactor ,SHARPIN,35,,,35
+F2,"coagulation factor II, thrombin ",coagulation factor II,11,,,11
+CLDN7,claudin 7 ,CLDN7,64,,,64
+COL18A1,collagen type XVIII alpha 1 chain ,COL18A1,41,,,41
+FAAP100,FA core complex associated protein 100 ,FAAP100,2,,,2
+IRS2,insulin receptor substrate 2 ,IRS2,256,,,256
+FGF3,fibroblast growth factor 3 ,FGF3,145,,,145
+TUBB,tubulin beta class I ,TUBB,59,,,59
+WWP2,WW domain containing E3 ubiquitin protein ligase 2 ,WWP2,34,,,34
+CENPW,centromere protein W ,CENPW,7,,,7
+CFH,complement factor H ,CFH,73,,,73
+CUL3,cullin 3 ,CUL3,164,,,164
+GNAI3,G protein subunit alpha i3 ,GNAI3,9,,,9
+FGF22,fibroblast growth factor 22 ,FGF22,10,,,10
+ENO1,enolase 1 ,ENO1,284,,,284
+DYNC1I2,dynein cytoplasmic 1 intermediate chain 2 ,DYNC1I2,2,,,2
+FGF20,fibroblast growth factor 20 ,FGF20,21,,,21
+WDR76,WD repeat domain 76 ,WDR76,9,,,9
+FGF9,fibroblast growth factor 9 ,FGF9,114,,,114
+JAK3,Janus kinase 3 ,JAK3,502,,,502
+STX1A,syntaxin 1A ,STX1A,6,,,6
+PRKAR1A,protein kinase cAMP-dependent type I regulatory subunit alpha ,PRKAR1A,367,,,367
+PF4V1,platelet factor 4 variant 1 ,PF4V1,4,,,4
+FGF6,fibroblast growth factor 6 ,FGF6,39,,,39
+ATP5PB,ATP synthase peripheral stalk-membrane subunit b ,ATP5PB,1,,,1
+FGF7,fibroblast growth factor 7 ,FGF7,146,,,146
+APC,APC regulator of WNT signaling pathway ,APC,9134,,,9134
+ATP6V1G3,ATPase H+ transporting V1 subunit G3 ,ATP6V1G3,4,,,4
+CCL28,C-C motif chemokine ligand 28 ,CCL28,66,,,66
+CXCL13,C-X-C motif chemokine ligand 13 ,CXCL13,583,,,583
+CXCL5,C-X-C motif chemokine ligand 5 ,CXCL5,322,,,322
+KRT8,keratin 8 ,KRT8,91,,,91
+HMGB1,high mobility group box 1 ,HMGB1,1293,,,1293
+TLR9,toll like receptor 9 ,TLR9,665,,,665
+IGKV2D-40,immunoglobulin kappa variable 2D-40 ,IGKV2D-40,2,,,2
+NDC80,NDC80 kinetochore complex component ,NDC80,103,,,103
+MYL6,myosin light chain 6 ,MYL6,9,,,9
+NRP1,neuropilin 1 ,NRP1,546,,,546
+PDGFB,platelet derived growth factor subunit B ,PDGFB,598,,,598
+HCK,"HCK proto-oncogene, Src family tyrosine kinase ",HCK,173,,,173
+WASL,WASP like actin nucleation promoting factor ,WASL,15,,,15
+GAPDH,glyceraldehyde-3-phosphate dehydrogenase ,GAPDH,1115,,,1115
+KIF20A,kinesin family member 20A ,KIF20A,143,,,143
+FOXA1,forkhead box A1 ,FOXA1,788,,,788
+FANCL,FA complementation group L ,FANCL,50,,,50
+YWHAQ,tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein theta ,YWHAQ,12,,,12
+LMO7,LIM domain 7 ,LMO7,25,,,25
+BMPR1B,bone morphogenetic protein receptor type 1B ,BMPR1B,54,,,54
+SCARB2,scavenger receptor class B member 2 ,SCARB2,9,,,9
+ANK3,ankyrin 3 ,ANK3,20,,,20
+CTLA4,cytotoxic T-lymphocyte associated protein 4 ,CTLA4,4771,,,4771
+CLDN1,claudin 1 ,CLDN1,185,,,185
+CENPN,centromere protein N ,CENPN,19,,,19
+KRT1,keratin 1 ,KRT1,29,,,29
+MLST8,"MTOR associated protein, LST8 homolog ",MLST8,34,,,34
+RBPJ,recombination signal binding protein for immunoglobulin kappa J region ,RBPJ,118,,,118
+FGB,fibrinogen beta chain ,FGB,30,,,30
+BSG,basigin (Ok blood group) ,BSG,184,,,184
+UBE2C,ubiquitin conjugating enzyme E2 C ,UBE2C,256,,,256
+F8,coagulation factor VIII ,coagulation factor VIII ,49,,,49
+MUC1,"mucin 1, cell surface associated ",MUC1,3083,,,3083
+CENPP,centromere protein P ,CENPP,1,,,1
+MYH6,myosin heavy chain 6 ,MYH6,14,,,14
+IGLL5,immunoglobulin lambda like polypeptide 5 ,IGLL5,35,,,35
+IGHV3OR16-17,immunoglobulin heavy variable 3/OR16-17 (non-functional) ,IGHV3OR16-17,0,,,0
+CX3CL1,C-X3-C motif chemokine ligand 1 ,CX3CL1,224,,,224
+JARID2,jumonji and AT-rich interaction domain containing 2 ,JARID2,48,,,48
+CENPQ,centromere protein Q ,CENPQ,3,,,3
+TAB2,TGF-beta activated kinase 1 (MAP3K7) binding protein 2 ,TAB2,43,,,43
+RNF4,ring finger protein 4 ,RNF4,36,,,36
+NGFR,nerve growth factor receptor ,NGFR,238,,,238
+HNRNPC,heterogeneous nuclear ribonucleoprotein C ,HNRNPC,127,,,127
+CENPM,centromere protein M ,CENPM,28,,,28
+RBL2,RB transcriptional corepressor like 2 ,RBL2,73,,,73
+ATP6V0A4,ATPase H+ transporting V0 subunit a4 ,ATP6V0A4,6,,,6
+KNG1,kininogen 1 ,KNG1,30,,,30
+CENPL,centromere protein L ,CENPL,8,,,8
+PLAU,"plasminogen activator, urokinase ",PLAU,223,,,223
+CENPK,centromere protein K ,CENPK,20,,,20
+COL10A1,collagen type X alpha 1 chain ,COL10A1,70,,,70
+STAU1,staufen double-stranded RNA binding protein 1 ,STAU1,27,,,27
+CENPO,centromere protein O ,CENPO,8,,,8
+LEF1,lymphoid enhancer binding factor 1 ,LEF1,637,,,637
+COL8A1,collagen type VIII alpha 1 chain ,COL8A1,31,,,31
+PELO,pelota mRNA surveillance and ribosome rescue factor ,PELO,14,,,14
+MBL2,mannose binding lectin 2 ,MBL2,66,,,66
+YWHAG,tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein gamma ,YWHAG,25,,,25
+CEBPB,CCAAT enhancer binding protein beta ,CEBPB,142,,,142
+ATP2A2,ATPase sarcoplasmic/endoplasmic reticulum Ca2+ transporting 2 ,ATP2A2,24,,,24
+LEP,leptin ,LEP,281,,,281
+DCTN2,dynactin subunit 2 ,DCTN2,9,,,9
+YES1,"YES proto-oncogene 1, Src family tyrosine kinase ",YES1,112,,,112
+CLDN5,claudin 5 ,CLDN5,36,,,36
+CD47,CD47 molecule ,CD47,997,,,997
+PDGFA,platelet derived growth factor subunit A ,PDGFA,296,,,296
+SPTAN1,"spectrin alpha, non-erythrocytic 1 ",SPTAN1,15,,,15
+COL15A1,collagen type XV alpha 1 chain ,COL15A1,13,,,13
+PABPC1,poly(A) binding protein cytoplasmic 1 ,PABPC1,89,,,89
+SCARB1,scavenger receptor class B member 1 ,SCARB1,40,,,40
+CXCL2,C-X-C motif chemokine ligand 2 ,CXCL2,280,,,280
+GNA11,G protein subunit alpha 11 ,GNA11,336,,,336
+BIRC5,baculoviral IAP repeat containing 5 ,BIRC5,633,,,633
+DVL1,dishevelled segment polarity protein 1 ,DVL1,81,,,81
+COL1A1,collagen type I alpha 1 chain ,COL1A1,631,,,631
+P3H3,prolyl 3-hydroxylase 3 ,P3H3,4,,,4
+COL9A1,collagen type IX alpha 1 chain ,COL9A1,5,,,5
+RAP1A,"RAP1A, member of RAS oncogene family ",RAP1A,117,,,117
+DNMT3A,DNA methyltransferase 3 alpha ,DNMT3A,1661,,,1661
+TRIM25,tripartite motif containing 25 ,TRIM25,78,,,78
+ATP5F1E,ATP synthase F1 subunit epsilon ,ATP5F1E,0,,,0
+FAAP24,FA core complex associated protein 24 ,FAAP24,4,,,4
+CD36,CD36 molecule (CD36 blood group) ,CD36,584,,,584
+RDX,radixin ,RDX,22,,,22
+CETN2,centrin 2 ,CETN2,7,,,7
+PLOD2,"procollagen-lysine,2-oxoglutarate 5-dioxygenase 2 ",PLOD2,103,,,103
+MAD2L1,mitotic arrest deficient 2 like 1 ,MAD2L1,152,,,152
+FGG,fibrinogen gamma chain ,FGG,36,,,36
+FGA,fibrinogen alpha chain ,FGA,106,,,106
+EIF2AK3,eukaryotic translation initiation factor 2 alpha kinase 3 ,EIF2AK3,41,,,41
+TLN2,talin 2 ,TLN2,13,,,13
+FANCB,FA complementation group B ,FANCB,22,,,22
+MYL6B,myosin light chain 6B ,MYL6B,1,,,1
+FANCF,FA complementation group F ,FANCF,71,,,71
+LDB1,LIM domain binding 1 ,LDB1,28,,,28
+COLGALT2,collagen beta(1-O)galactosyltransferase 2 ,COLGALT2,4,,,4
+F5,coagulation factor V ,coagulation factor V ,28,,,28
+MT-ATP6,mitochondrially encoded ATP synthase membrane subunit 6 ,MT-ATP6,15,,,15
+E2F4,E2F transcription factor 4 ,E2F4,265,,,265
+WAS,WASP actin nucleation promoting factor ,WAS,123,27,0,123
+ITCH,itchy E3 ubiquitin protein ligase ,ITCH,367,1,22,22
+CTTN,cortactin ,CTTN,95,,,95
+FKBP1A,FKBP prolyl isomerase 1A ,FKBP1A,23,,,23
+TAB1,TGF-beta activated kinase 1 (MAP3K7) binding protein 1 ,TAB1,37,,,37
+MYL9,myosin light chain 9 ,MYL9,51,,,51
+PFN1,profilin 1 ,PFN1,69,,,69
+SMURF2,SMAD specific E3 ubiquitin protein ligase 2 ,SMURF2,86,,,86
+CD86,CD86 molecule ,CD86,1323,,,1323
+POMC,proopiomelanocortin ,POMC,336,,,336
+CCRL2,C-C motif chemokine receptor like 2 ,CCRL2,23,,,23
+USP9X,ubiquitin specific peptidase 9 X-linked ,USP9X,143,,,143
+NUP153,nucleoporin 153 ,NUP153,13,,,13
+MYH11,myosin heavy chain 11 ,MYH11,472,,,472
+ACTR1A,actin related protein 1A ,ACTR1A,6,,,6
+PPM1B,"protein phosphatase, Mg2+/Mn2+ dependent 1B ",PPM1B,19,,,19
+KIF11,kinesin family member 11 ,KIF11,142,,,142
+MTA2,metastasis associated 1 family member 2 ,MTA2,79,,,79
+CENPE,centromere protein E ,CENPE,93,,,93
+RRAGA,Ras related GTP binding A ,RRAGA,2,,,2
+FAAP20,FA core complex associated protein 20 ,FAAP20,3,,,3
+PSMD4,"proteasome 26S subunit ubiquitin receptor, non-ATPase 4 ",PSMD4,23,,,23
+ATP5PD,ATP synthase peripheral stalk subunit d ,ATP5PD,0,,,0
+ADRB2,adrenoceptor beta 2 ,ADRB2,93,,,93
+ARL6IP1,ADP ribosylation factor like GTPase 6 interacting protein 1 ,ARL6IP1,3,,,3
+PPP1CA,protein phosphatase 1 catalytic subunit alpha ,PPP1CA,35,,,35
+CCL19,C-C motif chemokine ligand 19 ,CCL19,272,,,272
+MYD88,MYD88 innate immune signal transduction adaptor ,MYD88,1281,,,1281
+CCL13,C-C motif chemokine ligand 13 ,CCL13,44,,,44
+SLX4,SLX4 structure-specific endonuclease subunit ,SLX4,47,,,47
+HLA-DRB1,"major histocompatibility complex, class II, DR beta 1 ",HLA-DRB1,534,,,534
+TRIM33,tripartite motif containing 33 ,TRIM33,43,,,43
+IGF1,insulin like growth factor 1 ,IGF1,3636,,,3636
+RRAGD,Ras related GTP binding D ,RRAGD,6,,,6
+ATP6AP1,ATPase H+ transporting accessory protein 1 ,ATP6AP1,17,,,17
+COL16A1,collagen type XVI alpha 1 chain ,COL16A1,9,,,9
+NCOA1,nuclear receptor coactivator 1 ,NCOA1,88,,,88
+GCN1,GCN1 activator of EIF2AK4 ,GCN1,5,,,5
+EFNB1,ephrin B1 ,EFNB1,23,,,23
+MYH7,myosin heavy chain 7 ,MYH7,15,,,15
+MMP9,matrix metallopeptidase 9 ,MMP9,9989,,,9989
+TJP3,tight junction protein 3 ,TJP3,4,,,4
+CARS1,cysteinyl-tRNA synthetase 1 ,CARS1,3,,,3
+OPRM1,opioid receptor mu 1 ,OPRM1,67,,,67
+PARK7,Parkinsonism associated deglycase ,PARK7,68,,,68
+RRAGC,Ras related GTP binding C ,RRAGC,10,,,10
+P3H1,prolyl 3-hydroxylase 1 ,P3H1,10,,,10
+ZWINT,ZW10 interacting kinetochore protein ,ZWINT,56,,,56
+ANXA1,annexin A1 ,ANXA1,317,,,317
+ATP1B1,ATPase Na+/K+ transporting subunit beta 1 ,ATP1B1,39,,,39
+ARF1,ADP ribosylation factor 1 ,ARF1,59,,,59
+CXCL14,C-X-C motif chemokine ligand 14 ,CXCL14,162,,,162
+CCNB2,cyclin B2 ,CCNB2,202,,,202
+ITGA5,integrin subunit alpha 5 ,ITGA5,177,,,177
+SMARCC1,"SWI/SNF related, matrix associated, actin dependent regulator of chromatin subfamily c member 1 ",SMARCC1,39,,,39
+SLC38A9,solute carrier family 38 member 9 ,SLC38A9,2,,,2
+HGS,hepatocyte growth factor-regulated tyrosine kinase substrate ,HGS,344,,,344
+CLDN4,claudin 4 ,CLDN4,114,,,114
+BMPR2,bone morphogenetic protein receptor type 2 ,BMPR2,79,,,79
+CFI,complement factor I ,CFI,317,,,317
+HLA-A,"major histocompatibility complex, class I, A ",HLA-A,2340,,,2340
+INS,insulin ,INS,1165,,,1165
+COL9A2,collagen type IX alpha 2 chain ,COL9A2,7,,,7
+TRAF1,TNF receptor associated factor 1 ,TRAF1,148,,,148
+ACTN2,actinin alpha 2 ,ACTN2,17,,,17
+PLOD1,"procollagen-lysine,2-oxoglutarate 5-dioxygenase 1 ",PLOD1,28,,,28
+RRAGB,Ras related GTP binding B ,RRAGB,6,,,6
+CYLD,CYLD lysine 63 deubiquitinase ,CYLD,349,,,349
+MAPRE1,microtubule associated protein RP/EB family member 1 ,MAPRE1,22,,,22
+MYL12A,myosin light chain 12A ,MYL12A,6,,,6
+CD40LG,CD40 ligand ,CD40LG,50,,,50
+DCTN6,dynactin subunit 6 ,DCTN6,4,,,4
+HSPB1,heat shock protein family B (small) member 1 ,HSPB1,180,,,180
+CDK6,cyclin dependent kinase 6 ,CDK6,1805,,,1805
+CCL20,C-C motif chemokine ligand 20 ,CCL20,418,,,418
+ACVR1,activin A receptor type 1 ,ACVR1,91,,,91
+HSPA2,heat shock protein family A (Hsp70) member 2 ,HSPA2,38,,,38
+HIP1,huntingtin interacting protein 1 ,HIP1,53,,,53
+COLGALT1,collagen beta(1-O)galactosyltransferase 1 ,COLGALT1,2,,,2
+DCTN4,dynactin subunit 4 ,DCTN4,4,,,4
+MYH10,myosin heavy chain 10 ,MYH10,27,,,27
+HNRNPA1,heterogeneous nuclear ribonucleoprotein A1 ,HNRNPA1,128,,,128
+GCC2,GRIP and coiled-coil domain containing 2 ,GCC2,9,,,9
+XCL1,X-C motif chemokine ligand 1 ,XCL1,47,,,47
+ELMO1,engulfment and cell motility 1 ,ELMO1,34,,,34
+PRKCD,protein kinase C delta ,PRKCD,51,,,51
+HNRNPH1,heterogeneous nuclear ribonucleoprotein H1 ,HNRNPH1,39,,,39
+COL8A2,collagen type VIII alpha 2 chain ,COL8A2,6,,,6
+CTBP2,C-terminal binding protein 2 ,CTBP2,75,,,75
+CD28,CD28 molecule ,CD28,1772,,,1772
+BGN,biglycan ,BGN,105,,,105
+COL14A1,collagen type XIV alpha 1 chain ,COL14A1,27,,,27
+TUBB4B,tubulin beta 4B class IVb ,TUBB4B,6,,,6
+HLA-DRA,"major histocompatibility complex, class II, DR alpha ",HLA-DRA,80,,,80
+KRT6A,keratin 6A ,KRT6A,60,,,60
+CCL27,C-C motif chemokine ligand 27 ,CCL27,69,,,69
+DYNLL2,dynein light chain LC8-type 2 ,DYNLL2,3,,,3
+GNAO1,G protein subunit alpha o1 ,GNAO1,22,,,22
+F11,coagulation factor XI ,F11,92,,,92
+CCL8,C-C motif chemokine ligand 8 ,CCL8,103,,,103
+COL9A3,collagen type IX alpha 3 chain ,COL9A3,7,,,7
+PPARGC1A,PPARG coactivator 1 alpha ,PPARGC1A,103,,,103
+PROC,"protein C, inactivator of coagulation factors Va and VIIIa ",PROC,570,,,570
+F3,"coagulation factor III, tissue factor ",coagulation factor III,10,,,10
+CXCL6,C-X-C motif chemokine ligand 6 ,CXCL6,86,,,86
+BMP4,bone morphogenetic protein 4 ,BMP4,472,,,472
+ACE2,angiotensin converting enzyme 2 ,ACE2,210,,,210
+DCTN3,dynactin subunit 3 ,DCTN3,5,,,5
+ATIC,5-aminoimidazole-4-carboxamide ribonucleotide formyltransferase/IMP cyclohydrolase ,ATIC,66,,,66
+HSPD1,heat shock protein family D (Hsp60) member 1 ,HSPD1,60,,,60
+HAUS6,HAUS augmin like complex subunit 6 ,HAUS6,6,,,6
+CDK5,cyclin dependent kinase 5 ,CDK5,288,,,288
+PRKACG,protein kinase cAMP-activated catalytic subunit gamma ,PRKACG,5,,,5
+DCTN5,dynactin subunit 5 ,DCTN5,2,,,2
+CRTAP,cartilage associated protein ,CRTAP,3,,,3
+SMAD1,SMAD family member 1 ,SMAD1,311,,,311
+SFN,stratifin ,SFN,583,,,583
+CAPZA3,capping actin protein of muscle Z-line subunit alpha 3 ,CAPZA3,1,,,1
+HCLS1,hematopoietic cell-specific Lyn substrate 1 ,HCLS1,20,,,20
+MTA1,metastasis associated 1 ,MTA1,366,,,366
+PBX1,PBX homeobox 1 ,PBX1,492,,,492
+KRT14,keratin 14 ,KRT14,91,,,91
+HSPA1A,heat shock protein family A (Hsp70) member 1A ,HSPA1A,113,,,113
+HSPA1L,heat shock protein family A (Hsp70) member 1 like ,HSPA1L,21,,,21
+PAFAH1B1,platelet activating factor acetylhydrolase 1b regulatory subunit 1 ,PAFAH1B1,16,,,16
+FAS,Fas cell surface death receptor ,FAS,6348,,,6348
+GPC1,glypican 1 ,GPC1,103,,,103
+ANAPC4,anaphase promoting complex subunit 4 ,ANAPC4,5,,,5
+CLTCL1,clathrin heavy chain like 1 ,CLTCL1,6,,,6
+NCK2,NCK adaptor protein 2 ,NCK2,13,,,13
+DNM2,dynamin 2 ,DNM2,34,,,34
+XPO1,exportin 1 ,XPO1,360,,,360
+ITPR3,"inositol 1,4,5-trisphosphate receptor type 3 ",ITPR3,27,,,27
+CCL17,C-C motif chemokine ligand 17 ,CCL17,215,,,215
+NHERF1,NHERF family PDZ scaffold protein 1 ,NHERF1,82,,,82
+PPFIBP1,PPFIA binding protein 1 ,PPFIBP1,12,,,12
+COL12A1,collagen type XII alpha 1 chain ,COL12A1,55,,,55
+MYL12B,myosin light chain 12B ,MYL12B,3,,,3
+KIF18A,kinesin family member 18A ,KIF18A,55,,,55
+OPTN,optineurin ,OPTN,106,,,106
+SDC4,syndecan 4 ,SDC4,89,,,89
+EFNB2,ephrin B2 ,EFNB2,60,,,60
+IL1B,interleukin 1 beta ,IL1B,638,,,638
+RRBP1,ribosome binding protein 1 ,RRBP1,23,,,23
+F10,coagulation factor X ,F10,812,,,812
+MASP1,MBL associated serine protease 1 ,MASP1,17,,,17
+RAP1B,"RAP1B, member of RAS oncogene family ",RAP1B,72,,,72
+EPHB2,EPH receptor B2 ,EPHB2,190,,,190
+COL4A2,collagen type IV alpha 2 chain ,COL4A2,81,,,81
+NAT10,N-acetyltransferase 10 ,NAT10,83,,,83
+CD63,CD63 molecule ,CD63,615,,,615
+XCL2,X-C motif chemokine ligand 2 ,XCL2,15,,,15
+EPHA1,EPH receptor A1 ,EPHA1,56,,,56
+ESAM,endothelial cell adhesion molecule ,ESAM,13,,,13
+EPHB1,EPH receptor B1 ,EPHB1,56,,,56
+F11R,F11 receptor ,F11R,21,,,21
+FCN2,ficolin 2 ,FCN2,10,,,10
+COL26A1,collagen type XXVI alpha 1 chain ,COL26A1,1,,,1
+WDCP,WD repeat and coiled coil containing ,WDCP,2,,,2
+RET,ret proto-oncogene ,RET,5192,567,1022,5192
+ATP5MG,ATP synthase membrane subunit g ,ATP5MG,0,,,0
+GDNF,glial cell derived neurotrophic factor ,GDNF,306,,,306
+KRT2,keratin 2 ,KRT2,6,,,6
+PSMD2,"proteasome 26S subunit ubiquitin receptor, non-ATPase 2 ",PSMD2,24,,,24
+CDH5,cadherin 5 ,CDH5,62,,,62
+KRT10,keratin 10 ,KRT10,25,,,25
+TFDP1,transcription factor Dp-1 ,TFDP1,51,,,51
+MYL5,myosin light chain 5 ,MYL5,8,,,8
+CEBPA,CCAAT enhancer binding protein alpha ,CEBPA,880,,,880
+LTF,lactotransferrin ,LTF,95,,,95
+TCF3,transcription factor 3 ,TCF3,337,,,337
+DNAJA1,DnaJ heat shock protein family (Hsp40) member A1 ,DNAJA1,21,,,21
+P3H2,prolyl 3-hydroxylase 2 ,P3H2,6,,,6
+DDX17,DEAD-box helicase 17 ,DDX17,43,,,43
+KIF3B,kinesin family member 3B ,KIF3B,15,,,15
+FASLG,Fas ligand ,FASLG,81,,,81
+SPP1,secreted phosphoprotein 1 ,SPP1,596,,,596
+TARDBP,TAR DNA binding protein ,TARDBP,15,,,15
+CD274,CD274 molecule ,CD274,657,,,657
+SNAI1,snail family transcriptional repressor 1 ,SNAI1,500,,,500
+AVPR2,arginine vasopressin receptor 2 ,AVPR2,12,,,12
+KRT17,keratin 17 ,KRT17,101,,,101
+MYOD1,myogenic differentiation 1 ,MYOD1,383,,,383
+F12,coagulation factor XII ,F12,190,,,190
+ACTR10,actin related protein 10 ,ACTR10,1,,,1
+SLX1A,"SLX1 homolog A, structure-specific endonuclease subunit ",SLX1A,2,,,2
+VAV3,vav guanine nucleotide exchange factor 3 ,VAV3,110,,,110
+ITGB4,integrin subunit beta 4 ,ITGB4,136,,,136
+SORT1,sortilin 1 ,SORT1,22,,,22
+CALM2,calmodulin 2 ,CALM2,19,,,19
+KIF2B,kinesin family member 2B ,KIF2B,5,,,5
+ACKR2,atypical chemokine receptor 2 ,ACKR2,11,,,11
+ITPR1,"inositol 1,4,5-trisphosphate receptor type 1 ",ITPR1,39,,,39
+MIS18A,MIS18 kinetochore protein A ,MIS18A,1,,,1
+RACGAP1,Rac GTPase activating protein 1 ,RACGAP1,98,,,98
+CXCL3,C-X-C motif chemokine ligand 3 ,CXCL3,129,,,129
+ATRIP,ATR interacting protein ,ATRIP,19,0,9,9
+KLKB1,kallikrein B1 ,KLKB1,10,,,10
+COL1A2,collagen type I alpha 2 chain ,COL1A2,234,,,234
+KRT19,keratin 19 ,KRT19,174,,,174
+KRT38,keratin 38 ,KRT38,2,,,2
+KRT9,keratin 9 ,KRT9,6,,,6
+MUS81,MUS81 structure-specific endonuclease subunit ,MUS81,47,,,47
+ADCY5,adenylate cyclase 5 ,ADCY5,15,,,15
+SAA1,serum amyloid A1 ,SAA1,109,,,109
+CCNE2,cyclin E2 ,CCNE2,141,,,141
+BDNF,brain derived neurotrophic factor ,BDNF,676,,,676
+PLEC,plectin ,PLEC,35,,,35
+MYL11,myosin light chain 11 ,MYL11,0,,,0
+DIABLO,diablo IAP-binding mitochondrial protein ,DIABLO,385,,,385
+PPP1CC,protein phosphatase 1 catalytic subunit gamma ,PPP1CC,7,,,7
+KRT16,keratin 16 ,KRT16,49,,,49
+COL4A1,collagen type IV alpha 1 chain ,COL4A1,119,,,119
+EPHB4,EPH receptor B4 ,EPHB4,237,,,237
+MYO18A,myosin XVIIIA ,MYO18A,12,,,12
+C4A,complement C4A (Chido/Rodgers blood group) ,C4A,67,,,67
+GH1,growth hormone 1 ,GH1,40,,,40
+CCL4,C-C motif chemokine ligand 4 ,CCL4,426,,,426
+UHRF1,ubiquitin like with PHD and ring finger domains 1 ,UHRF1,245,,,245
+KRT31,keratin 31 ,KRT31,1,,,1
+APBB1IP,amyloid beta precursor protein binding family B member 1 interacting protein ,APBB1IP,10,,,10
+RIGI,RNA sensor RIG-I ,RIGI,211,,,211
+EFNB3,ephrin B3 ,EFNB3,21,,,21
+MYH3,myosin heavy chain 3 ,MYH3,8,,,8
+ITGA4,integrin subunit alpha 4 ,ITGA4,84,,,84
+FGF23,fibroblast growth factor 23 ,FGF23,363,,,363
+TUBA1B,tubulin alpha 1b ,TUBA1B,25,,,25
+EPO,erythropoietin ,EPO,1310,,,1310
+DNAJB1,DnaJ heat shock protein family (Hsp40) member B1 ,DNAJB1,91,,,91
+KL,klotho ,klotho ,170,,,170
+ACVR1B,activin A receptor type 1B ,ACVR1B,21,,,21
+CCDC115,coiled-coil domain containing 115 ,CCDC115,2,,,2
+TCF12,transcription factor 12 ,TCF12,70,,,70
+FCN3,ficolin 3 ,FCN3,21,,,21
+EME1,essential meiotic structure-specific endonuclease 1 ,EME1,21,,,21
+IL6R,interleukin 6 receptor ,IL6R,581,,,581
+ATP1A1,ATPase Na+/K+ transporting subunit alpha 1 ,ATP1A1,96,,,96
+CLDN2,claudin 2 ,CLDN2,43,,,43
+CLDN3,claudin 3 ,CLDN3,100,,,100
+RAB8A,"RAB8A, member RAS oncogene family ",RAB8A,19,,,19
+ATP5ME,ATP synthase membrane subunit e ,ATP5ME,1,,,1
+MECP2,methyl-CpG binding protein 2 ,MECP2,172,,,172
+INSR,insulin receptor ,INSR,242,,,242
+KRT15,keratin 15 ,KRT15,33,,,33
+ADRA1D,adrenoceptor alpha 1D ,ADRA1D,6,,,6
+CKS1B,CDC28 protein kinase regulatory subunit 1B ,CKS1B,85,,,85
+EPHB3,EPH receptor B3 ,EPHB3,62,,,62
+THBD,thrombomodulin ,THBD,33,,,33
+EPOR,erythropoietin receptor ,EPOR,367,,,367
+KRT40,keratin 40 ,KRT40,1,,,1
+KLRK1,killer cell lectin like receptor K1 ,KLRK1,32,,,32
+TMEM199,transmembrane protein 199 ,TMEM199,1,,,1
+IKBKE,inhibitor of nuclear factor kappa B kinase subunit epsilon ,IKBKE,66,,,66
+AATF,apoptosis antagonizing transcription factor ,AATF,28,,,28
+CD79B,CD79b molecule ,CD79B,406,,,406
+TYROBP,transmembrane immune signaling adaptor TYROBP ,TYROBP,52,,,52
+MASP2,MBL associated serine protease 2 ,MASP2,37,,,37
+CLDN11,claudin 11 ,CLDN11,28,,,28
+ATP1A2,ATPase Na+/K+ transporting subunit alpha 2 ,ATP1A2,12,,,12
+F7,coagulation factor VII ,coagulation factor VII ,45,,,45
+CLDN18,claudin 18 ,CLDN18,164,,,164
+PSEN1,presenilin 1 ,PSEN1,55,,,55
+PPP2R5C,protein phosphatase 2 regulatory subunit B'gamma ,PPP2R5C,25,,,25
+AVP,arginine vasopressin ,AVP,218,,,218
+EEF1A2,eukaryotic translation elongation factor 1 alpha 2 ,EEF1A2,93,,,93
+RAB3A,"RAB3A, member RAS oncogene family ",RAB3A,26,,,26
+KRT37,keratin 37 ,KRT37,1,,,1
+CCL7,C-C motif chemokine ligand 7 ,CCL7,98,,,98
+IFIH1,interferon induced with helicase C domain 1 ,IFIH1,21,,,21
+TNFAIP3,TNF alpha induced protein 3 ,TNFAIP3,284,,,284
+VAMP8,vesicle associated membrane protein 8 ,VAMP8,26,,,26
+DCLRE1B,DNA cross-link repair 1B ,DCLRE1B,11,,,11
+ADRA1A,adrenoceptor alpha 1A ,ADRA1A,15,,,15
+PLG,plasminogen ,PLG,169,,,169
+VAMP7,vesicle associated membrane protein 7 ,VAMP7,18,,,18
+COL21A1,collagen type XXI alpha 1 chain ,COL21A1,5,,,5
+MYH2,myosin heavy chain 2 ,MYH2,11,,,11
+KRT33B,keratin 33B ,KRT33B,2,,,2
+TOP2A,DNA topoisomerase II alpha ,TOP2A,831,,,831
+IL6ST,interleukin 6 cytokine family signal transducer ,IL6ST,84,,,84
+GH2,growth hormone 2 ,GH2,8,,,8
+GATA4,GATA binding protein 4 ,GATA4,206,,,206
+TUBB2B,tubulin beta 2B class IIb ,TUBB2B,19,,,19
+TPM1,tropomyosin 1 ,TPM1,78,,,78
+PDIA3,protein disulfide isomerase family A member 3 ,PDIA3,85,,,85
+IGF2,insulin like growth factor 2 ,IGF2,1365,,,1365
+COL22A1,collagen type XXII alpha 1 chain ,COL22A1,12,,,12
+CHD3,chromodomain helicase DNA binding protein 3 ,CHD3,14,,,14
+KRT20,keratin 20 ,KRT20,58,,,58
+EXOSC10,exosome component 10 ,EXOSC10,3,,,3
+EFNA5,ephrin A5 ,EFNA5,24,,,24
+KRT5,keratin 5 ,KRT5,106,,,106
+COL4A5,collagen type IV alpha 5 chain ,COL4A5,59,,,59
+BLM,BLM RecQ like helicase ,BLM,679,,,679
+DCLRE1A,DNA cross-link repair 1A ,DCLRE1A,4,,,4
+DMD,dystrophin ,DMD,126,,,126
+ATP5MF,ATP synthase membrane subunit f ,ATP5MF,2,,,2
+ATP5MGL,ATP synthase membrane subunit g like ,ATP5MGL,0,,,0
+MYH4,myosin heavy chain 4 ,MYH4,2,,,2
+CFLAR,CASP8 and FADD like apoptosis regulator ,CFLAR,78,,,78
+VCAN,versican ,VCAN,151,,,151
+KITLG,KIT ligand ,KITLG,91,,,91
+TNFRSF9,TNF receptor superfamily member 9 ,TNFRSF9,75,,,75
+ELN,elastin ,ELN,453,,,453
+PKM,pyruvate kinase M1/2 ,PKM,168,,,168
+ATP1B3,ATPase Na+/K+ transporting subunit beta 3 ,ATP1B3,13,,,13
+DLG1,discs large MAGUK scaffold protein 1 ,DLG1,45,,,45
+MYH7B,myosin heavy chain 7B ,MYH7B,6,,,6
+CDH17,cadherin 17 ,CDH17,104,,,104
+COL19A1,collagen type XIX alpha 1 chain ,COL19A1,4,,,4
+CDC6,cell division cycle 6 ,CDC6,209,,,209
+COL20A1,collagen type XX alpha 1 chain ,COL20A1,4,,,4
+F9,coagulation factor IX ,coagulation factor IX ,12,,,12
+GATA1,GATA binding protein 1 ,GATA1,530,,,530
+CCL22,C-C motif chemokine ligand 22 ,CCL22,299,,,299
+CD79A,CD79a molecule ,CD79A,859,,,859
+EPHB6,EPH receptor B6 ,EPHB6,80,,,80
+CLDN15,claudin 15 ,CLDN15,6,,,6
+AGR2,"anterior gradient 2, protein disulphide isomerase family member ",AGR2,234,,,234
+KRT32,keratin 32 ,KRT32,1,,,1
+MYH1,myosin heavy chain 1 ,MYH1,11,,,11
+GLP1R,glucagon like peptide 1 receptor ,GLP1R,102,,,102
+SMAD5,SMAD family member 5 ,SMAD5,93,,,93
+COLEC11,collectin subfamily member 11 ,COLEC11,4,,,4
+KIF14,kinesin family member 14 ,KIF14,86,,,86
+DMAC2L,distal membrane arm assembly component 2 like ,DMAC2L,0,,,0
+MIS18BP1,MIS18 binding protein 1 ,MIS18BP1,1,,,1
+KRT34,keratin 34 ,KRT34,1,,,1
+SNAP25,synaptosome associated protein 25 ,SNAP25,65,,,65
+MYH8,myosin heavy chain 8 ,MYH8,5,,,5
+TUBB2A,tubulin beta 2A class IIa ,TUBB2A,20,,,20
+SMAD6,SMAD family member 6 ,SMAD6,76,,,76
+MARVELD2,MARVEL domain containing 2 ,MARVELD2,1,,,1
+GTF2E1,general transcription factor IIE subunit 1 ,GTF2E1,2,,,2
+BUB3,BUB3 mitotic checkpoint protein ,BUB3,75,,,75
+ATP5PF,ATP synthase peripheral stalk subunit F6 ,ATP5PF,0,,,0
+MYL3,myosin light chain 3 ,MYL3,4,,,4
+RICTOR,RPTOR independent companion of MTOR complex 2 ,RICTOR,353,,,353
+TERT,telomerase reverse transcriptase ,TERT,3580,,,3580
+FBN1,fibrillin 1 ,FBN1,83,,,83
+COL4A3,collagen type IV alpha 3 chain ,COL4A3,27,,,27
+HSPB3,heat shock protein family B (small) member 3 ,HSPB3,5,,,5
+GJB1,gap junction protein beta 1 ,GJB1,9,,,9
+KRT78,keratin 78 ,KRT78,6,,,6
+KRT13,keratin 13 ,KRT13,36,,,36
+EHMT1,euchromatic histone lysine methyltransferase 1 ,EHMT1,31,,,31
+COLEC10,collectin subfamily member 10 ,COLEC10,6,,,6
+KRT39,keratin 39 ,KRT39,0,,,0
+ELANE,"elastase, neutrophil expressed ",ELANE,45,,,45
+KRT35,keratin 35 ,KRT35,1,,,1
+FAN1,FANCD2 and FANCI associated nuclease 1 ,FAN1,18,,,18
+GABBR1,gamma-aminobutyric acid type B receptor subunit 1 ,GABBR1,17,,,17
+IGLV10-54,immunoglobulin lambda variable 10-54 ,IGLV10-54,1,,,1
+CLDN9,claudin 9 ,CLDN9,16,,,16
+COL28A1,collagen type XXVIII alpha 1 chain ,COL28A1,1,,,1
+CORT,cortistatin ,CORT,46,,,46
+H4C7,H4 clustered histone 7 ,H4C7,0,,,0
+ATP5MF-PTCD1,ATP5MF-PTCD1 readthrough ,ATP5MF-PTCD1,0,,,0
+PAX6,paired box 6 ,PAX6,248,,,248
+NOTCH3,notch receptor 3 ,NOTCH3,570,,,570
+TRAF5,TNF receptor associated factor 5 ,TRAF5,48,,,48
+FCN1,ficolin 1 ,FCN1,9,,,9
+OIP5,Opa interacting protein 5 ,OIP5,133,,,133
+UBR5,ubiquitin protein ligase E3 component n-recognin 5 ,UBR5,71,,,71
+MYH14,myosin heavy chain 14 ,MYH14,10,,,10
+APOA4,apolipoprotein A4 ,APOA4,23,,,23
+NANOG,Nanog homeobox ,NANOG,1887,,,1887
+HBEGF,heparin binding EGF like growth factor ,HBEGF,383,,,383
+CLDN16,claudin 16 ,CLDN16,8,,,8
+ITGB6,integrin subunit beta 6 ,ITGB6,63,,,63
+CENPF,centromere protein F ,CENPF,176,,,176
+NUP214,nucleoporin 214 ,NUP214,165,,,165
+ATP1B2,ATPase Na+/K+ transporting subunit beta 2 ,ATP1B2,13,,,13
+CCL25,C-C motif chemokine ligand 25 ,CCL25,74,,,74
+MYO18B,myosin XVIIIB ,MYO18B,21,,,21
+NOTCH2,notch receptor 2 ,NOTCH2,617,,,617
+CLDN10,claudin 10 ,CLDN10,32,,,32
+KRT85,keratin 85 ,KRT85,2,,,2
+KRT7,keratin 7 ,KRT7,82,,,82
+TANK,TRAF family member associated NFKB activator ,TANK,319,2,0,2
+SDCBP,syndecan binding protein ,SDCBP,40,,,40
+SEC24B,"SEC24 homolog B, COPII coat complex component ",SEC24B,4,,,4
+ARHGDIA,Rho GDP dissociation inhibitor alpha ,ARHGDIA,15,,,15
+HDAC8,histone deacetylase 8 ,HDAC8,160,,,160
+CLDN17,claudin 17 ,CLDN17,6,,,6
+CLDN8,claudin 8 ,CLDN8,12,,,12
+ACAN,aggrecan ,ACAN,23,,,23
+CLDN14,claudin 14 ,CLDN14,8,,,8
+KIF15,kinesin family member 15 ,KIF15,53,,,53
+RFC4,replication factor C subunit 4 ,RFC4,54,,,54
+CLDN19,claudin 19 ,CLDN19,1,,,1
+INPPL1,inositol polyphosphate phosphatase like 1 ,INPPL1,14,,,14
+KRT80,keratin 80 ,KRT80,22,,,22
+LGALS9,galectin 9 ,LGALS9,59,,,59
+ITGAM,integrin subunit alpha M ,ITGAM,49,,,49
+KRT75,keratin 75 ,KRT75,2,,,2
+KRT6C,keratin 6C ,KRT6C,17,,,17
+FPR2,formyl peptide receptor 2 ,FPR2,48,,,48
+CLDN20,claudin 20 ,CLDN20,1,,,1
+KRT27,keratin 27 ,KRT27,1,,,1
+CLDN22,claudin 22 ,CLDN22,1,,,1
+CLDN6,claudin 6 ,CLDN6,58,,,58
+SIAH1,siah E3 ubiquitin protein ligase 1 ,SIAH1,105,,,105
+EME2,essential meiotic structure-specific endonuclease subunit 2 ,EME2,4,,,4
+LPAR1,lysophosphatidic acid receptor 1 ,LPAR1,74,,,74
+MYL4,myosin light chain 4 ,MYL4,0,,,0
+HLA-DRB5,"major histocompatibility complex, class II, DR beta 5 ",HLA-DRB5,23,,,23
+PLN,phospholamban ,PLN,303,,,303
+L1CAM,L1 cell adhesion molecule ,L1CAM,382,,,382
+HLA-C,"major histocompatibility complex, class I, C ",HLA-C,343,,,343
+MT-ATP8,mitochondrially encoded ATP synthase membrane subunit 8 ,MT-ATP8,5,,,5
+SLCO6A1,solute carrier organic anion transporter family member 6A1 ,SLCO6A1,2,,,2
+ERVW-1,"endogenous retrovirus group W member 1, envelope ",ERVW-1,6,,,6
+CLDN23,claudin 23 ,CLDN23,10,,,10
+KRT33A,keratin 33A ,KRT33A,0,,,0
+KCNAB2,potassium voltage-gated channel subfamily A regulatory beta subunit 2 ,KCNAB2,8,,,8
+EPHA8,EPH receptor A8 ,EPHA8,22,,,22
+UBE2T,ubiquitin conjugating enzyme E2 T ,UBE2T,84,,,84
+TCF7,transcription factor 7 ,TCF7,137,,,137
+TGFB2,transforming growth factor beta 2 ,TGFB2,107,,,107
+RANGAP1,Ran GTPase activating protein 1 ,RANGAP1,23,,,23
+DNAJC5,DnaJ heat shock protein family (Hsp40) member C5 ,DNAJC5,5,,,5
+KRT23,keratin 23 ,KRT23,26,,,26
+ATP1A3,ATPase Na+/K+ transporting subunit alpha 3 ,ATP1A3,8,,,8
+CAND1,cullin associated and neddylation dissociated 1 ,CAND1,25,,,25
+PPP2R5D,protein phosphatase 2 regulatory subunit B'delta ,PPP2R5D,4,,,4
+TFDP2,transcription factor Dp-2 ,TFDP2,14,,,14
+KRT36,keratin 36 ,KRT36,1,,,1
+ATP1A4,ATPase Na+/K+ transporting subunit alpha 4 ,ATP1A4,2,,,2
+IGF2BP3,insulin like growth factor 2 mRNA binding protein 3 ,IGF2BP3,286,,,286
+GABBR2,gamma-aminobutyric acid type B receptor subunit 2 ,GABBR2,15,,,15
+ADAM10,ADAM metallopeptidase domain 10 ,ADAM10,357,,,357
+NCOA2,nuclear receptor coactivator 2 ,NCOA2,192,,,192
+COL6A1,collagen type VI alpha 1 chain ,COL6A1,60,,,60
+NONO,non-POU domain containing octamer binding ,NONO,225,,,225
+POLE3,"DNA polymerase epsilon 3, accessory subunit ",POLE3,6,,,6
+DRD2,dopamine receptor D2 ,DRD2,141,,,141
+SEC24D,"SEC24 homolog D, COPII coat complex component ",SEC24D,1,,,1
+ATP5MJ,ATP synthase membrane subunit j ,ATP5MJ,0,,,0
+TAB3,TGF-beta activated kinase 1 (MAP3K7) binding protein 3 ,TAB3,24,,,24
+EPB41,erythrocyte membrane protein band 4.1 ,EPB41,7,,,7
+IL3,interleukin 3 ,IL3,1367,,,1367
+KRT24,keratin 24 ,KRT24,4,,,4
+H1-4,"H1.4 linker histone, cluster member ",H1-4,38,,,38
+KRT86,keratin 86 ,KRT86,1,,,1
+KRT4,keratin 4 ,KRT4,28,,,28
+KRT83,keratin 83 ,KRT83,1,,,1
+PRL,prolactin ,PRL,2981,,,2981
+KRT28,keratin 28 ,KRT28,3,,,3
+BBS1,Bardet-Biedl syndrome 1 ,BBS1,7,,,7
+CD19,CD19 molecule ,CD19,6218,,,6218
+F2R,coagulation factor II thrombin receptor ,F2R,35,,,35
+KRT6B,keratin 6B ,KRT6B,24,,,24
+KRT79,keratin 79 ,KRT79,1,,,1
+CLDN24,claudin 24 ,CLDN24,3,,,3
+KRT26,keratin 26 ,KRT26,0,,,0
+KRT3,keratin 3 ,KRT3,0,,,0
+KRT12,keratin 12 ,KRT12,2,,,2
+PTPN1,protein tyrosine phosphatase non-receptor type 1 ,PTPN1,76,,,76
+SELL,selectin L ,SELL,103,0,11,11
+GTF2E2,general transcription factor IIE subunit 2 ,GTF2E2,6,,,6
+DPP4,dipeptidyl peptidase 4 ,DPP4,236,,,236
+TPM2,tropomyosin 2 ,TPM2,42,,,42
+KRT25,keratin 25 ,KRT25,2,,,2
+KRT81,keratin 81 ,KRT81,24,,,24
+ATP6AP1L,ATPase H+ transporting accessory protein 1 like (pseudogene) ,ATP6AP1L,1,,,1
+CLDN25,claudin 25 ,CLDN25,0,,,0
+CLDN34,claudin 34 ,CLDN34,1,,,1
+HLA-B,"major histocompatibility complex, class I, B ",HLA-B,653,,,653
+FXYD1,FXYD domain containing ion transport regulator 1 ,FXYD1,3,,,3
+CCL3,C-C motif chemokine ligand 3 ,CCL3,325,,,325
+TBXA2R,thromboxane A2 receptor ,TBXA2R,12,,,12
+NHERF2,NHERF family PDZ scaffold protein 2 ,NHERF2,12,,,12
+ATP12A,ATPase H+/K+ transporting non-gastric alpha2 subunit ,ATP12A,3,,,3
+COL4A4,collagen type IV alpha 4 chain ,COL4A4,13,,,13
+CLSPN,claspin ,CLSPN,25,,,25
+HNRNPM,heterogeneous nuclear ribonucleoprotein M ,HNRNPM,34,,,34
+MCM5,minichromosome maintenance complex component 5 ,MCM5,120,,,120
+VRK1,VRK serine/threonine kinase 1 ,VRK1,44,,,44
+NUP98,nucleoporin 98 and 96 precursor ,NUP98,358,,,358
+CCNC,cyclin C ,CCNC,30,,,30
+FAF2,Fas associated factor family member 2 ,FAF2,4,,,4
+EPHA4,EPH receptor A4 ,EPHA4,88,,,88
+MAD2L2,mitotic arrest deficient 2 like 2 ,MAD2L2,36,,,36
+MYB,"MYB proto-oncogene, transcription factor ",MYB,1412,,,1412
+H1-1,"H1.1 linker histone, cluster member ",H1-1,10,,,10
+ADORA2A,adenosine A2a receptor ,ADORA2A,44,,,44
+ILF3,interleukin enhancer binding factor 3 ,ILF3,69,,,69
+AJUBA,ajuba LIM protein ,AJUBA,54,,,54
+APLNR,apelin receptor ,APLNR,30,,,30
+UBQLN1,ubiquilin 1 ,UBQLN1,17,,,17
+EPHA7,EPH receptor A7 ,EPHA7,83,,,83
+KRT71,keratin 71 ,KRT71,2,,,2
+APOA2,apolipoprotein A2 ,APOA2,38,,,38
+UBXN7,UBX domain protein 7 ,UBXN7,2,,,2
+MYL1,myosin light chain 1 ,MYL1,9,,,9
+INPP5D,inositol polyphosphate-5-phosphatase D ,INPP5D,14,,,14
+RAC3,Rac family small GTPase 3 ,RAC3,93,,,93
+TMED10,transmembrane p24 trafficking protein 10 ,TMED10,7,,,7
+KRT74,keratin 74 ,KRT74,0,,,0
+PRNP,prion protein (Kanno blood group) ,PRNP,59,,,59
+LGALS9C,galectin 9C ,LGALS9C,1,,,1
+ATP5MK,ATP synthase membrane subunit k ,ATP5MK,0,,,0
+KRT76,keratin 76 ,KRT76,3,,,3
+UBE2L3,ubiquitin conjugating enzyme E2 L3 ,UBE2L3,21,,,21
+KRT77,keratin 77 ,KRT77,0,,,0
+NOTCH4,notch receptor 4 ,NOTCH4,232,,,232
+C4B,complement C4B (Chido/Rodgers blood group) ,C4B,117,,,117
+CRIPTO,"cripto, EGF-CFC family member ",CRIPTO,205,,,205
+PECAM1,platelet and endothelial cell adhesion molecule 1 ,PECAM1,201,,,201
+MYH13,myosin heavy chain 13 ,MYH13,3,,,3
+RANBP9,RAN binding protein 9 ,RANBP9,11,,,11
+ATG5,autophagy related 5 ,ATG5,1060,,,1060
+MCM10,minichromosome maintenance 10 replication initiation factor ,MCM10,61,,,61
+ABCC9,ATP binding cassette subfamily C member 9 ,ABCC9,13,,,13
+MMP2,matrix metallopeptidase 2 ,MMP2,8814,,,8814
+BMP7,bone morphogenetic protein 7 ,BMP7,242,,,242
+RAE1,ribonucleic acid export 1 ,RAE1,39,,,39
+ITGB8,integrin subunit beta 8 ,ITGB8,40,,,40
+CCL24,C-C motif chemokine ligand 24 ,CCL24,31,,,31
+GHR,growth hormone receptor ,GHR,193,,,193
+PRLR,prolactin receptor ,PRLR,240,,,240
+FHL2,four and a half LIM domains 2 ,FHL2,102,,,102
+EREG,epiregulin ,EREG,169,,,169
+FLRT3,fibronectin leucine rich transmembrane protein 3 ,FLRT3,16,,,16
+MCHR1,melanin concentrating hormone receptor 1 ,MCHR1,7,,,7
+MYBBP1A,MYB binding protein 1a ,MYBBP1A,25,,,25
+KLC4,kinesin light chain 4 ,KLC4,4,,,4
+ABCG8,ATP binding cassette subfamily G member 8 ,ABCG8,17,,,17
+MYH15,myosin heavy chain 15 ,MYH15,3,,,3
+DAB2,DAB adaptor protein 2 ,DAB2,144,,,144
+PSMC2,"proteasome 26S subunit, ATPase 2 ",PSMC2,25,,,25
+KRT84,keratin 84 ,KRT84,3,,,3
+KRT82,keratin 82 ,KRT82,2,,,2
+NDEL1,nudE neurodevelopment protein 1 like 1 ,NDEL1,6,,,6
+STIP1,stress induced phosphoprotein 1 ,STIP1,57,,,57
+IL7R,interleukin 7 receptor ,IL7R,252,,,252
+EFNA1,ephrin A1 ,EFNA1,53,,,53
+KRT72,keratin 72 ,KRT72,1,,,1
+EWSR1,EWS RNA binding protein 1 ,EWSR1,1256,,,1256
+KRT73,keratin 73 ,KRT73,0,,,0
+PDCD1,programmed cell death 1 ,PDCD1,378,,,378
+CNTF,ciliary neurotrophic factor ,CNTF,89,,,89
+HP,haptoglobin ,haptoglobin ,775,,,775
+CCL4L2,C-C motif chemokine ligand 4 like 2 ,CCL4L2,4,,,4
+ABCC8,ATP binding cassette subfamily C member 8 ,ABCC8,29,,,29
+EPHA3,EPH receptor A3 ,EPHA3,121,,,121
+FOXP3,forkhead box P3 ,FOXP3,3923,,,3923
+LPAR2,lysophosphatidic acid receptor 2 ,LPAR2,31,,,31
+LRP6,LDL receptor related protein 6 ,LRP6,243,,,243
+NDE1,nudE neurodevelopment protein 1 ,NDE1,10,,,10
+UBE2K,ubiquitin conjugating enzyme E2 K ,UBE2K,9,,,9
+TP73,tumor protein p73 ,TP73,305,,,305
+MEF2C,myocyte enhancer factor 2C ,MEF2C,132,,,132
+EFNA2,ephrin A2 ,EFNA2,4,,,4
+BRD1,bromodomain containing 1 ,BRD1,17,,,17
+VAPA,VAMP associated protein A ,VAPA,29,,,29
+PLAT,"plasminogen activator, tissue type ",PLAT,83,1,7,7
+CD2,CD2 molecule ,CD2,1779,,,1779
+CR2,complement C3d receptor 2 ,CR2,626,,,626
+ENY2,ENY2 transcription and export complex 2 subunit ,ENY2,6,,,6
+KCNJ8,potassium inwardly rectifying channel subfamily J member 8 ,KCNJ8,5,,,5
+GDF5,growth differentiation factor 5 ,GDF5,14,,,14
+RAN,"RAN, member RAS oncogene family ",RAN,859,9,1,9
+E2F5,E2F transcription factor 5 ,E2F5,95,,,95
+MYCN,"MYCN proto-oncogene, bHLH transcription factor ",MYCN,2684,,,2684
+ETS1,"ETS proto-oncogene 1, transcription factor ",ETS1,720,,,720
+EPRS1,glutamyl-prolyl-tRNA synthetase 1 ,EPRS1,1,,,1
+GABARAPL1,GABA type A receptor associated protein like 1 ,GABARAPL1,47,,,47
+BBS4,Bardet-Biedl syndrome 4 ,BBS4,2,,,2
+SOD1,superoxide dismutase 1 ,SOD1,407,,,407
+CGN,cingulin ,CGN,66,,,66
+EFNA3,ephrin A3 ,EFNA3,31,,,31
+RAB5A,"RAB5A, member RAS oncogene family ",RAB5A,66,,,66
+RHOC,ras homolog family member C ,RHOC,378,,,378
+FCER1G,Fc epsilon receptor Ig ,FCER1G,23,,,23
+ICOS,inducible T cell costimulator ,ICOS,439,,,439
+RNF168,ring finger protein 168 ,RNF168,48,,,48
+CAMP,cathelicidin antimicrobial peptide ,CAMP,5365,2,14,14
+GPER1,G protein-coupled estrogen receptor 1 ,GPER1,91,,,91
+ADRA1B,adrenoceptor alpha 1B ,ADRA1B,6,,,6
+SELP,selectin P ,SELP,45,,,45
+BANF1,BAF nuclear assembly factor 1 ,BANF1,16,,,16
+GRIN1,glutamate ionotropic receptor NMDA type subunit 1 ,GRIN1,11,,,11
+SOX11,SRY-box transcription factor 11 ,SOX11,296,,,296
+DCC,DCC netrin 1 receptor ,DCC,1166,,,1166
+TCF4,transcription factor 4 ,TCF4,841,,,841
+TLE1,"TLE family member 1, transcriptional corepressor ",TLE1,168,,,168
+HLA-G,"major histocompatibility complex, class I, G ",HLA-G,628,,,628
+HLA-F,"major histocompatibility complex, class I, F ",HLA-F,54,,,54
+SUPT4H1,"SPT4 homolog, DSIF elongation factor subunit ",SUPT4H1,3,,,3
+MPO,myeloperoxidase ,MPO,958,,,958
+LAMP2,lysosomal associated membrane protein 2 ,LAMP2,144,,,144
+WWTR1,WW domain containing transcription regulator 1 ,WWTR1,164,,,164
+TNFRSF1B,TNF receptor superfamily member 1B ,TNFRSF1B,53,,,53
+DCUN1D1,defective in cullin neddylation 1 domain containing 1 ,DCUN1D1,23,,,23
+COL17A1,collagen type XVII alpha 1 chain ,COL17A1,31,,,31
+EPHA6,EPH receptor A6 ,EPHA6,20,,,20
+RBL1,RB transcriptional corepressor like 1 ,RBL1,61,,,61
+USP11,ubiquitin specific peptidase 11 ,USP11,49,,,49
+CDC45,cell division cycle 45 ,CDC45,82,,,82
+LIM2,lens intrinsic membrane protein 2 ,LIM2,3,,,3
+CCND3,cyclin D3 ,CCND3,219,,,219
+CRBN,cereblon ,CRBN,200,,,200
+SNX4,sorting nexin 4 ,SNX4,3,,,3
+TGFB3,transforming growth factor beta 3 ,TGFB3,46,,,46
+TNFRSF8,TNF receptor superfamily member 8 ,TNFRSF8,30,,,30
+ORC4,origin recognition complex subunit 4 ,ORC4,9,,,9
+FLRT1,fibronectin leucine rich transmembrane protein 1 ,FLRT1,4,,,4
+ADRM1,ADRM1 26S proteasome ubiquitin receptor ,ADRM1,38,,,38
+AKAP12,A-kinase anchoring protein 12 ,AKAP12,116,,,116
+CASP9,caspase 9 ,CASP9,235,,,235
+MEN1,menin 1 ,MEN1,2100,,,2100
+HAVCR2,hepatitis A virus cellular receptor 2 ,HAVCR2,172,,,172
+KLF4,KLF transcription factor 4 ,KLF4,1034,,,1034
+FXYD2,FXYD domain containing ion transport regulator 2 ,FXYD2,10,,,10
+MSTN,myostatin ,MSTN,18,,,18
+USP8,ubiquitin specific peptidase 8 ,USP8,125,,,125
+PEX5,peroxisomal biogenesis factor 5 ,PEX5,10,,,10
+ACVRL1,activin A receptor like type 1 ,ACVRL1,28,,,28
+CSNK1D,casein kinase 1 delta ,CSNK1D,25,,,25
+EPHA5,EPH receptor A5 ,EPHA5,75,,,75
+EIF4E,eukaryotic translation initiation factor 4E ,EIF4E,922,,,922
+RRP1B,ribosomal RNA processing 1B ,RRP1B,13,,,13
+VCAM1,vascular cell adhesion molecule 1 ,VCAM1,839,,,839
+FCGR3B,Fc gamma receptor IIIb ,FCGR3B,13,,,13
+VIRMA,vir like m6A methyltransferase associated ,VIRMA,33,,,33
+WRN,WRN RecQ like helicase ,WRN,249,,,249
+PSMC3,"proteasome 26S subunit, ATPase 3 ",PSMC3,14,,,14
+NOD2,nucleotide binding oligomerization domain containing 2 ,NOD2,162,,,162
+CDT1,chromatin licensing and DNA replication factor 1 ,CDT1,100,,,100
+MIS12,MIS12 kinetochore complex component ,MIS12,6,,,6
+ING2,inhibitor of growth family member 2 ,ING2,39,,,39
+PCBP1,poly(rC) binding protein 1 ,PCBP1,79,,,79
+PDCD6IP,programmed cell death 6 interacting protein ,PDCD6IP,17,,,17
+BPTF,bromodomain PHD finger transcription factor ,BPTF,63,,,63
+RND1,Rho family GTPase 1 ,RND1,15,,,15
+HSPA6,heat shock protein family A (Hsp70) member 6 ,HSPA6,48,,,48
+TOP3A,DNA topoisomerase III alpha ,TOP3A,20,,,20
+ERN1,endoplasmic reticulum to nucleus signaling 1 ,ERN1,57,,,57
+ATP4B,ATPase H+/K+ transporting subunit beta ,ATP4B,20,,,20
+CCNL2,cyclin L2 ,CCNL2,5,,,5
+EFNA4,ephrin A4 ,EFNA4,17,,,17
+CDK3,cyclin dependent kinase 3 ,CDK3,49,,,49
+CCL15,C-C motif chemokine ligand 15 ,CCL15,42,,,42
+TAC1,tachykinin precursor 1 ,TAC1,54,,,54
+PSMC4,"proteasome 26S subunit, ATPase 4 ",PSMC4,13,,,13
+HIPK2,homeodomain interacting protein kinase 2 ,HIPK2,130,,,130
+SYT1,synaptotagmin 1 ,SYT1,27,,,27
+CD209,CD209 molecule ,CD209,52,,,52
+ENG,endoglin ,ENG,202,,,202
+ABCA2,ATP binding cassette subfamily A member 2 ,ABCA2,41,,,41
+PSMD3,"proteasome 26S subunit, non-ATPase 3 ",PSMD3,14,,,14
+AMBRA1,autophagy and beclin 1 regulator 1 ,AMBRA1,60,,,60
+HES1,hes family bHLH transcription factor 1 ,HES1,749,,,749
+CISH,cytokine inducible SH2 containing protein ,CISH,467,,,467
+IL1A,interleukin 1 alpha ,IL1A,198,,,198
+ABCB6,ATP binding cassette subfamily B member 6 (LAN blood group) ,ABCB6,40,,,40
+ABCD4,ATP binding cassette subfamily D member 4 ,ABCD4,7,,,7
+CRHR1,corticotropin releasing hormone receptor 1 ,CRHR1,35,,,35
+TNFAIP6,TNF alpha induced protein 6 ,TNFAIP6,42,,,42
+ACVR1C,activin A receptor type 1C ,ACVR1C,12,,,12
+RAMP1,receptor activity modifying protein 1 ,RAMP1,26,,,26
+ABCG5,ATP binding cassette subfamily G member 5 ,ABCG5,20,,,20
+SNRPF,small nuclear ribonucleoprotein polypeptide F ,SNRPF,7,,,7
+GRB7,growth factor receptor bound protein 7 ,GRB7,139,,,139
+GATAD2B,GATA zinc finger domain containing 2B ,GATAD2B,5,,,5
+ILF2,interleukin enhancer binding factor 2 ,ILF2,40,,,40
+PLA2G7,phospholipase A2 group VII ,PLA2G7,25,,,25
+ZEB1,zinc finger E-box binding homeobox 1 ,ZEB1,2194,,,2194
+BMP6,bone morphogenetic protein 6 ,BMP6,158,,,158
+SST,somatostatin ,SST,668,,,668
+PAXIP1,PAX interacting protein 1 ,PAXIP1,14,,,14
+CLDN12,claudin 12 ,CLDN12,8,,,8
+ACTC1,actin alpha cardiac muscle 1 ,ACTC1,20,,,20
+DVL3,dishevelled segment polarity protein 3 ,DVL3,82,,,82
+CNST,"consortin, connexin sorting protein ",CNST,36,,,36
+PEX2,peroxisomal biogenesis factor 2 ,PEX2,1,,,1
+LIPC,"lipase C, hepatic type ",LIPC,19,,,19
+OTUB1,"OTU deubiquitinase, ubiquitin aldehyde binding 1 ",OTUB1,57,,,57
+KCNAB1,potassium voltage-gated channel subfamily A regulatory beta subunit 1 ,KCNAB1,7,,,7
+KCNAB3,potassium voltage-gated channel subfamily A regulatory beta subunit 3 ,KCNAB3,1,,,1
+GABARAP,GABA type A receptor-associated protein ,GABARAP,54,,,54
+CYCS,"cytochrome c, somatic ",CYCS,42,,,42
+ZFPM1,"zinc finger protein, FOG family member 1 ",ZFPM1,8,,,8
+EPHA10,EPH receptor A10 ,EPHA10,29,,,29
+LPAR5,lysophosphatidic acid receptor 5 ,LPAR5,32,,,32
+ABCB8,ATP binding cassette subfamily B member 8 ,ABCB8,8,,,8
+COL4A6,collagen type IV alpha 6 chain ,COL4A6,50,,,50
+NUP62,nucleoporin 62 ,NUP62,14,,,14
+CSNK1E,casein kinase 1 epsilon ,CSNK1E,35,,,35
+MIF,macrophage migration inhibitory factor ,MIF,912,,,912
+NME2,NME/NM23 nucleoside diphosphate kinase 2 ,NME2,72,,,72
+HBB,hemoglobin subunit beta ,HBB,84,,,84
+CCL3L3,C-C motif chemokine ligand 3 like 3 ,CCL3L3,2,,,2
+ARID4A,AT-rich interaction domain 4A ,ARID4A,12,,,12
+SIRT2,sirtuin 2 ,SIRT2,226,,,226
+NUP133,nucleoporin 133 ,NUP133,3,,,3
+DNAJA2,DnaJ heat shock protein family (Hsp40) member A2 ,DNAJA2,1,,,1
+HMMR,hyaluronan mediated motility receptor ,HMMR,149,,,149
+DNAJB11,DnaJ heat shock protein family (Hsp40) member B11 ,DNAJB11,13,,,13
+NFATC2,nuclear factor of activated T cells 2 ,NFATC2,139,,,139
+MAP1LC3A,microtubule associated protein 1 light chain 3 alpha ,MAP1LC3A,40,,,40
+PTPRZ1,protein tyrosine phosphatase receptor type Z1 ,PTPRZ1,63,,,63
+CCL1,C-C motif chemokine ligand 1 ,CCL1,61,,,61
+SELPLG,selectin P ligand ,SELPLG,13,,,13
+SRF,serum response factor ,SRF,346,,,346
+LMNB1,lamin B1 ,LMNB1,53,,,53
+LIFR,LIF receptor subunit alpha ,LIFR,187,,,187
+CNR1,cannabinoid receptor 1 ,CNR1,40,,,40
+CCND2,cyclin D2 ,CCND2,450,,,450
+CNTFR,ciliary neurotrophic factor receptor ,CNTFR,21,,,21
+PKN1,protein kinase N1 ,PKN1,26,,,26
+CKS2,CDC28 protein kinase regulatory subunit 2 ,CKS2,82,,,82
+OBSL1,obscurin like cytoskeletal adaptor 1 ,OBSL1,2,,,2
+SMO,"smoothened, frizzled class receptor ",SMO,992,,,992
+RAMP2,receptor activity modifying protein 2 ,RAMP2,31,,,31
+CRP,C-reactive protein ,CRP,5138,,,5138
+MEIS2,Meis homeobox 2 ,MEIS2,52,,,52
+AGT,angiotensinogen ,AGT,358,,,358
+PLIN2,perilipin 2 ,PLIN2,49,,,49
+PSEN2,presenilin 2 ,PSEN2,14,,,14
+C9orf72,C9orf72-SMCR8 complex subunit ,C9orf72,8,,,8
+ADGRL3,adhesion G protein-coupled receptor L3 ,ADGRL3,5,,,5
+GRM1,glutamate metabotropic receptor 1 ,GRM1,56,,,56
+APPL1,"adaptor protein, phosphotyrosine interacting with PH domain and leucine zipper 1 ",APPL1,31,,,31
+SPATA2,spermatogenesis associated 2 ,SPATA2,6,,,6
+MAML1,mastermind like transcriptional coactivator 1 ,MAML1,67,,,67
+CXCL16,C-X-C motif chemokine ligand 16 ,CXCL16,185,,,185
+NUP35,nucleoporin 35 ,NUP35,1,,,1
+SAP30,Sin3A associated protein 30 ,SAP30,14,,,14
+GFRA2,GDNF family receptor alpha 2 ,GFRA2,11,,,11
+CPLX1,complexin 1 ,CPLX1,1,,,1
+UBE2V2,ubiquitin conjugating enzyme E2 V2 ,UBE2V2,13,,,13
+LPL,lipoprotein lipase ,LPL,570,,,570
+PFN4,profilin family member 4 ,PFN4,1,,,1
+LIN9,lin-9 DREAM MuvB core complex component ,LIN9,21,,,21
+WT1,WT1 transcription factor ,WT1,3357,,,3357
+LAMP1,lysosomal associated membrane protein 1 ,LAMP1,281,,,281
+WWOX,WW domain containing oxidoreductase ,WWOX,333,,,333
+NF2,"NF2, moesin-ezrin-radixin like (MERLIN) tumor suppressor ",NF2,2263,,,2263
+TNFRSF4,TNF receptor superfamily member 4 ,TNFRSF4,54,,,54
+ATG7,autophagy related 7 ,ATG7,565,,,565
+MBP,myelin basic protein ,MBP,565,,,565
+AGER,advanced glycosylation end-product specific receptor ,AGER,52,2,11,11
+MAD1L1,mitotic arrest deficient 1 like 1 ,MAD1L1,38,,,38
+BAZ1B,bromodomain adjacent to zinc finger domain 1B ,BAZ1B,11,,,11
+FBXW11,F-box and WD repeat domain containing 11 ,FBXW11,16,,,16
+RIMS1,regulating synaptic membrane exocytosis 1 ,RIMS1,6,,,6
+TF,transferrin ,transferrin ,3542,,,3542
+HSCB,HscB mitochondrial iron-sulfur cluster cochaperone ,HSCB,4,,,4
+CTSG,cathepsin G ,CTSG,29,,,29
+JAG1,jagged canonical Notch ligand 1 ,JAG1,283,,,283
+TNFSF13B,TNF superfamily member 13b ,TNFSF13B,32,,,32
+COMP,cartilage oligomeric matrix protein ,COMP,237,,,237
+C1QBP,complement C1q binding protein ,C1QBP,38,,,38
+PDE4D,phosphodiesterase 4D ,PDE4D,57,,,57
+RTN4,reticulon 4 ,RTN4,30,,,30
+STMN1,stathmin 1 ,STMN1,227,,,227
+LEPR,leptin receptor ,LEPR,169,,,169
+UBE2B,ubiquitin conjugating enzyme E2 B ,UBE2B,13,,,13
+FKBP1B,FKBP prolyl isomerase 1B ,FKBP1B,3,,,3
+SET,SET nuclear proto-oncogene ,SET,59309,25,4,25
+SOCS2,suppressor of cytokine signaling 2 ,SOCS2,149,,,149
+AMOT,angiomotin ,AMOT,44,,,44
+CDKN1C,cyclin dependent kinase inhibitor 1C ,CDKN1C,155,,,155
+NECTIN2,nectin cell adhesion molecule 2 ,NECTIN2,77,,,77
+CSH1,chorionic somatomammotropin hormone 1 ,CSH1,5,,,5
+CEP55,centrosomal protein 55 ,CEP55,145,,,145
+CD27,CD27 molecule ,CD27,782,,,782
+PEX14,peroxisomal biogenesis factor 14 ,PEX14,20,,,20
+LUM,lumican ,LUM,108,1,123,123
+NUF2,NUF2 component of NDC80 kinetochore complex ,NUF2,61,,,61
+DLG2,discs large MAGUK scaffold protein 2 ,DLG2,29,,,29
+SERPING1,serpin family G member 1 ,SERPING1,21,,,21
+PEX10,peroxisomal biogenesis factor 10 ,PEX10,2,,,2
+SKA3,spindle and kinetochore associated complex subunit 3 ,SKA3,39,,,39
+PEX13,peroxisomal biogenesis factor 13 ,PEX13,3,,,3
+BDKRB2,bradykinin receptor B2 ,BDKRB2,8,,,8
+HNRNPF,heterogeneous nuclear ribonucleoprotein F ,HNRNPF,19,,,19
+LGALS9B,galectin 9B ,LGALS9B,2,,,2
+LPAR3,lysophosphatidic acid receptor 3 ,LPAR3,40,,,40
+RRM2,ribonucleotide reductase regulatory subunit M2 ,RRM2,433,,,433
+CNTN2,contactin 2 ,CNTN2,9,,,9
+MAML2,mastermind like transcriptional coactivator 2 ,MAML2,321,,,321
+S100A4,S100 calcium binding protein A4 ,S100A4,696,,,696
+COL25A1,collagen type XXV alpha 1 chain ,COL25A1,3,,,3
+UNC13B,unc-13 homolog B ,UNC13B,3,,,3
+TRIM27,tripartite motif containing 27 ,TRIM27,57,,,57
+LIN52,lin-52 DREAM MuvB core complex component ,LIN52,6,,,6
+LIN37,lin-37 DREAM MuvB core complex component ,LIN37,3,,,3
+NEFL,neurofilament light chain ,NEFL,50,,,50
+CD22,CD22 molecule ,CD22,1410,,,1410
+CASR,calcium sensing receptor ,CASR,288,,,288
+MAPK9,mitogen-activated protein kinase 9 ,MAPK9,51,,,51
+CALCRL,calcitonin receptor like receptor ,CALCRL,21,,,21
+TRIP13,thyroid hormone receptor interactor 13 ,TRIP13,94,,,94
+ADGRL1,adhesion G protein-coupled receptor L1 ,ADGRL1,3,,,3
+PICALM,phosphatidylinositol binding clathrin assembly protein ,PICALM,37,,,37
+SMARCD3,"SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily d, member 3 ",SMARCD3,20,,,20
+ATG16L1,autophagy related 16 like 1 ,ATG16L1,92,,,92
+FBXO7,F-box protein 7 ,FBXO7,13,,,13
+RBFOX2,RNA binding fox-1 homolog 2 ,RBFOX2,39,,,39
+APOL1,apolipoprotein L1 ,APOL1,23,,,23
+PSMA6,proteasome 20S subunit alpha 6 ,PSMA6,13,,,13
+MYBL2,MYB proto-oncogene like 2 ,MYBL2,165,,,165
+PTN,pleiotrophin ,PTN,273,,,273
+HOXA5,homeobox A5 ,HOXA5,141,,,141
+AMBP,alpha-1-microglobulin/bikunin precursor ,AMBP,26,,,26
+PEX12,peroxisomal biogenesis factor 12 ,PEX12,1,,,1
+DHX15,DEAH-box helicase 15 ,DHX15,27,,,27
+LTBR,lymphotoxin beta receptor ,LTBR,48,,,48
+IL4,interleukin 4 ,IL4,3507,,,3507
+SMC4,structural maintenance of chromosomes 4 ,SMC4,53,,,53
+NEK2,NIMA related kinase 2 ,NEK2,212,,,212
+CCN2,cellular communication network factor 2 ,CCN2,110,,,110
+SMAD9,SMAD family member 9 ,SMAD9,16,,,16
+VAPB,VAMP associated protein B and C ,VAPB,10,,,10
+BBS2,Bardet-Biedl syndrome 2 ,BBS2,3,,,3
+TUBA4A,tubulin alpha 4a ,TUBA4A,12,,,12
+HBZ,hemoglobin subunit zeta ,HBZ,137,,,137
+STXBP1,syntaxin binding protein 1 ,STXBP1,8,,,8
+BBS7,Bardet-Biedl syndrome 7 ,BBS7,1,,,1
+VPS37B,VPS37B subunit of ESCRT-I ,VPS37B,1,,,1
+TLE3,"TLE family member 3, transcriptional corepressor ",TLE3,30,,,30
+KIFC3,kinesin family member C3 ,KIFC3,12,,,12
+NME7,NME/NM23 family member 7 ,NME7,5,,,5
+PDE3B,phosphodiesterase 3B ,PDE3B,26,,,26
+XRCC4,X-ray repair cross complementing 4 ,XRCC4,185,,,185
+TTN,titin ,TTN,241,,,241
+NRG2,neuregulin 2 ,NRG2,27,,,27
+KCNB1,potassium voltage-gated channel subfamily B member 1 ,KCNB1,12,,,12
+S100B,S100 calcium binding protein B ,S100B,326,,,326
+HSPA12A,heat shock protein family A (Hsp70) member 12A ,HSPA12A,8,,,8
+S100A1,S100 calcium binding protein A1 ,S100A1,90,,,90
+ADORA2B,adenosine A2b receptor ,ADORA2B,22,,,22
+KCNA2,potassium voltage-gated channel subfamily A member 2 ,KCNA2,0,,,0
+PRPF8,pre-mRNA processing factor 8 ,PRPF8,20,,,20
+SH2B1,SH2B adaptor protein 1 ,SH2B1,14,,,14
+GATA2,GATA binding protein 2 ,GATA2,522,,,522
+RCC1,regulator of chromosome condensation 1 ,RCC1,68,,,68
+MUC16,"mucin 16, cell surface associated ",MUC16,361,,,361
+FLRT2,fibronectin leucine rich transmembrane protein 2 ,FLRT2,13,,,13
+NTF3,neurotrophin 3 ,NTF3,12,,,12
+PLA2G2A,phospholipase A2 group IIA ,PLA2G2A,58,,,58
+IFNA2,interferon alpha 2 ,IFNA2,10,,,10
+CLN3,"CLN3 lysosomal/endosomal transmembrane protein, battenin ",CLN3,21,,,21
+CXCL17,C-X-C motif chemokine ligand 17 ,CXCL17,40,,,40
+NCR1,natural cytotoxicity triggering receptor 1 ,NCR1,33,,,33
+MAML3,mastermind like transcriptional coactivator 3 ,MAML3,68,,,68
+PDCD1LG2,programmed cell death 1 ligand 2 ,PDCD1LG2,131,,,131
+DLL1,delta like canonical Notch ligand 1 ,DLL1,110,,,110
+COL6A6,collagen type VI alpha 6 chain ,COL6A6,13,,,13
+HPR,haptoglobin-related protein ,HPR,395,,,395
+CCL16,C-C motif chemokine ligand 16 ,CCL16,21,,,21
+CCL18,C-C motif chemokine ligand 18 ,CCL18,189,,,189
+COL23A1,collagen type XXIII alpha 1 chain ,COL23A1,5,,,5
+TNK2,tyrosine kinase non receptor 2 ,TNK2,42,,,42
+NTN1,netrin 1 ,NTN1,22,,,22
+SMC1A,structural maintenance of chromosomes 1A ,SMC1A,67,,,67
+PVR,PVR cell adhesion molecule ,PVR,344,,,344
+TBX5,T-box transcription factor 5 ,TBX5,47,,,47
+DSP,desmoplakin ,DSP,205,,,205
+MPDZ,multiple PDZ domain crumbs cell polarity complex component ,MPDZ,8,,,8
+NECTIN1,nectin cell adhesion molecule 1 ,NECTIN1,39,,,39
+MYL2,myosin light chain 2 ,MYL2,12,,,12
+ADGRL2,adhesion G protein-coupled receptor L2 ,ADGRL2,3,,,3
+MUC5B,"mucin 5B, oligomeric mucus/gel-forming ",MUC5B,153,,,153
+RHOQ,ras homolog family member Q ,RHOQ,5,,,5
+GAD1,glutamate decarboxylase 1 ,GAD1,21,,,21
+ACKR4,atypical chemokine receptor 4 ,ACKR4,8,,,8
+PSMA1,proteasome 20S subunit alpha 1 ,PSMA1,26,,,26
+UNC13A,unc-13 homolog A ,UNC13A,1,,,1
+PAK4,p21 (RAC1) activated kinase 4 ,PAK4,207,,,207
+POLN,DNA polymerase nu ,POLN,10,,,10
+APCS,"amyloid P component, serum ",APCS,1023,,,1023
+AP3B1,adaptor related protein complex 3 subunit beta 1 ,AP3B1,11,,,11
+KLRC1,killer cell lectin like receptor C1 ,KLRC1,27,,,27
+LMX1B,LIM homeobox transcription factor 1 beta ,LMX1B,15,,,15
+TCHP,trichoplein keratin filament binding ,TCHP,27,,,27
+NTRK3,neurotrophic receptor tyrosine kinase 3 ,NTRK3,657,,,657
+MEAK7,"MTOR associated protein, eak-7 homolog ",MEAK7,0,,,0
+SKAP1,src kinase associated phosphoprotein 1 ,SKAP1,18,,,18
+NUP205,nucleoporin 205 ,NUP205,13,,,13
+SKI,SKI proto-oncogene ,SKI,379,2,4,4
+SDC3,syndecan 3 ,SDC3,17,,,17
+TRIM63,tripartite motif containing 63 ,TRIM63,20,,,20
+PIGR,polymeric immunoglobulin receptor ,PIGR,91,,,91
+MSX1,msh homeobox 1 ,MSX1,70,,,70
+FABP5,fatty acid binding protein 5 ,FABP5,156,,,156
+CHMP4C,charged multivesicular body protein 4C ,CHMP4C,19,,,19
+NOS3,nitric oxide synthase 3 ,NOS3,149,,,149
+STX3,syntaxin 3 ,STX3,8,,,8
+TUBA1C,tubulin alpha 1c ,TUBA1C,25,,,25
+SERPINF2,serpin family F member 2 ,SERPINF2,7,,,7
+HJV,hemojuvelin BMP co-receptor ,HJV,14,,,14
+NLGN1,neuroligin 1 ,NLGN1,8,,,8
+DES,desmin ,DES,2976,,,2976
+SGF29,SAGA complex associated factor 29 ,SGF29,5,,,5
+NR2C2,nuclear receptor subfamily 2 group C member 2 ,NR2C2,13,,,13
+KCNA4,potassium voltage-gated channel subfamily A member 4 ,KCNA4,8,,,8
+HSPA14,heat shock protein family A (Hsp70) member 14 ,HSPA14,5,,,5
+LIN54,lin-54 DREAM MuvB core complex component ,LIN54,7,,,7
+PAX5,paired box 5 ,PAX5,1000,,,1000
+RYR1,ryanodine receptor 1 ,RYR1,43,,,43
+IFNA1,interferon alpha 1 ,IFNA1,16,,,16
+PBX2,PBX homeobox 2 ,PBX2,25,,,25
+NME1,NME/NM23 nucleoside diphosphate kinase 1 ,NME1,145,,,145
+NFYA,nuclear transcription factor Y subunit alpha ,NFYA,92,,,92
+TFPI,tissue factor pathway inhibitor ,TFPI,256,,,256
+NEO1,neogenin 1 ,NEO1,15,,,15
+TGFBR3,transforming growth factor beta receptor 3 ,TGFBR3,103,,,103
+SREBF1,sterol regulatory element binding transcription factor 1 ,SREBF1,76,,,76
+PALS1,"protein associated with LIN7 1, MAGUK p55 family member ",PALS1,11,,,11
+PCM1,pericentriolar material 1 ,PCM1,76,,,76
+GP6,glycoprotein VI platelet ,GP6,221,,,221
+SPTLC1,serine palmitoyltransferase long chain base subunit 1 ,SPTLC1,9,,,9
+TTLL12,tubulin tyrosine ligase like 12 ,TTLL12,8,,,8
+BDKRB1,bradykinin receptor B1 ,BDKRB1,4,,,4
+BIRC7,baculoviral IAP repeat containing 7 ,BIRC7,27,,,27
+CHMP4B,charged multivesicular body protein 4B ,CHMP4B,10,,,10
+CA2,carbonic anhydrase 2 ,CA2,7374,,,7374
+SGTA,small glutamine rich tetratricopeptide repeat co-chaperone alpha ,SGTA,20,,,20
+IL27RA,interleukin 27 receptor subunit alpha ,IL27RA,10,,,10
+LGALS3BP,galectin 3 binding protein ,LGALS3BP,70,,,70
+TIMELESS,timeless circadian regulator ,TIMELESS,78,2,1,2
+MFN2,mitofusin 2 ,MFN2,126,,,126
+APAF1,apoptotic peptidase activating factor 1 ,APAF1,589,,,589
+BBS9,Bardet-Biedl syndrome 9 ,BBS9,5,,,5
+RAMP3,receptor activity modifying protein 3 ,RAMP3,36,,,36
+DLGAP5,DLG associated protein 5 ,DLGAP5,82,,,82
+LILRB2,leukocyte immunoglobulin like receptor B2 ,LILRB2,34,,,34
+GFAP,glial fibrillary acidic protein ,GFAP,2306,,,2306
+TPT1,"tumor protein, translationally-controlled 1 ",TPT1,57,,,57
+DCAF7,DDB1 and CUL4 associated factor 7 ,DCAF7,5,,,5
+SORL1,sortilin related receptor 1 ,SORL1,16,,,16
+TRPC6,transient receptor potential cation channel subfamily C member 6 ,TRPC6,75,,,75
+FBN2,fibrillin 2 ,FBN2,34,,,34
+MFGE8,milk fat globule EGF and factor V/VIII domain containing ,MFGE8,48,,,48
+MVB12A,multivesicular body subunit 12A ,MVB12A,0,,,0
+SIRT3,sirtuin 3 ,SIRT3,333,,,333
+RHOB,ras homolog family member B ,RHOB,241,,,241
+GPC3,glypican 3 ,GPC3,676,,,676
+MKI67,marker of proliferation Ki-67 ,MKI67,315,,,315
+DSN1,DSN1 component of MIS12 kinetochore complex ,DSN1,13,,,13
+DBI,"diazepam binding inhibitor, acyl-CoA binding protein ",DBI,50,,,50
+RBPMS,"RNA binding protein, mRNA processing factor ",RBPMS,40,,,40
+TNFRSF14,TNF receptor superfamily member 14 ,TNFRSF14,110,,,110
+ICOSLG,inducible T cell costimulator ligand ,ICOSLG,23,,,23
+VPS28,VPS28 subunit of ESCRT-I ,VPS28,5,,,5
+UBXN1,UBX domain protein 1 ,UBXN1,9,,,9
+SYVN1,synoviolin 1 ,SYVN1,14,,,14
+WDR26,WD repeat domain 26 ,WDR26,4,,,4
+HSPA4L,heat shock protein family A (Hsp70) member 4 like ,HSPA4L,10,,,10
+LDB2,LIM domain binding 2 ,LDB2,9,,,9
+ROBO1,roundabout guidance receptor 1 ,ROBO1,161,,,161
+NMUR1,neuromedin U receptor 1 ,NMUR1,10,,,10
+MALT1,MALT1 paracaspase ,MALT1,445,,,445
+GP5,glycoprotein V platelet ,GP5,469,,,469
+MAGED1,MAGE family member D1 ,MAGED1,23,,,23
+CHRM2,cholinergic receptor muscarinic 2 ,CHRM2,13,,,13
+RNF41,ring finger protein 41 ,RNF41,8,,,8
+GP1BA,glycoprotein Ib platelet subunit alpha ,GP1BA,6,,,6
+PFN3,profilin 3 ,PFN3,2,,,2
+MMP1,matrix metallopeptidase 1 ,MMP1,1752,,,1752
+COL13A1,collagen type XIII alpha 1 chain ,COL13A1,16,,,16
+PRC1,protein regulator of cytokinesis 1 ,PRC1,294,,,294
+ABHD16A,"abhydrolase domain containing 16A, phospholipase ",ABHD16A,2,,,2
+ACKR1,atypical chemokine receptor 1 (Duffy blood group) ,ACKR1,20,,,20
+PPP1CB,protein phosphatase 1 catalytic subunit beta ,PPP1CB,29,,,29
+PHB2,prohibitin 2 ,PHB2,70,,,70
+PPP2R2A,protein phosphatase 2 regulatory subunit Balpha ,PPP2R2A,63,,,63
+SSTR3,somatostatin receptor 3 ,SSTR3,133,,,133
+ORM1,orosomucoid 1 ,ORM1,44,,,44
+PDK4,pyruvate dehydrogenase kinase 4 ,PDK4,116,,,116
+MAMLD1,mastermind like domain containing 1 ,MAMLD1,20,,,20
+RTN4R,reticulon 4 receptor ,RTN4R,4,,,4
+ASPM,assembly factor for spindle microtubules ,ASPM,149,,,149
+EIF2B3,eukaryotic translation initiation factor 2B subunit gamma ,EIF2B3,0,,,0
+PTPRC,protein tyrosine phosphatase receptor type C ,PTPRC,118,,,118
+ADD1,adducin 1 ,ADD1,13,,,13
+LAG3,lymphocyte activating 3 ,LAG3,1125,,,1125
+RAPGEF4,Rap guanine nucleotide exchange factor 4 ,RAPGEF4,8,,,8
+NME3,NME/NM23 nucleoside diphosphate kinase 3 ,NME3,9,,,9
+NEFM,neurofilament medium chain ,NEFM,15,,,15
+FGL1,fibrinogen like 1 ,FGL1,46,,,46
+DNAJB6,DnaJ heat shock protein family (Hsp40) member B6 ,DNAJB6,21,,,21
+RGP1,"RGP1 homolog, RAB6A GEF complex partner 1 ",RGP1,2,,,2
+RAB5C,"RAB5C, member RAS oncogene family ",RAB5C,13,,,13
+WASF1,WASP family member 1 ,WASF1,8,,,8
+NUP155,nucleoporin 155 ,NUP155,10,,,10
+NPHP3,nephrocystin 3 ,NPHP3,7,,,7
+PRKAR2A,protein kinase cAMP-dependent type II regulatory subunit alpha ,PRKAR2A,16,,,16
+KCNIP3,potassium voltage-gated channel interacting protein 3 ,KCNIP3,3,,,3
+HOXB5,homeobox B5 ,HOXB5,43,,,43
+AKAP1,A-kinase anchoring protein 1 ,AKAP1,3,,,3
+GOT2,glutamic-oxaloacetic transaminase 2 ,GOT2,46,,,46
+SYMPK,symplekin scaffold protein ,SYMPK,6,,,6
+RAB3IP,RAB3A interacting protein ,RAB3IP,9,,,9
+KCNA5,potassium voltage-gated channel subfamily A member 5 ,KCNA5,9,,,9
+HIP1R,huntingtin interacting protein 1 related ,HIP1R,15,,,15
+HSPA12B,heat shock protein family A (Hsp70) member 12B ,HSPA12B,3,,,3
+NMUR2,neuromedin U receptor 2 ,NMUR2,5,,,5
+MYBPC3,myosin binding protein C3 ,MYBPC3,4,,,4
+GAD2,glutamate decarboxylase 2 ,GAD2,28,,,28
+STX17,syntaxin 17 ,STX17,27,,,27
+CACNA1A,calcium voltage-gated channel subunit alpha1 A ,CACNA1A,19,,,19
+CERS2,ceramide synthase 2 ,CERS2,24,,,24
+ACKR3,atypical chemokine receptor 3 ,ACKR3,37,,,37
+OSMR,oncostatin M receptor ,OSMR,89,,,89
+PHIP,pleckstrin homology domain interacting protein ,PHIP,233,,,233
+CHMP7,charged multivesicular body protein 7 ,CHMP7,3,,,3
+TIAL1,TIA1 cytotoxic granule associated RNA binding protein like 1 ,TIAL1,8,,,8
+RPP38,ribonuclease P/MRP subunit p38 ,RPP38,1,,,1
+HSPA13,heat shock protein family A (Hsp70) member 13 ,HSPA13,7,,,7
+VMA21,vacuolar ATPase assembly factor VMA21 ,VMA21,7,,,7
+CCNF,cyclin F ,CCNF,24,,,24
+BBS5,Bardet-Biedl syndrome 5 ,BBS5,0,,,0
+IFI16,interferon gamma inducible protein 16 ,IFI16,95,,,95
+GJB2,gap junction protein beta 2 ,GJB2,54,,,54
+TTC8,tetratricopeptide repeat domain 8 ,TTC8,3,,,3
+TET2,tet methylcytosine dioxygenase 2 ,TET2,1346,,,1346
+GPS1,G protein pathway suppressor 1 ,GPS1,24,,,24
+KCND3,potassium voltage-gated channel subfamily D member 3 ,KCND3,2,,,2
+CLEC7A,C-type lectin domain containing 7A ,CLEC7A,20,,,20
+KCNA3,potassium voltage-gated channel subfamily A member 3 ,KCNA3,10,,,10
+ACAD9,acyl-CoA dehydrogenase family member 9 ,ACAD9,5,,,5
+AKAP5,A-kinase anchoring protein 5 ,AKAP5,4,,,4
+SCRIB,scribble planar cell polarity protein ,SCRIB,71,,,71
+TIGIT,T cell immunoreceptor with Ig and ITIM domains ,TIGIT,754,,,754
+NKX2-5,NK2 homeobox 5 ,NKX2-5,34,,,34
+H1-5,"H1.5 linker histone, cluster member ",H1-5,20,,,20
+KCND2,potassium voltage-gated channel subfamily D member 2 ,KCND2,10,,,10
+LILRB4,leukocyte immunoglobulin like receptor B4 ,LILRB4,32,,,32
+HEXIM1,HEXIM P-TEFb complex subunit 1 ,HEXIM1,49,,,49
+PDLIM7,PDZ and LIM domain 7 ,PDLIM7,9,,,9
+SNX2,sorting nexin 2 ,SNX2,12,,,12
+CFB,complement factor B ,CFB,48,,,48
+HOXB7,homeobox B7 ,HOXB7,126,,,126
+MYCBP2,MYC binding protein 2 ,MYCBP2,14,,,14
+SELE,selectin E ,SELE,26,1,18,18
+MYOC,myocilin ,MYOC,11,,,11
+SPDL1,spindle apparatus coiled-coil protein 1 ,SPDL1,198,,,198
+TNC,tenascin C ,TNC,460,,,460
+USE1,unconventional SNARE in the ER 1 ,USE1,4,,,4
+SRI,sorcin ,SRI,522,0,62,62
+HOXA9,homeobox A9 ,HOXA9,579,,,579
+RAPGEF3,Rap guanine nucleotide exchange factor 3 ,RAPGEF3,8,,,8
+FYB1,FYN binding protein 1 ,FYB1,1,,,1
+EPB41L3,erythrocyte membrane protein band 4.1 like 3 ,EPB41L3,68,,,68
+BAX,"BCL2 associated X, apoptosis regulator ",BAX,15738,,,15738
+PROCR,protein C receptor ,PROCR,31,,,31
+PSMD10,"proteasome 26S subunit, non-ATPase 10 ",PSMD10,34,,,34
+SCML2,Scm polycomb group protein like 2 ,SCML2,3,,,3
+EEF2K,eukaryotic elongation factor 2 kinase ,EEF2K,95,,,95
+EEF1D,eukaryotic translation elongation factor 1 delta ,EEF1D,16,,,16
+MAG,myelin associated glycoprotein ,MAG,280,0,97,97
+LSR,lipolysis stimulated lipoprotein receptor ,LSR,123,,,123
+SERPINE1,serpin family E member 1 ,SERPINE1,328,,,328
+TLE4,"TLE family member 4, transcriptional corepressor ",TLE4,23,,,23
+RIC1,"RIC1 homolog, RAB6A GEF complex partner 1 ",RIC1,1,,,1
+KCNA1,potassium voltage-gated channel subfamily A member 1 ,KCNA1,18,,,18
+E2F3,E2F transcription factor 3 ,E2F3,357,,,357
+FOXP1,forkhead box P1 ,FOXP1,343,,,343
+INVS,inversin ,INVS,7,,,7
+IAPP,islet amyloid polypeptide ,IAPP,66,,,66
+JCHAIN,joining chain of multimeric IgA and IgM ,JCHAIN,39,,,39
+NES,nestin ,NES,365,,,365
+FLOT1,flotillin 1 ,FLOT1,49,,,49
+RABGGTB,Rab geranylgeranyltransferase subunit beta ,RABGGTB,1,,,1
+MEIS1,Meis homeobox 1 ,MEIS1,316,,,316
+GPR17,G protein-coupled receptor 17 ,GPR17,15,,,15
+METTL14,"methyltransferase 14, N6-adenosine-methyltransferase non-catalytic subunit ",METTL14,249,,,249
+GOLGA7,golgin A7 ,GOLGA7,5,,,5
+IFNA5,interferon alpha 5 ,IFNA5,3,,,3
+HMGA2,high mobility group AT-hook 2 ,HMGA2,945,,,945
+RMND5A,required for meiotic nuclear division 5 homolog A ,RMND5A,6,,,6
+AIFM1,apoptosis inducing factor mitochondria associated 1 ,AIFM1,21,,,21
+XDH,xanthine dehydrogenase ,XDH,28,,,28
+SHANK2,SH3 and multiple ankyrin repeat domains 2 ,SHANK2,26,,,26
+BMP10,bone morphogenetic protein 10 ,BMP10,18,,,18
+SLBP,stem-loop histone mRNA binding protein ,SLBP,13,,,13
+WDR41,WD repeat domain 41 ,WDR41,1,,,1
+CTSB,cathepsin B ,CTSB,160,,,160
+ABCA1,ATP binding cassette subfamily A member 1 ,ABCA1,207,,,207
+LMO1,LIM domain only 1 ,LMO1,71,,,71
+GOLGA2,golgin A2 ,GOLGA2,10,,,10
+STIM1,stromal interaction molecule 1 ,STIM1,207,,,207
+GRM5,glutamate metabotropic receptor 5 ,GRM5,11,,,11
+ZEB2,zinc finger E-box binding homeobox 2 ,ZEB2,692,,,692
+SWSAP1,SWIM-type zinc finger 7 associated protein 1 ,SWSAP1,0,,,0
+RIMS2,regulating synaptic membrane exocytosis 2 ,RIMS2,11,,,11
+SMCR8,SMCR8-C9orf72 complex subunit ,SMCR8,0,,,0
+PNPLA2,patatin like phospholipase domain containing 2 ,PNPLA2,21,,,21
+ADIPOQ,"adiponectin, C1Q and collagen domain containing ",ADIPOQ,172,,,172
+C1S,complement C1s ,C1S,76,,,76
+BTLA,B and T lymphocyte associated ,BTLA,219,,,219
+CARD11,caspase recruitment domain family member 11 ,CARD11,190,,,190
+WDHD1,WD repeat and HMG-box DNA binding protein 1 ,WDHD1,19,,,19
+CEP290,centrosomal protein 290 ,CEP290,4,,,4
+SREBF2,sterol regulatory element binding transcription factor 2 ,SREBF2,36,,,36
+ZSWIM7,zinc finger SWIM-type containing 7 ,ZSWIM7,3,,,3
+IGKV2-40,immunoglobulin kappa variable 2-40 ,IGKV2-40,0,,,0
+KRIT1,KRIT1 ankyrin repeat containing ,KRIT1,229,,,229
+CALCR,calcitonin receptor ,CALCR,15,,,15
+RALA,RAS like proto-oncogene A ,RALA,162,,,162
+TACC3,transforming acidic coiled-coil containing protein 3 ,TACC3,189,,,189
+MAP2K3,mitogen-activated protein kinase kinase 3 ,MAP2K3,20,,,20
+CAPG,"capping actin protein, gelsolin like ",CAPG,83,,,83
+LTBP1,latent transforming growth factor beta binding protein 1 ,LTBP1,51,,,51
+TUBA3D,tubulin alpha 3d ,TUBA3D,4,,,4
+FBLN1,fibulin 1 ,FBLN1,41,,,41
+NRCAM,neuronal cell adhesion molecule ,NRCAM,39,,,39
+SEC22C,"SEC22 homolog C, vesicle trafficking protein ",SEC22C,0,,,0
+IL11,interleukin 11 ,IL11,416,,,416
+LGALS1,galectin 1 ,LGALS1,93,,,93
+NIN,ninein ,NIN,72,,,72
+RABGGTA,Rab geranylgeranyltransferase subunit alpha ,RABGGTA,1,,,1
+NTSR1,neurotensin receptor 1 ,NTSR1,78,,,78
+CDC25B,cell division cycle 25B ,CDC25B,234,,,234
+CD37,CD37 molecule ,CD37,171,,,171
+HOXB6,homeobox B6 ,HOXB6,25,,,25
+CD5,CD5 molecule ,CD5,3457,,,3457
+FBXO5,F-box protein 5 ,FBXO5,18,,,18
+MDFI,MyoD family inhibitor ,MDFI,17,,,17
+VIPR1,vasoactive intestinal peptide receptor 1 ,VIPR1,20,,,20
+USP34,ubiquitin specific peptidase 34 ,USP34,12,,,12
+NSL1,NSL1 component of MIS12 kinetochore complex ,NSL1,2,,,2
+AKAP7,A-kinase anchoring protein 7 ,AKAP7,2,,,2
+PPL,periplakin ,PPL,243,,,243
+NFYB,nuclear transcription factor Y subunit beta ,NFYB,27,,,27
+CSTA,cystatin A ,CSTA,23,,,23
+FMOD,fibromodulin ,FMOD,32,,,32
+HOXA7,homeobox A7 ,HOXA7,87,,,87
+SOX9,SRY-box transcription factor 9 ,SOX9,813,,,813
+PCID2,PCI domain containing 2 ,PCID2,4,,,4
+FOXP2,forkhead box P2 ,FOXP2,45,,,45
+PHF20L1,PHD finger protein 20 like 1 ,PHF20L1,10,,,10
+ECSIT,ECSIT signaling integrator ,ECSIT,6,,,6
+ATP5IF1,ATP synthase inhibitory factor subunit 1 ,ATP5IF1,3,,,3
+NFATC1,nuclear factor of activated T cells 1 ,NFATC1,173,,,173
+CLEC10A,C-type lectin domain containing 10A ,CLEC10A,14,,,14
+PATJ,PATJ crumbs cell polarity complex component ,PATJ,8,,,8
+NTS,neurotensin ,NTS,299,,,299
+GRP,gastrin releasing peptide ,GRP,716,,,716
+HOOK1,hook microtubule tethering protein 1 ,HOOK1,20,,,20
+PAX3,paired box 3 ,PAX3,611,,,611
+IRF4,interferon regulatory factor 4 ,IRF4,700,,,700
+SNX27,sorting nexin 27 ,SNX27,12,,,12
+CEP170,centrosomal protein 170 ,CEP170,8,,,8
+IL9,interleukin 9 ,IL9,282,,,282
+SIGMAR1,sigma non-opioid intracellular receptor 1 ,SIGMAR1,16,,,16
+ADM,adrenomedullin ,ADM,2062,,,2062
+PTPRJ,protein tyrosine phosphatase receptor type J ,PTPRJ,55,,,55
+HIKESHI,heat shock protein nuclear import factor hikeshi ,HIKESHI,2,,,2
+LATS2,large tumor suppressor kinase 2 ,LATS2,276,,,276
+HSPB8,heat shock protein family B (small) member 8 ,HSPB8,55,,,55
+WNT3A,Wnt family member 3A ,WNT3A,552,,,552
+SKA1,spindle and kinetochore associated complex subunit 1 ,SKA1,42,,,42
+BACH1,BTB domain and CNC homolog 1 ,BACH1,188,,,188
+SSBP3,single stranded DNA binding protein 3 ,SSBP3,2,,,2
+ZYX,zyxin ,ZYX,14,,,14
+TNFRSF13C,TNF receptor superfamily member 13C ,TNFRSF13C,18,,,18
+ARHGAP35,Rho GTPase activating protein 35 ,ARHGAP35,19,,,19
+SPC24,SPC24 component of NDC80 kinetochore complex ,SPC24,14,,,14
+DNAJB4,DnaJ heat shock protein family (Hsp40) member B4 ,DNAJB4,15,,,15
+FSTL1,follistatin like 1 ,FSTL1,64,,,64
+METTL3,"methyltransferase 3, N6-adenosine-methyltransferase complex catalytic subunit ",METTL3,712,,,712
+MAPK7,mitogen-activated protein kinase 7 ,MAPK7,42,,,42
+NR0B1,nuclear receptor subfamily 0 group B member 1 ,NR0B1,47,,,47
+KNDC1,kinase non-catalytic C-lobe domain containing 1 ,KNDC1,0,,,0
+CERS6,ceramide synthase 6 ,CERS6,49,,,49
+FBXO45,F-box protein 45 ,FBXO45,25,,,25
+CNTNAP2,contactin associated protein 2 ,CNTNAP2,17,,,17
+SSTR2,somatostatin receptor 2 ,SSTR2,562,,,562
+SKA2,spindle and kinetochore associated complex subunit 2 ,SKA2,23,,,23
+HOXB4,homeobox B4 ,HOXB4,56,,,56
+GJC1,gap junction protein gamma 1 ,GJC1,8,,,8
+TRDN,triadin ,TRDN,1,,,1
+PRTN3,proteinase 3 ,PRTN3,18,,,18
+ERV3-1,"endogenous retrovirus group 3 member 1, envelope ",ERV3-1,6,,,6
+BBIP1,BBSome interacting protein 1 ,BBIP1,1,,,1
+HBD,hemoglobin subunit delta ,HBD,165,,,165
+HLA-DMB,"major histocompatibility complex, class II, DM beta ",HLA-DMB,18,,,18
+ERVFRD-1,"endogenous retrovirus group FRD member 1, envelope ",ERVFRD-1,4,,,4
+MRC1,mannose receptor C-type 1 ,MRC1,67,,,67
+CCL23,C-C motif chemokine ligand 23 ,CCL23,49,,,49
+CRLF1,cytokine receptor like factor 1 ,CRLF1,9,,,9
+CD6,CD6 molecule ,CD6,86,,,86
+SNX1,sorting nexin 1 ,SNX1,19,,,19
+BOD1L1,biorientation of chromosomes in cell division 1 like 1 ,BOD1L1,1,,,1
+PDK3,pyruvate dehydrogenase kinase 3 ,PDK3,24,,,24
+PLA2G10,phospholipase A2 group X ,PLA2G10,9,,,9
+LNX1,ligand of numb-protein X 1 ,LNX1,8,,,8
+PPP2R2C,protein phosphatase 2 regulatory subunit Bgamma ,PPP2R2C,15,,,15
+TIPIN,TIMELESS interacting protein ,TIPIN,30,,,30
+MAP2,microtubule associated protein 2 ,MAP2,246,,,246
+EDN1,endothelin 1 ,EDN1,68,,,68
+SDF4,stromal cell derived factor 4 ,SDF4,7,,,7
+CHMP5,charged multivesicular body protein 5 ,CHMP5,5,,,5
+HBQ1,hemoglobin subunit theta 1 ,HBQ1,2,,,2
+THPO,thrombopoietin ,THPO,26,,,26
+SNAP29,synaptosome associated protein 29 ,SNAP29,8,,,8
+OSM,oncostatin M ,OSM,310,,,310
+CNIH1,cornichon family member 1 ,CNIH1,1,,,1
+HTR2A,5-hydroxytryptamine receptor 2A ,HTR2A,31,,,31
+ESRP1,epithelial splicing regulatory protein 1 ,ESRP1,105,,,105
+NMU,neuromedin U ,NMU,120,,,120
+CD33,CD33 molecule ,CD33,2231,,,2231
+CRYAB,crystallin alpha B ,CRYAB,79,,,79
+HPX,hemopexin ,HPX,32,,,32
+LMAN2L,"lectin, mannose binding 2 like ",LMAN2L,0,,,0
+LGALS8,galectin 8 ,LGALS8,14,,,14
+MFAP2,microfibril associated protein 2 ,MFAP2,20,,,20
+CD46,CD46 molecule ,CD46,290,,,290
+TNFSF4,TNF superfamily member 4 ,TNFSF4,28,,,28
+KBTBD7,kelch repeat and BTB domain containing 7 ,KBTBD7,4,,,4
+INHBA,inhibin subunit beta A ,INHBA,159,,,159
+SNRPN,small nuclear ribonucleoprotein polypeptide N ,SNRPN,51,,,51
+DLL4,delta like canonical Notch ligand 4 ,DLL4,281,,,281
+NCAN,neurocan ,NCAN,8,,,8
+SSBP4,single stranded DNA binding protein 4 ,SSBP4,1,,,1
+RLIM,"ring finger protein, LIM domain interacting ",RLIM,10,,,10
+AP4B1,adaptor related protein complex 4 subunit beta 1 ,AP4B1,2,,,2
+FST,follistatin ,FST,142,,,142
+SOX5,SRY-box transcription factor 5 ,SOX5,73,,,73
+EDNRB,endothelin receptor type B ,EDNRB,124,,,124
+ECPAS,Ecm29 proteasome adaptor and scaffold ,ECPAS,0,,,0
+NR5A1,nuclear receptor subfamily 5 group A member 1 ,NR5A1,46,,,46
+DIAPH3,diaphanous related formin 3 ,DIAPH3,33,,,33
+LRIG1,leucine rich repeats and immunoglobulin like domains 1 ,LRIG1,158,,,158
+AHSG,alpha 2-HS glycoprotein ,AHSG,50,,,50
+BOD1,biorientation of chromosomes in cell division 1 ,BOD1,4,,,4
+MCHR2,melanin concentrating hormone receptor 2 ,MCHR2,7,,,7
+CCNO,cyclin O ,CCNO,2,,,2
+LRRK1,leucine rich repeat kinase 1 ,LRRK1,9,,,9
+NODAL,nodal growth differentiation factor ,NODAL,34088,5,1,5
+CLASP2,cytoplasmic linker associated protein 2 ,CLASP2,9,,,9
+ANPEP,"alanyl aminopeptidase, membrane ",ANPEP,35,,,35
+RRM1,ribonucleotide reductase catalytic subunit M1 ,RRM1,418,,,418
+PDHB,pyruvate dehydrogenase E1 subunit beta ,PDHB,39,,,39
+LCLAT1,lysocardiolipin acyltransferase 1 ,LCLAT1,4,,,4
+IQCB1,IQ motif containing B1 ,IQCB1,3,,,3
+PPP2R2D,protein phosphatase 2 regulatory subunit Bdelta ,PPP2R2D,6,,,6
+SYNM,synemin ,SYNM,10,,,10
+NDN,"necdin, MAGE family member ",NDN,45,,,45
+NEB,nebulin ,NEB,40,0,13,13
+JAG2,jagged canonical Notch ligand 2 ,JAG2,67,,,67
+CHM,CHM Rab escort protein ,CHM,425,,,425
+CD55,CD55 molecule (Cromer blood group) ,CD55,294,,,294
+CHML,CHM like Rab escort protein ,CHML,8,,,8
+CR1,complement C3b/C4b receptor 1 (Knops blood group) ,CR1,1238,,,1238
+NCR3,natural cytotoxicity triggering receptor 3 ,NCR3,23,,,23
+HBM,hemoglobin subunit mu ,HBM,244,,,244
+IFNA4,interferon alpha 4 ,IFNA4,2,,,2
+ARPC4,actin related protein 2/3 complex subunit 4 ,ARPC4,7,,,7
+GJA5,gap junction protein alpha 5 ,GJA5,4,,,4
+TSPOAP1,TSPO associated protein 1 ,TSPOAP1,3,,,3
+HFE,homeostatic iron regulator ,HFE,229,,,229
+NME1-NME2,NME1-NME2 readthrough ,NME1-NME2,5,,,5
+CNTN1,contactin 1 ,CNTN1,43,,,43
+PRDM1,PR/SET domain 1 ,PRDM1,198,,,198
+NFATC3,nuclear factor of activated T cells 3 ,NFATC3,47,,,47
+CLASP1,cytoplasmic linker associated protein 1 ,CLASP1,3,,,3
+GTSE1,G2 and S-phase expressed 1 ,GTSE1,46,,,46
+ADD2,adducin 2 ,ADD2,8,,,8
+WDR62,WD repeat domain 62 ,WDR62,10,,,10
+PAX2,paired box 2 ,PAX2,318,,,318
+RBM22,RNA binding motif protein 22 ,RBM22,2,,,2
+SRRT,"serrate, RNA effector molecule ",SRRT,2,,,2
+NLK,nemo like kinase ,NLK,89,,,89
+CNOT3,CCR4-NOT transcription complex subunit 3 ,CNOT3,13,,,13
+TPX2,TPX2 microtubule nucleation factor ,TPX2,254,,,254
+LYZ,lysozyme ,LYZ,45,,,45
+USP48,ubiquitin specific peptidase 48 ,USP48,23,,,23
+DTX2,deltex E3 ubiquitin ligase 2 ,DTX2,8,,,8
+SLC26A3,solute carrier family 26 member 3 ,SLC26A3,25,,,25
+ANGPT2,angiopoietin 2 ,ANGPT2,141,,,141
+PICK1,protein interacting with PRKCA 1 ,PICK1,11,,,11
+CYB5R3,cytochrome b5 reductase 3 ,CYB5R3,14,,,14
+HAO1,hydroxyacid oxidase 1 ,HAO1,5,,,5
+SLC32A1,solute carrier family 32 member 1 ,SLC32A1,2,,,2
+ATP1B4,ATPase Na+/K+ transporting family member beta 4 ,ATP1B4,1,,,1
+NME4,NME/NM23 nucleoside diphosphate kinase 4 ,NME4,19,,,19
+SALL1,spalt like transcription factor 1 ,SALL1,27,,,27
+CCP110,centriolar coiled-coil protein 110 ,CCP110,0,,,0
+TFR2,transferrin receptor 2 ,TFR2,58,,,58
+GTPBP4,GTP binding protein 4 ,GTPBP4,11,,,11
+LRRC59,leucine rich repeat containing 59 ,LRRC59,14,,,14
+GAR1,GAR1 ribonucleoprotein ,GAR1,2,,,2
+SOX6,SRY-box transcription factor 6 ,SOX6,75,,,75
+QKI,"QKI, KH domain containing RNA binding ",QKI,129,,,129
+GOLPH3,golgi phosphoprotein 3 ,GOLPH3,123,,,123
+ARL6,ADP ribosylation factor like GTPase 6 ,ARL6,4,,,4
+HAO2,hydroxyacid oxidase 2 ,HAO2,7,,,7
+APH1A,"aph-1 homolog A, gamma-secretase subunit ",APH1A,7,,,7
+SERPINC1,serpin family C member 1 ,SERPINC1,18,,,18
+NRP2,neuropilin 2 ,NRP2,193,,,193
+MSX2,msh homeobox 2 ,MSX2,58,,,58
+CD70,CD70 molecule ,CD70,327,,,327
+CFP,complement factor properdin ,CFP,133,,,133
+LIF,LIF interleukin 6 family cytokine ,LIF,710,18,1,18
+KCNC1,potassium voltage-gated channel subfamily C member 1 ,KCNC1,2,,,2
+DPP6,dipeptidyl peptidase like 6 ,DPP6,22,,,22
+PDHA1,pyruvate dehydrogenase E1 subunit alpha 1 ,PDHA1,69,,,69
+IMMT,inner membrane mitochondrial protein ,IMMT,19,,,19
+SERPINF1,serpin family F member 1 ,SERPINF1,28,,,28
+IL11RA,interleukin 11 receptor subunit alpha ,IL11RA,27,,,27
+IFNA21,interferon alpha 21 ,IFNA21,3,,,3
+LPAR6,lysophosphatidic acid receptor 6 ,LPAR6,34,,,34
+MTNAP1,mitochondrial nucleoid associated protein 1 ,MTNAP1,0,,,0
+NFIC,nuclear factor I C ,NFIC,40,,,40
+WTAP,WT1 associated protein ,WTAP,189,,,189
+YTHDF1,YTH N6-methyladenosine RNA binding protein F1 ,YTHDF1,203,,,203
+FERMT3,FERM domain containing kindlin 3 ,FERMT3,12,,,12
+CD226,CD226 molecule ,CD226,130,,,130
+SPC25,SPC25 component of NDC80 kinetochore complex ,SPC25,29,,,29
+CETN3,centrin 3 ,CETN3,4,,,4
+LPCAT1,lysophosphatidylcholine acyltransferase 1 ,LPCAT1,66,,,66
+OTULIN,OTU deubiquitinase with linear linkage specificity ,OTULIN,11,,,11
+GRAMD2B,GRAM domain containing 2B ,GRAMD2B,0,,,0
+PDIA4,protein disulfide isomerase family A member 4 ,PDIA4,33,,,33
+PPP2R2B,protein phosphatase 2 regulatory subunit Bbeta ,PPP2R2B,25,,,25
+GHRL,ghrelin and obestatin prepropeptide ,GHRL,36,,,36
+CNOT11,CCR4-NOT transcription complex subunit 11 ,CNOT11,0,,,0
+ADIPOR1,adiponectin receptor 1 ,ADIPOR1,165,,,165
+C1R,complement C1r ,C1R,82,,,82
+MCM3AP,minichromosome maintenance complex component 3 associated protein ,MCM3AP,46,,,46
+PTH1R,parathyroid hormone 1 receptor ,PTH1R,39,,,39
+NCSTN,nicastrin ,NCSTN,10,,,10
+INHBB,inhibin subunit beta B ,INHBB,44,,,44
+NFASC,neurofascin ,NFASC,5,,,5
+WDR82,WD repeat domain 82 ,WDR82,4,,,4
+SHH,sonic hedgehog signaling molecule ,SHH,1749,,,1749
+ALDH7A1,aldehyde dehydrogenase 7 family member A1 ,ALDH7A1,27,,,27
+ANKS6,ankyrin repeat and sterile alpha motif domain containing 6 ,ANKS6,1,,,1
+ENDOG,endonuclease G ,ENDOG,57,,,57
+KIR3DL1,"killer cell immunoglobulin like receptor, three Ig domains and long cytoplasmic tail 1 ",KIR3DL1,81,,,81
+RAB4A,"RAB4A, member RAS oncogene family ",RAB4A,11,,,11
+HOXD4,homeobox D4 ,HOXD4,22,,,22
+CEL,carboxyl ester lipase ,CEL,626,,,626
+S1PR1,sphingosine-1-phosphate receptor 1 ,S1PR1,119,,,119
+AGXT,alanine--glyoxylate aminotransferase ,AGXT,18,,,18
+HOXC5,homeobox C5 ,HOXC5,15,,,15
+LEMD3,LEM domain containing 3 ,LEMD3,10,,,10
+PDZK1,PDZ domain containing 1 ,PDZK1,45,,,45
+CKAP5,cytoskeleton associated protein 5 ,CKAP5,15,,,15
+LPCAT4,lysophosphatidylcholine acyltransferase 4 ,LPCAT4,6,,,6
+NOP10,NOP10 ribonucleoprotein ,NOP10,8,,,8
+LIPF,"lipase F, gastric type ",LIPF,9,,,9
+PMCH,pro-melanin concentrating hormone ,PMCH,3,,,3
+SEPTIN9,septin 9 ,SEPTIN9,59,,,59
+KCNIP4,potassium voltage-gated channel interacting protein 4 ,KCNIP4,6,,,6
+ASAH2,N-acylsphingosine amidohydrolase 2 ,ASAH2,4,,,4
+NELFB,negative elongation factor complex member B ,NELFB,4,,,4
+HBG2,hemoglobin subunit gamma 2 ,HBG2,4,,,4
+PELI1,pellino E3 ubiquitin protein ligase 1 ,PELI1,16,,,16
+HOXC4,homeobox C4 ,HOXC4,31,,,31
+FKBPL,FKBP prolyl isomerase like ,FKBPL,15,,,15
+NMS,neuromedin S ,NMS,219,,,219
+HBE1,hemoglobin subunit epsilon 1 ,HBE1,8,,,8
+HBG1,hemoglobin subunit gamma 1 ,HBG1,3,,,3
+LINC02210-CRHR1,LINC02210-CRHR1 readthrough ,LINC02210-CRHR1,0,,,0
+ANXA8,annexin A8 ,ANXA8,20,,,20
+CCL14,C-C motif chemokine ligand 14 ,CCL14,36,,,36
+LASP1,LIM and SH3 protein 1 ,LASP1,146,,,146
+FHL1,four and a half LIM domains 1 ,FHL1,68,,,68
+GRN,granulin precursor ,GRN,159,,,159
+ZFYVE16,zinc finger FYVE-type containing 16 ,ZFYVE16,3,,,3
+HYAL2,hyaluronidase 2 ,HYAL2,75,,,75
+GAL,galanin and GMAP prepropeptide ,GAL,2039,29,0,29
+SEMA3A,semaphorin 3A ,SEMA3A,114,,,114
+AP4E1,adaptor related protein complex 4 subunit epsilon 1 ,AP4E1,1,,,1
+PKP1,plakophilin 1 ,PKP1,39,,,39
+CD82,CD82 molecule ,CD82,248,,,248
+ZW10,zw10 kinetochore protein ,ZW10,17,,,17
+TRIP6,thyroid hormone receptor interactor 6 ,TRIP6,33,,,33
+MAEA,"macrophage erythroblast attacher, E3 ubiquitin ligase ",MAEA,5,,,5
+TFIP11,tuftelin interacting protein 11 ,TFIP11,0,,,0
+AHSA1,activator of HSP90 ATPase activity 1 ,AHSA1,10,,,10
+SPTLC2,serine palmitoyltransferase long chain base subunit 2 ,SPTLC2,7,,,7
+GID8,GID complex subunit 8 homolog ,GID8,2,,,2
+KCND1,potassium voltage-gated channel subfamily D member 1 ,KCND1,2,,,2
+BNIP3L,BCL2 interacting protein 3 like ,BNIP3L,100,,,100
+HOXA6,homeobox A6 ,HOXA6,21,,,21
+SSBP1,single stranded DNA binding protein 1 ,SSBP1,19,,,19
+LHX6,LIM homeobox 6 ,LHX6,23,,,23
+CA9,carbonic anhydrase 9 ,CA9,714,,,714
+UNC5B,unc-5 netrin receptor B ,UNC5B,62,,,62
+ENO3,enolase 3 ,ENO3,16,,,16
+SLC6A4,solute carrier family 6 member 4 ,SLC6A4,29,,,29
+CEP164,centrosomal protein 164 ,CEP164,6,,,6
+PDHX,pyruvate dehydrogenase complex component X ,PDHX,10,,,10
+CALCA,calcitonin related polypeptide alpha ,CALCA,59,,,59
+USP5,ubiquitin specific peptidase 5 ,USP5,36,,,36
+TDP2,tyrosyl-DNA phosphodiesterase 2 ,TDP2,20,,,20
+PPARD,peroxisome proliferator activated receptor delta ,PPARD,56,,,56
+GMNN,geminin DNA replication inhibitor ,GMNN,23,,,23
+PACRG,parkin coregulated ,PACRG,12,,,12
+BTNL8,butyrophilin like 8 ,BTNL8,6,,,6
+UNC5A,unc-5 netrin receptor A ,UNC5A,17,,,17
+ID2,inhibitor of DNA binding 2 ,ID2,312,,,312
+FBXO6,F-box protein 6 ,FBXO6,11,,,11
+KIAA2013,KIAA2013 ,KIAA2013,0,,,0
+PRPF3,pre-mRNA processing factor 3 ,PRPF3,8,,,8
+DR1,down-regulator of transcription 1 ,DR1,192,,,192
+ATF6,activating transcription factor 6 ,ATF6,346,,,346
+NEK9,NIMA related kinase 9 ,NEK9,36,,,36
+KCNIP2,potassium voltage-gated channel interacting protein 2 ,KCNIP2,4,,,4
+GJA8,gap junction protein alpha 8 ,GJA8,0,,,0
+MYOG,myogenin ,MYOG,24,,,24
+SEPTIN7,septin 7 ,SEPTIN7,4,,,4
+ZC3H13,zinc finger CCCH-type containing 13 ,ZC3H13,54,,,54
+ORMDL2,ORMDL sphingolipid biosynthesis regulator 2 ,ORMDL2,3,,,3
+C4BPA,complement component 4 binding protein alpha ,C4BPA,17,,,17
+SNRPC,small nuclear ribonucleoprotein polypeptide C ,SNRPC,4,,,4
+ABCC4,ATP binding cassette subfamily C member 4 (PEL blood group) ,ABCC4,153,,,153
+KTN1,kinectin 1 ,KTN1,25,,,25
+CHMP1A,charged multivesicular body protein 1A ,CHMP1A,8,,,8
+MTUS2,microtubule associated scaffold protein 2 ,MTUS2,4,,,4
+SFTPD,surfactant protein D ,SFTPD,15,,,15
+KIDINS220,kinase D interacting substrate 220 ,KIDINS220,14,,,14
+STAB2,stabilin 2 ,STAB2,10,,,10
+CDK5RAP2,CDK5 regulatory subunit associated protein 2 ,CDK5RAP2,6,,,6
+ENPP2,ectonucleotide pyrophosphatase/phosphodiesterase 2 ,ENPP2,55,,,55
+ALDH1B1,aldehyde dehydrogenase 1 family member B1 ,ALDH1B1,34,,,34
+CASP6,caspase 6 ,CASP6,34,,,34
+DNAJA4,DnaJ heat shock protein family (Hsp40) member A4 ,DNAJA4,7,,,7
+RETREG3,reticulophagy regulator family member 3 ,RETREG3,0,,,0
+SLC6A3,solute carrier family 6 member 3 ,SLC6A3,27,,,27
+S100A7,S100 calcium binding protein A7 ,S100A7,152,,,152
+GULP1,GULP PTB domain containing engulfment adaptor 1 ,GULP1,10,,,10
+ATG3,autophagy related 3 ,ATG3,110,,,110
+VIP,vasoactive intestinal peptide ,VIP,2098,20,686,686
+CRH,corticotropin releasing hormone ,CRH,604,,,604
+HYOU1,hypoxia up-regulated 1 ,HYOU1,19,,,19
+CTF1,cardiotrophin 1 ,CTF1,16,,,16
+DLAT,dihydrolipoamide S-acetyltransferase ,DLAT,83,,,83
+AKAP6,A-kinase anchoring protein 6 ,AKAP6,6,,,6
+PDK1,pyruvate dehydrogenase kinase 1 ,PDK1,763,,,763
+GOLGA7B,golgin A7 family member B ,GOLGA7B,1,,,1
+TMBIM4,transmembrane BAX inhibitor motif containing 4 ,TMBIM4,4,,,4
+TNNI1,"troponin I1, slow skeletal type ",TNNI1,1,,,1
+GJD2,gap junction protein delta 2 ,GJD2,5,,,5
+PMF1,polyamine modulated factor 1 ,PMF1,10,,,10
+CTSS,cathepsin S ,CTSS,59,,,59
+HDAC11,histone deacetylase 11 ,HDAC11,53,,,53
+UCN,urocortin ,UCN,287,,,287
+HEY1,hes related family bHLH transcription factor with YRPW motif 1 ,HEY1,239,,,239
+SF1,splicing factor 1 ,SF1,293,,,293
+CHRM1,cholinergic receptor muscarinic 1 ,CHRM1,13,,,13
+SNTB2,syntrophin beta 2 ,SNTB2,3,,,3
+IL12A,interleukin 12A ,IL12A,97,,,97
+LINGO1,leucine rich repeat and Ig domain containing 1 ,LINGO1,8,,,8
+AHSP,alpha hemoglobin stabilizing protein ,AHSP,8,,,8
+ZFPM2,"zinc finger protein, FOG family member 2 ",ZFPM2,47,,,47
+GYPA,glycophorin A (MNS blood group) ,GYPA,13,,,13
+AKAP13,A-kinase anchoring protein 13 ,AKAP13,26,,,26
+NME6,NME/NM23 nucleoside diphosphate kinase 6 ,NME6,5,,,5
+ESRRA,estrogen related receptor alpha ,ESRRA,33,,,33
+RHOD,ras homolog family member D ,RHOD,43,,,43
+RGMB,repulsive guidance molecule BMP co-receptor b ,RGMB,31,,,31
+CCDC14,coiled-coil domain containing 14 ,CCDC14,1,,,1
+BNIP3,BCL2 interacting protein 3 ,BNIP3,398,,,398
+TUBAL3,tubulin alpha like 3 ,TUBAL3,1,,,1
+MLF1,myeloid leukemia factor 1 ,MLF1,42,,,42
+PUF60,poly(U) binding splicing factor 60 ,PUF60,18,,,18
+CNOT10,CCR4-NOT transcription complex subunit 10 ,CNOT10,0,,,0
+TUBA8,tubulin alpha 8 ,TUBA8,2,,,2
+PROS1,protein S ,PROS1,37,,,37
+POTEF,POTE ankyrin domain family member F ,POTEF,7,,,7
+CIB1,calcium and integrin binding 1 ,CIB1,25,,,25
+TRPV1,transient receptor potential cation channel subfamily V member 1 ,TRPV1,247,,,247
+IL27,interleukin 27 ,IL27,205,,,205
+ENPP1,ectonucleotide pyrophosphatase/phosphodiesterase 1 ,ENPP1,58,,,58
+HOXC6,homeobox C6 ,HOXC6,104,,,104
+TEAD4,TEA domain transcription factor 4 ,TEAD4,131,,,131
+VARS1,valyl-tRNA synthetase 1 ,VARS1,1,,,1
+PSENEN,"presenilin enhancer, gamma-secretase subunit ",PSENEN,2,,,2
+CSH2,chorionic somatomammotropin hormone 2 ,CSH2,14,,,14
+GCGR,glucagon receptor ,GCGR,26,,,26
+BOD1L2,biorientation of chromosomes in cell division 1 like 2 ,BOD1L2,0,,,0
+IFNA14,interferon alpha 14 ,IFNA14,4,,,4
+KLHL41,kelch like family member 41 ,KLHL41,2,,,2
+RASSF5,Ras association domain family member 5 ,RASSF5,31,,,31
+PDK2,pyruvate dehydrogenase kinase 2 ,PDK2,48,,,48
+ADIPOR2,adiponectin receptor 2 ,ADIPOR2,125,,,125
+LMO3,LIM domain only 3 ,LMO3,35,,,35
+RAB27A,"RAB27A, member RAS oncogene family ",RAB27A,131,,,131
+MAP2K7,mitogen-activated protein kinase kinase 7 ,MAP2K7,22,,,22
+AMPH,amphiphysin ,AMPH,41,,,41
+LIPE,"lipase E, hormone sensitive type ",LIPE,25,,,25
+LPCAT2,lysophosphatidylcholine acyltransferase 2 ,LPCAT2,9,,,9
+PLA2G3,phospholipase A2 group III ,PLA2G3,7,,,7
+CSTF1,cleavage stimulation factor subunit 1 ,CSTF1,1,,,1
+OXT,oxytocin/neurophysin I prepropeptide ,OXT,24,,,24
+CD276,CD276 molecule ,CD276,222,,,222
+ASAH1,N-acylsphingosine amidohydrolase 1 ,ASAH1,47,,,47
+RETN,resistin ,RETN,30,,,30
+PLIN3,perilipin 3 ,PLIN3,16,,,16
+MEOX2,mesenchyme homeobox 2 ,MEOX2,32,,,32
+LHX2,LIM homeobox 2 ,LHX2,39,,,39
+NCS1,neuronal calcium sensor 1 ,NCS1,16,,,16
+ALDH2,aldehyde dehydrogenase 2 family member ,ALDH2,430,,,430
+CNOT2,CCR4-NOT transcription complex subunit 2 ,CNOT2,20,,,20
+BMP5,bone morphogenetic protein 5 ,BMP5,42,,,42
+EEF1B2,eukaryotic translation elongation factor 1 beta 2 ,EEF1B2,6,,,6
+IGFBP2,insulin like growth factor binding protein 2 ,IGFBP2,634,,,634
+SRSF11,serine and arginine rich splicing factor 11 ,SRSF11,9,,,9
+PLA2G2D,phospholipase A2 group IID ,PLA2G2D,13,,,13
+IFNA6,interferon alpha 6 ,IFNA6,1,,,1
+IFNA8,interferon alpha 8 ,IFNA8,4,,,4
+TNN,tenascin N ,TNN,22,,,22
+CAT,catalase ,CAT,3612,178,2614,2614
+GJB6,gap junction protein beta 6 ,GJB6,12,,,12
+GJA3,gap junction protein alpha 3 ,GJA3,5,,,5
+GHSR,growth hormone secretagogue receptor ,GHSR,104,,,104
+NPY,neuropeptide Y ,NPY,391,,,391
+RAB9A,"RAB9A, member RAS oncogene family ",RAB9A,10,,,10
+PLA2G12A,phospholipase A2 group XIIA ,PLA2G12A,4,,,4
+INHA,inhibin subunit alpha ,INHA,68,,,68
+RBPJL,recombination signal binding protein for immunoglobulin kappa J region like ,RBPJL,2,,,2
+ATXN1,ataxin 1 ,ATXN1,26,,,26
+OMG,oligodendrocyte myelin glycoprotein ,OMG,177,,,177
+ORMDL1,ORMDL sphingolipid biosynthesis regulator 1 ,ORMDL1,3,,,3
+BCAN,brevican ,BCAN,40,,,40
+LDHA,lactate dehydrogenase A ,LDHA,920,,,920
+CTSL,cathepsin L ,CTSL,85,,,85
+AMHR2,anti-Mullerian hormone receptor type 2 ,AMHR2,36,,,36
+GDF11,growth differentiation factor 11 ,GDF11,24,,,24
+RANBP10,RAN binding protein 10 ,RANBP10,1,,,1
+MDH2,malate dehydrogenase 2 ,MDH2,44,,,44
+CCDC120,coiled-coil domain containing 120 ,CCDC120,0,,,0
+ADAM12,ADAM metallopeptidase domain 12 ,ADAM12,161,,,161
+TAGLN,transgelin ,TAGLN,76,,,76
+TUBA3E,tubulin alpha 3e ,TUBA3E,2,,,2
+UTRN,utrophin ,UTRN,14,,,14
+FBXL2,F-box and leucine rich repeat protein 2 ,FBXL2,10,,,10
+CERS3,ceramide synthase 3 ,CERS3,6,,,6
+ENPP3,ectonucleotide pyrophosphatase/phosphodiesterase 3 ,ENPP3,12,,,12
+AK9,adenylate kinase 9 ,AK9,2,,,2
+TFF1,trefoil factor 1 ,TFF1,370,,,370
+SPTBN4,"spectrin beta, non-erythrocytic 4 ",SPTBN4,2,,,2
+FOXH1,forkhead box H1 ,FOXH1,10,,,10
+PDPN,podoplanin ,PDPN,196,,,196
+FBLN2,fibulin 2 ,FBLN2,28,,,28
+RCHY1,ring finger and CHY zinc finger domain containing 1 ,RCHY1,3,,,3
+CDC20B,cell division cycle 20B ,CDC20B,3,,,3
+EBF1,EBF transcription factor 1 ,EBF1,145,,,145
+CAMLG,calcium modulating ligand ,CAMLG,1,,,1
+SPTSSA,serine palmitoyltransferase small subunit A ,SPTSSA,2,,,2
+PKNOX2,PBX/knotted 1 homeobox 2 ,PKNOX2,3,,,3
+TRUB1,TruB pseudouridine synthase family member 1 ,TRUB1,2,,,2
+AVPR1A,arginine vasopressin receptor 1A ,AVPR1A,11,,,11
+SFTPC,surfactant protein C ,SFTPC,29,,,29
+GFM1,G elongation factor mitochondrial 1 ,GFM1,1,,,1
+RAB3B,"RAB3B, member RAS oncogene family ",RAB3B,19,,,19
+FPR1,formyl peptide receptor 1 ,FPR1,66,,,66
+ORMDL3,ORMDL sphingolipid biosynthesis regulator 3 ,ORMDL3,14,,,14
+SPTLC3,serine palmitoyltransferase long chain base subunit 3 ,SPTLC3,4,,,4
+TCAP,titin-cap ,TCAP,18,,,18
+CLCF1,cardiotrophin like cytokine factor 1 ,CLCF1,10,,,10
+CIDEA,cell death inducing DFFA like effector a ,CIDEA,19,,,19
+CD163,CD163 molecule ,CD163,1685,,,1685
+MAF,MAF bZIP transcription factor ,MAF,661,,,661
+OXTR,oxytocin receptor ,OXTR,29,,,29
+KCNB2,potassium voltage-gated channel subfamily B member 2 ,KCNB2,1,,,1
+GAST,gastrin ,GAST,28,1,3889,3889
+DRD1,dopamine receptor D1 ,DRD1,30,,,30
+FMNL1,formin like 1 ,FMNL1,19,,,19
+NR2F2,nuclear receptor subfamily 2 group F member 2 ,NR2F2,68,,,68
+TNFRSF18,TNF receptor superfamily member 18 ,TNFRSF18,40,,,40
+CCK,cholecystokinin ,CCK,9576,,,9576
+ZDHHC9,zinc finger DHHC-type palmitoyltransferase 9 ,ZDHHC9,11,,,11
+APOD,apolipoprotein D ,APOD,94,6,66,66
+SERPINA3,serpin family A member 3 ,SERPINA3,62,,,62
+SPTSSB,serine palmitoyltransferase small subunit B ,SPTSSB,1,,,1
+MFAP5,microfibril associated protein 5 ,MFAP5,31,,,31
+ASPH,aspartate beta-hydroxylase ,ASPH,56,,,56
+TGM2,transglutaminase 2 ,TGM2,124,,,124
+RNF5,ring finger protein 5 ,RNF5,13,,,13
+PRSS1,serine protease 1 ,PRSS1,92,,,92
+TMSB4X,thymosin beta 4 X-linked ,TMSB4X,24,,,24
+COLQ,collagen like tail subunit of asymmetric acetylcholinesterase ,COLQ,12,,,12
+TXNDC5,thioredoxin domain containing 5 ,TXNDC5,36,,,36
+MC1R,melanocortin 1 receptor ,MC1R,508,,,508
+ORAI1,ORAI calcium release-activated calcium modulator 1 ,ORAI1,188,,,188
+ADAM22,ADAM metallopeptidase domain 22 ,ADAM22,23,,,23
+AKAP8L,A-kinase anchoring protein 8 like ,AKAP8L,4,,,4
+ACAA1,acetyl-CoA acyltransferase 1 ,ACAA1,11,,,11
+SLC9A3,solute carrier family 9 member A3 ,SLC9A3,9,,,9
+MAOB,monoamine oxidase B ,MAOB,109,,,109
+TULP3,TUB like protein 3 ,TULP3,5,,,5
+PAFAH1B3,platelet activating factor acetylhydrolase 1b catalytic subunit 3 ,PAFAH1B3,11,,,11
+ACHE,acetylcholinesterase (Yt blood group) ,ACHE,497,20,0,20
+PEBP1,phosphatidylethanolamine binding protein 1 ,PEBP1,37,,,37
+CERS4,ceramide synthase 4 ,CERS4,15,,,15
+WDR7,WD repeat domain 7 ,WDR7,3,,,3
+SOX10,SRY-box transcription factor 10 ,SOX10,840,,,840
+GTPBP1,GTP binding protein 1 ,GTPBP1,2,,,2
+PNPLA3,patatin like phospholipase domain containing 3 ,PNPLA3,160,,,160
+HDAC10,histone deacetylase 10 ,HDAC10,51,,,51
+GZMB,granzyme B ,GZMB,242,,,242
+LIPG,"lipase G, endothelial type ",LIPG,22,,,22
+MSLN,mesothelin ,MSLN,221,,,221
+UBFD1,ubiquitin family domain containing 1 ,UBFD1,1,,,1
+RPGRIP1L,RPGRIP1 like ,RPGRIP1L,3,,,3
+CYTH2,cytohesin 2 ,CYTH2,3,,,3
+DNASE2,"deoxyribonuclease 2, lysosomal ",DNASE2,2,,,2
+PBX4,PBX homeobox 4 ,PBX4,4,,,4
+DLX5,distal-less homeobox 5 ,DLX5,35,,,35
+VIPR2,vasoactive intestinal peptide receptor 2 ,VIPR2,15,,,15
+EZH1,enhancer of zeste 1 polycomb repressive complex 2 subunit ,EZH1,104,,,104
+CD69,CD69 molecule ,CD69,745,,,745
+DAO,D-amino acid oxidase ,DAO,115,2,25,25
+CD48,CD48 molecule ,CD48,132,,,132
+PILRB,paired immunoglobin like type 2 receptor beta ,PILRB,7,,,7
+COPA,COPI coat complex subunit alpha ,COPA,44,0,0,0
+SEPTIN6,septin 6 ,SEPTIN6,5,,,5
+TNFSF9,TNF superfamily member 9 ,TNFSF9,50,,,50
+PKMYT1,"protein kinase, membrane associated tyrosine/threonine 1 ",PKMYT1,64,,,64
+SNX6,sorting nexin 6 ,SNX6,4,,,4
+SYNE1,spectrin repeat containing nuclear envelope protein 1 ,SYNE1,76,,,76
+TRIM5,tripartite motif containing 5 ,TRIM5,9,,,9
+SSTR4,somatostatin receptor 4 ,SSTR4,79,,,79
+DTNA,dystrobrevin alpha ,DTNA,10,,,10
+FHOD1,formin homology 2 domain containing 1 ,FHOD1,10,,,10
+CFC1,"cryptic, EGF-CFC family member 1 ",CFC1,4,,,4
+FOXP4,forkhead box P4 ,FOXP4,58,,,58
+STAMBPL1,STAM binding protein like 1 ,STAMBPL1,14,,,14
+ARL3,ADP ribosylation factor like GTPase 3 ,ARL3,3,,,3
+PAPSS1,3'-phosphoadenosine 5'-phosphosulfate synthase 1 ,PAPSS1,14,,,14
+CERS5,ceramide synthase 5 ,CERS5,13,,,13
+RHOF,"ras homolog family member F, filopodia associated ",RHOF,10,,,10
+CDH13,cadherin 13 ,CDH13,235,,,235
+ADCYAP1,adenylate cyclase activating polypeptide 1 ,ADCYAP1,15,,,15
+PKLR,pyruvate kinase L/R ,PKLR,30,,,30
+MBOAT2,membrane bound O-acyltransferase domain containing 2 ,MBOAT2,6,,,6
+SSBP2,single stranded DNA binding protein 2 ,SSBP2,27,,,27
+CREB5,cAMP responsive element binding protein 5 ,CREB5,31,,,31
+RGS20,regulator of G protein signaling 20 ,RGS20,11,,,11
+IFNA16,interferon alpha 16 ,IFNA16,1,,,1
+PDCD4,programmed cell death 4 ,PDCD4,512,,,512
+TRIM36,tripartite motif containing 36 ,TRIM36,19,,,19
+NIFK,nucleolar protein interacting with the FHA domain of MKI67 ,NIFK,8,,,8
+UNC5D,unc-5 netrin receptor D ,UNC5D,15,,,15
+NMNAT2,nicotinamide nucleotide adenylyltransferase 2 ,NMNAT2,10,,,10
+ISL2,ISL LIM homeobox 2 ,ISL2,4,,,4
+PKNOX1,PBX/knotted 1 homeobox 1 ,PKNOX1,9,,,9
+CBS,cystathionine beta-synthase ,CBS,559,,,559
+PRKAA2,protein kinase AMP-activated catalytic subunit alpha 2 ,PRKAA2,33,,,33
+RBM15,RNA binding motif protein 15 ,RBM15,110,,,110
+ZNF281,zinc finger protein 281 ,ZNF281,23,,,23
+TRAT1,T cell receptor associated transmembrane adaptor 1 ,TRAT1,5,,,5
+CITED2,Cbp/p300 interacting transactivator with Glu/Asp rich carboxy-terminal domain 2 ,CITED2,67,,,67
+S100P,S100 calcium binding protein P ,S100P,383,,,383
+CKB,creatine kinase B ,CKB,79,,,79
+PBX3,PBX homeobox 3 ,PBX3,105,,,105
+KLK4,kallikrein related peptidase 4 ,KLK4,101,,,101
+ANGPTL4,angiopoietin like 4 ,ANGPTL4,209,,,209
+XPO6,exportin 6 ,XPO6,7,,,7
+HOOK3,hook microtubule tethering protein 3 ,HOOK3,11,,,11
+ALCAM,activated leukocyte cell adhesion molecule ,ALCAM,208,,,208
+SP7,Sp7 transcription factor ,SP7,5,,,5
+EMB,embigin ,EMB,87,,,87
+PLA2G1B,phospholipase A2 group IB ,PLA2G1B,10,,,10
+GRIK1,glutamate ionotropic receptor kainate type subunit 1 ,GRIK1,8,,,8
+MBOAT1,membrane bound O-acyltransferase domain containing 1 ,MBOAT1,2,,,2
+IL16,interleukin 16 ,IL16,147,,,147
+DMXL1,Dmx like 1 ,DMXL1,2,,,2
+GPR156,G protein-coupled receptor 156 ,GPR156,1,,,1
+CALCB,calcitonin related polypeptide beta ,CALCB,5,,,5
+OTOL1,otolin 1 ,OTOL1,0,,,0
+CIITA,class II major histocompatibility complex transactivator ,CIITA,236,,,236
+GJD3,gap junction protein delta 3 ,GJD3,1,,,1
+CCBE1,collagen and calcium binding EGF domains 1 ,CCBE1,27,,,27
+MRGPRX2,MAS related GPR family member X2 ,MRGPRX2,14,,,14
+SIVA1,SIVA1 apoptosis inducing factor ,SIVA1,25,,,25
+POMK,protein O-mannose kinase ,POMK,2,,,2
+PTCH1,patched 1 ,PTCH1,780,,,780
+SLIT1,slit guidance ligand 1 ,SLIT1,23,,,23
+PLA2G2E,phospholipase A2 group IIE ,PLA2G2E,0,,,0
+ERC2,ELKS/RAB6-interacting/CAST family member 2 ,ERC2,5,,,5
+GJB4,gap junction protein beta 4 ,GJB4,2,,,2
+MUC5AC,"mucin 5AC, oligomeric mucus/gel-forming ",MUC5AC,1072,,,1072
+ORM2,orosomucoid 2 ,ORM2,24,,,24
+GDF2,growth differentiation factor 2 ,GDF2,7,,,7
+AGPAT4,1-acylglycerol-3-phosphate O-acyltransferase 4 ,AGPAT4,5,,,5
+CD38,CD38 molecule ,CD38,3652,,,3652
+BTN3A1,butyrophilin subfamily 3 member A1 ,BTN3A1,34,,,34
+FHIP1B,FHF complex subunit HOOK interacting protein 1B ,FHIP1B,0,,,0
+PTPRN,protein tyrosine phosphatase receptor type N ,PTPRN,12,,,12
+RORA,RAR related orphan receptor A ,RORA,85,,,85
+FSTL3,follistatin like 3 ,FSTL3,23,,,23
+ALDH3A2,aldehyde dehydrogenase 3 family member A2 ,ALDH3A2,20,,,20
+ACER3,alkaline ceramidase 3 ,ACER3,8,,,8
+CARMIL1,capping protein regulator and myosin 1 linker 1 ,CARMIL1,4,,,4
+SCTR,secretin receptor ,SCTR,15,,,15
+ERC1,ELKS/RAB6-interacting/CAST family member 1 ,ERC1,19,,,19
+FOLH1,folate hydrolase 1 ,FOLH1,50,,,50
+PIR,pirin ,PIR,196,1,17,17
+RPH3A,rabphilin 3A ,RPH3A,1,,,1
+PLEKHG2,pleckstrin homology and RhoGEF domain containing G2 ,PLEKHG2,3,,,3
+EXOC1,exocyst complex component 1 ,EXOC1,3,,,3
+CST3,cystatin C ,CST3,22,,,22
+FAM83D,family with sequence similarity 83 member D ,FAM83D,33,,,33
+NCALD,neurocalcin delta ,NCALD,11,,,11
+IL4I1,interleukin 4 induced 1 ,IL4I1,45,,,45
+NAMPT,nicotinamide phosphoribosyltransferase ,NAMPT,359,,,359
+PDLIM1,PDZ and LIM domain 1 ,PDLIM1,23,,,23
+LGI1,leucine rich glioma inactivated 1 ,LGI1,287,,,287
+NUDT12,nudix hydrolase 12 ,NUDT12,3,,,3
+ITGB1BP1,integrin subunit beta 1 binding protein 1 ,ITGB1BP1,1,,,1
+NEK6,NIMA related kinase 6 ,NEK6,35,,,35
+GOT1,glutamic-oxaloacetic transaminase 1 ,GOT1,94,,,94
+TBX2,T-box transcription factor 2 ,TBX2,92,,,92
+LHX4,LIM homeobox 4 ,LHX4,12,,,12
+PLP1,proteolipid protein 1 ,PLP1,15,,,15
+C4BPB,complement component 4 binding protein beta ,C4BPB,5,,,5
+PREX1,"phosphatidylinositol-3,4,5-trisphosphate dependent Rac exchange factor 1 ",PREX1,66,,,66
+SDCBP2,syndecan binding protein 2 ,SDCBP2,6,,,6
+XRCC3,X-ray repair cross complementing 3 ,XRCC3,578,,,578
+PLA2G5,phospholipase A2 group V ,PLA2G5,6,,,6
+FGL2,fibrinogen like 2 ,FGL2,39,,,39
+ADM2,adrenomedullin 2 ,ADM2,14,,,14
+SIGLEC9,sialic acid binding Ig like lectin 9 ,SIGLEC9,51,,,51
+LYVE1,lymphatic vessel endothelial hyaluronan receptor 1 ,LYVE1,308,,,308
+GPR55,G protein-coupled receptor 55 ,GPR55,52,,,52
+CCM2,CCM2 scaffold protein ,CCM2,202,,,202
+NDUFB5,NADH:ubiquinone oxidoreductase subunit B5 ,NDUFB5,2,,,2
+TOR1A,torsin family 1 member A ,TOR1A,5,,,5
+FXYD6,FXYD domain containing ion transport regulator 6 ,FXYD6,16,,,16
+SEPTIN11,septin 11 ,SEPTIN11,2,,,2
+ERP27,endoplasmic reticulum protein 27 ,ERP27,4,,,4
+FBLN5,fibulin 5 ,FBLN5,29,,,29
+SORD,sorbitol dehydrogenase ,SORD,10,,,10
+SLC16A3,solute carrier family 16 member 3 ,SLC16A3,45,,,45
+PTPRF,protein tyrosine phosphatase receptor type F ,PTPRF,38,,,38
+LEFTY2,left-right determination factor 2 ,LEFTY2,8,,,8
+NPHP1,nephrocystin 1 ,NPHP1,5,,,5
+LPAR4,lysophosphatidic acid receptor 4 ,LPAR4,11,,,11
+INA,internexin neuronal intermediate filament protein alpha ,INA,168,,,168
+DGKZ,diacylglycerol kinase zeta ,DGKZ,10,,,10
+IL18,interleukin 18 ,IL18,1036,,,1036
+KCNA6,potassium voltage-gated channel subfamily A member 6 ,KCNA6,1,,,1
+ITIH2,inter-alpha-trypsin inhibitor heavy chain 2 ,ITIH2,17,,,17
+RAB3C,"RAB3C, member RAS oncogene family ",RAB3C,7,,,7
+ZFYVE27,zinc finger FYVE-type containing 27 ,ZFYVE27,0,,,0
+SLC16A1,solute carrier family 16 member 1 ,SLC16A1,66,,,66
+SLC6A1,solute carrier family 6 member 1 ,SLC6A1,16,,,16
+PLA2G2F,phospholipase A2 group IIF ,PLA2G2F,3,,,3
+BTG2,BTG anti-proliferation factor 2 ,BTG2,204,,,204
+AGPAT3,1-acylglycerol-3-phosphate O-acyltransferase 3 ,AGPAT3,3,,,3
+IGFBP7,insulin like growth factor binding protein 7 ,IGFBP7,191,,,191
+CDCP1,CUB domain containing protein 1 ,CDCP1,141,,,141
+LZTFL1,leucine zipper transcription factor like 1 ,LZTFL1,12,,,12
+LRPAP1,LDL receptor related protein associated protein 1 ,LRPAP1,8,,,8
+BSN,bassoon presynaptic cytomatrix protein ,BSN,18,,,18
+DNAAF5,dynein axonemal assembly factor 5 ,DNAAF5,0,,,0
+ALDH1A1,aldehyde dehydrogenase 1 family member A1 ,ALDH1A1,508,,,508
+C2,complement C2 ,complement C2 ,6,,,6
+AKTIP,AKT interacting protein ,AKTIP,6,,,6
+GPT,glutamic--pyruvic transaminase ,GPT,474,,,474
+ACER1,alkaline ceramidase 1 ,ACER1,2,,,2
+BSCL2,"BSCL2 lipid droplet biogenesis associated, seipin ",BSCL2,8,,,8
+PBK,PDZ binding kinase ,PBK,165,,,165
+PAFAH1B2,platelet activating factor acetylhydrolase 1b catalytic subunit 2 ,PAFAH1B2,10,,,10
+KCNG4,potassium voltage-gated channel modifier subfamily G member 4 ,KCNG4,0,,,0
+BMP1,bone morphogenetic protein 1 ,BMP1,71,,,71
+GOT1L1,glutamic-oxaloacetic transaminase 1 like 1 ,GOT1L1,1,,,1
+AGPAT2,1-acylglycerol-3-phosphate O-acyltransferase 2 ,AGPAT2,8,,,8
+FOXD4,forkhead box D4 ,FOXD4,6,,,6
+FABP4,fatty acid binding protein 4 ,FABP4,183,,,183
+MUC7,"mucin 7, secreted ",MUC7,55,,,55
+PGAM1,phosphoglycerate mutase 1 ,PGAM1,99,,,99
+SP3,Sp3 transcription factor ,SP3,360,,,360
+VEGFB,vascular endothelial growth factor B ,VEGFB,215,,,215
+PTPN2,protein tyrosine phosphatase non-receptor type 2 ,PTPN2,68,,,68
+DPP10,dipeptidyl peptidase like 10 ,DPP10,19,,,19
+PNLIP,pancreatic lipase ,PNLIP,5,,,5
+ACER2,alkaline ceramidase 2 ,ACER2,9,,,9
+NECTIN3,nectin cell adhesion molecule 3 ,NECTIN3,16,,,16
+PDE4DIP,phosphodiesterase 4D interacting protein ,PDE4DIP,30,,,30
+BBS10,Bardet-Biedl syndrome 10 ,BBS10,2,,,2
+ADGRB1,adhesion G protein-coupled receptor B1 ,ADGRB1,6,,,6
+KCNIP1,potassium voltage-gated channel interacting protein 1 ,KCNIP1,3,,,3
+RGMA,repulsive guidance molecule BMP co-receptor a ,RGMA,20,,,20
+CAMK1D,calcium/calmodulin dependent protein kinase ID ,CAMK1D,8,,,8
+PNLIPRP1,pancreatic lipase related protein 1 ,PNLIPRP1,4,,,4
+MITF,melanocyte inducing transcription factor ,MITF,1118,,,1118
+KCNJ11,potassium inwardly rectifying channel subfamily J member 11 ,KCNJ11,21,,,21
+EIF4EBP1,eukaryotic translation initiation factor 4E binding protein 1 ,EIF4EBP1,69,,,69
+DMBT1,deleted in malignant brain tumors 1 ,DMBT1,114,,,114
+NOXA1,NADPH oxidase activator 1 ,NOXA1,14,,,14
+FBF1,Fas binding factor 1 ,FBF1,0,,,0
+MAOA,monoamine oxidase A ,MAOA,169,,,169
+PNLIPRP3,pancreatic lipase related protein 3 ,PNLIPRP3,1,,,1
+MSH5,mutS homolog 5 ,MSH5,25,,,25
+FXYD7,FXYD domain containing ion transport regulator 7 ,FXYD7,3,,,3
+IFNA7,interferon alpha 7 ,IFNA7,3,,,3
+IFNA13,interferon alpha 13 ,IFNA13,3,,,3
+IFNA17,interferon alpha 17 ,IFNA17,10,,,10
+LEFTY1,left-right determination factor 1 ,LEFTY1,11,,,11
+ACTN3,actinin alpha 3 ,ACTN3,4,,,4
+S1PR2,sphingosine-1-phosphate receptor 2 ,S1PR2,64,,,64
+MLLT6,"MLLT6, PHD finger containing ",MLLT6,15,,,15
+SLC4A1,solute carrier family 4 member 1 (Diego blood group) ,SLC4A1,11,,,11
+MEOX1,mesenchyme homeobox 1 ,MEOX1,13,,,13
+IFFO1,intermediate filament family orphan 1 ,IFFO1,4,,,4
+ABHD5,"abhydrolase domain containing 5, lysophosphatidic acid acyltransferase ",ABHD5,19,,,19
+SLC4A7,solute carrier family 4 member 7 ,SLC4A7,40,,,40
+TIMP2,TIMP metallopeptidase inhibitor 2 ,TIMP2,1471,,,1471
+RRM2B,ribonucleotide reductase regulatory TP53 inducible subunit M2B ,RRM2B,36,,,36
+TNFRSF17,TNF receptor superfamily member 17 ,TNFRSF17,40,,,40
+SYNE2,spectrin repeat containing nuclear envelope protein 2 ,SYNE2,18,,,18
+DAPP1,dual adaptor of phosphotyrosine and 3-phosphoinositides 1 ,DAPP1,6,,,6
+TXLNA,taxilin alpha ,TXLNA,4,,,4
+XRN2,5'-3' exoribonuclease 2 ,XRN2,17,,,17
+FXYD3,FXYD domain containing ion transport regulator 3 ,FXYD3,41,,,41
+CD200,CD200 molecule ,CD200,291,,,291
+DLD,dihydrolipoamide dehydrogenase ,DLD,1154,,,1154
+PPP2R3C,protein phosphatase 2 regulatory subunit B''gamma ,PPP2R3C,3,,,3
+ARVCF,ARVCF delta catenin family member ,ARVCF,14,,,14
+SAMM50,SAMM50 sorting and assembly machinery component ,SAMM50,1,,,1
+CST4,cystatin S ,CST4,10,,,10
+MIB1,MIB E3 ubiquitin protein ligase 1 ,MIB1,3646,,,3646
+MAGED2,MAGE family member D2 ,MAGED2,21,,,21
+ZNF423,zinc finger protein 423 ,ZNF423,21,,,21
+EYA1,EYA transcriptional coactivator and phosphatase 1 ,EYA1,31,,,31
+KCNN4,potassium calcium-activated channel subfamily N member 4 ,KCNN4,49,,,49
+MTPN,myotrophin ,MTPN,3,,,3
+CRHR2,corticotropin releasing hormone receptor 2 ,CRHR2,24,,,24
+LIMK1,LIM domain kinase 1 ,LIMK1,140,,,140
+OGN,osteoglycin ,OGN,37,,,37
+TLX1,T cell leukemia homeobox 1 ,TLX1,79,,,79
+GNRHR,gonadotropin releasing hormone receptor ,GNRHR,125,,,125
+IL23A,interleukin 23 subunit alpha ,IL23A,38,,,38
+ENO2,enolase 2 ,ENO2,73,,,73
+TTC1,tetratricopeptide repeat domain 1 ,TTC1,2,,,2
+AGXT2,alanine--glyoxylate aminotransferase 2 ,AGXT2,2,,,2
+STEAP3,STEAP3 metalloreductase ,STEAP3,46,,,46
+AUP1,AUP1 lipid droplet regulating VLDL assembly factor ,AUP1,6,,,6
+TNR,tenascin R ,TNR,153,,,153
+KCNC4,potassium voltage-gated channel subfamily C member 4 ,KCNC4,1,,,1
+WLS,Wnt ligand secretion mediator ,WLS,68,,,68
+SLC8A2,solute carrier family 8 member A2 ,SLC8A2,5,,,5
+HOXB1,homeobox B1 ,HOXB1,12,,,12
+CEP89,centrosomal protein 89 ,CEP89,2,,,2
+LAX1,lymphocyte transmembrane adaptor 1 ,LAX1,4,,,4
+F13A1,coagulation factor XIII A chain ,F13A1,21,,,21
+MAD2L1BP,MAD2L1 binding protein ,MAD2L1BP,2,,,2
+PAX8,paired box 8 ,PAX8,1204,,,1204
+FOXA2,forkhead box A2 ,FOXA2,217,,,217
+GRPR,gastrin releasing peptide receptor ,GRPR,368,,,368
+RIBC2,RIB43A domain with coiled-coils 2 ,RIBC2,4,,,4
+CSRP3,cysteine and glycine rich protein 3 ,CSRP3,2,,,2
+CD68,CD68 molecule ,CD68,3910,,,3910
+GDF1,growth differentiation factor 1 ,GDF1,8,,,8
+BMP15,bone morphogenetic protein 15 ,BMP15,39,,,39
+OLFM1,olfactomedin 1 ,OLFM1,9,,,9
+GATA5,GATA binding protein 5 ,GATA5,61,,,61
+COX4I1,cytochrome c oxidase subunit 4I1 ,COX4I1,7,,,7
+AOC3,amine oxidase copper containing 3 ,AOC3,16,,,16
+NPHP4,nephrocystin 4 ,NPHP4,7,,,7
+CHI3L1,chitinase 3 like 1 ,CHI3L1,197,,,197
+RINT1,RAD50 interactor 1 ,RINT1,14,,,14
+ADGRB3,adhesion G protein-coupled receptor B3 ,ADGRB3,11,,,11
+SPAG8,sperm associated antigen 8 ,SPAG8,3,,,3
+NUSAP1,nucleolar and spindle associated protein 1 ,NUSAP1,111,,,111
+NDUFAF1,NADH:ubiquinone oxidoreductase complex assembly factor 1 ,NDUFAF1,4,,,4
+NEDD1,NEDD1 gamma-tubulin ring complex targeting factor ,NEDD1,3,,,3
+FAM222A,family with sequence similarity 222 member A ,FAM222A,2,,,2
+FRMD6,FERM domain containing 6 ,FRMD6,31,,,31
+SLC27A2,solute carrier family 27 member 2 ,SLC27A2,12,,,12
+GLYR1,glyoxylate reductase 1 homolog ,GLYR1,5,,,5
+GATA6,GATA binding protein 6 ,GATA6,261,,,261
+TMC6,transmembrane channel like 6 ,TMC6,16,,,16
+CCN1,cellular communication network factor 1 ,CCN1,131,,,131
+DMRTB1,DMRT like family B with proline rich C-terminal 1 ,DMRTB1,0,,,0
+SOX13,SRY-box transcription factor 13 ,SOX13,22,,,22
+TAGLN3,transgelin 3 ,TAGLN3,2,,,2
+MUC4,"mucin 4, cell surface associated ",MUC4,603,,,603
+RMND5B,required for meiotic nuclear division 5 homolog B ,RMND5B,0,,,0
+FXYD4,FXYD domain containing ion transport regulator 4 ,FXYD4,4,,,4
+NEK7,NIMA related kinase 7 ,NEK7,18,,,18
+SCLT1,sodium channel and clathrin linker 1 ,SCLT1,3,,,3
+EDNRA,endothelin receptor type A ,EDNRA,44,,,44
+AGPAT5,1-acylglycerol-3-phosphate O-acyltransferase 5 ,AGPAT5,2,,,2
+PAFAH2,platelet activating factor acetylhydrolase 2 ,PAFAH2,2,,,2
+TSPAN33,tetraspanin 33 ,TSPAN33,5,,,5
+CD1B,CD1b molecule ,CD1B,42,,,42
+EDA,ectodysplasin A ,EDA,196,,,196
+TFF3,trefoil factor 3 ,TFF3,269,,,269
+FLAD1,flavin adenine dinucleotide synthetase 1 ,FLAD1,6,,,6
+ALOX15,arachidonate 15-lipoxygenase ,ALOX15,57,,,57
+SSTR5,somatostatin receptor 5 ,SSTR5,287,,,287
+SYNC,"syncoilin, intermediate filament protein ",SYNC,40,0,1,1
+KCNF1,potassium voltage-gated channel modifier subfamily F member 1 ,KCNF1,5,,,5
+ADORA1,adenosine A1 receptor ,ADORA1,30,,,30
+TEKT4,tektin 4 ,TEKT4,5,,,5
+HAND2,heart and neural crest derivatives expressed 2 ,HAND2,87,,,87
+SEPTIN8,septin 8 ,SEPTIN8,1,,,1
+GDF9,growth differentiation factor 9 ,GDF9,50,,,50
+MELK,maternal embryonic leucine zipper kinase ,MELK,214,,,214
+PRDX3,peroxiredoxin 3 ,PRDX3,64,,,64
+GPT2,glutamic--pyruvic transaminase 2 ,GPT2,24,,,24
+PLIN1,perilipin 1 ,PLIN1,21,,,21
+RBPMS2,"RNA binding protein, mRNA processing factor 2 ",RBPMS2,10,,,10
+NEMP1,nuclear envelope integral membrane protein 1 ,NEMP1,2,,,2
+SOST,sclerostin ,SOST,31,,,31
+ZNF598,"zinc finger protein 598, E3 ubiquitin ligase ",ZNF598,1,,,1
+ANKS3,ankyrin repeat and sterile alpha motif domain containing 3 ,ANKS3,0,,,0
+TNXB,tenascin XB ,TNXB,25,,,25
+CTRB1,chymotrypsinogen B1 ,CTRB1,6,,,6
+CTRB2,chymotrypsinogen B2 ,CTRB2,5,,,5
+CNBP,CCHC-type zinc finger nucleic acid binding protein ,CNBP,18,,,18
+KLF13,KLF transcription factor 13 ,KLF13,14,,,14
+DEFB4A,defensin beta 4A ,DEFB4A,2,,,2
+AZU1,azurocidin 1 ,AZU1,18,,,18
+DCP2,decapping mRNA 2 ,DCP2,8,,,8
+CEP83,centrosomal protein 83 ,CEP83,0,,,0
+ZWILCH,zwilch kinetochore protein ,ZWILCH,5,,,5
+HTR1A,5-hydroxytryptamine receptor 1A ,HTR1A,11,,,11
+UCN3,urocortin 3 ,UCN3,11,,,11
+CSNK1A1L,casein kinase 1 alpha 1 like ,CSNK1A1L,1,,,1
+MAB21L1,mab-21 like 1 ,MAB21L1,2,,,2
+SLX1B,"SLX1 homolog B, structure-specific endonuclease subunit ",SLX1B,1,,,1
+IFITM1,interferon induced transmembrane protein 1 ,IFITM1,101,,,101
+BTN3A2,butyrophilin subfamily 3 member A2 ,BTN3A2,10,,,10
+PCLO,piccolo presynaptic cytomatrix protein ,PCLO,28,,,28
+CHP1,calcineurin like EF-hand protein 1 ,CHP1,7,,,7
+GJA4,gap junction protein alpha 4 ,GJA4,10,,,10
+GJB3,gap junction protein beta 3 ,GJB3,13,,,13
+ATP2A1,ATPase sarcoplasmic/endoplasmic reticulum Ca2+ transporting 1 ,ATP2A1,12,,,12
+LCE1B,late cornified envelope 1B ,LCE1B,1,,,1
+ARID5A,AT-rich interaction domain 5A ,ARID5A,9,,,9
+NMB,neuromedin B ,NMB,176,,,176
+MARCHF5,membrane associated ring-CH-type finger 5 ,MARCHF5,1,,,1
+ARHGEF15,Rho guanine nucleotide exchange factor 15 ,ARHGEF15,4,,,4
+MUC2,"mucin 2, oligomeric mucus/gel-forming ",MUC2,1281,,,1281
+AGPAT1,1-acylglycerol-3-phosphate O-acyltransferase 1 ,AGPAT1,6,,,6
+HTN3,histatin 3 ,HTN3,7,,,7
+SMIM3,small integral membrane protein 3 ,SMIM3,2,,,2
+SIGLEC5,sialic acid binding Ig like lectin 5 ,SIGLEC5,15,,,15
+RIMBP3,RIMS binding protein 3 ,RIMBP3,0,,,0
+TUBGCP5,tubulin gamma complex component 5 ,TUBGCP5,0,,,0
+ACACA,acetyl-CoA carboxylase alpha ,ACACA,52,,,52
+PGLYRP1,peptidoglycan recognition protein 1 ,PGLYRP1,13,,,13
+MLXIPL,MLX interacting protein like ,MLXIPL,11,,,11
+MVP,major vault protein ,MVP,380,,,380
+RCN1,reticulocalbin 1 ,RCN1,31,,,31
+CTSA,cathepsin A ,CTSA,25,,,25
+SPEN,spen family transcriptional repressor ,SPEN,89,,,89
+TCOF1,treacle ribosome biogenesis factor 1 ,TCOF1,8,,,8
+ATP2A3,ATPase sarcoplasmic/endoplasmic reticulum Ca2+ transporting 3 ,ATP2A3,18,,,18
+FKBP6,FKBP prolyl isomerase family member 6 (inactive) ,FKBP6,3,,,3
+DLL3,delta like canonical Notch ligand 3 ,DLL3,172,,,172
+CAPN3,calpain 3 ,CAPN3,5,,,5
+SLC16A8,solute carrier family 16 member 8 ,SLC16A8,6,,,6
+CDKN3,cyclin dependent kinase inhibitor 3 ,CDKN3,102,,,102
+NFATC4,nuclear factor of activated T cells 4 ,NFATC4,15,,,15
+TAFAZZIN,"tafazzin, phospholipid-lysophospholipid transacylase ",TAFAZZIN,21,,,21
+SIGLEC5,sialic acid binding Ig like lectin 5 ,SIGLEC5,15,,,15
+RAB3D,"RAB3D, member RAS oncogene family ",RAB3D,20,,,20
+HOXA1,homeobox A1 ,HOXA1,128,,,128
+ZNHIT1,zinc finger HIT-type containing 1 ,ZNHIT1,5,,,5
+TNFSF8,TNF superfamily member 8 ,TNFSF8,18,,,18
+DKK1,dickkopf WNT signaling pathway inhibitor 1 ,DKK1,763,,,763
+UNC119,unc-119 lipid binding chaperone ,UNC119,6,,,6
+RAPGEF2,Rap guanine nucleotide exchange factor 2 ,RAPGEF2,8,,,8
+BTN3A3,butyrophilin subfamily 3 member A3 ,BTN3A3,10,,,10
+NCOA7,nuclear receptor coactivator 7 ,NCOA7,8,,,8
+BTN2A1,butyrophilin subfamily 2 member A1 ,BTN2A1,28,,,28
+THBS4,thrombospondin 4 ,THBS4,30,,,30
+FAHD2A,fumarylacetoacetate hydrolase domain containing 2A ,FAHD2A,1,,,1
+REEP6,receptor accessory protein 6 ,REEP6,4,,,4
+OTX1,orthodenticle homeobox 1 ,OTX1,49,,,49
+MOB4,"MOB family member 4, phocein ",MOB4,1,,,1
+KISS1R,KISS1 receptor ,KISS1R,65,,,65
+CFHR3,complement factor H related 3 ,CFHR3,20,,,20
+ID3,inhibitor of DNA binding 3 ,ID3,246,,,246
+IPO13,importin 13 ,IPO13,5,,,5
+RCN2,reticulocalbin 2 ,RCN2,12,,,12
+RPN2,ribophorin II ,RPN2,37,,,37
+LYZL1,lysozyme like 1 ,LYZL1,1,,,1
+ANXA11,annexin A11 ,ANXA11,15,,,15
+RECK,reversion inducing cysteine rich protein with kazal motifs ,RECK,284,49,115,115
+SLPI,secretory leukocyte peptidase inhibitor ,SLPI,123,,,123
+KCNS1,potassium voltage-gated channel modifier subfamily S member 1 ,KCNS1,6,,,6
+EMC3,ER membrane protein complex subunit 3 ,EMC3,2,,,2
+TNFRSF19,TNF receptor superfamily member 19 ,TNFRSF19,33,,,33
+CAP1,cyclase associated actin cytoskeleton regulatory protein 1 ,CAP1,77,,,77
+ZRANB2,zinc finger RANBP2-type containing 2 ,ZRANB2,5,,,5
+PRPH,peripherin ,PRPH,11,,,11
+NMBR,neuromedin B receptor ,NMBR,32,,,32
+IREB2,iron responsive element binding protein 2 ,IREB2,22,,,22
+HCRTR2,hypocretin receptor 2 ,HCRTR2,2,,,2
+APH1B,"aph-1 homolog B, gamma-secretase subunit ",APH1B,4,,,4
+SSTR1,somatostatin receptor 1 ,SSTR1,208,,,208
+TCF25,transcription factor 25 ,TCF25,3,,,3
+NPC1,NPC intracellular cholesterol transporter 1 ,NPC1,51,,,51
+SLC14A1,solute carrier family 14 member 1 (Kidd blood group) ,SLC14A1,26,,,26
+SIGLEC10,sialic acid binding Ig like lectin 10 ,SIGLEC10,49,,,49
+ECM1,extracellular matrix protein 1 ,ECM1,93,,,93
+TARS2,"threonyl-tRNA synthetase 2, mitochondrial ",TARS2,3,,,3
+ANP32E,acidic nuclear phosphoprotein 32 family member E ,ANP32E,24,,,24
+SELENBP1,selenium binding protein 1 ,SELENBP1,39,,,39
+SDE2,SDE2 telomere maintenance homolog ,SDE2,3,,,3
+UCN2,urocortin 2 ,UCN2,14,,,14
+CRHBP,corticotropin releasing hormone binding protein ,CRHBP,11,,,11
+YIPF5,Yip1 domain family member 5 ,YIPF5,1,,,1
+CDCA5,cell division cycle associated 5 ,CDCA5,62,,,62
+IDI2,isopentenyl-diphosphate delta isomerase 2 ,IDI2,2,,,2
+PLA2R1,phospholipase A2 receptor 1 ,PLA2R1,23,,,23
+MIA3,MIA SH3 domain ER export factor 3 ,MIA3,7,,,7
+ASZ1,"ankyrin repeat, SAM and basic leucine zipper domain containing 1 ",ASZ1,0,,,0
+CD1C,CD1c molecule ,CD1C,125,,,125
+B4GALT3,"beta-1,4-galactosyltransferase 3 ",B4GALT3,10,,,10
+SAFB,scaffold attachment factor B ,SAFB,17,,,17
+HCRT,hypocretin neuropeptide precursor ,HCRT,22,,,22
+WDR90,WD repeat domain 90 ,WDR90,1,,,1
+TTC9C,tetratricopeptide repeat domain 9C ,TTC9C,0,,,0
+ITIH3,inter-alpha-trypsin inhibitor heavy chain 3 ,ITIH3,17,,,17
+FBLIM1,filamin binding LIM protein 1 ,FBLIM1,4,,,4
+COA7,cytochrome c oxidase assembly factor 7 ,COA7,0,,,0
+NEUROD1,neuronal differentiation 1 ,NEUROD1,175,,,175
+EN1,engrailed homeobox 1 ,EN1,57,,,57
+SLC2A2,solute carrier family 2 member 2 ,SLC2A2,19,,,19
+PGRMC2,progesterone receptor membrane component 2 ,PGRMC2,17,,,17
+TBX20,T-box transcription factor 20 ,TBX20,6,,,6
+CA3,carbonic anhydrase 3 ,CA3,78,,,78
+BEX3,brain expressed X-linked 3 ,BEX3,5,,,5
+CA4,carbonic anhydrase 4 ,CA4,209,,,209
+CXXC4,CXXC finger protein 4 ,CXXC4,21,,,21
+NMD3,NMD3 ribosome export adaptor ,NMD3,9,,,9
+GP2,glycoprotein 2 ,GP2,62,,,62
+GLB1,galactosidase beta 1 ,GLB1,22,,,22
+KCNS3,potassium voltage-gated channel modifier subfamily S member 3 ,KCNS3,1,,,1
+FAM241B,family with sequence similarity 241 member B ,FAM241B,0,,,0
+C3AR1,complement C3a receptor 1 ,C3AR1,28,,,28
+NHERF4,NHERF family PDZ scaffold protein 4 ,NHERF4,1,,,1
+PDE3A,phosphodiesterase 3A ,PDE3A,29,,,29
+FKBP2,FKBP prolyl isomerase 2 ,FKBP2,4,,,4
+NMNAT1,nicotinamide nucleotide adenylyltransferase 1 ,NMNAT1,9,,,9
+TALDO1,transaldolase 1 ,TALDO1,19,,,19
+ARIH2,ariadne RBR E3 ubiquitin protein ligase 2 ,ARIH2,9,,,9
+MAB21L2,mab-21 like 2 ,MAB21L2,4,,,4
+UNC5C,unc-5 netrin receptor C ,UNC5C,33,,,33
+CEP63,centrosomal protein 63 ,CEP63,7,,,7
+NOG,noggin ,NOG,200,0,104,104
+MYBL1,MYB proto-oncogene like 1 ,MYBL1,110,,,110
+MUC6,"mucin 6, oligomeric mucus/gel-forming ",MUC6,690,,,690
+GSAP,gamma-secretase activating protein ,GSAP,3,,,3
+GLDN,gliomedin ,GLDN,5,,,5
+IFNA10,interferon alpha 10 ,IFNA10,2,,,2
+MAGI2,"membrane associated guanylate kinase, WW and PDZ domain containing 2 ",MAGI2,81,,,81
+RGPD1,RANBP2 like and GRIP domain containing 1 ,RGPD1,0,,,0
+ADA,adenosine deaminase ,ADA,736,29,1000,1000
+WDR45,WD repeat domain 45 ,WDR45,3,,,3
+SIGLEC15,sialic acid binding Ig like lectin 15 ,SIGLEC15,76,,,76
+NEU1,neuraminidase 1 ,NEU1,45,,,45
+CDSN,corneodesmosin ,CDSN,6,,,6
+SPDYC,speedy/RINGO cell cycle regulator family member C ,SPDYC,3,,,3
+IPO7,importin 7 ,IPO7,14,,,14
+GALT,galactose-1-phosphate uridylyltransferase ,GALT,95,6,4,6
+NAIP,NLR family apoptosis inhibitory protein ,NAIP,42,,,42
+HOXA10,homeobox A10 ,HOXA10,236,,,236
+CD99,CD99 molecule (Xg blood group) ,CD99,1427,,,1427
+AOC1,amine oxidase copper containing 1 ,AOC1,6,,,6
+COX15,cytochrome c oxidase assembly homolog COX15 ,COX15,4,,,4
+MUSK,muscle associated receptor tyrosine kinase ,MUSK,630,0,1,1
+GLP2R,glucagon like peptide 2 receptor ,GLP2R,8,,,8
+ATG2B,autophagy related 2B ,ATG2B,40,,,40
+SCT,secretin ,SCT,3957,,,3957
+TUBE1,tubulin epsilon 1 ,TUBE1,2,,,2
+CDC14A,cell division cycle 14A ,CDC14A,13,,,13
+AKR1B1,aldo-keto reductase family 1 member B ,AKR1B1,80,,,80
+ADAMTS2,ADAM metallopeptidase with thrombospondin type 1 motif 2 ,ADAMTS2,23,,,23
+ATRN,attractin ,ATRN,5,,,5
+CHGB,chromogranin B ,CHGB,12,,,12
+NEFH,neurofilament heavy chain ,NEFH,28,,,28
+NOL4,nucleolar protein 4 ,NOL4,14,,,14
+MID1,midline 1 ,MID1,16,,,16
+SRPX2,sushi repeat containing protein X-linked 2 ,SRPX2,27,,,27
+MGRN1,mahogunin ring finger 1 ,MGRN1,10,,,10
+STMN2,stathmin 2 ,STMN2,11,,,11
+CLEC4M,C-type lectin domain family 4 member M ,CLEC4M,6,,,6
+PTOV1,PTOV1 extended AT-hook containing adaptor protein ,PTOV1,36,,,36
+ATP4A,ATPase H+/K+ transporting subunit alpha ,ATP4A,28,,,28
+ELF2,E74 like ETS transcription factor 2 ,ELF2,16,,,16
+LHPP,phospholysine phosphohistidine inorganic pyrophosphate phosphatase ,LHPP,47,,,47
+SNX15,sorting nexin 15 ,SNX15,2,,,2
+LPCAT3,lysophosphatidylcholine acyltransferase 3 ,LPCAT3,19,,,19
+TTK,TTK protein kinase ,TTK,254,,,254
+TARS1,threonyl-tRNA synthetase 1 ,TARS1,6,,,6
+BCHE,butyrylcholinesterase ,BCHE,89,,,89
+PDCD10,programmed cell death 10 ,PDCD10,167,,,167
+ABTB1,ankyrin repeat and BTB domain containing 1 ,ABTB1,5,,,5
+PODXL2,podocalyxin like 2 ,PODXL2,6,,,6
+TTL,tubulin tyrosine ligase ,TTL,81,,,81
+EPB41L5,erythrocyte membrane protein band 4.1 like 5 ,EPB41L5,12,,,12
+ELF1,E74 like ETS transcription factor 1 ,ELF1,67,,,67
+NPC2,NPC intracellular cholesterol transporter 2 ,NPC2,34,,,34
+SERP1,stress associated endoplasmic reticulum protein 1 ,SERP1,6,,,6
+EDN3,endothelin 3 ,EDN3,19,,,19
+LPGAT1,lysophosphatidylglycerol acyltransferase 1 ,LPGAT1,2,,,2
+BTN2A2,butyrophilin subfamily 2 member A2 ,BTN2A2,5,,,5
+RAP2A,"RAP2A, member of RAS oncogene family ",RAP2A,27,,,27
+MBOAT7,membrane bound O-acyltransferase domain containing 7 ,MBOAT7,29,,,29
+MKKS,MKKS centrosomal shuttling protein ,MKKS,9,,,9
+STATH,statherin ,STATH,4,,,4
+MCF2L,MCF.2 cell line derived transforming sequence like ,MCF2L,15,,,15
+EDN2,endothelin 2 ,EDN2,7,,,7
+EMC4,ER membrane protein complex subunit 4 ,EMC4,0,,,0
+ALDH1A2,aldehyde dehydrogenase 1 family member A2 ,ALDH1A2,49,,,49
+PALLD,"palladin, cytoskeletal associated protein ",PALLD,20,,,20
+SHBG,sex hormone binding globulin ,SHBG,1530,,,1530
+HRC,histidine rich calcium binding protein ,HRC,73,,,73
+CYP2E1,cytochrome P450 family 2 subfamily E member 1 ,CYP2E1,623,,,623
+EDA2R,ectodysplasin A2 receptor ,EDA2R,9,,,9
+KCNC3,potassium voltage-gated channel subfamily C member 3 ,KCNC3,2,,,2
+MCCC2,methylcrotonyl-CoA carboxylase subunit 2 ,MCCC2,7,,,7
+ANKRD17,ankyrin repeat domain 17 ,ANKRD17,8,,,8
+GPS2,G protein pathway suppressor 2 ,GPS2,32,,,32
+CA1,carbonic anhydrase 1 ,CA1,145,,,145
+CFHR4,complement factor H related 4 ,CFHR4,8,,,8
+CABLES1,Cdk5 and Abl enzyme substrate 1 ,CABLES1,16,,,16
+TIMM10,translocase of inner mitochondrial membrane 10 ,TIMM10,2,,,2
+TBX3,T-box transcription factor 3 ,TBX3,133,,,133
+TRIM54,tripartite motif containing 54 ,TRIM54,4,,,4
+LOXL4,lysyl oxidase like 4 ,LOXL4,49,,,49
+AOX1,aldehyde oxidase 1 ,AOX1,45,,,45
+CSAD,cysteine sulfinic acid decarboxylase ,CSAD,7,,,7
+CDR2,cerebellar degeneration related protein 2 ,CDR2,88,,,88
+GALNS,galactosamine (N-acetyl)-6-sulfatase ,GALNS,6,,,6
+PYCR2,pyrroline-5-carboxylate reductase 2 ,PYCR2,15,,,15
+GADL1,glutamate decarboxylase like 1 ,GADL1,2,,,2
+ARL6IP5,ADP ribosylation factor like GTPase 6 interacting protein 5 ,ARL6IP5,9,,,9
+NR1I2,nuclear receptor subfamily 1 group I member 2 ,NR1I2,56,,,56
+FBXO38,F-box protein 38 ,FBXO38,7,,,7
+TBX6,T-box transcription factor 6 ,TBX6,1,,,1
+TEX9,testis expressed 9 ,TEX9,2,,,2
+SCAF4,SR-related CTD associated factor 4 ,SCAF4,1,,,1
+GDF6,growth differentiation factor 6 ,GDF6,7,,,7
+ZDHHC5,zinc finger DHHC-type palmitoyltransferase 5 ,ZDHHC5,10,,,10
+CD1A,CD1a molecule ,CD1A,976,,,976
+GPAT4,glycerol-3-phosphate acyltransferase 4 ,GPAT4,2,,,2
+TAGLN2,transgelin 2 ,TAGLN2,59,,,59
+ADAMTS4,ADAM metallopeptidase with thrombospondin type 1 motif 4 ,ADAMTS4,42,,,42
+CCDC28B,coiled-coil domain containing 28B ,CCDC28B,1,,,1
+NEK8,NIMA related kinase 8 ,NEK8,11,,,11
+RAVER1,"ribonucleoprotein, PTB binding 1 ",RAVER1,2,,,2
+INTU,inturned planar cell polarity protein ,INTU,4,,,4
+FAM170A,family with sequence similarity 170 member A ,FAM170A,0,,,0
+SFXN1,sideroflexin 1 ,SFXN1,12,,,12
+SPIDR,scaffold protein involved in DNA repair ,SPIDR,3,,,3
+SALL2,spalt like transcription factor 2 ,SALL2,32,,,32
+KCNC2,potassium voltage-gated channel subfamily C member 2 ,KCNC2,2,,,2
+HTRA1,HtrA serine peptidase 1 ,HTRA1,85,,,85
+SGPL1,sphingosine-1-phosphate lyase 1 ,SGPL1,24,,,24
+DNAAF8,dynein axonemal assembly factor 8 ,DNAAF8,0,,,0
+NTSR2,neurotensin receptor 2 ,NTSR2,12,,,12
+UPF3A,UPF3A regulator of nonsense mediated mRNA decay ,UPF3A,7,,,7
+ZBTB43,zinc finger and BTB domain containing 43 ,ZBTB43,2,,,2
+SETMAR,SET domain and mariner transposase fusion gene ,SETMAR,16,,,16
+CST1,cystatin SN ,CST1,42,,,42
+KISS1,KiSS-1 metastasis suppressor ,KISS1,279,,,279
+KCNG3,potassium voltage-gated channel modifier subfamily G member 3 ,KCNG3,3,,,3
+FIBP,FGF1 intracellular binding protein ,FIBP,5,,,5
+ZNF622,zinc finger protein 622 ,ZNF622,3,,,3
+AMY1B,amylase alpha 1B ,AMY1B,0,,,0
+CD248,CD248 molecule ,CD248,49,,,49
+GBA1,glucosylceramidase beta 1 ,GBA1,18,,,18
+PRF1,perforin 1 ,PRF1,114,,,114
+TREX2,three prime repair exonuclease 2 ,TREX2,12,,,12
+FOXL2,forkhead box L2 ,FOXL2,231,,,231
+MAGEA11,MAGE family member A11 ,MAGEA11,36,,,36
+TARS3,threonyl-tRNA synthetase 3 ,TARS3,0,,,0
+SHOX,SHOX homeobox ,SHOX,15,,,15
+ANKRD46,ankyrin repeat domain 46 ,ANKRD46,6,,,6
+KATNA1,katanin catalytic subunit A1 ,KATNA1,2,,,2
+ENTPD5,ectonucleoside triphosphate diphosphohydrolase 5 (inactive) ,ENTPD5,25,,,25
+FPR3,formyl peptide receptor 3 ,FPR3,9,,,9
+PLSCR1,phospholipid scramblase 1 ,PLSCR1,33,,,33
+NCR3LG1,natural killer cell cytotoxicity receptor 3 ligand 1 ,NCR3LG1,10,,,10
+CNR2,cannabinoid receptor 2 ,CNR2,21,,,21
+NOL4L,nucleolar protein 4 like ,NOL4L,5,,,5
+TMEM120A,transmembrane protein 120A ,TMEM120A,1,,,1
+SIPA1L1,signal induced proliferation associated 1 like 1 ,SIPA1L1,2,,,2
+ADAMTSL2,ADAMTS like 2 ,ADAMTSL2,2,,,2
+AVPR1B,arginine vasopressin receptor 1B ,AVPR1B,7,,,7
+TAT,tyrosine aminotransferase ,TAT,1358,36,43,43
+MOG,myelin oligodendrocyte glycoprotein ,MOG,214,0,181,181
+CD177,CD177 molecule ,CD177,44,,,44
+MUC12,"mucin 12, cell surface associated ",MUC12,35,,,35
+PLIN5,perilipin 5 ,PLIN5,10,,,10
+CRCP,CGRP receptor component ,CRCP,32,,,32
+TMEFF1,transmembrane protein with EGF like and two follistatin like domains 1 ,TMEFF1,10,,,10
+PGAM5,"PGAM family member 5, mitochondrial serine/threonine protein phosphatase ",PGAM5,35,,,35
+NOTCH2NLA,notch 2 N-terminal like A ,NOTCH2NLA,0,,,0
+HOXA11,homeobox A11 ,HOXA11,138,,,138
+PROM1,prominin 1 ,PROM1,123,,,123
+PAX7,paired box 7 ,PAX7,259,,,259
+DLX3,distal-less homeobox 3 ,DLX3,19,,,19
+NTN4,netrin 4 ,NTN4,30,,,30
+BCS1L,"BCS1 homolog, ubiquinol-cytochrome c reductase complex chaperone ",BCS1L,3,,,3
+BRINP1,BMP/retinoic acid inducible neural specific 1 ,BRINP1,3,,,3
+CLDND1,claudin domain containing 1 ,CLDND1,2,,,2
+WDFY1,WD repeat and FYVE domain containing 1 ,WDFY1,4,,,4
+PILRA,paired immunoglobin like type 2 receptor alpha ,PILRA,3,,,3
+MAST2,microtubule associated serine/threonine kinase 2 ,MAST2,9,,,9
+TXLNG,taxilin gamma ,TXLNG,0,,,0
+GOLGA3,golgin A3 ,GOLGA3,4,,,4
+PHGDH,phosphoglycerate dehydrogenase ,PHGDH,175,,,175
+HOOK2,hook microtubule tethering protein 2 ,HOOK2,9,,,9
+BCL2L13,BCL2 like 13 ,BCL2L13,16,,,16
+ARSA,arylsulfatase A ,ARSA,37,,,37
+NDRG3,NDRG family member 3 ,NDRG3,29,,,29
+BPI,bactericidal permeability increasing protein ,BPI,405,,,405
+BRS3,bombesin receptor subtype 3 ,BRS3,29,,,29
+VWA8,von Willebrand factor A domain containing 8 ,VWA8,1,,,1
+TLE5,"TLE family member 5, transcriptional modulator ",TLE5,0,,,0
+OLFM2,olfactomedin 2 ,OLFM2,4,,,4
+CCNP,cyclin P ,CCNP,5,,,5
+ETFB,electron transfer flavoprotein subunit beta ,ETFB,4,,,4
+CAPS,calcyphosine ,CAPS,373,,,373
+TMEM106B,transmembrane protein 106B ,TMEM106B,9,,,9
+RARRES2,retinoic acid receptor responder 2 ,RARRES2,21,,,21
+CHCHD3,coiled-coil-helix-coiled-coil-helix domain containing 3 ,CHCHD3,3,,,3
+SLC25A11,solute carrier family 25 member 11 ,SLC25A11,10,,,10
+BLMH,bleomycin hydrolase ,BLMH,8,,,8
+ALOX12,"arachidonate 12-lipoxygenase, 12S type ",ALOX12,42,,,42
+SULT1E1,sulfotransferase family 1E member 1 ,SULT1E1,51,,,51
+WFS1,wolframin ER transmembrane glycoprotein ,WFS1,18,,,18
+MTCH2,mitochondrial carrier 2 ,MTCH2,18,,,18
+ATG2A,autophagy related 2A ,ATG2A,10,,,10
+OSBP,oxysterol binding protein ,OSBP,23,,,23
+CPT1A,carnitine palmitoyltransferase 1A ,CPT1A,164,,,164
+ALDH5A1,aldehyde dehydrogenase 5 family member A1 ,ALDH5A1,16,,,16
+NEK4,NIMA related kinase 4 ,NEK4,11,,,11
+SNX17,sorting nexin 17 ,SNX17,6,,,6
+DLX2,distal-less homeobox 2 ,DLX2,38,,,38
+CD207,CD207 molecule ,CD207,60,,,60
+PRG4,proteoglycan 4 ,PRG4,12,,,12
+TSNAX,translin associated factor X ,TSNAX,2,,,2
+CA14,carbonic anhydrase 14 ,CA14,8,,,8
+SLC16A7,solute carrier family 16 member 7 ,SLC16A7,8,,,8
+PTBP3,polypyrimidine tract binding protein 3 ,PTBP3,18,,,18
+HCRTR1,hypocretin receptor 1 ,HCRTR1,1,,,1
+BTN1A1,butyrophilin subfamily 1 member A1 ,BTN1A1,4,,,4
+HTN1,histatin 1 ,HTN1,3,,,3
+OMD,osteomodulin ,OMD,118,,,118
+PXDN,peroxidasin ,PXDN,30,,,30
+AOC2,amine oxidase copper containing 2 ,AOC2,2,,,2
+MATN3,matrilin 3 ,MATN3,20,,,20
+GRSF1,G-rich RNA sequence binding factor 1 ,GRSF1,7,,,7
+HAPLN2,hyaluronan and proteoglycan link protein 2 ,HAPLN2,2,,,2
+PRAM1,PML-RARA regulated adaptor molecule 1 ,PRAM1,7,,,7
+VTCN1,V-set domain containing T cell activation inhibitor 1 ,VTCN1,54,,,54
+NT5E,5'-nucleotidase ecto ,NT5E,128,,,128
+DNAJC1,DnaJ heat shock protein family (Hsp40) member C1 ,DNAJC1,5,,,5
+PREB,prolactin regulatory element binding ,PREB,1484,,,1484
+DUSP5,dual specificity phosphatase 5 ,DUSP5,56,,,56
+ENTPD1,ectonucleoside triphosphate diphosphohydrolase 1 ,ENTPD1,61,,,61
+INHBE,inhibin subunit beta E ,INHBE,12,,,12
+KERA,keratocan ,KERA,3,,,3
+MYG1,MYG1 exonuclease ,MYG1,3,,,3
+TLNRD1,talin rod domain containing 1 ,TLNRD1,2,,,2
+ADAMTS10,ADAM metallopeptidase with thrombospondin type 1 motif 10 ,ADAMTS10,2,,,2
+LHX9,LIM homeobox 9 ,LHX9,11,,,11
+GDF7,growth differentiation factor 7 ,GDF7,10,,,10
+HNRNPLL,heterogeneous nuclear ribonucleoprotein L like ,HNRNPLL,6,,,6
+CNTN4,contactin 4 ,CNTN4,14,,,14
+CSRNP1,cysteine and serine rich nuclear protein 1 ,CSRNP1,2,,,2
+SHQ1,"SHQ1, H/ACA ribonucleoprotein assembly factor ",SHQ1,13,,,13
+SCD5,stearoyl-CoA desaturase 5 ,SCD5,25,,,25
+TENM2,teneurin transmembrane protein 2 ,TENM2,6,,,6
+CCNB3,cyclin B3 ,CCNB3,81,,,81
+GNRH1,gonadotropin releasing hormone 1 ,GNRH1,19,,,19
+PXDNL,peroxidasin like ,PXDNL,5,,,5
+MTDH,metadherin ,MTDH,264,,,264
+HSD17B12,hydroxysteroid 17-beta dehydrogenase 12 ,HSD17B12,19,,,19
+TENM4,teneurin transmembrane protein 4 ,TENM4,7,,,7
+DOC2A,double C2 domain alpha ,DOC2A,1,,,1
+EEF1AKMT1,EEF1A lysine methyltransferase 1 ,EEF1AKMT1,0,,,0
+UHMK1,U2AF homology motif kinase 1 ,UHMK1,18,,,18
+SPARCL1,SPARC like 1 ,SPARCL1,66,,,66
+CAPSL,calcyphosine like ,CAPSL,0,,,0
+RPIA,ribose 5-phosphate isomerase A ,RPIA,17,,,17
+PTPRN2,protein tyrosine phosphatase receptor type N2 ,PTPRN2,27,,,27
+LDLRAP1,low density lipoprotein receptor adaptor protein 1 ,LDLRAP1,4,,,4
+SPATA2L,spermatogenesis associated 2 like ,SPATA2L,0,,,0
+KCNE2,potassium voltage-gated channel subfamily E regulatory subunit 2 ,KCNE2,12,,,12
+LCE2B,late cornified envelope 2B ,LCE2B,2,,,2
+BROX,BRO1 domain and CAAX motif containing ,BROX,4,,,4
+FCRL4,Fc receptor like 4 ,FCRL4,10,,,10
+IFT122,intraflagellar transport 122 ,IFT122,0,,,0
+ERMAP,erythroblast membrane associated protein (Scianna blood group) ,ERMAP,4,,,4
+AIMP1,aminoacyl tRNA synthetase complex interacting multifunctional protein 1 ,AIMP1,14,,,14
+FHIP1A,FHF complex subunit HOOK interacting protein 1A ,FHIP1A,0,,,0
+BMPER,BMP binding endothelial regulator ,BMPER,7,,,7
+SYTL3,synaptotagmin like 3 ,SYTL3,3,,,3
+ZMYND19,zinc finger MYND-type containing 19 ,ZMYND19,1,,,1
+BTNL9,butyrophilin like 9 ,BTNL9,12,,,12
+SPRYD3,SPRY domain containing 3 ,SPRYD3,0,,,0
+TK1,thymidine kinase 1 ,TK1,299,,,299
+IRF2,interferon regulatory factor 2 ,IRF2,135,,,135
+CA7,carbonic anhydrase 7 ,CA7,14,,,14
+ANKRD49,ankyrin repeat domain 49 ,ANKRD49,4,,,4
+BTNL3,butyrophilin like 3 ,BTNL3,4,,,4
+SIGLEC7,sialic acid binding Ig like lectin 7 ,SIGLEC7,51,,,51
+THBS3,thrombospondin 3 ,THBS3,7,,,7
+MUC15,"mucin 15, cell surface associated ",MUC15,22,,,22
+UGP2,UDP-glucose pyrophosphorylase 2 ,UGP2,18,,,18
+TMEM192,transmembrane protein 192 ,TMEM192,3,,,3
+NUDT9,nudix hydrolase 9 ,NUDT9,4,,,4
+CANT1,calcium activated nucleotidase 1 ,CANT1,20,,,20
+ATPAF2,ATP synthase mitochondrial F1 complex assembly factor 2 ,ATPAF2,0,,,0
+SNCG,synuclein gamma ,SNCG,93,,,93
+PTPRM,protein tyrosine phosphatase receptor type M ,PTPRM,27,,,27
+MUC13,"mucin 13, cell surface associated ",MUC13,66,,,66
+CCS,copper chaperone for superoxide dismutase ,CCS,1439,,,1439
+HEG1,heart development protein with EGF like domains 1 ,HEG1,34,,,34
+INHBC,inhibin subunit beta C ,INHBC,3,,,3
+FZD8,frizzled class receptor 8 ,FZD8,47,,,47
+BASP1,brain abundant membrane attached signal protein 1 ,BASP1,39,,,39
+PAWR,pro-apoptotic WT1 regulator ,PAWR,24,,,24
+SEPHS2,selenophosphate synthetase 2 ,SEPHS2,8,,,8
+PJA1,praja ring finger ubiquitin ligase 1 ,PJA1,4,,,4
+S100A7A,S100 calcium binding protein A7A ,S100A7A,12,,,12
+KNTC1,kinetochore associated 1 ,KNTC1,28,,,28
+XPOT,exportin for tRNA ,XPOT,7,,,7
+RALYL,RALY RNA binding protein like ,RALYL,13,,,13
+OSBP2,oxysterol binding protein 2 ,OSBP2,4,,,4
+CA13,carbonic anhydrase 13 ,CA13,19,,,19
+TCEAL9,transcription elongation factor A like 9 ,TCEAL9,1,,,1
+LYPD6,LY6/PLAUR domain containing 6 ,LYPD6,2,,,2
+FHIT,fragile histidine triad diadenosine triphosphatase ,FHIT,934,,,934
+GREB1,growth regulating estrogen receptor binding 1 ,GREB1,111,,,111
+SHPK,sedoheptulokinase ,SHPK,1,,,1
+SULT1A1,sulfotransferase family 1A member 1 ,SULT1A1,205,,,205
+CFD,complement factor D ,CFD,136,,,136
+GJC2,gap junction protein gamma 2 ,GJC2,1,,,1
+POU3F3,POU class 3 homeobox 3 ,POU3F3,21,,,21
+IL31,interleukin 31 ,IL31,56,,,56
+CPT1B,carnitine palmitoyltransferase 1B ,CPT1B,29,,,29
+KRTAP3-2,keratin associated protein 3-2 ,KRTAP3-2,0,,,0
+MT-ND4L,mitochondrially encoded NADH:ubiquinone oxidoreductase core subunit 4L ,MT-ND4L,1,,,1
+CRIP1,cysteine rich protein 1 ,CRIP1,38,,,38
+LYRM4,LYR motif containing 4 ,LYRM4,2,,,2
+DEFA1B,defensin alpha 1B ,DEFA1B,0,,,0
+SIGLEC14,sialic acid binding Ig like lectin 14 ,SIGLEC14,8,,,8
+EPPK1,epiplakin 1 ,EPPK1,15,,,15
+SRXN1,sulfiredoxin 1 ,SRXN1,23,,,23
+RCC1L,RCC1 like ,RCC1L,1,,,1
+FCGBP,Fc gamma binding protein ,FCGBP,34,,,34
+TENM1,teneurin transmembrane protein 1 ,TENM1,13,,,13
+PRSS3,serine protease 3 ,PRSS3,39,,,39
+XYLT2,xylosyltransferase 2 ,XYLT2,3,,,3
+SERPINB1,serpin family B member 1 ,SERPINB1,17,,,17
+GRAMD1B,GRAM domain containing 1B ,GRAMD1B,8,,,8
+DEPDC1,DEP domain containing 1 ,DEPDC1,60,,,60
+SZRD1,SUZ RNA binding domain containing 1 ,SZRD1,5,,,5
+ITIH1,inter-alpha-trypsin inhibitor heavy chain 1 ,ITIH1,7,,,7
+BCAT1,branched chain amino acid transaminase 1 ,BCAT1,126,,,126
+COASY,Coenzyme A synthase ,COASY,4,,,4
+CA12,carbonic anhydrase 12 ,CA12,108,,,108
+PGM1,phosphoglucomutase 1 ,PGM1,132,,,132
+ALKBH5,"alkB homolog 5, RNA demethylase ",ALKBH5,247,,,247
+SUCO,SUN domain containing ossification factor ,SUCO,3,,,3
+PATZ1,POZ/BTB and AT hook containing zinc finger 1 ,PATZ1,55,,,55
+ITPK1,inositol-tetrakisphosphate 1-kinase ,ITPK1,4,,,4
+SLC8A3,solute carrier family 8 member A3 ,SLC8A3,5,,,5
+HM13,histocompatibility minor 13 ,HM13,14,,,14
+PBDC1,polysaccharide biosynthesis domain containing 1 ,PBDC1,1,,,1
+CLN5,CLN5 intracellular trafficking protein ,CLN5,6,,,6
+NECAB2,N-terminal EF-hand calcium binding protein 2 ,NECAB2,1,,,1
+FAH,fumarylacetoacetate hydrolase ,FAH,42,,,42
+MEIS3,Meis homeobox 3 ,MEIS3,8,,,8
+BCAT2,branched chain amino acid transaminase 2 ,BCAT2,23,,,23
+HIBADH,3-hydroxyisobutyrate dehydrogenase ,HIBADH,1,,,1
+NPTX2,neuronal pentraxin 2 ,NPTX2,40,,,40
+VSIR,V-set immunoregulatory receptor ,VSIR,19,,,19
+ANKRD26,ankyrin repeat domain containing 26 ,ANKRD26,37,,,37
+ZMIZ1,zinc finger MIZ-type containing 1 ,ZMIZ1,37,,,37
+CPE,carboxypeptidase E ,CPE,287,,,287
+VWA5A,von Willebrand factor A domain containing 5A ,VWA5A,2,,,2
+EIF2B1,eukaryotic translation initiation factor 2B subunit alpha ,EIF2B1,4,,,4
+FZD10,frizzled class receptor 10 ,FZD10,53,,,53
+KLHL18,kelch like family member 18 ,KLHL18,1,,,1
+PLSCR4,phospholipid scramblase 4 ,PLSCR4,3,,,3
+DNAJC16,DnaJ heat shock protein family (Hsp40) member C16 ,DNAJC16,0,,,0
+GPAM,"glycerol-3-phosphate acyltransferase, mitochondrial ",GPAM,13,,,13
+TNFSF18,TNF superfamily member 18 ,TNFSF18,8,,,8
+PLXDC2,plexin domain containing 2 ,PLXDC2,10,,,10
+WASHC3,WASH complex subunit 3 ,WASHC3,0,,,0
+RNF170,ring finger protein 170 ,RNF170,0,,,0
+ECHDC2,enoyl-CoA hydratase domain containing 2 ,ECHDC2,4,,,4
+GPR83,G protein-coupled receptor 83 ,GPR83,0,,,0
+MC3R,melanocortin 3 receptor ,MC3R,5,,,5
+UNC5CL,unc-5 family C-terminal like ,UNC5CL,2,,,2
+S1PR4,sphingosine-1-phosphate receptor 4 ,S1PR4,14,,,14
+SBDS,SBDS ribosome maturation factor ,SBDS,49,,,49
+KNSTRN,kinetochore localized astrin (SPAG5) binding protein ,KNSTRN,12,,,12
+SOX15,SRY-box transcription factor 15 ,SOX15,19,,,19
+REEP5,receptor accessory protein 5 ,REEP5,5,,,5
+CEP85,centrosomal protein 85 ,CEP85,1,,,1
+INPP5K,inositol polyphosphate-5-phosphatase K ,INPP5K,5,,,5
+REEP2,receptor accessory protein 2 ,REEP2,2,,,2
+ANGPTL3,angiopoietin like 3 ,ANGPTL3,30,,,30
+DCLK1,doublecortin like kinase 1 ,DCLK1,182,,,182
+VRTN,vertebrae development associated ,VRTN,0,,,0
+CEP20,centrosomal protein 20 ,CEP20,1,,,1
+TMTC1,transmembrane O-mannosyltransferase targeting cadherins 1 ,TMTC1,2,,,2
+TMEM106C,transmembrane protein 106C ,TMEM106C,6,,,6
+TBR1,T-box brain transcription factor 1 ,TBR1,9,,,9
+EDAR,ectodysplasin A receptor ,EDAR,21,,,21
+GRHPR,glyoxylate and hydroxypyruvate reductase ,GRHPR,6,,,6
+UNC13C,unc-13 homolog C ,UNC13C,7,,,7
+BCAR3,"BCAR3 adaptor protein, NSP family member ",BCAR3,35,,,35
+GPAT3,glycerol-3-phosphate acyltransferase 3 ,GPAT3,3,,,3
+SHROOM3,shroom family member 3 ,SHROOM3,5,,,5
+LGR5,leucine rich repeat containing G protein-coupled receptor 5 ,LGR5,654,,,654
+SERPINA10,serpin family A member 10 ,SERPINA10,5,,,5
+MARVELD3,MARVEL domain containing 3 ,MARVELD3,8,,,8
+SGSM2,small G protein signaling modulator 2 ,SGSM2,6,,,6
+RNF157,ring finger protein 157 ,RNF157,4,,,4
+IFITM3,interferon induced transmembrane protein 3 ,IFITM3,61,,,61
+CIAO1,cytosolic iron-sulfur assembly component 1 ,CIAO1,3,,,3
+LPP,LIM domain containing preferred translocation partner in lipoma ,LPP,149,,,149
+SLC30A5,solute carrier family 30 member 5 ,SLC30A5,4,,,4
+CER1,"cerberus 1, DAN family BMP antagonist ",CER1,13,,,13
+LRSAM1,leucine rich repeat and sterile alpha motif containing 1 ,LRSAM1,7,,,7
+ADAMTS12,ADAM metallopeptidase with thrombospondin type 1 motif 12 ,ADAMTS12,19,,,19
+SERP2,stress associated endoplasmic reticulum protein family member 2 ,SERP2,4,,,4
+PFKM,"phosphofructokinase, muscle ",PFKM,29,,,29
+MMP16,matrix metallopeptidase 16 ,MMP16,67,,,67
+ADAMTS3,ADAM metallopeptidase with thrombospondin type 1 motif 3 ,ADAMTS3,9,,,9
+WDR19,WD repeat domain 19 ,WDR19,1,,,1
+HOXB13,homeobox B13 ,HOXB13,325,,,325
+THEM4,thioesterase superfamily member 4 ,THEM4,5,,,5
+TFF2,trefoil factor 2 ,TFF2,128,,,128
+GPSM1,G protein signaling modulator 1 ,GPSM1,7,,,7
+TEDC2,tubulin epsilon and delta complex 2 ,TEDC2,5,,,5
+SNX7,sorting nexin 7 ,SNX7,3,,,3
+MATN1,matrilin 1 ,MATN1,4,,,4
+BOLA3,bolA family member 3 ,BOLA3,9,,,9
+HIPK1,homeodomain interacting protein kinase 1 ,HIPK1,23,,,23
+PITX2,paired like homeodomain 2 ,PITX2,134,,,134
+F2RL1,F2R like trypsin receptor 1 ,F2RL1,24,,,24
+CTHRC1,collagen triple helix repeat containing 1 ,CTHRC1,117,,,117
+HEPACAM,hepatic and glial cell adhesion molecule ,HEPACAM,46,,,46
+CDX2,caudal type homeobox 2 ,CDX2,1719,,,1719
+NUDT5,nudix hydrolase 5 ,NUDT5,16,,,16
+HACD1,3-hydroxyacyl-CoA dehydratase 1 ,HACD1,2,,,2
+GPR182,G protein-coupled receptor 182 ,GPR182,4,,,4
+DPEP2,dipeptidase 2 ,DPEP2,5,,,5
+TAC3,tachykinin precursor 3 ,TAC3,6,,,6
+SRR,serine racemase ,SRR,229,,,229
+UBTD2,ubiquitin domain containing 2 ,UBTD2,0,,,0
+KLK1,kallikrein 1 ,KLK1,52,,,52
+SLC16A4,solute carrier family 16 member 4 ,SLC16A4,6,,,6
+TMEM208,transmembrane protein 208 ,TMEM208,2,,,2
+DUS1L,dihydrouridine synthase 1 like ,DUS1L,1,,,1
+TACR3,tachykinin receptor 3 ,TACR3,7,,,7
+MUC17,"mucin 17, cell surface associated ",MUC17,47,,,47
+SLN,sarcolipin ,SLN,4540,,,4540
+HOXB9,homeobox B9 ,HOXB9,85,,,85
+TMEM43,transmembrane protein 43 ,TMEM43,5,,,5
+S100Z,S100 calcium binding protein Z ,S100Z,6,,,6
+MRM3,mitochondrial rRNA methyltransferase 3 ,MRM3,3,,,3
+EGFL7,EGF like domain multiple 7 ,EGFL7,90,,,90
+NAA20,"N-alpha-acetyltransferase 20, NatB catalytic subunit ",NAA20,2,,,2
+ENDOV,endonuclease V ,ENDOV,5,,,5
+GPR171,G protein-coupled receptor 171 ,GPR171,6,,,6
+LINGO2,leucine rich repeat and Ig domain containing 2 ,LINGO2,4,,,4
+MLXIP,MLX interacting protein ,MLXIP,4,,,4
+UNC119B,unc-119 lipid binding chaperone B ,UNC119B,2,,,2
+GJC3,gap junction protein gamma 3 ,GJC3,1,,,1
+LCORL,ligand dependent nuclear receptor corepressor like ,LCORL,3,,,3
+DAND5,DAN domain BMP antagonist family member 5 ,DAND5,2,,,2
+ITLN1,intelectin 1 ,ITLN1,19,,,19
+SKIDA1,SKI/DACH domain containing 1 ,SKIDA1,0,,,0
+C5orf24,chromosome 5 open reading frame 24 ,C5orf24,0,,,0
+ABAT,4-aminobutyrate aminotransferase ,ABAT,29,,,29
+SLC8A1,solute carrier family 8 member A1 ,SLC8A1,21,,,21
+SLC25A10,solute carrier family 25 member 10 ,SLC25A10,6,,,6
+POTEC,POTE ankyrin domain family member C ,POTEC,1,,,1
+RIMBP3C,RIMS binding protein 3C ,RIMBP3C,1,,,1
+ALDH1A3,aldehyde dehydrogenase 1 family member A3 ,ALDH1A3,180,,,180
+GDF3,growth differentiation factor 3 ,GDF3,31,,,31
+FOXD4L1,forkhead box D4 like 1 ,FOXD4L1,2,,,2
+EDARADD,EDAR associated via death domain ,EDARADD,12,,,12
+GPAT2,"glycerol-3-phosphate acyltransferase 2, mitochondrial ",GPAT2,6,,,6
+TMPRSS6,transmembrane serine protease 6 ,TMPRSS6,15,,,15
+FOXD3,forkhead box D3 ,FOXD3,89,,,89
+TMEM201,transmembrane protein 201 ,TMEM201,3,,,3
+SPATS2L,spermatogenesis associated serine rich 2 like ,SPATS2L,9,,,9
+ANXA4,annexin A4 ,ANXA4,39,,,39
+ENTPD4,ectonucleoside triphosphate diphosphohydrolase 4 ,ENTPD4,1,,,1
+ENTPD6,ectonucleoside triphosphate diphosphohydrolase 6 ,ENTPD6,3,,,3
+CLEC4C,C-type lectin domain family 4 member C ,CLEC4C,4,,,4
+PAPSS2,3'-phosphoadenosine 5'-phosphosulfate synthase 2 ,PAPSS2,25,,,25
+GPRIN2,G protein regulated inducer of neurite outgrowth 2 ,GPRIN2,5,,,5
+TMEM231,transmembrane protein 231 ,TMEM231,0,,,0
+DEFA1,defensin alpha 1 ,DEFA1,10,,,10
+ZBTB9,zinc finger and BTB domain containing 9 ,ZBTB9,2,,,2
+SLC26A6,solute carrier family 26 member 6 ,SLC26A6,5,,,5
+SHLD3,shieldin complex subunit 3 ,SHLD3,2,,,2
+TENM3,teneurin transmembrane protein 3 ,TENM3,5,,,5
+MMP12,matrix metallopeptidase 12 ,MMP12,239,,,239
+ZNF224,zinc finger protein 224 ,ZNF224,14,,,14
+RIMBP3B,RIMS binding protein 3B ,RIMBP3B,0,,,0
+FUCA2,alpha-L-fucosidase 2 ,FUCA2,7,,,7
+AK2,adenylate kinase 2 ,AK2,15,,,15
+ARHGAP33,Rho GTPase activating protein 33 ,ARHGAP33,0,,,0
+MRC2,mannose receptor C-type 2 ,MRC2,32,,,32
+LDAF1,lipid droplet assembly factor 1 ,LDAF1,0,,,0
+HEBP1,heme binding protein 1 ,HEBP1,4,,,4
+TNIP3,TNFAIP3 interacting protein 3 ,TNIP3,3,,,3
+LY75,lymphocyte antigen 75 ,LY75,14,,,14
+SERPINB3,serpin family B member 3 ,SERPINB3,52,,,52
+OAT,ornithine aminotransferase ,OAT,1291,2,37,37
+HDHD5,haloacid dehalogenase like hydrolase domain containing 5 ,HDHD5,0,,,0
+NDST1,N-deacetylase and N-sulfotransferase 1 ,NDST1,21,,,21
+ACAP1,"ArfGAP with coiled-coil, ankyrin repeat and PH domains 1 ",ACAP1,10,,,10
+ANKRD13A,ankyrin repeat domain 13A ,ANKRD13A,3,,,3
+LAMP3,lysosomal associated membrane protein 3 ,LAMP3,89,,,89
+SLC4A4,solute carrier family 4 member 4 ,SLC4A4,36,,,36
+SEPHS1,selenophosphate synthetase 1 ,SEPHS1,7,,,7
+OGFOD1,2-oxoglutarate and iron dependent oxygenase domain containing 1 ,OGFOD1,5,,,5
+ASAP3,"ArfGAP with SH3 domain, ankyrin repeat and PH domain 3 ",ASAP3,9,,,9
+P2RX7,purinergic receptor P2X 7 ,P2RX7,49,,,49
+MIEF1,mitochondrial elongation factor 1 ,MIEF1,4,,,4
+RASSF2,Ras association domain family member 2 ,RASSF2,65,,,65
+POFUT1,protein O-fucosyltransferase 1 ,POFUT1,26,,,26
+ASIP,agouti signaling protein ,ASIP,41,,,41
+PLP2,proteolipid protein 2 ,PLP2,27,,,27
+PCSK1N,proprotein convertase subtilisin/kexin type 1 inhibitor ,PCSK1N,1,,,1
+ACOD1,aconitate decarboxylase 1 ,ACOD1,6,,,6
+CMC2,C-X9-C motif containing 2 ,CMC2,3,,,3
+FCER2,Fc epsilon receptor II ,FCER2,14,,,14
+CLEC11A,C-type lectin domain containing 11A ,CLEC11A,18,,,18
+ABHD11,abhydrolase domain containing 11 ,ABHD11,31,,,31
+ATRNL1,attractin like 1 ,ATRNL1,4,,,4
+PALD1,phosphatase domain containing paladin 1 ,PALD1,2,,,2
+MLX,MAX dimerization protein MLX ,MLX,19,,,19
+SLC35F2,solute carrier family 35 member F2 ,SLC35F2,14,,,14
+CLEC4A,C-type lectin domain family 4 member A ,CLEC4A,7,,,7
+CEP85L,centrosomal protein 85 like ,CEP85L,6,,,6
+NIT2,nitrilase family member 2 ,NIT2,9,,,9
+UPK1B,uroplakin 1B ,UPK1B,21,,,21
+MMP8,matrix metallopeptidase 8 ,MMP8,212,,,212
+PRAMEF12,PRAME family member 12 ,PRAMEF12,1,,,1
+OLFM3,olfactomedin 3 ,OLFM3,3,,,3
+ABCG2,ATP binding cassette subfamily G member 2 (JR blood group) ,ABCG2,1767,,,1767
+SLIRP,SRA stem-loop interacting RNA binding protein ,SLIRP,3,,,3
+PCMT1,protein-L-isoaspartate (D-aspartate) O-methyltransferase ,PCMT1,14,,,14
+MTIF3,mitochondrial translational initiation factor 3 ,MTIF3,0,,,0
+TEX14,"testis expressed 14, intercellular bridge forming factor ",TEX14,9,,,9
+PAEP,progestagen associated endometrial protein ,PAEP,18,,,18
+BICC1,BicC family RNA binding protein 1 ,BICC1,19,,,19
+NLN,neurolysin ,NLN,72,,,72
+G0S2,G0/G1 switch 2 ,G0S2,45,,,45
+MATN4,matrilin 4 ,MATN4,3,,,3
+FASTKD3,FAST kinase domains 3 ,FASTKD3,1,,,1
+GNRH2,gonadotropin releasing hormone 2 ,GNRH2,12,,,12
+PAX1,paired box 1 ,PAX1,86,,,86
+BFSP1,beaded filament structural protein 1 ,BFSP1,3,,,3
+ITPA,inosine triphosphatase ,ITPA,53,,,53
+HOXD1,homeobox D1 ,HOXD1,28,,,28
+TTBK2,tau tubulin kinase 2 ,TTBK2,9,,,9
+NAA35,"N-alpha-acetyltransferase 35, NatC auxiliary subunit ",NAA35,1,,,1
+TRAFD1,TRAF-type zinc finger domain containing 1 ,TRAFD1,0,,,0
+ZC3H10,zinc finger CCCH-type containing 10 ,ZC3H10,1,,,1
+CNPY3,canopy FGF signaling regulator 3 ,CNPY3,4,,,4
+MMAB,metabolism of cobalamin associated B ,MMAB,21,,,21
+MDGA2,MAM domain containing glycosylphosphatidylinositol anchor 2 ,MDGA2,5,,,5
+KATNB1,katanin regulatory subunit B1 ,KATNB1,2,,,2
+P3H4,prolyl 3-hydroxylase family member 4 (inactive) ,P3H4,8,,,8
+EMP3,epithelial membrane protein 3 (MAM blood group) ,EMP3,60,,,60
+FBN3,fibrillin 3 ,FBN3,15,,,15
+F13B,coagulation factor XIII B chain ,F13B,6,,,6
+FAHD2B,fumarylacetoacetate hydrolase domain containing 2B ,FAHD2B,0,,,0
+USP53,ubiquitin specific peptidase 53 ,USP53,6,,,6
+CYP17A1,cytochrome P450 family 17 subfamily A member 1 ,CYP17A1,321,,,321
+EML3,EMAP like 3 ,EML3,1,,,1
+GPRASP2,G protein-coupled receptor associated sorting protein 2 ,GPRASP2,1,,,1
+ITLN2,intelectin 2 ,ITLN2,0,,,0
+GDPD1,glycerophosphodiester phosphodiesterase domain containing 1 ,GDPD1,0,,,0
+VPS11,VPS11 core subunit of CORVET and HOPS complexes ,VPS11,1,,,1
+TBC1D24,TBC1 domain family member 24 ,TBC1D24,2,,,2
+C1orf87,chromosome 1 open reading frame 87 ,C1orf87,0,,,0
+LHX8,LIM homeobox 8 ,LHX8,19,,,19
+POGLUT1,protein O-glucosyltransferase 1 ,POGLUT1,3,,,3
+NEUROD6,neuronal differentiation 6 ,NEUROD6,5,,,5
+OSR2,odd-skipped related transciption factor 2 ,OSR2,12,,,12
+METTL2B,"methyltransferase 2B, tRNA N3-cytidine ",METTL2B,4,,,4
+SLC6A5,solute carrier family 6 member 5 ,SLC6A5,2,,,2
+NDST2,N-deacetylase and N-sulfotransferase 2 ,NDST2,7,,,7
+GLYCTK,glycerate kinase ,GLYCTK,0,,,0
+FAM107A,family with sequence similarity 107 member A ,FAM107A,18,,,18
+CPT1C,carnitine palmitoyltransferase 1C ,CPT1C,30,,,30
+RNASE3,ribonuclease A family member 3 ,RNASE3,9,,,9
+CT55,cancer/testis antigen 55 ,CT55,3,,,3
+DRD5,dopamine receptor D5 ,DRD5,23,,,23
+MUC3A,"mucin 3A, cell surface associated ",MUC3A,24,,,24
+SERPINA6,serpin family A member 6 ,SERPINA6,7,,,7
+ZBTB26,zinc finger and BTB domain containing 26 ,ZBTB26,0,,,0
+LDHAL6B,lactate dehydrogenase A like 6B ,LDHAL6B,0,,,0
+SLFN12,schlafen family member 12 ,SLFN12,15,,,15
+CES2,carboxylesterase 2 ,CES2,53,,,53
+RNASEH2C,ribonuclease H2 subunit C ,RNASEH2C,5,,,5
+GLRX,glutaredoxin ,GLRX,15,,,15
+REP15,RAB15 effector protein ,REP15,1,,,1
+DOLK,dolichol kinase ,DOLK,0,,,0
+HOXD8,homeobox D8 ,HOXD8,38,,,38
+IP6K1,inositol hexakisphosphate kinase 1 ,IP6K1,4,,,4
+MC5R,melanocortin 5 receptor ,MC5R,5,,,5
+PLAAT3,phospholipase A and acyltransferase 3 ,PLAAT3,2,,,2
+SLC25A22,solute carrier family 25 member 22 ,SLC25A22,5,,,5
+GRAMD1C,GRAM domain containing 1C ,GRAMD1C,3,,,3
+EPM2AIP1,EPM2A interacting protein 1 ,EPM2AIP1,10,,,10
+GPR35,G protein-coupled receptor 35 ,GPR35,16,,,16
+ARID3B,AT-rich interaction domain 3B ,ARID3B,21,,,21
+ALOX15B,arachidonate 15-lipoxygenase type B ,ALOX15B,14,,,14
+B3GNT3,"UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3 ",B3GNT3,22,,,22
+TSHZ1,teashirt zinc finger homeobox 1 ,TSHZ1,4,,,4
+SOX1,SRY-box transcription factor 1 ,SOX1,130,,,130
+PTGDR2,prostaglandin D2 receptor 2 ,PTGDR2,9,,,9
+KRTAP6-1,keratin associated protein 6-1 ,KRTAP6-1,0,,,0
+TEDC1,tubulin epsilon and delta complex 1 ,TEDC1,0,,,0
+ADAMTSL5,ADAMTS like 5 ,ADAMTSL5,5,,,5
+RTN4RL1,reticulon 4 receptor like 1 ,RTN4RL1,0,,,0
+LRCH3,leucine rich repeats and calponin homology domain containing 3 ,LRCH3,2,,,2
+ZBTB6,zinc finger and BTB domain containing 6 ,ZBTB6,3,,,3
+SAPCD2,suppressor APC domain containing 2 ,SAPCD2,13,,,13
+PRELID2,PRELI domain containing 2 ,PRELID2,5,,,5
+CIDEC,cell death inducing DFFA like effector c ,CIDEC,10,,,10
+TRPV2,transient receptor potential cation channel subfamily V member 2 ,TRPV2,65,,,65
+HAPLN4,hyaluronan and proteoglycan link protein 4 ,HAPLN4,1,,,1
+PLA2G2C,phospholipase A2 group IIC ,PLA2G2C,1,,,1
+TMEM120B,transmembrane protein 120B ,TMEM120B,3,,,3
+JPT1,Jupiter microtubule associated homolog 1 ,JPT1,8,,,8
+S100A7L2,S100 calcium binding protein A7 like 2 ,S100A7L2,1,,,1
+SLC22A5,solute carrier family 22 member 5 ,SLC22A5,19,,,19
+STMN3,stathmin 3 ,STMN3,14,,,14
+SOX18,SRY-box transcription factor 18 ,SOX18,70,,,70
+CD300LD,CD300 molecule like family member d ,CD300LD,3,,,3
+PRRT1,proline rich transmembrane protein 1 ,PRRT1,4,,,4
+KRTAP10-9,keratin associated protein 10-9 ,KRTAP10-9,0,,,0
+PRAF2,PRA1 domain family member 2 ,PRAF2,8,,,8
+INMT,indolethylamine N-methyltransferase ,INMT,11,,,11
+LY75-CD302,LY75-CD302 readthrough ,LY75-CD302,1,,,1
+TMEM185A,transmembrane protein 185A ,TMEM185A,2,,,2
+MYO19,myosin XIX ,MYO19,1,,,1
+NIPAL3,NIPA like domain containing 3 ,NIPAL3,0,,,0
+ARHGAP31,Rho GTPase activating protein 31 ,ARHGAP31,3,,,3
+DLX6,distal-less homeobox 6 ,DLX6,67,,,67
+GPM6B,glycoprotein M6B ,GPM6B,12,,,12
+ADAMTS6,ADAM metallopeptidase with thrombospondin type 1 motif 6 ,ADAMTS6,15,,,15
+SLC4A8,solute carrier family 4 member 8 ,SLC4A8,2,,,2
+ATP9A,ATPase phospholipid transporting 9A (putative) ,ATP9A,3,,,3
+RIMBP2,RIMS binding protein 2 ,RIMBP2,3,,,3
+FOXJ2,forkhead box J2 ,FOXJ2,18,,,18
+MPPED2,metallophosphoesterase domain containing 2 ,MPPED2,8,,,8
+ADGRF5,adhesion G protein-coupled receptor F5 ,ADGRF5,8,,,8
+FNDC3B,fibronectin type III domain containing 3B ,FNDC3B,50,,,50
+FAP,fibroblast activation protein alpha ,FAP,3325,,,3325
+OAS1,2'-5'-oligoadenylate synthetase 1 ,OAS1,61,,,61
+ABCC6,ATP binding cassette subfamily C member 6 ,ABCC6,49,,,49
+SPAG7,sperm associated antigen 7 ,SPAG7,1,,,1
+ADA2,adenosine deaminase 2 ,ADA2,28,,,28
+RSPH14,radial spoke head 14 homolog ,RSPH14,2,,,2
+ISM2,isthmin 2 ,ISM2,3,,,3
+ISM1,isthmin 1 ,ISM1,10,,,10
+TM9SF4,transmembrane 9 superfamily member 4 ,TM9SF4,11,,,11
+MXRA5,matrix remodeling associated 5 ,MXRA5,19,,,19
+GDPD3,glycerophosphodiester phosphodiesterase domain containing 3 ,GDPD3,1,,,1
+CLCN7,chloride voltage-gated channel 7 ,CLCN7,5,,,5
+METRN,"meteorin, glial cell differentiation regulator ",METRN,4,,,4
+ILVBL,ilvB acetolactate synthase like ,ILVBL,0,,,0
+SIGLEC8,sialic acid binding Ig like lectin 8 ,SIGLEC8,14,,,14
+SIGLEC6,sialic acid binding Ig like lectin 6 ,SIGLEC6,15,,,15
+TMEM147,transmembrane protein 147 ,TMEM147,10,,,10
+ETHE1,ETHE1 persulfide dioxygenase ,ETHE1,7,,,7
+NPVF,neuropeptide VF precursor ,NPVF,1,,,1
+LIPA,"lipase A, lysosomal acid type ",LIPA,291,1,0,1
+PBLD,phenazine biosynthesis like protein domain containing ,PBLD,6,,,6
+PIGL,phosphatidylinositol glycan anchor biosynthesis class L ,PIGL,2,,,2
+PMP22,peripheral myelin protein 22 ,PMP22,73,,,73
+SC5D,sterol-C5-desaturase ,SC5D,4,,,4
+RNF141,ring finger protein 141 ,RNF141,3,,,3
+PRR4,proline rich 4 ,PRR4,2,,,2
+MAN1A1,mannosidase alpha class 1A member 1 ,MAN1A1,14,,,14
+SLC22A2,solute carrier family 22 member 2 ,SLC22A2,22,,,22
+DAP,death associated protein ,DAP,401,0,377,377
+NPR3,natriuretic peptide receptor 3 ,NPR3,20,,,20
+PRRX1,paired related homeobox 1 ,PRRX1,87,,,87
+PHTF1,putative homeodomain transcription factor 1 ,PHTF1,3,,,3
+GPR89A,G protein-coupled receptor 89A ,GPR89A,0,,,0
+DHDDS,dehydrodolichyl diphosphate synthase subunit ,DHDDS,4,,,4
+SNX19,sorting nexin 19 ,SNX19,2,,,2
+TMEM131L,transmembrane 131 like ,TMEM131L,0,,,0
+LRRC39,leucine rich repeat containing 39 ,LRRC39,0,,,0
+MYRF,myelin regulatory factor ,MYRF,5,,,5
+TCF15,transcription factor 15 ,TCF15,1,,,1
+FRMD8,FERM domain containing 8 ,FRMD8,4,,,4
+GLIS2,GLIS family zinc finger 2 ,GLIS2,63,,,63
+HOXD10,homeobox D10 ,HOXD10,98,,,98
+KLK14,kallikrein related peptidase 14 ,KLK14,44,,,44
+USHBP1,USH1 protein network component harmonin binding protein 1 ,USHBP1,1,,,1
+C1QL1,complement C1q like 1 ,C1QL1,5,,,5
+TESMIN,testis expressed metallothionein like protein ,TESMIN,3,,,3
+ADAMTS8,ADAM metallopeptidase with thrombospondin type 1 motif 8 ,ADAMTS8,26,,,26
+C7orf25,chromosome 7 open reading frame 25 ,C7orf25,2,,,2
+ADAMTS7,ADAM metallopeptidase with thrombospondin type 1 motif 7 ,ADAMTS7,7,,,7
+CYP2C8,cytochrome P450 family 2 subfamily C member 8 ,CYP2C8,186,,,186
+PLA2G12B,phospholipase A2 group XIIB ,PLA2G12B,2,,,2
+NDST4,N-deacetylase and N-sulfotransferase 4 ,NDST4,3,,,3
+TMEM19,transmembrane protein 19 ,TMEM19,0,,,0
+ESD,esterase D ,ESD,3021,,,3021
+RDH12,retinol dehydrogenase 12 ,RDH12,6,,,6
+SERF2,small EDRK-rich factor 2 ,SERF2,2,,,2
+ADAMTS17,ADAM metallopeptidase with thrombospondin type 1 motif 17 ,ADAMTS17,4,,,4
+PCTP,phosphatidylcholine transfer protein ,PCTP,13,,,13
+CCDC40,coiled-coil domain 40 molecular ruler complex subunit ,CCDC40,4,,,4
+KIAA0319L,KIAA0319 like ,KIAA0319L,1,,,1
+ILDR2,immunoglobulin like domain containing receptor 2 ,ILDR2,2,,,2
+AMMECR1L,AMMECR1 like ,AMMECR1L,0,,,0
+ILDR1,immunoglobulin like domain containing receptor 1 ,ILDR1,3,,,3
+PLAC8,placenta associated 8 ,PLAC8,33,,,33
+HAPLN1,hyaluronan and proteoglycan link protein 1 ,HAPLN1,23,,,23
+MSRB2,methionine sulfoxide reductase B2 ,MSRB2,2,,,2
+NUDT22,nudix hydrolase 22 ,NUDT22,1,,,1
+KLRF1,killer cell lectin like receptor F1 ,KLRF1,4,,,4
+ARL11,ADP ribosylation factor like GTPase 11 ,ARL11,6,,,6
+EPG5,ectopic P-granules 5 autophagy tethering factor ,EPG5,4,,,4
+CLEC4F,C-type lectin domain family 4 member F ,CLEC4F,2,,,2
+NRSN1,neurensin 1 ,NRSN1,1,,,1
+CCDC148,coiled-coil domain containing 148 ,CCDC148,4,,,4
+GPR15,G protein-coupled receptor 15 ,GPR15,8,,,8
+SAMSN1,"SAM domain, SH3 domain and nuclear localization signals 1 ",SAMSN1,8,,,8
+XAGE2,X antigen family member 2 ,XAGE2,4,,,4
+GPR61,G protein-coupled receptor 61 ,GPR61,1,,,1
+ALX3,ALX homeobox 3 ,ALX3,8,,,8
+EFCAB14,EF-hand calcium binding domain 14 ,EFCAB14,0,,,0
+CACFD1,calcium channel flower domain containing 1 ,CACFD1,0,,,0
+AZGP1,"alpha-2-glycoprotein 1, zinc-binding ",AZGP1,69,,,69
+CYB561A3,cytochrome b561 family member A3 ,CYB561A3,1,,,1
+HAAO,"3-hydroxyanthranilate 3,4-dioxygenase ",HAAO,8,,,8
+TSACC,TSSK6 activating cochaperone ,TSACC,0,,,0
+CRYBA2,crystallin beta A2 ,CRYBA2,3,,,3
+SMIM14,small integral membrane protein 14 ,SMIM14,1,,,1
+CCDC112,coiled-coil domain containing 112 ,CCDC112,2,,,2
+COMTD1,catechol-O-methyltransferase domain containing 1 ,COMTD1,3,,,3
+PMPCA,"peptidase, mitochondrial processing subunit alpha ",PMPCA,0,,,0
+CMTM5,CKLF like MARVEL transmembrane domain containing 5 ,CMTM5,24,,,24
+SVOP,SV2 related protein ,SVOP,3,,,3
+PCBD1,pterin-4 alpha-carbinolamine dehydratase 1 ,PCBD1,0,,,0
+GOLM2,golgi membrane protein 2 ,GOLM2,1,,,1
+TMEM170A,transmembrane protein 170A ,TMEM170A,1,,,1
+EEIG1,estrogen-induced osteoclastogenesis regulator 1 ,EEIG1,2,,,2
+HDHD2,haloacid dehalogenase like hydrolase domain containing 2 ,HDHD2,0,,,0
+MN1,"MN1 proto-oncogene, transcriptional regulator ",MN1,206,,,206
+APEX2,apurinic/apyrimidinic endodeoxyribonuclease 2 ,APEX2,14,,,14
+TM4SF4,transmembrane 4 L six family member 4 ,TM4SF4,14,,,14
+GPRC5C,G protein-coupled receptor class C group 5 member C ,GPRC5C,8,,,8
+TRABD,TraB domain containing ,TRABD,2,,,2
+MORN4,MORN repeat containing 4 ,MORN4,0,,,0
+MAP6,microtubule associated protein 6 ,MAP6,5,,,5
+SLC16A11,solute carrier family 16 member 11 ,SLC16A11,2,,,2
+NPAS4,neuronal PAS domain protein 4 ,NPAS4,1,,,1
+SLCO2A1,solute carrier organic anion transporter family member 2A1 ,SLCO2A1,27,,,27
+SLC22A1,solute carrier family 22 member 1 ,SLC22A1,67,,,67
+ZNF408,zinc finger protein 408 ,ZNF408,0,,,0
+CSRP2,cysteine and glycine rich protein 2 ,CSRP2,15,,,15
+GRAMD2A,GRAM domain containing 2A ,GRAMD2A,0,,,0
+SUGCT,succinyl-CoA:glutarate-CoA transferase ,SUGCT,3,,,3
+PRIMA1,proline rich membrane anchor 1 ,PRIMA1,86,,,86
+ANO6,anoctamin 6 ,ANO6,15,,,15
+OLIG3,oligodendrocyte transcription factor 3 ,OLIG3,0,,,0
+RBM44,RNA binding motif protein 44 ,RBM44,1,,,1
+TEX44,testis expressed 44 ,TEX44,0,,,0
+P4HTM,"prolyl 4-hydroxylase, transmembrane ",P4HTM,3,,,3
+ELMOD2,ELMO domain containing 2 ,ELMOD2,0,,,0
+TRNAU1AP,tRNA selenocysteine 1 associated protein 1 ,TRNAU1AP,2,,,2
+AMIGO1,adhesion molecule with Ig like domain 1 ,AMIGO1,2,,,2
+CALN1,calneuron 1 ,CALN1,9,,,9
+NPIPA1,nuclear pore complex interacting protein family member A1 ,NPIPA1,0,,,0
+GKN2,gastrokine 2 ,GKN2,18,,,18
+POU6F1,POU class 6 homeobox 1 ,POU6F1,5,,,5
+DGAT1,diacylglycerol O-acyltransferase 1 ,DGAT1,36,,,36
+TMEM222,transmembrane protein 222 ,TMEM222,0,,,0
+KRTAP12-1,keratin associated protein 12-1 ,KRTAP12-1,0,,,0
+TPRG1,tumor protein p63 regulated 1 ,TPRG1,13,,,13
+RUFY4,RUN and FYVE domain containing 4 ,RUFY4,0,,,0
+SLC22A4,solute carrier family 22 member 4 ,SLC22A4,10,,,10
+KRTAP26-1,keratin associated protein 26-1 ,KRTAP26-1,1,,,1
+KLHL14,kelch like family member 14 ,KLHL14,7,,,7
+ZBTB10,zinc finger and BTB domain containing 10 ,ZBTB10,35,,,35
+JPT2,Jupiter microtubule associated homolog 2 ,JPT2,1,,,1
+KRTAP3-3,keratin associated protein 3-3 ,KRTAP3-3,0,,,0
+SYT3,synaptotagmin 3 ,SYT3,1,,,1
+STARD10,StAR related lipid transfer domain containing 10 ,STARD10,8,,,8
+MSANTD3-TMEFF1,MSANTD3-TMEFF1 readthrough ,MSANTD3-TMEFF1,0,,,0
+PCDHGA11,"protocadherin gamma subfamily A, 11 ",PCDHGA11,1,,,1
