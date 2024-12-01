@@ -1,0 +1,27 @@
+external_gene_name,description,search_id,MeSH_count,andGene_count,description_count,best_score
+CDK4,cyclin dependent kinase 4,CDK4,6048,,,6048
+CDK6,cyclin dependent kinase 6,CDK6,1805,,,1805
+PIK3CA,"phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha",PIK3CA,5540,,,5540
+CYP19A1,cytochrome P450 family 19 subfamily A member 1,CYP19A1,326,,,326
+AKT1,AKT serine/threonine kinase 1,AKT1,2403,,,2403
+AKT3,AKT serine/threonine kinase 3,AKT3,398,,,398
+AKT2,AKT serine/threonine kinase 2,AKT2,678,,,678
+ESR1,estrogen receptor 1,ESR1,1702,,,1702
+CYP19A1,cytochrome P450 family 19 subfamily A member 1,CYP19A1,326,,,326
+ESR1,estrogen receptor 1,ESR1,1702,,,1702
+EGFR,epidermal growth factor receptor,EGFR,39917,,,39917
+ERBB2,erb-b2 receptor tyrosine kinase 2,ERBB2,6652,,,6652
+CYP19A1,cytochrome P450 family 19 subfamily A member 1,CYP19A1,326,,,326
+EGFR,epidermal growth factor receptor,EGFR,39917,,,39917
+PARP1,poly(ADP-ribose) polymerase 1,PARP1,2369,,,2369
+PARP3,poly(ADP-ribose) polymerase family member 3,PARP3,41,,,41
+PARP2,poly(ADP-ribose) polymerase 2,PARP2,135,,,135
+CDK4,cyclin dependent kinase 4,CDK4,6048,,,6048
+CDK6,cyclin dependent kinase 6,CDK6,1805,,,1805
+CDK4,cyclin dependent kinase 4,CDK4,6048,,,6048
+CDK6,cyclin dependent kinase 6,CDK6,1805,,,1805
+PARP1,poly(ADP-ribose) polymerase 1,PARP1,2369,,,2369
+PARP2,poly(ADP-ribose) polymerase 2,PARP2,135,,,135
+ESR1,estrogen receptor 1,ESR1,1702,,,1702
+ESR1,estrogen receptor 1,ESR1,1702,,,1702
+ERBB2,erb-b2 receptor tyrosine kinase 2,ERBB2,6652,,,6652
