@@ -8,11 +8,29 @@ write_fst(pubtator3, "~/OneDrive - RMIT University/PhD/large_git_files/PubTator3
 
 
 
-pubtator3 <- read_fst("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3.fst")
+pubtator3 <- read_fst("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3.fst") # mac
+pubtator3 <- read_fst("/home/ubuntu/Downloads/gene2pubtator3.fst") # ubuntu
+pubtator3 <- as.data.table(pubtator3)
+
 pmids <- fread("data/pmids.txt", sep = "\t")
 synon <- fread("data/human_syno.csv")
 
-pubtator3_genes <- pubtator3[!duplicated(Mentions)]
+
+
+target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'CD4', 'PIK3CA',
+                'H4C4', 'GABBR2', 'F8', 'ALDH2', 'COL1A1', 'MYZAP', 'CENPK', 'KIF26B', 'USP25', 'CLOCK')
+
+library(biomaRt)
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+
+target_set <- getBM(attributes = c( "external_gene_name", "description"), 
+                       filters = "external_gene_name", 
+                       values = target_set, 
+                       mart = ensembl)
+target_set$description <- gsub("\\s*\\[.*?\\]", "", target_set$description)
+
+
+
 
 
 
