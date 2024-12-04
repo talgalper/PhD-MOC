@@ -35,6 +35,7 @@ novel_proteins <- unmapped[grep("novel protein", unmapped$description), ]
 pseudogene <- unmapped[grep("pseudogene", unmapped$description), ]
 
 drug_scores <- merge(IDs_converted, drug_scores, by.x = "uniprot_gn_id", by.y = "uniprot_id", all.y = T)
+drug_scores <- unique(drug_scores)
 
 write.csv(drug_scores, "data_general/druggability_scores_annot.csv", row.names = F)
 
