@@ -1,0 +1,6 @@
+# get pubmed IDs for human neoplasms
+esearch -db pubmed -query "Neoplasms[MH] AND Humans[MH]" | efetch -format uid > pmids.txt
+
+# get pubtator3 data
+wget https://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator3/gene2pubtator3.gz
+gzip gene2pubtator3.gz

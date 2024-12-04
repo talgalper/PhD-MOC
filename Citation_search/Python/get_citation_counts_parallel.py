@@ -2,7 +2,7 @@
 
 import sys
 
-# List of required modules
+
 required_modules = [
     'requests',
     'pandas',
@@ -49,9 +49,9 @@ import argparse
 import urllib.parse
 import pickle
 import os
-import concurrent.futures  # For parallelization
-import threading  # For thread-safe progress bar and rate limiting
-import time  # For rate limiting
+import concurrent.futures 
+import threading
+import time  
 
 # Ensure the NLTK 'words' corpus is downloaded
 try:
@@ -61,10 +61,10 @@ except LookupError:
     nltk.download('words')
 print(f'Download location: {nltk.data.find("corpora/words")}')
 
-# Rate limiting semaphore
-RATE_LIMIT = 3  # Maximum 3 requests per second
+# Rate limiting
+RATE_LIMIT = 3 
 semaphore = threading.Semaphore(RATE_LIMIT)
-lock = threading.Lock()  # For thread-safe operations
+lock = threading.Lock() 
 
 def get_citation_count(search_query):
     """
