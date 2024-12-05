@@ -7,13 +7,17 @@ colnames(pubtator3) <- c("PMID", "Type", "Concept_ID", "Mentions", "Resource")
 write_fst(pubtator3, "~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3.fst")
 
 
-
+# read in data
 pubtator3 <- read_fst("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3.fst") # mac
 pubtator3 <- read_fst("/home/ubuntu/Downloads/gene2pubtator3.fst") # ubuntu
 pubtator3 <- as.data.table(pubtator3)
 
 pmids <- fread("data/pmids.txt", sep = "\t")
+pmids <- pmids$V1
 synon <- fread("data/human_syno.csv")
+
+# isolate cancer related studies 
+pubtator3_neoplasm <- pubtator3[PMID %in% pmids]
 
 
 
@@ -31,10 +35,14 @@ target_set$description <- gsub("\\s*\\[.*?\\]", "", target_set$description)
 
 
 
+# get PMIDS for 
 
 
 
 
+
+ESR1_synon <- synon[ref_term == "ESR1"]
+ESR1_subset <- pubtator3[Mentions %in% c(ESR1_synon, "ESR1")]
 
 KRAS_synon <- synon[ref_term == "KRAS"]
 KRAS_subset <- pubtator3[Mentions %in% c(KRAS_synon, "KRAS")]
