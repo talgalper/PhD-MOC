@@ -77,7 +77,10 @@ for (i in seq_along(unique_gene_ids)) {
 }
 
 save(citation_counts, file = "citation_counts_pubtator.RData")
+load("citation_counts_pubtator.RData")
 
+library(biomaRt)
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 entrezgene_ids <- getBM(attributes = c( "entrezgene_id", "external_gene_name", "description", "gene_biotype"), 
                     filters = "entrezgene_id", 
                     values = citation_counts$entrezgene_id, 
