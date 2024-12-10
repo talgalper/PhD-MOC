@@ -84,7 +84,7 @@ for (i in seq_len(num_batches)) {
     filters = "entrezgene_id",
     values = current_batch,
     mart = ensembl
-    )
+  )
   
   entrezgene_ids <- rbind(entrezgene_ids, batch_result)
   
@@ -122,9 +122,9 @@ library(biomaRt)
 ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
 target_set <- getBM(attributes = c( "external_gene_name", "description", "entrezgene_id"), 
-                       filters = "external_gene_name", 
-                       values = target_set, 
-                       mart = ensembl)
+                    filters = "external_gene_name", 
+                    values = target_set, 
+                    mart = ensembl)
 target_set$description <- gsub("\\s*\\[.*?\\]", "", target_set$description)
 target_set$entrezgene_id <- as.character(target_set$entrezgene_id)
 
