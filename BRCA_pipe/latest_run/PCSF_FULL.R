@@ -71,9 +71,10 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
   
   pca <- prcomp(PCA_data, scale. = T, center = T)
   pca_data <- pca$x
-  pca_var <- pca$sdev^2
   
+  pca_var <- pca$sdev^2
   pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
+  
   pca_data <- as.data.frame(pca_data)
   
   # Merge sample mapping with PCA data
@@ -81,24 +82,30 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
   
   # Create a custom colour palette for stages
   library(RColorBrewer)
-  groups <- unique(sample_info[ ,2])
+  groups <- unique(PCA_sample_info[ ,2])
   num_colors <- length(groups)
   colours <- brewer.pal(n = num_colors, name = "Dark2")
   names(colours) <- groups
   
   # Create the PCA plot with color mapping
   library(ggrepel)
-  PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = group, shape = sample_type)) +
+  PCA_plot <- ggplot(PCA_plot$plot_data, aes(PC1, PC2, color = group, shape = sample_type)) +
     geom_point() +
     #geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # opt for point labels
-    scale_color_manual(values = colours) + 
+    scale_color_manual(values = colours) +
     theme_bw() +
-    labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
-         y = paste0('PC2: ', pca_var_perc[2], ' %'))
+    labs(x = paste0('PC1: ', PCA_plot$pca_var_perc[1], ' %'),
+         y = paste0('PC2: ', PCA_plot$pca_var_perc[2], ' %')) +
+    theme(
+      axis.title = element_text(size = 20),
+      axis.text = element_text(size = 18),
+      legend.title = element_text(size = 18),
+      legend.text = element_text(size = 16))
+  
   print(PCA_plot)
   
   if (output_plot_data == T) {
-    return(list(PCA_plot = PCA_plot, plot_data = pca_data))
+    return(list(PCA_plot = PCA_plot, plot_data = pca_data, pca_var_perc = pca_var_perc))
   }
 }
 
