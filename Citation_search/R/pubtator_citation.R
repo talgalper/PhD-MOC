@@ -2,7 +2,7 @@ library(data.table)
 library(fst)
 library(progress)
 
-# first time read in and read/write optimisation of pubator data
+# first time read in and read/write optimisation of pubator data (saved to onedrive from mac)
 gene2pubtator3 <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3", sep = "\t")
 colnames(gene2pubtator3) <- c("PMID", "Type", "Concept_ID", "Mentions", "Resource")
 write_fst(gene2pubtator3, "~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3.fst")
@@ -13,11 +13,11 @@ write_fst(species2pubtator3, "~/OneDrive - RMIT University/PhD/large_git_files/P
 
 # read in data
 gene2pubtator3 <- read_fst("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/gene2pubtator3.fst") # mac
-gene2pubtator3 <- read_fst("/home/ubuntu/Downloads/gene2pubtator3.fst") # ubuntu
+gene2pubtator3 <- read_fst("/home/ubuntu/Desktop/pubtator3/gene2pubtator3.fst") # ubuntu
 gene2pubtator3 <- as.data.table(gene2pubtator3)
 
 species2pubtator3 <- read_fst("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/species2pubtator3.fst") # mac
-species2pubtator3 <- read_fst("/home/ubuntu/Downloads/species2pubtator3.fst") # ubuntu
+species2pubtator3 <- read_fst("/home/ubuntu/Desktop/pubtator3/species2pubtator3.fst") # ubuntu
 species2pubtator3 <- as.data.table(species2pubtator3)
 
 # subset PMIDs for humans
