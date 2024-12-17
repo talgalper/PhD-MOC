@@ -44,7 +44,7 @@ for (i in seq_len(num_batches)) {
 }
 rm(pb)
 
-save(entrezgene_ids, file = "entrezgene_id_converted.RData")
+save(entrezgene_ids, file = "data/entrezgene_id_converted.RData")
 
 entrezgene_ids <- as.data.table(entrezgene_ids)
 entrezgene_ids$entrezgene_id <- as.character(entrezgene_ids$entrezgene_id)
@@ -61,6 +61,7 @@ ensembl <- useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl")
 
 mouse_genes <- data.table()
 NA_entrezgene_ids <- citation_counts_noFilt$entrezgene_id[is.na(citation_counts_noFilt$entrezgene_accession)]
+batch_size <- 10000
 num_batches <- ceiling(length(NA_entrezgene_ids) / batch_size)
 pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
                        total = num_batches)
@@ -86,45 +87,69 @@ for (i in seq_len(num_batches)) {
   
   pb$tick()
   
-  rm(start_index, end_index, current_batch, batch_result, i)
 }
-rm(pb)
+rm(start_index, end_index, current_batch, batch_result, pb, i)
+
+save(mouse_genes, file = "data/entrezgene_id_converted(mouse).RData")
+
+mouse_genes <- as.data.table(mouse_genes)
+mouse_genes$entrezgene_id <- as.character(mouse_genes$entrezgene_id)
+
+# merge with count data
+citation_counts_mouse <- merge.data.table(mouse_genes, citation_counts, by = "entrezgene_id", all.y = T)
+citation_counts_mouse <- citation_counts_mouse[order(-count)]
+
+save(citation_counts_mouse, file = "results/citation_counts_pubtator_mouse.RData")
 
 
+# using new library to annotate entrez IDs with organism
+library(rentrez)
+library(future.apply) # need to parallelise
+library(progressr)
 
 
-
-
-
-
-
-
-
-
-# Resume at batch 275:
-for (i in 430:num_batches) {
-  start_index <- (i - 1) * batch_size + 1
-  end_index <- min(i * batch_size, length(NA_entrezgene_ids))
-  
-  current_batch <- NA_entrezgene_ids[start_index:end_index]
-  
-  batch_result <- suppressMessages(getBM(
-    attributes = c("entrezgene_id", "entrezgene_accession", "entrezgene_description"),
-    filters = "entrezgene_id",
-    values = current_batch,
-    mart = ensembl
-  ))
-  
-  mouse_genes <- rbind(mouse_genes, batch_result)
-  
-  Sys.sleep(3)
-  
-  pb$tick()
-  
-  # Instead of removing i at the end of each iteration, you can remove it after the loop if needed.
-  rm(start_index, end_index, current_batch, batch_result)
+# Define the function to fetch organism information for a single Entrez ID
+get_organism <- function(entrez_id) {
+  tryCatch({
+    summary <- entrez_summary(db = "gene", id = entrez_id)
+    return(summary$organism$scientificname)
+  }, error = function(e) {
+    return(NA)  # Return NA if there's an error
+  })
 }
 
-rm(pb)
+# Set up parallel processing and progress handler
+plan(multisession)  # Use multisession for Mac/RStudio stability
+handlers(global = TRUE)  # Enable global progress handlers
 
-save(mouse_genes, file = "entrezgene_id_mouse_429it.RData")
+# Enable progress bar
+with_progress({
+  p <- progressor(along = citation_counts_orgnsmAnnot$entrezgene_id)
+  
+  # Parallelised organism retrieval
+  results <- future_lapply(citation_counts_orgnsmAnnot$entrezgene_id, function(entrez_id) {
+    p(message = paste("Processing Entrez ID:", entrez_id))
+    organism <- get_organism(entrez_id)
+    return(data.table(entrezgene_id = entrez_id, organism = organism))
+  })
+})
+
+# Combine results into a single data.table
+organisms <- rbindlist(results)
+
+# Print final results
+print(organisms)
+
+# Clean up
+plan(sequential)
+
+
+
+
+
+
+
+
+
+
+
