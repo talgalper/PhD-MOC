@@ -154,3 +154,46 @@ target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'C
                 'H4C4', 'GABBR2', 'F8', 'ALDH2', 'COL1A1', 'MYZAP', 'CENPK', 'KIF26B', 'USP25', 'CLOCK')
 temp <- citaiton_counts_ognsmAnnot[symbol %in% target_set]
 
+
+
+
+
+
+
+
+
+
+
+
+library(data.table)
+library(progress)
+
+citaiton_counts_ognsmAnnot <- fread("/home/ubuntu/Desktop/pubtator3/citaiton_counts_ognsmAnnot.csv")
+
+# small example from data set
+target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'CD4', 'PIK3CA',
+                'H4C4', 'GABBR2', 'F8', 'ALDH2', 'COL1A1', 'MYZAP', 'CENPK', 'KIF26B', 'USP25', 'CLOCK')
+temp <- citaiton_counts_ognsmAnnot[symbol %in% target_set]
+
+
+library(rentrez)
+tax_ids <- temp[,unique(tax_id)]
+tax_ids <- na.omit(tax_ids)
+
+get_organism_name <- function(entrez_id) {
+  summary <- entrez_summary(db = "taxonomy", id = entrez_id)
+  return(summary$scientificname)
+}
+
+pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta",
+                       total = length(tax_ids))
+organisms <- data.table(tax_id = character(), organism = character())
+for (id in tax_ids) {
+  organism <- get_organism_name(id)
+  organisms <- rbind(organisms, data.table(tax_id = id, organism = organism))
+  
+  pb$tick()
+}
+rm(pb, organism, id)
+
+
