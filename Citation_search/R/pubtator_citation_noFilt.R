@@ -122,6 +122,8 @@ fwrite(citaiton_counts_ognsmAnnot, "results/citaiton_counts_ognsmAnnot.csv")
 temp <- citaiton_counts_ognsmAnnot[is.na(tax_id)]
 
 
+# annotate the tax_ids with the organism scientific names
+# NEED TO ADD ERROR HANDLING FOR TAX_IDs THAT DO NOT RETURN DATA
 library(rentrez)
 tax_ids <- citaiton_counts_ognsmAnnot[,unique(tax_id)]
 tax_ids <- na.omit(tax_ids)
@@ -168,7 +170,8 @@ temp <- citaiton_counts_ognsmAnnot[symbol %in% target_set]
 library(data.table)
 library(progress)
 
-citaiton_counts_ognsmAnnot <- fread("/home/ubuntu/Desktop/pubtator3/citaiton_counts_ognsmAnnot.csv")
+citaiton_counts_ognsmAnnot <- fread("/home/ubuntu/Desktop/pubtator3/citaiton_counts_ognsmAnnot.csv") # ubuntu
+citaiton_counts_ognsmAnnot <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/citaiton_counts_ognsmAnnot.csv") # mac
 
 # small example from data set
 target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'CD4', 'PIK3CA',
@@ -195,5 +198,32 @@ for (id in tax_ids) {
   pb$tick()
 }
 rm(pb, organism, id)
+
+temp$tax_id <- as.character(temp$tax_id)
+temp2 <- merge.data.table(organisms, temp, by = "tax_id", all.x = T)
+temp2 <- temp2[order(-temp2$count), ]
+
+
+
+
+# Count total 
+unique_genes <- unique(temp2$symbol)
+citation_counts <- data.table(entrezgene_id = unique_genes,
+                              counts = integer(length(unique_genes)))
+
+pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
+                       total = length(unique_genes))
+
+for (i in seq_along(unique_genes)) {
+  gene_id <- unique_genes[i]
+  total <- sum(temp2$count[temp2$symbol == gene_id])
+  citation_counts$counts[i] <- total
+  
+  pb$tick()
+}
+rm(gene_id, total, i, pb)
+
+temp3 <- temp[tax_id == "9606"]
+
 
 
