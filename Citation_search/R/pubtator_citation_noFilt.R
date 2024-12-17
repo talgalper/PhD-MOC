@@ -57,91 +57,90 @@ save(citation_counts_noFilt, file = "results/citation_counts_pubtator_noFilt.RDa
 
 
 # 2nd pass for mouse genes
-ensembl <- useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl")
+# ensembl <- useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl")
+# 
+# mouse_genes <- data.table()
+# NA_entrezgene_ids <- citation_counts_noFilt$entrezgene_id[is.na(citation_counts_noFilt$entrezgene_accession)]
+# batch_size <- 10000
+# num_batches <- ceiling(length(NA_entrezgene_ids) / batch_size)
+# pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
+#                        total = num_batches)
+# for (i in seq_len(num_batches)) {
+#   # Define the start and end indices for the current batch
+#   start_index <- (i - 1) * batch_size + 1
+#   end_index <- min(i * batch_size, length(NA_entrezgene_ids))
+#   
+#   # Extract the current batch of gene IDs
+#   current_batch <- NA_entrezgene_ids[start_index:end_index]
+#   
+#   batch_result <- suppressMessages(getBM(
+#     attributes = c("entrezgene_id", "entrezgene_accession", "entrezgene_description"),
+#     filters = "entrezgene_id",
+#     values = current_batch,
+#     mart = ensembl
+#   ))
+#   
+#   mouse_genes <- rbind(mouse_genes, batch_result)
+#   
+#   # Delay for 3 seconds so they dont freak out and ban me
+#   Sys.sleep(3)
+#   
+#   pb$tick()
+#   
+# }
+# rm(start_index, end_index, current_batch, batch_result, pb, i)
+# 
+# save(mouse_genes, file = "data/entrezgene_id_converted(mouse).RData")
+# 
+# mouse_genes <- as.data.table(mouse_genes)
+# mouse_genes$entrezgene_id <- as.character(mouse_genes$entrezgene_id)
+# 
+# # merge with count data
+# citation_counts_mouse <- merge.data.table(mouse_genes, citation_counts, by = "entrezgene_id", all.y = T)
+# citation_counts_mouse <- citation_counts_mouse[order(-count)]
+# 
+# save(citation_counts_mouse, file = "results/citation_counts_pubtator_mouse.RData")
 
-mouse_genes <- data.table()
-NA_entrezgene_ids <- citation_counts_noFilt$entrezgene_id[is.na(citation_counts_noFilt$entrezgene_accession)]
-batch_size <- 10000
-num_batches <- ceiling(length(NA_entrezgene_ids) / batch_size)
-pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
-                       total = num_batches)
-for (i in seq_len(num_batches)) {
-  # Define the start and end indices for the current batch
-  start_index <- (i - 1) * batch_size + 1
-  end_index <- min(i * batch_size, length(NA_entrezgene_ids))
-  
-  # Extract the current batch of gene IDs
-  current_batch <- NA_entrezgene_ids[start_index:end_index]
-  
-  batch_result <- suppressMessages(getBM(
-    attributes = c("entrezgene_id", "entrezgene_accession", "entrezgene_description"),
-    filters = "entrezgene_id",
-    values = current_batch,
-    mart = ensembl
-  ))
-  
-  mouse_genes <- rbind(mouse_genes, batch_result)
-  
-  # Delay for 3 seconds so they dont freak out and ban me
-  Sys.sleep(3)
+
+# instead of using biomaRt to convert everything, downloaded gene annotation data from entrez
+entrezgene_data <- fread("/home/ubuntu/Downloads/All_Data.gene_info", sep = "\t")
+temp <- entrezgene_data[1:10,1:16] # preview structure
+
+entrezgene_data_subset <- entrezgene_data[, c(1,2,3,9,10)]
+entrezgene_data_subset[] <- lapply(entrezgene_data_subset, as.character)
+
+load("results/citation_counts_pubtator_noFilt.RData")
+citaiton_counts_ognsmAnnot <- citation_counts_noFilt
+citaiton_counts_ognsmAnnot <- merge.data.table(entrezgene_data_subset, citaiton_counts_ognsmAnnot, by.x = "GeneID", by.y = "entrezgene_id", all.y = T)
+citaiton_counts_ognsmAnnot <- citaiton_counts_ognsmAnnot[order(-count)]
+citaiton_counts_ognsmAnnot <- citaiton_counts_ognsmAnnot[, c(1:5,8)]
+colnames(citaiton_counts_ognsmAnnot) <- c("entrezgene_id", "tax_id", "symbol", "description", "type", "count")
+fwrite(citaiton_counts_ognsmAnnot, "results/citaiton_counts_ognsmAnnot.csv")
+
+# subset of missing entries
+# seem to have a withdraw notice on entrez page
+temp <- citaiton_counts_ognsmAnnot[is.na(tax_id)]
+
+
+library(rentrez)
+tax_ids <- citaiton_counts_ognsmAnnot[,unique(tax_id)]
+tax_ids <- na.omit(tax_ids)
+
+get_organism_name <- function(entrez_id) {
+  summary <- entrez_summary(db = "taxonomy", id = entrez_id)
+  return(summary$scientificname)
+}
+
+pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta",
+                       total = length(tax_ids))
+organisms <- data.table(tax_id = character(), organism = character())
+for (id in tax_ids) {
+  organism <- get_organism_name(id)
+  organisms <- rbind(organisms, data.table(tax_id = id, organism = organism))
   
   pb$tick()
-  
 }
-rm(start_index, end_index, current_batch, batch_result, pb, i)
-
-save(mouse_genes, file = "data/entrezgene_id_converted(mouse).RData")
-
-mouse_genes <- as.data.table(mouse_genes)
-mouse_genes$entrezgene_id <- as.character(mouse_genes$entrezgene_id)
-
-# merge with count data
-citation_counts_mouse <- merge.data.table(mouse_genes, citation_counts, by = "entrezgene_id", all.y = T)
-citation_counts_mouse <- citation_counts_mouse[order(-count)]
-
-save(citation_counts_mouse, file = "results/citation_counts_pubtator_mouse.RData")
-
-
-# using new library to annotate entrez IDs with organism
-library(rentrez)
-library(future.apply) # need to parallelise
-library(progressr)
-
-
-# Define the function to fetch organism information for a single Entrez ID
-get_organism <- function(entrez_id) {
-  tryCatch({
-    summary <- entrez_summary(db = "gene", id = entrez_id)
-    return(summary$organism$scientificname)
-  }, error = function(e) {
-    return(NA)  # Return NA if there's an error
-  })
-}
-
-# Set up parallel processing and progress handler
-plan(multisession)  # Use multisession for Mac/RStudio stability
-handlers(global = TRUE)  # Enable global progress handlers
-
-# Enable progress bar
-with_progress({
-  p <- progressor(along = citation_counts_orgnsmAnnot$entrezgene_id)
-  
-  # Parallelised organism retrieval
-  results <- future_lapply(citation_counts_orgnsmAnnot$entrezgene_id, function(entrez_id) {
-    p(message = paste("Processing Entrez ID:", entrez_id))
-    organism <- get_organism(entrez_id)
-    return(data.table(entrezgene_id = entrez_id, organism = organism))
-  })
-})
-
-# Combine results into a single data.table
-organisms <- rbindlist(results)
-
-# Print final results
-print(organisms)
-
-# Clean up
-plan(sequential)
+rm(pb, organism, id)
 
 
 
@@ -150,6 +149,8 @@ plan(sequential)
 
 
 
-
-
+# small example from data set
+target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'CD4', 'PIK3CA',
+                'H4C4', 'GABBR2', 'F8', 'ALDH2', 'COL1A1', 'MYZAP', 'CENPK', 'KIF26B', 'USP25', 'CLOCK')
+temp <- citaiton_counts_ognsmAnnot[symbol %in% target_set]
 
