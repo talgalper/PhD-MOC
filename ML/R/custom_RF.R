@@ -5,8 +5,12 @@ library(pROC)
 
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
 druggability <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
+load("RData/full_fpocket_results.RData")
 
-feature_matrix <- merge(feature_matrix, subset(druggability, select = c("uniprot_gn_id", "druggability", "CP_score", "highest_score")), by.x = "Protein", by.y = "uniprot_gn_id")
+feature_matrix <- merge(feature_matrix, results_master[, -1], by.x = "Protein", by.y = "uniprot_id")
+feature_matrix <- merge(feature_matrix, subset(druggability, select = c("uniprot_gn_id", "CP_score", "highest_score")), by.x = "Protein", by.y = "uniprot_gn_id")
+
+
 
 
 
