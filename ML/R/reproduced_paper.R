@@ -13,13 +13,37 @@ feature_data$Label <- as.factor(ifelse(feature_data$Protein %in% approved_target
 feature_data$validation <- as.factor(ifelse(feature_data$Protein %in% clinical_targets$Protein, 1, 0))
 
 # Split data into positive (approved drug targets) and negative (non-drug targets)
+# need to load in updated set of negative targets
+load("RData/TTD_data.RData")
+target_info_df <- target_info_df[-1, ]
+
+TTD_master <- data.frame(TARGETID = rownames(target_info_df),
+                         GENENAME = target_info_df$GENENAME,
+                         UNIPROID = target_info_df$UNIPROID,
+                         TARGNAME = target_info_df$TARGNAME)
+
+TTD_master <- merge(TTD_master, drug_info_df, by = "TARGETID", all = T)
+
+TTD_master <- merge(TTD_master, drugDisease_data[, c(1:3)], by.x = "TTDDrugID", by.y = "TTDDRUID", all = T)
+TTD_master <- unique(TTD_master)
+
+
+# get all uniprot IDs for all TTD target proteins
+all_target_genes <- unique(TTD_master$GENENAME)
+all_target_genes <- na.omit(all_target_genes)
+all_target_genes <- strsplit(all_target_genes, ";")
+all_target_genes <- unlist(all_target_genes)
+all_target_genes <- unique(all_target_genes)
+all_target_genes <- trimws(all_target_genes)
+all_target_genes <- all_target_genes[all_target_genes != ""]
+
 positive_set <- feature_data[feature_data$Label == 1, ]
 negative_pool <- feature_data[feature_data$Label == 0 & !feature_data$Protein %in% all_target_genes, ]
 
 
 # Initialize parameters
 ntrees <- 1000  # Fixed number of trees
-n_models <- 100  # Number of random forests for bagging
+n_models <- 10000  # Number of random forests for bagging
 predictions <- matrix(0, nrow = nrow(feature_data), ncol = n_models)  # For storing predictions
 
 
@@ -45,16 +69,37 @@ for (i in 1:n_models) {
   # Predict on the entire dataset
   predictions[, i] <- predict(rf_model, feature_data[, !names(feature_data) %in% c("Label", "Protein", "validation")], type = "prob")[, 2]
   
+  # save at the 100th and 1000th model 
+  if (i == 100) {
+    predictions_after_100 <- predictions
+    predictions_after_100 <- predictions_after_100[1:100,1:100]
+  }
+  
+  if (i == 1000) {
+    predictions_after_1000 <- predictions
+    predictions_after_1000 <- predictions_after_1000[1:1000,1:1000]
+  }
+  
   pb$tick()
 }
 
 
 # Average predictions across all models
 final_predictions <- rowMeans(predictions)
+final_predictions_after_100 <- rowMeans(predictions_after_100)
+final_predictions_after_1000 <- rowMeans(predictions_after_1000)
+
+
 # Attach predictions to the dataset
 feature_data$Prediction_Score <- final_predictions
+feature_data$Prediction_Score_after_100 <- final_predictions_after_100
+feature_data$Prediction_Score_after_1000 <- final_predictions_after_1000
 
-model_scores <- subset(feature_data, select = c("Protein", "Prediction_Score", "Label", "validation"))
+
+model_scores <- subset(feature_data, select = c("Protein", "Prediction_Score", "Prediction_Score_after_100", "Prediction_Score_after_1000", "Label", "validation"))
+
+library(biomaRt)
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
 gene_names <- getBM(
   attributes = c("uniprotswissprot", "hgnc_symbol"),

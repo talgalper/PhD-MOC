@@ -106,6 +106,17 @@ for (i in 1:n_models) {
   # Predict on the entire dataset
   predictions[, i] <- predict(rf_model, feature_matrix[, !names(feature_matrix) %in% c("approved", "Protein", "clinical")], type = "prob")[, 2]
   
+  # save at the 100th and 1000th model 
+  if (i == 100) {
+    predictions_after_100 <- predictions
+    predictions_after_100 <- predictions_after_100[1:100,1:100]
+  }
+  
+  if (i == 1000) {
+    predictions_after_1000 <- predictions
+    predictions_after_1000 <- predictions_after_1000[1:1000,1:1000]
+  }
+  
   pb$tick()
 }
 
