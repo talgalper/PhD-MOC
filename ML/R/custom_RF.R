@@ -6,14 +6,33 @@ library(pROC)
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
 druggability <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
 load("RData/full_fpocket_results.RData")
+load("RData/human_string_PPI_metrics.RData")
 
-feature_matrix <- merge(feature_matrix, results_master[, -1], by.x = "Protein", by.y = "uniprot_id")
-feature_matrix <- merge(feature_matrix, subset(druggability, select = c("uniprot_gn_id", "CP_score", "highest_score")), by.x = "Protein", by.y = "uniprot_gn_id")
+new_feature_matrix <- feature_matrix[, -c((ncol(feature_matrix)-5):ncol(feature_matrix))]
 
+new_feature_matrix <- merge(new_feature_matrix, results_master[, -c(1,23)], by.x = "Protein", by.y = "uniprot_id", all.x = T)
+new_feature_matrix <- merge(new_feature_matrix, subset(druggability, select = c("uniprot_gn_id", "CP_score", "highest_score")), by.x = "Protein", by.y = "uniprot_gn_id", all.x = T)
+new_feature_matrix <- merge(new_feature_matrix, string_df, by.x = "Protein", by.y = "ENSG", all.x = T)
 
+table(complete.cases(new_feature_matrix))
+temp <- new_feature_matrix[!complete.cases(new_feature_matrix), ]
 
+library(biomaRt)
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
+gene_ids <- getBM(
+  attributes = c("uniprotswissprot", "hgnc_symbol"),
+  filters = "uniprotswissprot",
+  values = temp$Protein,
+  mart = ensembl)
 
+missing_from_featureMatrix <- merge(gene_ids, temp, by.x = "uniprotswissprot", by.y = "Protein", all.y = T)
+new_feature_matrix <- new_feature_matrix[complete.cases(new_feature_matrix), ]
+
+# Normalise only the specified columns
+new_feature_matrix[c(88:92)] <- lapply(new_feature_matrix[c(88:92)], function(x) {
+  (x - min(x)) / (max(x) - min(x))
+})
 
 
 load("RData/TTD_data.RData")
@@ -68,7 +87,7 @@ TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$INDICATION
 TTD_approved_cancer <- unique(TTD_approved_cancer$uniprotswissprot)
 TTD_approved_cancer <- TTD_approved_cancer[TTD_approved_cancer != "" & !is.na(TTD_approved_cancer)]
 
-feature_matrix$approved <- as.factor(ifelse(feature_matrix$Protein %in% TTD_approved_cancer, 1, 0))
+new_feature_matrix$approved <- as.factor(ifelse(new_feature_matrix$Protein %in% TTD_approved_cancer, 1, 0))
 
 
 TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_clinical, by = "TARGETID", all.y = T)
@@ -80,18 +99,33 @@ TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$INDICATION
 TTD_clinical_cancer <- unique(TTD_clinical_cancer$uniprotswissprot)
 TTD_clinical_cancer <- TTD_clinical_cancer[TTD_clinical_cancer != "" & !is.na(TTD_clinical_cancer)]
 
-feature_matrix$clinical <- as.factor(ifelse(feature_matrix$Protein %in% TTD_clinical_cancer, 1, 0))
+new_feature_matrix$clinical <- as.factor(ifelse(new_feature_matrix$Protein %in% TTD_clinical_cancer, 1, 0))
 
 
 # Split data into positive (approved drug targets) and negative (non-drug targets across any indication)
-positive_set <- feature_matrix[feature_matrix$approved == 1, ]
-negative_pool <- feature_matrix[!feature_matrix$Protein %in% all_target_genes, ]
+positive_set <- new_feature_matrix[new_feature_matrix$approved == 1, ]
+negative_pool <- new_feature_matrix[!new_feature_matrix$Protein %in% all_target_genes, ]
+
+
+library(corrplot)
+
+# Calculate correlations between features
+# Exclude non-numeric columns like 'Protein', 'Label', or 'validation'
+numeric_features <- new_feature_matrix[, sapply(new_feature_matrix, is.numeric)]
+correlation_matrix <- cor(numeric_features, use = "pairwise.complete.obs")
+
+# Plot the correlation matrix
+corrplot(correlation_matrix, method = "color",
+         tl.cex = 0.7, tl.col = "black", tl.srt = 45, 
+         mar = c(0, 0, 0, 0))
+
+
 
 
 # Initialize parameters
 ntrees <- 1000  # Fixed number of trees
 n_models <- 100  # Number of random forests for bagging
-predictions <- matrix(0, nrow = nrow(feature_matrix), ncol = n_models)  # For storing predictions
+predictions <- matrix(0, nrow = nrow(new_feature_matrix), ncol = n_models)  # For storing predictions
 
 
 pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
@@ -114,7 +148,7 @@ for (i in 1:n_models) {
     importance = TRUE)
   
   # Predict on the entire dataset
-  predictions[, i] <- predict(rf_model, feature_matrix[, !names(feature_matrix) %in% c("approved", "Protein", "clinical")], type = "prob")[, 2]
+  predictions[, i] <- predict(rf_model, new_feature_matrix[, !names(new_feature_matrix) %in% c("approved", "Protein", "clinical")], type = "prob")[, 2]
   
   pb$tick()
 }
@@ -123,9 +157,9 @@ for (i in 1:n_models) {
 # Average predictions across all models
 final_predictions <- rowMeans(predictions)
 # Attach predictions to the dataset
-feature_matrix$Prediction_Score <- final_predictions
+new_feature_matrix$Prediction_Score <- final_predictions
 
-model_scores <- subset(feature_matrix, select = c("Protein", "Prediction_Score", "approved", "clinical"))
+model_scores <- subset(new_feature_matrix, select = c("Protein", "Prediction_Score", "approved", "clinical"))
 
 gene_names <- getBM(
   attributes = c("uniprotswissprot", "hgnc_symbol"),
@@ -138,7 +172,7 @@ model_scores <- model_scores[order(-model_scores$Prediction_Score), ]
 
 
 # Evaluate on validation set (if provided)
-roc_curve <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score)
+roc_curve <- roc(new_feature_matrix$clinical, new_feature_matrix$Prediction_Score)
 auc(roc_curve)
 
 # Plot ROC Curve
@@ -161,21 +195,8 @@ ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -I
   theme_minimal()
 
 
-save(roc_curve, importance_df, model_scores, feature_matrix, positive_set, negative_pool, file = "RData/model_druggability.RData")
+save(roc_curve, importance_df, model_scores, new_feature_matrix, positive_set, negative_pool, file = "RData/model_druggability.RData")
 
-
-
-library(corrplot)
-
-# Calculate correlations between features
-# Exclude non-numeric columns like 'Protein', 'Label', or 'validation'
-numeric_features <- feature_matrix[, sapply(feature_matrix, is.numeric)]
-correlation_matrix <- cor(numeric_features, use = "pairwise.complete.obs")
-
-# Plot the correlation matrix
-corrplot(correlation_matrix, method = "color", type = "upper",
-         tl.cex = 0.7, tl.col = "black", tl.srt = 45, 
-         mar = c(0, 0, 1, 0))
 
 
 

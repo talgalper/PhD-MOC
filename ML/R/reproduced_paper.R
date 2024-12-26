@@ -9,34 +9,6 @@ approved_targets <- read_xls("data/approved_targets.xls", sheet = 1)
 clinical_targets <- read_xls("data/approved_targets.xls", sheet = 2)
 
 
-# get all uniprot IDs for all TTD target proteins
-all_target_genes <- unique(TTD_master$GENENAME)
-all_target_genes <- na.omit(all_target_genes)
-all_target_genes <- strsplit(all_target_genes, ";")
-all_target_genes <- unlist(all_target_genes)
-all_target_genes <- unique(all_target_genes)
-all_target_genes <- trimws(all_target_genes)
-all_target_genes <- all_target_genes[all_target_genes != ""]
-
-library(biomaRt)
-ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
-
-uniprot_ids <- getBM(
-  attributes = c("hgnc_symbol", "uniprotswissprot"),
-  filters = "hgnc_symbol",
-  values = all_target_genes,
-  mart = ensembl)
-
-# remove empty duplicates
-duplicated_values <- names(table(uniprot_ids$hgnc_symbol)[table(uniprot_ids$hgnc_symbol) > 1])
-uniprot_ids_clean <- uniprot_ids[!(uniprot_ids$hgnc_symbol %in% duplicated_values & uniprot_ids$uniprotswissprot == ""), ]
-
-uniprot_ids_clean <- merge(as.data.frame(all_target_genes), uniprot_ids_clean, by.x = "all_target_genes", by.y = "hgnc_symbol", all.x = T)
-all_target_genes <- uniprot_ids_clean$uniprotswissprot
-all_target_genes <- na.omit(all_target_genes)
-
-
-
 feature_data$Label <- as.factor(ifelse(feature_data$Protein %in% approved_targets$Protein, 1, 0))
 feature_data$validation <- as.factor(ifelse(feature_data$Protein %in% clinical_targets$Protein, 1, 0))
 
@@ -121,4 +93,108 @@ ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -I
 
 save(roc_curve, importance_df, model_scores, feature_data, positive_set, negative_pool, file = "RData/reproduced_paper.RData")
 
+# see if updated list of validated targets were predicted
+load("RData/reproduced_paper.RData")
+load("RData/TTD_data.RData")
 
+target_info_df <- target_info_df[-1, ]
+
+TTD_master <- data.frame(TARGETID = rownames(target_info_df),
+                         GENENAME = target_info_df$GENENAME,
+                         UNIPROID = target_info_df$UNIPROID,
+                         TARGNAME = target_info_df$TARGNAME)
+
+TTD_master <- merge(TTD_master, drug_info_df, by = "TARGETID", all = T)
+
+TTD_master <- merge(TTD_master, drugDisease_data[, c(1:3)], by.x = "TTDDrugID", by.y = "TTDDRUID", all = T)
+TTD_master <- unique(TTD_master)
+
+
+# get all uniprot IDs for all TTD target proteins
+all_target_genes <- unique(TTD_master$GENENAME)
+all_target_genes <- na.omit(all_target_genes)
+all_target_genes <- strsplit(all_target_genes, ";")
+all_target_genes <- unlist(all_target_genes)
+all_target_genes <- unique(all_target_genes)
+all_target_genes <- trimws(all_target_genes)
+all_target_genes <- all_target_genes[all_target_genes != ""]
+
+library(biomaRt)
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+
+uniprot_ids <- getBM(
+  attributes = c("hgnc_symbol", "uniprotswissprot"),
+  filters = "hgnc_symbol",
+  values = all_target_genes,
+  mart = ensembl)
+
+# remove empty duplicates
+duplicated_values <- names(table(uniprot_ids$hgnc_symbol)[table(uniprot_ids$hgnc_symbol) > 1])
+uniprot_ids_clean <- uniprot_ids[!(uniprot_ids$hgnc_symbol %in% duplicated_values & uniprot_ids$uniprotswissprot == ""), ]
+
+uniprot_ids_clean <- merge(as.data.frame(all_target_genes), uniprot_ids_clean, by.x = "all_target_genes", by.y = "hgnc_symbol", all.x = T)
+# all_target_genes <- uniprot_ids_clean$uniprotswissprot
+# all_target_genes <- na.omit(all_target_genes)
+
+TTD_master <- merge(uniprot_ids_clean, TTD_master, by.x = "all_target_genes", by.y = "GENENAME", all = T)
+TTD_master <- unique(TTD_master) # because i merged NAs
+
+TTD_approved <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_approved, by = "TARGETID", all.y = T)
+cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases", "tumour")
+pattern <- paste(cancer_terms, collapse = "|")
+TTD_approved_cancer <- TTD_approved[grepl(pattern, TTD_approved$INDICATION, ignore.case = TRUE), ]
+TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$INDICATION), ]
+
+TTD_approved_cancer <- unique(TTD_approved_cancer$uniprotswissprot)
+TTD_approved_cancer <- TTD_approved_cancer[TTD_approved_cancer != "" & !is.na(TTD_approved_cancer)]
+
+feature_data$updated_approved <- as.factor(ifelse(feature_data$Protein %in% TTD_approved_cancer, 1, 0))
+
+
+TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_clinical, by = "TARGETID", all.y = T)
+cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases")
+pattern <- paste(cancer_terms, collapse = "|")
+TTD_clinical_cancer <- TTD_clinical[grepl(pattern, TTD_clinical$INDICATION, ignore.case = TRUE), ]
+TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$INDICATION), ]
+
+TTD_clinical_cancer <- unique(TTD_clinical_cancer$uniprotswissprot)
+TTD_clinical_cancer <- TTD_clinical_cancer[TTD_clinical_cancer != "" & !is.na(TTD_clinical_cancer)]
+
+feature_data$updated_clinical <- as.factor(ifelse(feature_data$Protein %in% TTD_clinical_cancer, 1, 0))
+
+
+
+plot_data <- subset(feature_data, select = c("Protein", "Prediction_Score", "Label", "updated_approved", "validation", "updated_clinical"))
+
+plot_data$Group <- with(plot_data, ifelse(
+  Label == 1, "Approved Targets",
+  ifelse(updated_approved == 1, "Updated Approved",
+         ifelse(validation == 1, "Clinical Targets",
+                ifelse(updated_clinical == 1, "Updated Clinical", "Not Targets")
+         )
+  )
+))
+
+# Convert the group column into a factor with the desired order
+plot_data$Group <- factor(plot_data$Group, levels = c("Approved Targets", "Updated Approved", "Clinical Targets", "Updated Clinical", "Not Targets"))
+
+
+ggplot(plot_data, aes(x = Group, y = Prediction_Score)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    x = NULL,
+    y = "Prediction Scores"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14)
+  )
+
+roc_curve <- roc(feature_data$updated_clinical, feature_data$Prediction_Score)
+auc(roc_curve)
+plot(roc_curve)
+
+
+temp <- plot_data[plot_data$Group == "Updated Approved", ]

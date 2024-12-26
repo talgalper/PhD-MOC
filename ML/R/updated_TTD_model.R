@@ -152,7 +152,7 @@ ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -I
 
 
 save(roc_curve, importance_df, model_scores, feature_matrix, positive_set, negative_pool, file = "RData/updated_TTD_model.RData")
-
+load("RData/updated_TTD_model.RData")
 
 
 library(corrplot)

@@ -1,8 +1,3 @@
-### converts .txt output file from fpocket into organised df ###
-if (!require("readr")) {
-  install.packages("readr")
-}
-
 library(readr)
 
 fpocket_format <- function(txt_file){

@@ -22,17 +22,18 @@ wide_table <- dcast(
 )
 
 
-gene_ids <- feature_matrix$Protein
-source_cols <- setdiff(names(wide_table), "#string_protein_id")
-# Count matches for each column
-matching_counts <- sapply(source_cols, function(col_name) {
-  # Count how many entries in the column are in your gene ID set
-  sum(wide_table[[col_name]] %in% gene_ids, na.rm = TRUE)
-})
-
-# Find the column with the highest number of matches
-names(matching_counts)[which.max(matching_counts)]
-matching_counts[matching_counts != 0]
+# this code just reads in original feature matrix to see which alias type to use
+# gene_ids <- feature_matrix$Protein
+# source_cols <- setdiff(names(wide_table), "#string_protein_id")
+# # Count matches for each column
+# matching_counts <- sapply(source_cols, function(col_name) {
+#   # Count how many entries in the column are in your gene ID set
+#   sum(wide_table[[col_name]] %in% gene_ids, na.rm = TRUE)
+# })
+# 
+# # Find the column with the highest number of matches
+# names(matching_counts)[which.max(matching_counts)]
+# matching_counts[matching_counts != 0]
 
 
 
@@ -69,7 +70,7 @@ result[is.na(alias), alias := alias_Ensembl_HGNC_uniprot_ids]
 result[, alias_Ensembl_HGNC_uniprot_ids := NULL]
 
 table(unique(c(STRING_edge$protein1, STRING_edge$protein2)) %in% result$`#string_protein_id`)
-table(feature_matrix$Protein %in% result$alias)
+# table(feature_matrix$Protein %in% result$alias)
 
 
 
