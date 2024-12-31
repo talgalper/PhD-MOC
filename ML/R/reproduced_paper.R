@@ -69,26 +69,18 @@ for (i in 1:n_models) {
   # Predict on the entire dataset
   predictions[, i] <- predict(rf_model, feature_data[, !names(feature_data) %in% c("Label", "Protein", "validation")], type = "prob")[, 2]
   
-  # save at the 100th and 1000th model 
-  if (i == 100) {
-    predictions_after_100 <- predictions
-    predictions_after_100 <- predictions_after_100[1:100,1:100]
-  }
-  
-  if (i == 1000) {
-    predictions_after_1000 <- predictions
-    predictions_after_1000 <- predictions_after_1000[1:1000,1:1000]
-  }
-  
   pb$tick()
 }
 
 
 # Average predictions across all models
 final_predictions <- rowMeans(predictions)
-final_predictions_after_100 <- rowMeans(predictions_after_100)
-final_predictions_after_1000 <- rowMeans(predictions_after_1000)
 
+final_predictions_after_100 <- predictions[, 1:100]
+final_predictions_after_100 <- rowMeans(final_predictions_after_100)
+
+final_predictions_after_1000 <- predictions[, 1:1000]
+final_predictions_after_1000 <- rowMeans(final_predictions_after_1000)
 
 # Attach predictions to the dataset
 feature_data$Prediction_Score <- final_predictions
