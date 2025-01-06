@@ -150,46 +150,30 @@ rm(pb, organism, id)
 
 
 
-
-# small example from data set
-target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'CD4', 'PIK3CA',
-                'H4C4', 'GABBR2', 'F8', 'ALDH2', 'COL1A1', 'MYZAP', 'CENPK', 'KIF26B', 'USP25', 'CLOCK')
-temp <- citaiton_counts_ognsmAnnot[symbol %in% target_set]
-
-
-
-
-
-
-
-
-
-
-
-
+# annotate tax_id with organism name
 library(data.table)
 library(progress)
 
-citaiton_counts_ognsmAnnot <- fread("/home/ubuntu/Desktop/pubtator3/citaiton_counts_ognsmAnnot.csv") # ubuntu
-citaiton_counts_ognsmAnnot <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/citaiton_counts_ognsmAnnot.csv") # mac
-
-# small example from data set
-target_set <- c('BRCA1', 'TP53', 'ESR1', 'ERBB2', 'MYC', 'KIT', 'KRAS', 'AR', 'CD4', 'PIK3CA',
-                'H4C4', 'GABBR2', 'F8', 'ALDH2', 'COL1A1', 'MYZAP', 'CENPK', 'KIF26B', 'USP25', 'CLOCK')
-temp <- citaiton_counts_ognsmAnnot[symbol %in% target_set]
-
+# spelling error in filename (fix later)
+citation_counts_ognsmAnnot <- fread("/home/ubuntu/Desktop/pubtator3/citaiton_counts_ognsmAnnot.csv") # ubuntu
+citation_counts_ognsmAnnot <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/citaiton_counts_ognsmAnnot.csv") # mac
 
 library(rentrez)
-tax_ids <- temp[,unique(tax_id)]
+tax_ids <- citation_counts_ognsmAnnot[,unique(tax_id)]
 tax_ids <- na.omit(tax_ids)
 
 get_organism_name <- function(entrez_id) {
-  summary <- entrez_summary(db = "taxonomy", id = entrez_id)
-  return(summary$scientificname)
+  tryCatch({
+    summary <- entrez_summary(db = "taxonomy", id = entrez_id)
+    summary$scientificname
+  }, error = function(e) {
+    NA  # Return NA if there's an error
+  })
 }
 
 pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta",
                        total = length(tax_ids))
+
 organisms <- data.table(tax_id = character(), organism = character())
 for (id in tax_ids) {
   organism <- get_organism_name(id)
@@ -199,31 +183,31 @@ for (id in tax_ids) {
 }
 rm(pb, organism, id)
 
-temp$tax_id <- as.character(temp$tax_id)
-temp2 <- merge.data.table(organisms, temp, by = "tax_id", all.x = T)
-temp2 <- temp2[order(-temp2$count), ]
+tmp <- get_organism_name("3248881")
+
+citation_counts_ognsmAnnot$tax_id <- as.character(citation_counts_ognsmAnnot$tax_id)
+citation_counts_ognsmAnnot$entrezgene_id <- as.character(citation_counts_ognsmAnnot$entrezgene_id)
+citation_counts_ognsmAnnot <- merge.data.table(organisms, citation_counts_ognsmAnnot, by = "tax_id", all.x = T)
+citation_counts_ognsmAnnot <- citation_counts_ognsmAnnot[order(-citation_counts_ognsmAnnot$count), ]
+
+temp <- copy(citation_counts_ognsmAnnot)
+temp[, combined := ifelse(symbol == "", entrezgene_id, symbol)]
+
+# apparently much faster than a loop. Can confirm it fukn defs is
+citation_counts <- temp[
+  , .(counts = sum(count)),
+  by = combined
+]
+citation_counts <- citation_counts[order(-citation_counts$counts), ]
+
+rm(temp)
+gc()
 
 
+plot_data <- citation_counts[citation_counts$counts > 50, ]
+summary(plot_data$counts)
 
-
-# Count total 
-unique_genes <- unique(temp2$symbol)
-citation_counts <- data.table(entrezgene_id = unique_genes,
-                              counts = integer(length(unique_genes)))
-
-pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
-                       total = length(unique_genes))
-
-for (i in seq_along(unique_genes)) {
-  gene_id <- unique_genes[i]
-  total <- sum(temp2$count[temp2$symbol == gene_id])
-  citation_counts$counts[i] <- total
-  
-  pb$tick()
-}
-rm(gene_id, total, i, pb)
-
-temp3 <- temp[tax_id == "9606"]
-
+hist(log(plot_data))
+summary(log10(citation_counts$counts))
 
 
