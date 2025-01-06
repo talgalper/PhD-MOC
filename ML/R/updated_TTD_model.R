@@ -134,7 +134,7 @@ feature_matrix$Prediction_Score_after_1000 <- final_predictions_after_1000
 write.csv(feature_matrix, "results/updated_TTD_model_featureMatrix.csv")
 
 # average feature importance across all models
-importance_df <- data.frame(Features = colnames(feature_data)[!colnames(feature_data) %in% c("Label", "Protein", "validation")],
+importance_df <- data.frame(Features = colnames(feature_matrix)[!colnames(feature_matrix) %in% c("Label", "Protein", "validation")],
                             Importance_100m = rowMeans(importance_scores[, 1:100]),
                             Importance_1000m = rowMeans(importance_scores[, 1:1000]),
                             Importance_10000m = rowMeans(importance_scores[, 1:10000]))
