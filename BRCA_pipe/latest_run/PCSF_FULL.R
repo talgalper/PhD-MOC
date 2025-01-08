@@ -156,8 +156,7 @@ EnhancedVolcano(
   FCcutoff = 1,
   title = "BRCA DE: TCGA vs GTEx",
   legendPosition = "right",
-  ylim = c(0, max(data$logPValue)),
-  drawConnectors = T
+  drawConnectors = T,
 )
 
 
