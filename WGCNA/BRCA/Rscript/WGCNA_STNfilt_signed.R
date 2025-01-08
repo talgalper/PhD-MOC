@@ -694,11 +694,15 @@ data$Test <- paste(data$Test, "(", data$TumourSize, ")", sep = "")
 ggplot(data, aes(x = Test, y = Reference, fill = LogPValue)) +
   geom_tile(color = "white") +
   scale_fill_gradient(low = "white", high = "red") +
-  geom_text(aes(label = Count), size = 3) +  # Display only counts
+  geom_text(aes(label = Count), size = 5) +  # Display only counts
   theme_minimal() +
   labs(title = "Control modules (rows) vs. Tumour modules (columns)",
        x = "Test Modules", y = "Reference Modules") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.text = element_text(colour = "black", size = 16),
+        axis.title = element_text(size = 18),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14))
 
 
 ## plot the colour mapping between control and tumour bwnet
