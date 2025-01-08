@@ -269,13 +269,21 @@ plot_preserved_modules <- function(modulePreservation_data) {
   library(ggplot2)
   library(ggrepel)
   library(gridExtra)
+  
+  # Common theme for increasing text sizes
+  bigger_text_theme <- theme(
+    axis.text = element_text(size = 14, colour = "black"),        # Tick label size
+    axis.title = element_text(size = 16, colour = "black"),       # Axis title size
+    legend.position = "none"
+  )
+  
   plot1 <- ggplot(plot_data, aes(x = moduleSize, y = medianRank.pres)) +
     geom_point(aes(fill = factor(cluster)), shape = 21, size = 2.4, colour = modColors) +
     scale_x_log10() +
     labs(x = "Module size", y = "Median Rank") +
     theme_minimal() +
-    theme(legend.position = "none") +
-    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+    bigger_text_theme +
+    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black", size = 5) +
     geom_hline(yintercept = 8, linetype = "dashed") +
     annotate("text", x = 1.5, y = 8.5, label = "Above", size = 3) +
     scale_fill_manual(values = modColors) 
@@ -286,8 +294,8 @@ plot_preserved_modules <- function(modulePreservation_data) {
     scale_x_log10() +
     labs(x = "Module size", y = "Z Summary") +
     theme_minimal() +
-    theme(legend.position = "none") +
-    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black") +
+    bigger_text_theme +
+    geom_text_repel(aes(label = cluster), position = position_nudge(x = 0.1, y = 0.1), color = "black", size = 5) +
     geom_hline(yintercept = 10, linetype = "dashed") +
     annotate("text", x = 1.5, y = 9, label = "Below", size = 3) +
     scale_fill_manual(values = modColors)
