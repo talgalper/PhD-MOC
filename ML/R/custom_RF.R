@@ -8,7 +8,7 @@ druggability <- read.csv("../Druggability_analysis/data_general/druggability_sco
 load("RData/full_fpocket_results.RData")
 load("RData/human_string_PPI_metrics.RData")
 
-#new_feature_matrix <- feature_matrix[, -c((ncol(feature_matrix)-5):ncol(feature_matrix))]
+#new_feature_matrix <- feature_matrix[, -c((ncol(feature_matrix)-5):ncol(feature_matrix))] # remove old centrality data
 new_feature_matrix <- feature_matrix
 
 new_feature_matrix <- merge(new_feature_matrix, results_master[, -c(1,23)], by.x = "Protein", by.y = "uniprot_id", all.x = T)
@@ -125,7 +125,7 @@ corrplot(correlation_matrix, method = "color",
 
 # Initialize parameters
 ntrees <- 1000  # Fixed number of trees
-n_models <- 10000  # Number of random forests for bagging
+n_models <- 100  # Number of random forests for bagging
 predictions <- matrix(0, nrow = nrow(new_feature_matrix), ncol = n_models)  # For storing predictions
 
 
@@ -150,17 +150,6 @@ for (i in 1:n_models) {
   
   # Predict on the entire dataset
   predictions[, i] <- predict(rf_model, new_feature_matrix[, !names(new_feature_matrix) %in% c("approved", "Protein", "clinical")], type = "prob")[, 2]
-  
-  # save at the 100th and 1000th model 
-  if (i == 100) {
-    predictions_after_100 <- predictions
-    predictions_after_100 <- predictions_after_100[1:100,1:100]
-  }
-  
-  if (i == 1000) {
-    predictions_after_1000 <- predictions
-    predictions_after_1000 <- predictions_after_1000[1:1000,1:1000]
-  }
   
   pb$tick()
 }

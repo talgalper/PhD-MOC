@@ -127,22 +127,22 @@ final_predictions_after_1000 <- predictions[, 1:1000]
 final_predictions_after_1000 <- rowMeans(final_predictions_after_1000)
 
 # Attach predictions to the dataset
-feature_matrix$Prediction_Score <- final_predictions
-feature_matrix$Prediction_Score_after_100 <- final_predictions_after_100
-feature_matrix$Prediction_Score_after_1000 <- final_predictions_after_1000
+feature_matrix$Prediction_Score_100m <- final_predictions_after_100
+feature_matrix$Prediction_Score_1000m <- final_predictions_after_1000
+feature_matrix$Prediction_Score_10000m <- final_predictions
 
 write.csv(feature_matrix, "results/updated_TTD_model_featureMatrix.csv")
 
 # average feature importance across all models
-importance_df <- data.frame(Features = colnames(feature_matrix)[!colnames(feature_matrix) %in% c("Label", "Protein", "validation")],
+importance_df <- data.frame(Features = colnames(feature_matrix)[!colnames(feature_matrix) %in% c("approved", "Protein", "clinical", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m")],
                             Importance_100m = rowMeans(importance_scores[, 1:100]),
                             Importance_1000m = rowMeans(importance_scores[, 1:1000]),
                             Importance_10000m = rowMeans(importance_scores[, 1:10000]))
 
-write.csv(importance_df, "results/feature_importance/reproduced_paper_FI.csv")
+write.csv(importance_df, "results/feature_importance/updated_TTD_model_FI.csv")
 
 
-model_scores <- subset(feature_matrix, select = c("Protein", "Prediction_Score", "approved", "clinical"))
+model_scores <- subset(feature_matrix, select = c("Protein", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m", "approved", "clinical"))
 
 gene_names <- getBM(
   attributes = c("uniprotswissprot", "hgnc_symbol"),
@@ -151,17 +151,18 @@ gene_names <- getBM(
   mart = ensembl)
 
 model_scores <- merge(gene_names, model_scores, by.x = "uniprotswissprot", by.y = "Protein", all.y = T)
-model_scores <- model_scores[order(-model_scores$Prediction_Score), ]
+model_scores <- model_scores[order(-model_scores$Prediction_Score_10000m), ]
 
 
 # Evaluate on validation set (if provided)
-roc_curve <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score)
-roc_curve_100 <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score_after_100)
-roc_curve_1000 <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score_after_1000)
+roc_curve_100 <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score_100m)
+roc_curve_1000 <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score_1000m)
+roc_curve_10000 <- roc(feature_matrix$clinical, feature_matrix$Prediction_Score_10000m)
 
-auc(roc_curve)
 auc(roc_curve_100)
 auc(roc_curve_1000)
+auc(roc_curve_10000)
+
 
 
 # Plot ROC Curve
@@ -203,3 +204,29 @@ corrplot(correlation_matrix, method = "color", type = "upper",
 
 
 
+
+plot_data <- subset(feature_matrix, select = c("Protein", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m", "approved", "clinical"))
+
+
+plot_data$Group <- with(plot_data, ifelse(
+  approved == 1, "Approved Targets",
+  ifelse(clinical == 1, "Clinical Targets", "Not Targets")
+))
+
+
+# create grouped boxplots
+plot_data$Group <- factor(plot_data$Group, levels = c("Approved Targets", "Clinical Targets", "Not Targets"))
+
+
+ggplot(plot_data, aes(x = Group, y = Prediction_Score_10000m)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    x = NULL,
+    y = "Prediction Scores"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14)
+  )

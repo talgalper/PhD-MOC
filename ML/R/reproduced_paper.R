@@ -97,7 +97,7 @@ feature_data$Prediction_Score_10000m <- final_predictions
 write.csv(feature_data, "results/reproduced_paper_featureMatrix.csv")
 
 # average feature importance across all models
-importance_df <- data.frame(Features = colnames(feature_data)[!colnames(feature_data) %in% c("Label", "Protein", "validation")],
+importance_df <- data.frame(Features = colnames(feature_data)[!colnames(feature_data) %in% c("Label", "Protein", "validation", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m")],
                             Importance_100m = rowMeans(importance_scores[, 1:100]),
                             Importance_1000m = rowMeans(importance_scores[, 1:1000]),
                             Importance_10000m = rowMeans(importance_scores[, 1:10000]))
@@ -105,7 +105,7 @@ importance_df <- data.frame(Features = colnames(feature_data)[!colnames(feature_
 write.csv(importance_df, "results/feature_importance/reproduced_paper_FI.csv")
 
 
-model_scores <- subset(feature_data, select = c("Protein", "Prediction_Score_after_100", "Prediction_Score_after_1000", "Prediction_Score_10000m", "Label", "validation"))
+model_scores <- subset(feature_data, select = c("Protein", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m", "Label", "validation"))
 
 library(biomaRt)
 ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
@@ -117,20 +117,20 @@ gene_names <- getBM(
   mart = ensembl)
 
 model_scores <- merge(gene_names, model_scores, by.x = "uniprotswissprot", by.y = "Protein", all.y = T)
-model_scores <- model_scores[order(-model_scores$Prediction_Score), ]
+model_scores <- model_scores[order(-model_scores$Prediction_Score_10000m), ]
 rownames(model_scores) <- NULL
 
 write.csv(model_scores, "results/hgnc_symbol/reproduced_paper_modelScores.csv")
 
 # Evaluate on validation set (if provided)
 # validation_set <- feature_data[feature_data$validation == 1, ]  
-roc_curve <- roc(feature_data$validation, feature_data$Prediction_Score)
-roc_curve_100 <- roc(feature_data$validation, feature_data$Prediction_Score_after_100)
-roc_curve_1000 <- roc(feature_data$validation, feature_data$Prediction_Score_after_1000)
+roc_curve_100 <- roc(feature_data$validation, feature_data$Prediction_Score_100m)
+roc_curve_1000 <- roc(feature_data$validation, feature_data$Prediction_Score_1000m)
+roc_curve_10000 <- roc(feature_data$validation, feature_data$Prediction_Score_10000m)
 
-auc(roc_curve)
 auc(roc_curve_100)
 auc(roc_curve_1000)
+auc(roc_curve_10000)
 
 
 # Plot ROC Curve
@@ -147,7 +147,10 @@ ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -I
   theme_minimal()
 
 
-save(roc_curve, importance_df, model_scores, feature_data, positive_set, negative_pool, file = "RData/reproduced_paper.RData")
+save(roc_curve_100, roc_curve_1000, roc_curve_10000, importance_df, model_scores, feature_data, positive_set, negative_pool, file = "RData/reproduced_paper.RData")
+
+
+
 
 # see if updated list of validated targets were predicted
 load("RData/reproduced_paper.RData")
@@ -220,7 +223,8 @@ feature_data$updated_clinical <- as.factor(ifelse(feature_data$Protein %in% TTD_
 
 
 
-plot_data <- subset(feature_data, select = c("Protein", "Prediction_Score", "Label", "updated_approved", "validation", "updated_clinical"))
+plot_data <- subset(feature_data, select = c("Protein", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m", "Label", "updated_approved", "validation", "updated_clinical"))
+plot_data <- plot_data[order(-plot_data$Prediction_Score_10000m), ]
 
 plot_data$Group <- with(plot_data, ifelse(
   Label == 1, "Approved Targets",
@@ -235,7 +239,7 @@ plot_data$Group <- with(plot_data, ifelse(
 plot_data$Group <- factor(plot_data$Group, levels = c("Approved Targets", "Updated Approved", "Clinical Targets", "Updated Clinical", "Not Targets"))
 
 
-ggplot(plot_data, aes(x = Group, y = Prediction_Score)) +
+ggplot(plot_data, aes(x = Group, y = Prediction_Score_10000m)) +
   geom_boxplot() +
   theme_minimal() +
   labs(
@@ -248,7 +252,11 @@ ggplot(plot_data, aes(x = Group, y = Prediction_Score)) +
     axis.title = element_text(size = 14)
   )
 
-roc_curve <- roc(feature_data$updated_clinical, feature_data$Prediction_Score)
+
+temp <- feature_data
+temp$updated_only <- ifelse(temp$Label == 0 & temp$updated_approved == 1, 1, 0)
+
+roc_curve <- roc(temp$updated_only, temp$Prediction_Score_100m)
 auc(roc_curve)
 plot(roc_curve)
 
