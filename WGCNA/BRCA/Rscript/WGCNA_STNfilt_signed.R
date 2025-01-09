@@ -360,7 +360,7 @@ save(DE_genes, tumour_associated, top_kwithin, top_gene_membership, file = "BRCA
 
 kWithin[rownames(kWithin) %in% "ENSG00000141510", ] # TP53
 
-load("BRCA/RData/all_default/signed/venn_data.RData")
+load("BRCA/RData/STN_filt/venn_data.RData")
 
 library(ggVennDiagram)
 ggVennDiagram(x = list(`DE genes` = DE_genes, 
@@ -431,7 +431,7 @@ df_subnet <- data.frame(ENSG = V(subnet)$name,
                         eigen_centrality = eigen_centrality(subnet)$vector)
 
 library(biomaRt)
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
 ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
                            filters = "ensembl_gene_id", 
