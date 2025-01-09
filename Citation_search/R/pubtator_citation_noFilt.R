@@ -207,7 +207,7 @@ gc()
 plot_data <- citation_counts[citation_counts$counts > 50, ]
 summary(plot_data$counts)
 
-hist(log(plot_data))
+hist(log10(plot_data$counts))
 summary(log10(citation_counts$counts))
 
 
