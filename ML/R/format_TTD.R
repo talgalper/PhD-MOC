@@ -102,17 +102,6 @@ drug_info_df <- do.call(rbind, drug_info_list)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 # Read the lines from the file
 lines <- readLines("~/Downloads/P1-05-Drug_disease.txt")
 
@@ -446,14 +435,97 @@ drug_info_list <- lapply(drugs_list, function(x) {
 # Combine all drug information into a single dataframe
 drug_crossID_df <- do.call(rbind, drug_info_list)
 
-# You may wish to inspect 'drug_crossID_df' to ensure that it matches the desired format.
-# Save the output if required:
-# save(drug_crossID_df, file = "data_general/TTD_drug_crossID_data.RData")
 
-# 'drug_crossID_df' now contains a data frame of the parsed drug data.
+# get drug types
+file_path <- "~/Downloads/P1-02-TTD_drug_download.txt"
+
+# Read all lines
+lines <- readLines(file_path)
+
+# Identify where data begins (i.e., the first line starting with 'D')
+data_start <- which(grepl("^D\\d", lines))[1]
+
+# Extract only the data section
+data_lines <- lines[data_start:length(lines)]
+
+# Initialise variables
+current_drug_id <- NA
+current_drug_info <- list()
+drugs_list <- list()
+
+# Loop over each line in the data section
+for (line in data_lines) {
+  # Skip empty lines
+  if (line == "") next
+  
+  # Skip lines without tabs (unlikely in the data, but just in case)
+  if (!grepl("\t", line)) next
+  
+  # Split by tabs
+  fields <- strsplit(line, "\t")[[1]]
+  
+  # Skip lines with fewer than 3 fields
+  if (length(fields) < 3) next
+  
+  # Extract the Drug ID, field name, and field value(s)
+  drug_id <- fields[1]
+  field_name <- fields[2]
+  field_values <- fields[3:length(fields)]
+  
+  # If we detect a new Drug ID, store the old one and start a new record
+  if (is.na(current_drug_id) || drug_id != current_drug_id) {
+    if (!is.na(current_drug_id)) {
+      # Save the record for the previous drug
+      drugs_list[[current_drug_id]] <- current_drug_info
+    }
+    # Begin new drug record
+    current_drug_id <- drug_id
+    current_drug_info <- list()
+    current_drug_info$DRUG__ID <- drug_id  # or "TTDDRUID", whichever label you prefer
+  }
+  
+  # Combine field values (in case there are multiple fields to store)
+  field_value <- paste(field_values, collapse = "; ")
+  
+  # If the field already exists, append to it (some entries have multiple lines for the same field)
+  if (is.null(current_drug_info[[field_name]])) {
+    current_drug_info[[field_name]] <- field_value
+  } else {
+    current_drug_info[[field_name]] <- paste(current_drug_info[[field_name]], field_value, sep = "; ")
+  }
+}
+
+# Save the last drug record
+if (!is.na(current_drug_id)) {
+  drugs_list[[current_drug_id]] <- current_drug_info
+}
+
+# Extract all unique field names
+all_field_names <- unique(unlist(lapply(drugs_list, names)))
+
+# Create a data frame from the list of drugs
+drug_info_list <- lapply(drugs_list, function(x) {
+  # Fill missing fields
+  missing_fields <- setdiff(all_field_names, names(x))
+  for (mf in missing_fields) {
+    x[[mf]] <- NA
+  }
+  # Order columns consistently
+  x <- x[all_field_names]
+  data.frame(x, stringsAsFactors = FALSE)
+})
+
+# Combine all drug entries into a single data frame
+drug_rawinfo_df <- do.call(rbind, drug_info_list)
+drug_rawinfo_df$DRUG__ID <- rownames(drug_rawinfo_df)
+# Inspect your final data frame
+# View(drug_rawinfo_df)
+
+# Optionally save it to RData or CSV
+# save(drug_rawinfo_df, file = "data_general/TTD_drugs_rawinfo_data.RData")
+# write.csv(drug_rawinfo_df, "data_general/TTD_drugs_rawinfo_data.csv", row.names = FALSE)
 
 
-
-save(TTD_approved, TTD_clinical, target_info_df, drug_info_df, targetDisease_data, drugDisease_data, 
-     file = "data_general/TTD_data.RData")
+save(TTD_approved, TTD_clinical, target_info_df, drug_info_df, targetDisease_data, drugDisease_data, drug_rawinfo_df,
+     file = "RData/TTD_data.RData")
 

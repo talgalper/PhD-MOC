@@ -79,6 +79,7 @@ for (i in 1:n_models) {
 }
 
 save(predictions, importance_scores, file = "~/Desktop/reproduced_paper_predictions.RData")
+load("~/Desktop/reproduced_paper_predictions.RData")
 
 # Average predictions across all models
 final_predictions <- rowMeans(predictions)
@@ -95,6 +96,7 @@ feature_data$Prediction_Score_1000m <- final_predictions_after_1000
 feature_data$Prediction_Score_10000m <- final_predictions
 
 write.csv(feature_data, "results/reproduced_paper_featureMatrix.csv")
+feature_data <- read.csv("results/reproduced_paper_featureMatrix.csv", row.names = 1)
 
 # average feature importance across all models
 importance_df <- data.frame(Features = colnames(feature_data)[!colnames(feature_data) %in% c("Label", "Protein", "validation", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m")],
@@ -103,6 +105,7 @@ importance_df <- data.frame(Features = colnames(feature_data)[!colnames(feature_
                             Importance_10000m = rowMeans(importance_scores[, 1:10000]))
 
 write.csv(importance_df, "results/feature_importance/reproduced_paper_FI.csv")
+importance_df <- read.csv("results/feature_importance/reproduced_paper_FI.csv", row.names = 1)
 
 
 model_scores <- subset(feature_data, select = c("Protein", "Prediction_Score_100m", "Prediction_Score_1000m", "Prediction_Score_10000m", "Label", "validation"))
@@ -168,6 +171,8 @@ TTD_master <- merge(TTD_master, drug_info_df, by = "TARGETID", all = T)
 TTD_master <- merge(TTD_master, drugDisease_data[, c(1:3)], by.x = "TTDDrugID", by.y = "TTDDRUID", all = T)
 TTD_master <- unique(TTD_master)
 
+TTD_master <- merge(TTD_master, drug_rawinfo_df[, c(1,5)], by.x = "TTDDrugID", by.y = "DRUG__ID", all = T)
+TTD_master <- unique(TTD_master)
 
 # get all uniprot IDs for all TTD target proteins
 all_target_genes <- unique(TTD_master$GENENAME)
@@ -198,11 +203,13 @@ uniprot_ids_clean <- merge(as.data.frame(all_target_genes), uniprot_ids_clean, b
 TTD_master <- merge(uniprot_ids_clean, TTD_master, by.x = "all_target_genes", by.y = "GENENAME", all = T)
 TTD_master <- unique(TTD_master) # because i merged NAs
 
-TTD_approved <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_approved, by = "TARGETID", all.y = T)
+TTD_approved <- merge(unique(TTD_master[, c(1,2,4,10,11)]), TTD_approved, by = "TARGETID", all.y = T)
 cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases", "tumour")
 pattern <- paste(cancer_terms, collapse = "|")
 TTD_approved_cancer <- TTD_approved[grepl(pattern, TTD_approved$INDICATION, ignore.case = TRUE), ]
 TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$INDICATION), ]
+TTD_approved_cancer <- TTD_approved_cancer[grepl(c("small molecul"), TTD_approved$DRUGTYPE, ignore.case = TRUE), ] # molecule spelt wrong on purpose
+TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$DRUGTYPE), ]
 
 TTD_approved_cancer <- unique(TTD_approved_cancer$uniprotswissprot)
 TTD_approved_cancer <- TTD_approved_cancer[TTD_approved_cancer != "" & !is.na(TTD_approved_cancer)]
@@ -210,11 +217,14 @@ TTD_approved_cancer <- TTD_approved_cancer[TTD_approved_cancer != "" & !is.na(TT
 feature_data$updated_approved <- as.factor(ifelse(feature_data$Protein %in% TTD_approved_cancer, 1, 0))
 
 
-TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_clinical, by = "TARGETID", all.y = T)
+TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10,11)]), TTD_clinical, by = "TARGETID", all.y = T)
 cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases")
 pattern <- paste(cancer_terms, collapse = "|")
 TTD_clinical_cancer <- TTD_clinical[grepl(pattern, TTD_clinical$INDICATION, ignore.case = TRUE), ]
 TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$INDICATION), ]
+# looks like they did not use small molecule clinical trial drugs for validation
+# TTD_clinical_cancer <- TTD_clinical_cancer[grepl(c("small molecul"), TTD_clinical_cancer$DRUGTYPE, ignore.case = TRUE), ] # molecule spelt wrong on purpose
+# TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$DRUGTYPE), ]
 
 TTD_clinical_cancer <- unique(TTD_clinical_cancer$uniprotswissprot)
 TTD_clinical_cancer <- TTD_clinical_cancer[TTD_clinical_cancer != "" & !is.na(TTD_clinical_cancer)]

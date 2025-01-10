@@ -76,7 +76,7 @@ temp$combined <- ifelse(
 gene_ids <- temp[, c(1,5)]
 colnames(gene_ids)[2] <- "gene_symbol"
 gene_ids <- merge(feature_matrix, gene_ids, by = "uniprot_gn_id", all.x = T)
-gene_ids <- gene_ids[, c(1,24)]
+gene_ids <- gene_ids[, c(1,23)]
 gene_ids <- unique(gene_ids)
 
 temp2 <- gene_ids[is.na(gene_ids$gene_symbol), ]
@@ -181,7 +181,9 @@ corrplot(correlation_matrix, method = "color",
 ntrees <- 1000  # Fixed number of trees
 n_models <- 100  # Number of random forests for bagging
 predictions <- matrix(0, nrow = nrow(feature_matrix), ncol = n_models)  # For storing predictions
-
+# for storing importance scores. remove protein and approved cols
+n_features <- ncol(feature_matrix) - 4
+importance_scores <- matrix(0, nrow = n_features, ncol = n_models) 
 
 pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
                        total = n_models)
@@ -203,18 +205,11 @@ for (i in 1:n_models) {
     importance = TRUE)
   
   # Predict on the entire dataset
-  predictions[, i] <- predict(rf_model, feature_matrix[, !names(feature_matrix) %in% c("approved", "Protein", "clinical")], type = "prob")[, 2]
+  predictions[, i] <- predict(rf_model, feature_matrix[, !names(feature_matrix) %in% c("gene_symbol", "uniprot_gn_id", "approved", "clinical")], type = "prob")[, 2]
   
-  # save at the 100th and 1000th model 
-  if (i == 100) {
-    predictions_after_100 <- predictions
-    predictions_after_100 <- predictions_after_100[1:100,1:100]
-  }
-  
-  if (i == 1000) {
-    predictions_after_1000 <- predictions
-    predictions_after_1000 <- predictions_after_1000[1:1000,1:1000]
-  }
+  # Extract feature importance 
+  importance <- importance(rf_model)
+  importance_scores[, i] <- importance[, "MeanDecreaseGini"]
   
   pb$tick()
 }
@@ -237,11 +232,10 @@ auc(roc_curve)
 plot(roc_curve, main = "ROC Curve for Random Forest Predictions")
 
 
-# Extract feature importance from one RF model as an example
-importance_scores <- importance(rf_model)
-importance_df <- data.frame(Feature = rownames(importance_scores), Importance = importance_scores[, "MeanDecreaseGini"])
-importance_df <- importance_df[order(importance_df$Importance, decreasing = TRUE), ]
-
+# Extract feature importance
+importance_df <- data.frame(Features = colnames(feature_matrix)[!colnames(feature_matrix) %in% c("gene_symbol", "uniprot_gn_id", "approved", "clinical", "Prediction_Score")],
+                            Importance = rowMeans(importance_scores))
+importance_df <- importance_df[order(-importance_df$Importance), ]
 
 ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -Importance), y = Importance)) +
   geom_bar(stat = "identity") +
