@@ -40,6 +40,8 @@ df$betweenness <- betweenness[as.character(df$gene_id)]
 df$degree_centrality <- centrality[as.character(df$gene_id)]
 df$betweenness <- as.integer(df$betweenness)
 df$degree_centrality <- as.integer(df$degree_centrality)
+df$eigen_centrality <- eigen_centrality(subnet)$vector
+df$closeness <- closeness(subnet)
 df$prize <- V(subnet)$prize
 df$type <- V(subnet)$type
 
