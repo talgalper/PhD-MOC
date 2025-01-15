@@ -1,11 +1,14 @@
 RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 1000, n_models = 100, track_iterations = TRUE, model_data_output_dir = NULL) {
-  library(progressr)
-  library(foreach)
-  library(doParallel)
-  library(caret)
-  library(randomForest)
-  library(pROC)
-  library(cli)
+  
+  suppressMessages({
+    library(progressr)
+    library(foreach)
+    library(doParallel)
+    library(caret)
+    library(randomForest)
+    library(pROC)
+    library(cli)
+  })
   
   handlers("cli") # Set up progress handlers
   cl <- makeCluster(detectCores() - 1)
@@ -18,6 +21,8 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
   tune_grid <- expand.grid(
     mtry = seq(2, 10, by = 1)  # Only include 'mtry'
   )
+  
+  mtrys <- c()
   
   # Use progressr to track the loop progress
   with_progress({
@@ -50,6 +55,7 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
       
       # Use best tuned parameters
       best_mtry <- rf_tuned$bestTune$mtry
+      mtrys <- append(mtrys, best_mtry)
 
       # Train Random Forest with tuned parameters
       rf_model <- randomForest(
@@ -98,7 +104,7 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
     AUC <- data.frame(N_iterations = c(track_iterations))
     for (i in seq_along(track_iterations)) {
       iter <- track_iterations[i]
-      roc_curve <- roc(feature_matrix$clinical, feature_matrix[[paste0("Prediction_Score_", iter, "m")]])
+      roc_curve <- suppressMessages({roc(feature_matrix$clinical, feature_matrix[[paste0("Prediction_Score_", iter, "m")]])})
       AUC[i, "AUC"] <- auc(roc_curve)
     }
   } else {
@@ -114,12 +120,18 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
     save(predictions, importance_scores, importance_df, AUC, feature_matrix, file = model_data_output_dir)
   }
   
-  return(list(predictions = predictions, importance_scores = importance_scores, importance_df = importance_df, AUC = AUC))
+  return(list(predictions = predictions, importance_scores = importance_scores, importance_df = importance_df, AUC = AUC, mtrys = mtrys))
   gc()
   stopCluster(cl)
 }
 
-RF_results5 <- RF_bagging(feature_matrix, 
-                          positive_set = training_data$positive_set, negative_pool = training_data$negative_pool, 
-                          n_models = 20, 
-                          track_iterations = T)
+library(biomaRt)
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
+training_data <- data_sets_from_TTD(ensembl)
+
+RF_results2 <- RF_bagging(training_data$feature_matrix, 
+                         positive_set = training_data$positive_set, negative_pool = training_data$negative_pool, 
+                         n_models = 1000, 
+                         track_iterations = T)
+

@@ -79,7 +79,7 @@ data_sets_from_TTD <- function(ensembl, filter_terms = c("cancer", "carcinoma", 
   positive_set <- feature_matrix[feature_matrix$approved == 1, ]
   negative_pool <- feature_matrix[feature_matrix$approved == 0 & !feature_matrix$Protein %in% TTD_approved$uniprotswissprot, ]
   
-  return(list(positive_set = positive_set, negative_pool = negative_pool))
+  return(list(positive_set = positive_set, negative_pool = negative_pool, feature_matrix = feature_matrix))
 }
 
 
