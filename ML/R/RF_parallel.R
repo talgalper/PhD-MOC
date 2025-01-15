@@ -1,4 +1,4 @@
-RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 1000, n_models = 100, track_iterations = TRUE, model_data_output_dir = NULL) {
+RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 1000, n_models = 100, track_iterations = TRUE, model_data_output_dir = NULL, parallel = FALSE) {
   
   suppressMessages({
     library(progressr)
@@ -24,6 +24,10 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
   
   mtrys <- c()
   
+  if (isTRUE(parallel)) {
+    
+  }
+    
   # Use progressr to track the loop progress
   with_progress({
     p <- progressor(along = 1:n_models) # Create a progressor
@@ -121,8 +125,8 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
   }
   
   return(list(predictions = predictions, importance_scores = importance_scores, importance_df = importance_df, AUC = AUC, mtrys = mtrys))
-  gc()
   stopCluster(cl)
+  gc()
 }
 
 library(biomaRt)
@@ -130,8 +134,8 @@ ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
 training_data <- data_sets_from_TTD(ensembl)
 
-RF_results2 <- RF_bagging(training_data$feature_matrix, 
+RF_results <- RF_bagging(training_data$feature_matrix, 
                          positive_set = training_data$positive_set, negative_pool = training_data$negative_pool, 
-                         n_models = 1000, 
+                         n_models = 10000, 
                          track_iterations = T)
 
