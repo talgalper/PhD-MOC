@@ -5,8 +5,9 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
   library(caret)
   library(randomForest)
   library(pROC)
+  library(cli)
   
-  handlers(global = TRUE) # Set up progress handlers
+  handlers("cli") # Set up progress handlers
   cl <- makeCluster(detectCores() - 1)
   registerDoParallel(cl)
   
@@ -115,6 +116,7 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
   
   return(list(predictions = predictions, importance_scores = importance_scores, importance_df = importance_df, AUC = AUC))
   gc()
+  stopCluster(cl)
 }
 
 RF_results5 <- RF_bagging(feature_matrix, 
