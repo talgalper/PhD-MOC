@@ -5,8 +5,8 @@ library(pROC)
 
 
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
-
 load("RData/TTD_data.RData")
+
 target_info_df <- target_info_df[-1, ]
 
 TTD_master <- data.frame(TARGETID = rownames(target_info_df),
@@ -19,11 +19,15 @@ TTD_master <- merge(TTD_master, drug_info_df, by = "TARGETID", all = T)
 TTD_master <- merge(TTD_master, drugDisease_data[, c(1:3)], by.x = "TTDDrugID", by.y = "TTDDRUID", all = T)
 TTD_master <- unique(TTD_master)
 
+TTD_master <- merge(TTD_master, drug_rawinfo_df[, c(1,5)], by.x = "TTDDrugID", by.y = "DRUG__ID", all = T)
+TTD_master <- unique(TTD_master)
 
 # get all uniprot IDs for all TTD target proteins
 all_target_genes <- unique(TTD_master$GENENAME)
 all_target_genes <- na.omit(all_target_genes)
 all_target_genes <- strsplit(all_target_genes, ";")
+all_target_genes <- unlist(all_target_genes)
+all_target_genes <- strsplit(all_target_genes, "/")
 all_target_genes <- unlist(all_target_genes)
 all_target_genes <- unique(all_target_genes)
 all_target_genes <- trimws(all_target_genes)
@@ -49,11 +53,13 @@ uniprot_ids_clean <- merge(as.data.frame(all_target_genes), uniprot_ids_clean, b
 TTD_master <- merge(uniprot_ids_clean, TTD_master, by.x = "all_target_genes", by.y = "GENENAME", all = T)
 TTD_master <- unique(TTD_master) # because i merged NAs
 
-TTD_approved <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_approved, by = "TARGETID", all.y = T)
-cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases", "tumour")
+TTD_approved <- merge(unique(TTD_master[, c(1,2,4,10,11)]), TTD_approved, by = "TARGETID", all.y = T)
+cancer_terms <- c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")
 pattern <- paste(cancer_terms, collapse = "|")
 TTD_approved_cancer <- TTD_approved[grepl(pattern, TTD_approved$INDICATION, ignore.case = TRUE), ]
 TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$INDICATION), ]
+TTD_approved_cancer <- TTD_approved_cancer[grepl(c("small molecul"), TTD_approved_cancer$DRUGTYPE, ignore.case = TRUE), ] # molecule spelt wrong on purpose
+TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$DRUGTYPE), ]
 
 TTD_approved_cancer <- unique(TTD_approved_cancer$uniprotswissprot)
 TTD_approved_cancer <- TTD_approved_cancer[TTD_approved_cancer != "" & !is.na(TTD_approved_cancer)]
@@ -61,11 +67,14 @@ TTD_approved_cancer <- TTD_approved_cancer[TTD_approved_cancer != "" & !is.na(TT
 feature_matrix$approved <- as.factor(ifelse(feature_matrix$Protein %in% TTD_approved_cancer, 1, 0))
 
 
-TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10)]), TTD_clinical, by = "TARGETID", all.y = T)
-cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases")
+TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10,11)]), TTD_clinical, by = "TARGETID", all.y = T)
+cancer_terms <- c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")
 pattern <- paste(cancer_terms, collapse = "|")
 TTD_clinical_cancer <- TTD_clinical[grepl(pattern, TTD_clinical$INDICATION, ignore.case = TRUE), ]
 TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$INDICATION), ]
+#looks like they did not use small molecule clinical trial drugs for validation, im doing it though
+TTD_clinical_cancer <- TTD_clinical_cancer[grepl(c("small molecul"), TTD_clinical_cancer$DRUGTYPE, ignore.case = TRUE), ] # molecule spelt wrong on purpose
+TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$DRUGTYPE), ]
 
 TTD_clinical_cancer <- unique(TTD_clinical_cancer$uniprotswissprot)
 TTD_clinical_cancer <- TTD_clinical_cancer[TTD_clinical_cancer != "" & !is.na(TTD_clinical_cancer)]
@@ -73,14 +82,15 @@ TTD_clinical_cancer <- TTD_clinical_cancer[TTD_clinical_cancer != "" & !is.na(TT
 feature_matrix$clinical <- as.factor(ifelse(feature_matrix$Protein %in% TTD_clinical_cancer, 1, 0))
 
 
+
 # Split data into positive (approved drug targets) and negative (non-drug targets across any indication)
 positive_set <- feature_matrix[feature_matrix$approved == 1, ]
-negative_pool <- feature_matrix[!feature_matrix$Protein %in% all_target_genes, ]
+negative_pool <- feature_matrix[feature_matrix$approved == 0 & !feature_matrix$Protein %in% TTD_approved$uniprotswissprot, ]
 
 
 # Initialize parameters
 ntrees <- 1000  # Fixed number of trees
-n_models <- 10000  # Number of random forests for bagging
+n_models <- 1000  # Number of random forests for bagging
 predictions <- matrix(0, nrow = nrow(feature_matrix), ncol = n_models)  # For storing predictions
 # for storing importance scores. remove protein and label cols
 n_features <- ncol(feature_matrix) - 3
@@ -184,6 +194,15 @@ ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -I
   ) +
   theme_minimal()
 
+# Create binary predictions using threshold
+feature_matrix$prediction_label <- ifelse(feature_matrix$Prediction_Score_1000m >= 0.5, 1, 0)
+feature_matrix$prediction_label <- as.factor(feature_matrix$prediction_label)
+
+conf_matrix <- confusionMatrix(data = feature_matrix$prediction_label, 
+                               reference = feature_matrix$clinical, 
+                               positive = "1")
+
+table(feature_matrix$prediction_label) # number of predicted targets
 
 save(roc_curve, importance_df, model_scores, feature_matrix, positive_set, negative_pool, file = "RData/updated_TTD_model.RData")
 load("RData/updated_TTD_model.RData")

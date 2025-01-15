@@ -38,7 +38,7 @@ all_target_genes <- trimws(all_target_genes)
 all_target_genes <- all_target_genes[all_target_genes != ""]
 
 positive_set <- feature_data[feature_data$Label == 1, ]
-negative_pool <- feature_data[feature_data$Label == 0 & !feature_data$Protein %in% all_target_genes, ]
+negative_pool <- feature_data[feature_data$Label == 0 & !feature_data$Protein %in% TTD_approved$uniprotswissprot, ]
 
 
 # Initialize parameters
@@ -150,7 +150,18 @@ ggplot(importance_df[1:(0.5*nrow(importance_df)), ], aes(x = reorder(Feature, -I
   theme_minimal()
 
 
-save(roc_curve_100, roc_curve_1000, roc_curve_10000, importance_df, model_scores, feature_data, positive_set, negative_pool, file = "RData/reproduced_paper.RData")
+# Create binary predictions using threshold
+feature_data$Predicted_Label <- ifelse(feature_data$Prediction_Score_100m >= 0.5, 1, 0)
+feature_data$Predicted_Label <- as.factor(feature_data$Predicted_Label)
+
+conf_matrix <- confusionMatrix(data = feature_data$Predicted_Label, 
+                               reference = feature_data$validation, 
+                               positive = "1")
+
+
+save(roc_curve_100, roc_curve_1000, roc_curve_10000, importance_df, model_scores, 
+     feature_data, positive_set, negative_pool, conf_matrix, 
+     file = "RData/reproduced_paper.RData")
 
 
 
@@ -179,6 +190,8 @@ all_target_genes <- unique(TTD_master$GENENAME)
 all_target_genes <- na.omit(all_target_genes)
 all_target_genes <- strsplit(all_target_genes, ";")
 all_target_genes <- unlist(all_target_genes)
+all_target_genes <- strsplit(all_target_genes, "/")
+all_target_genes <- unlist(all_target_genes)
 all_target_genes <- unique(all_target_genes)
 all_target_genes <- trimws(all_target_genes)
 all_target_genes <- all_target_genes[all_target_genes != ""]
@@ -204,11 +217,11 @@ TTD_master <- merge(uniprot_ids_clean, TTD_master, by.x = "all_target_genes", by
 TTD_master <- unique(TTD_master) # because i merged NAs
 
 TTD_approved <- merge(unique(TTD_master[, c(1,2,4,10,11)]), TTD_approved, by = "TARGETID", all.y = T)
-cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases", "tumour")
+cancer_terms <- c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")
 pattern <- paste(cancer_terms, collapse = "|")
 TTD_approved_cancer <- TTD_approved[grepl(pattern, TTD_approved$INDICATION, ignore.case = TRUE), ]
 TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$INDICATION), ]
-TTD_approved_cancer <- TTD_approved_cancer[grepl(c("small molecul"), TTD_approved$DRUGTYPE, ignore.case = TRUE), ] # molecule spelt wrong on purpose
+TTD_approved_cancer <- TTD_approved_cancer[grepl(c("small molecul"), TTD_approved_cancer$DRUGTYPE, ignore.case = TRUE), ] # molecule spelt wrong on purpose
 TTD_approved_cancer <- TTD_approved_cancer[!is.na(TTD_approved_cancer$DRUGTYPE), ]
 
 TTD_approved_cancer <- unique(TTD_approved_cancer$uniprotswissprot)
@@ -218,7 +231,7 @@ feature_data$updated_approved <- as.factor(ifelse(feature_data$Protein %in% TTD_
 
 
 TTD_clinical <- merge(unique(TTD_master[, c(1,2,4,10,11)]), TTD_clinical, by = "TARGETID", all.y = T)
-cancer_terms <- c("cancer", "carcinoma", "leukemia", "neoplasm", "metastases")
+cancer_terms <- c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")
 pattern <- paste(cancer_terms, collapse = "|")
 TTD_clinical_cancer <- TTD_clinical[grepl(pattern, TTD_clinical$INDICATION, ignore.case = TRUE), ]
 TTD_clinical_cancer <- TTD_clinical_cancer[!is.na(TTD_clinical_cancer$INDICATION), ]
@@ -230,6 +243,12 @@ TTD_clinical_cancer <- unique(TTD_clinical_cancer$uniprotswissprot)
 TTD_clinical_cancer <- TTD_clinical_cancer[TTD_clinical_cancer != "" & !is.na(TTD_clinical_cancer)]
 
 feature_data$updated_clinical <- as.factor(ifelse(feature_data$Protein %in% TTD_clinical_cancer, 1, 0))
+
+# add column indicating only new approved targets
+feature_data$updated_only <- ifelse(feature_data$Label == 0 & feature_data$updated_approved == 1, 1, 0)
+
+
+temp <- feature_data[feature_data$updated_only == 1 & feature_data$Prediction_Score_100m < 0.5, ]
 
 
 
