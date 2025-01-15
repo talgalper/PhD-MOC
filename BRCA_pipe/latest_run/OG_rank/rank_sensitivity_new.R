@@ -134,7 +134,6 @@ rank_sensitivity <- function(input_data, ensembl, topx) {
   
   final_gene_counts <- merge(gene_description, gene_counts, by.x = "external_gene_name", by.y = "gene", all.y = T)
   
-  # Suppose you want to sort by a certain overall count column
   final_gene_counts <- final_gene_counts[order(-final_gene_counts$count), ]
   
   rownames(final_gene_counts) <- NULL
