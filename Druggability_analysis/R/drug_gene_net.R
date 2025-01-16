@@ -1,6 +1,6 @@
 library(igraph)
 library(tidyverse)
-
+library(data.table)
 
 BioSNAP_edgelist <- fread("data_general/ChG-Miner_miner-chem-gene.tsv", sep = "\t")
 drug_mapping <- fread("data_general/drug-mappings.tsv", sep = "\t")
