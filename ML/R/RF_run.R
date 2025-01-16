@@ -36,6 +36,7 @@ RF_results2 <- RF_bagging(feature_matrix = feature_data,
                          tuning = T, 
                          set_mtry_tuning_grid = seq(2, 10, by = 1))
 
+save(RF_results2, file = "results/RF_results_1000m_tunedParallel_reproPaper.RData")
 
 
 
