@@ -1,6 +1,5 @@
 ### functions associated with ML work ###
 
-
 # formats TTD data into positive set and negative pool. Only works from this directory on the TTD_data.RData object.
 data_sets_from_TTD <- function(ensembl, filter_terms = c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")) {
   load("RData/TTD_data.RData")
@@ -88,17 +87,6 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
                        track_iterations = TRUE, model_data_output_dir = NULL, parallel = FALSE, tuning = FALSE, 
                        set_mtry_tuning_grid = seq(2, 10, by = 1)) {
   
-  if (isFALSE(parallel) & isTRUE(tuning)) {
-    cat("WARNING: Tuning mtry without parallel threads will take a very LONG time...")
-  } else if (isTRUE(parallel) & isFALSE(tuning)) {
-    cat("Running", n_models, "models using", detectCores() - 1, "threads")
-  } else if (isTRUE(parallel) & isTRUE(tuning)) {
-    cat("Running", n_models, "models with tuning, using", detectCores() - 1, "parallel threads")
-  } else if (isFALSE(parallel) & isFALSE(tuning)) {
-    cat("Running", n_models, "without tuning or parallel threads")
-  }
-  
-  
   suppressMessages({
     library(progressr)
     library(foreach)
@@ -108,6 +96,16 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
     library(pROC)
     library(cli)
   })
+  
+  if (isFALSE(parallel) & isTRUE(tuning)) {
+    cat("WARNING: Tuning mtry without parallel threads will take a very LONG time...")
+  } else if (isTRUE(parallel) & isFALSE(tuning)) {
+    cat("Running", n_models, "models using", detectCores() - 1, "threads, no tuning...")
+  } else if (isTRUE(parallel) & isTRUE(tuning)) {
+    cat("Running", n_models, "models with tuning, using", detectCores() - 1, "parallel threads...")
+  } else if (isFALSE(parallel) & isFALSE(tuning)) {
+    cat("Running", n_models, "without tuning or parallel threads...")
+  }
   
   predictions <- matrix(0, nrow = nrow(feature_matrix), ncol = n_models)  # For storing predictions
   # For storing importance scores
@@ -139,7 +137,7 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
         
         if (isTRUE(tuning)) {
           # Perform hyperparameter tuning. cant do ntrees for some reason
-          tune_control <- trainControl(method = "cv", number = 5, verboseIter = FALSE)
+          tune_control <- trainControl(method = "cv", number = 5, verboseIter = FALSE, allowParallel = T)
           tune_grid <- expand.grid(
             mtry = set_mtry_tuning_grid 
           )
@@ -183,8 +181,8 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool, ntrees = 100
         importance <- importance(rf_model)
         importance_scores[, i] <- importance[, "MeanDecreaseGini"]
       }
-      stopCluster(cl)
     })
+    stopCluster(cl)
   } else {
     pb <- progress_bar$new(format = "[:bar] :current/:total (:percent) eta: :eta", 
                            total = n_models)
