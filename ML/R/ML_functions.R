@@ -1,7 +1,7 @@
 ### functions associated with ML work ###
 
 # formats TTD data into positive set and negative pool. Only works from this directory on the TTD_data.RData object.
-data_sets_from_TTD <- function(ensembl, filter_terms = c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")) {
+data_sets_from_TTD <- function(feature_matrix, ensembl, filter_terms = c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma")) {
   load("RData/TTD_data.RData")
   
   target_info_df <- target_info_df[-1, ]
