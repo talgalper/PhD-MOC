@@ -40,6 +40,8 @@ save(RF_results2, file = "results/RF_results_1000m_tunedParallel_reproPaper.RDat
 
 
 #####################  Run with extended feature matrix ##################### 
+library(biomaRt)
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
 druggability <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
 load("RData/full_fpocket_results.RData")
@@ -53,7 +55,6 @@ results_master <- results_master[!duplicated(results_master$uniprot_id), ]
 druggability <- subset(druggability, select = c("uniprot_gn_id", "CP_score", "highest_score"))
 druggability <- unique(druggability)
 
-#new_feature_matrix <- feature_matrix[, -c((ncol(feature_matrix)-5):ncol(feature_matrix))] # remove old centrality data
 new_feature_matrix <- feature_matrix
 new_feature_matrix <- merge(new_feature_matrix, results_master[, -c(1,23)], by.x = "Protein", by.y = "uniprot_id", all.x = T)
 new_feature_matrix <- merge(new_feature_matrix, subset(druggability, select = c("uniprot_gn_id", "CP_score", "highest_score")), by.x = "Protein", by.y = "uniprot_gn_id", all.x = T)

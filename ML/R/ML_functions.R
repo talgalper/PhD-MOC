@@ -196,9 +196,7 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool,
       }
       
       # Predict on the entire feature_matrix
-      pred_col <- predict(rf_model, 
-                          feature_matrix[, !names(feature_matrix) %in% c("approved", "Protein", "clinical")], 
-                          type = "prob")[, 2]
+      pred_col <- predict(rf_model, feature_matrix[, !names(feature_matrix) %in% c("approved", "Protein", "clinical")], type = "prob")[, 2]
       
       # Extract feature importance
       imp_vals <- importance(rf_model)[, "MeanDecreaseGini"]
@@ -210,7 +208,6 @@ RF_bagging <- function(feature_matrix, positive_set, negative_pool,
         mtry_used = mtry_used
       )
     }
-    close(pb)
     stopCluster(cl)
     
     # Collect results into predictions/importance_scores
