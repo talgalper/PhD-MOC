@@ -52,7 +52,11 @@ venn_data <- list(GEPIA2 = GEPIA2_DE$Gene.Symbol,
                   OncoDB = OncoDB$Gene,
                   Xena = rownames(Xena))
 
-ggVennDiagram(venn_data)
+ggVennDiagram(venn_data,
+              set_size = 8,
+              label_size = 8) + 
+  theme(legend.text = element_text(size = 15),
+        legend.title = element_text(size = 17))
 
 
 BRCA_markers <- c("ERBB2", "TP53", "BRCA1", "BRCA2", "ESR1", "PGR", "PIK3CA", "PTEN",
