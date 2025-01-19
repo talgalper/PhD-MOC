@@ -21,6 +21,7 @@ FDA_drug_targets <- unique(all_db_targets$drugBank_target)
 library(igraph)
 library(tidyverse)
 library(data.table)
+library(biomaRt)
 
 
 # load in and convert DE data to gene symbols
@@ -29,6 +30,8 @@ load("../BRCA_pipe/latest_run/RData/STN_filt/dif_exp.RData")
 load("../BRCA_pipe/latest_run/RData/STN_filt/PCSF_results.RData")
 
 HHnet_result <- fread("../Hierarchical_HotNet/BRCA/STN_filt/results/df_subnetNeighs.csv")
+HHnetsubnet_result <- fread("../Hierarchical_HotNet/BRCA/STN_filt/results/df_subnet.csv")
+
 
 # load in and format WGCNA data
 load("../WGCNA/BRCA/RData/STN_filt/all_kwithin.RData")
@@ -39,7 +42,6 @@ load("../../../../Desktop/WGCNA_BRCA_large_files/TCGA_GTEx_filt_norm.RData") # U
 
 load("../WGCNA/BRCA/RData/STN_filt/venn_data.RData")
 
-library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 WGCNAsigned_modules <- as.data.frame(bwnet$colors)
@@ -56,6 +58,21 @@ colnames(WGCNAsigned_modules) <- c("ensembl_id", "module", "external_gene_name",
 
 tumour_associated <- as.data.frame(tumour_associated)
 tumour_associated <- merge(tumour_associated, WGCNAsigned_modules, by.x = "tumour_associated", by.y = "ensembl_id", all.x = T)
+
+load("../WGCNA/BRCA/RData/STN_filt/venn_data.RData")
+common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
+
+library(ggVennDiagram)
+venn_data <- list(PCSF = df$ensembl_gene_id,
+                  WGCNA = common_genes,
+                  `HHnet Neighs` = HHnet_result$ensembl_gene_id,
+                  HHnet = HHnetsubnet_result$ensembl_gene_id)
+
+ggVennDiagram(venn_data,
+              set_size = 8,
+              label_size = 8) + 
+  theme(legend.text = element_text(size = 15),
+        legend.title = element_text(size = 17))
 
 
 # combine all the data for the FDA drug targets
