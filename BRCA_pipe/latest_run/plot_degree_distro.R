@@ -1,3 +1,5 @@
+
+load("latest_run/RData/STN_filt/PCSF_results.RData")
 # Sort data frame by degree in descending order
 df <- df[order(-df$degree), ]
 df$rank <- seq_len(nrow(df))
@@ -10,7 +12,10 @@ library(ggplot2)
 library(ggrepel)
 library(patchwork) # For combining plots easily
 
-# Main plot: full distribution of degree centrality
+# Calculate the median degree centrality
+median_degree <- median(df$degree_centrality)
+
+# Main plot: full distribution of degree centrality with median line
 ggplot(df, aes(x = rank, y = degree_centrality)) +
   geom_line(colour = "steelblue") +
   # Highlight and label points of interest
@@ -34,6 +39,24 @@ ggplot(df, aes(x = rank, y = degree_centrality)) +
     box.padding = 0.35,
     point.padding = 0.3,
   ) +
+  # Add a horizontal dotted line at the median
+  geom_hline(
+    yintercept = median_degree,
+    linetype = "dotted",
+    color = "darkred",
+    size = 1
+  ) +
+  # Label the median line aligned to the y-axis
+  annotate(
+    "text",
+    x = 1,                 # Position on the x-axis (aligned to the first rank near the y-axis)
+    y = median_degree,     # Position on the y-axis (at the median)
+    label = paste0("Median = ", round(median_degree, 2)),
+    size = 8,
+    color = "darkred",
+    hjust = -0.1,          # Adjust horizontal alignment (slightly left of the line)
+    vjust = -0.5           # Adjust vertical alignment
+  ) +
   labs(
     title = NULL,
     x = "Rank",
@@ -43,13 +66,14 @@ ggplot(df, aes(x = rank, y = degree_centrality)) +
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
-    axis.text = element_text(size = 15, colour = "black"),
-    axis.title = element_text(size = 20),
+    axis.text = element_text(size = 18, colour = "black"),
+    axis.title = element_text(size = 23),
     axis.text.x = element_text(margin = margin(t=-15)),
     axis.text.y = element_text(margin = margin(r=-15)),
     axis.title.x = element_text(margin = margin(t=10)),
     axis.title.y = element_text(margin = margin(r=10))
   )
+
 
 # Zoomed-in plot: focus on top 200 nodes to show granularity
 ggplot(subset(df, rank <= 200), aes(x = rank, y = degree_centrality)) +
