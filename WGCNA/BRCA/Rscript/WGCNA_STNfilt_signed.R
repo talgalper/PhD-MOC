@@ -91,16 +91,20 @@ library(gridExtra)
 library(grid)
 a1 <- ggplot(sft, aes(Power, SFT.R.sq, label = Power)) +
   geom_point() +
-  geom_text(nudge_y = 0.1) +
+  geom_text(nudge_y = 0.1, size = 7) +
   geom_hline(yintercept = 0.8, color = 'red') +
   labs(x = 'Power', y = 'Scale free topology model fit') +
-  theme_classic()
+  theme_classic() +
+  theme(axis.text = element_text(size = 18, colour = "black"),
+        axis.title = element_text(size = 20))
 
 a2 <- ggplot(sft, aes(Power, mean.k., label = Power)) +
   geom_point() +
-  geom_text(nudge_y = 0.1) +
+  geom_text(nudge_y = 1000, size = 7) +
   labs(x = 'Power', y = 'Mean Connectivity') +
-  theme_classic()
+  theme_classic() +
+  theme(axis.text = element_text(size = 18, colour = "black"),
+        axis.title = element_text(size = 20))
 
 grid.arrange(a1, a2, nrow = 2)
 rm(a1, a2)
@@ -131,12 +135,15 @@ print(paste0("Elapsed time: ", elapsed_time))
 
 
 # Plot the dendrogram
+par()
 plotDendroAndColors(bwnet$dendrograms[[1]], cbind(bwnet$unmergedColors, bwnet$colors),
                     c("unmerged", "merged"),
                     dendroLabels = FALSE,
                     addGuide = TRUE,
                     hang= 0.03,
-                    guideHang = 0.05)
+                    guideHang = 0.05, 
+                    cex.colorLabels = 1.5,cex.rowText = 1.5, cex.dendroLabels = 1.5,
+                    cex.lab = 3, cex.axis = 2, marAll = c(1,6,3,1))
 
 
 save(bwnet, sample_info, file = "BRCA/RData/STN_filt/all_bwnet.RData")
@@ -172,11 +179,16 @@ heatmap_data <- merge(bwnet$MEs, traits, by = "row.names")
 
 heatmap_data <- column_to_rownames(heatmap_data, "Row.names")
 colnames(heatmap_data) <- gsub("data.", "", colnames(heatmap_data))
+colnames(heatmap_data) <- str_to_title(colnames(heatmap_data))
 
+# changed to only show tumour and control not all subtypes
 CorLevelPlot(heatmap_data,
-             x = names(heatmap_data)[13:18],
+             x = names(heatmap_data)[13:14],
              y = names(heatmap_data)[1:12],
-             col = c("blue1", "skyblue", "white", "pink", "red"))
+             col = c("blue1", "skyblue", "white", "pink", "red"),cexLabX = 2, 
+             cexLabY = 2, 
+             cexCorval = 1.5, 
+             cexLabColKey = 1.5)
 
 save(heatmap_data, file = "BRCA/RData/STN_filt/heatmap_data.RData")
 
@@ -366,7 +378,11 @@ library(ggVennDiagram)
 ggVennDiagram(x = list(`DE genes` = DE_genes, 
                        `Tumour Associated` = tumour_associated, 
                        `Top10% kWithin` = top_kwithin,
-                       `Top10% MM` = top_gene_membership))
+                       `Top10% MM` = top_gene_membership),
+              set_size = 8,
+              label_size = 8) + 
+  theme(legend.text = element_text(size = 15),
+        legend.title = element_text(size = 17))
 
 
 
@@ -696,13 +712,12 @@ ggplot(data, aes(x = Test, y = Reference, fill = LogPValue)) +
   scale_fill_gradient(low = "white", high = "red") +
   geom_text(aes(label = Count), size = 5) +  # Display only counts
   theme_minimal() +
-  labs(title = "Control modules (rows) vs. Tumour modules (columns)",
-       x = "Test Modules", y = "Reference Modules") +
+  labs(x = "Test Modules", y = "Reference Modules") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        axis.text = element_text(colour = "black", size = 16),
-        axis.title = element_text(size = 18),
-        legend.text = element_text(size = 12),
-        legend.title = element_text(size = 14))
+        axis.text = element_text(colour = "black", size = 18),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16))
 
 
 ## plot the colour mapping between control and tumour bwnet
