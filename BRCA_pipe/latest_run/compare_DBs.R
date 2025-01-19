@@ -16,6 +16,7 @@ ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$descrip
 
 unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
 unrecognised <- dif_exp[!dif_exp$gene_id %in% ensembl_converted$ensembl_gene_id, ]
+total_missing <- dif_exp[dif_exp$ensembl_gene_id %in% c(unmapped$ensembl_gene_id, unrecognised$gene_id), ]
 
 dif_exp <- merge.data.table(ensembl_converted, dif_exp, by.x = "ensembl_gene_id", by.y = "gene_id", all.y = T)
 
@@ -72,6 +73,13 @@ colnames(DE_datasets)[4] <- c("OncoDB")
 DE_datasets <- merge(DE_datasets, Xena, by.x = "gene_id", by.y = "row.names", all = T)
 DE_datasets <- DE_datasets[ ,-c(6:10)]
 colnames(DE_datasets)[5] <- c("Xena")
+
+summary_table <- data.frame(
+  Dataset = colnames(DE_datasets)[-1], # Exclude the `gene_id` column
+  Upregulated = sapply(DE_datasets[-1], function(x) sum(x >= 1, na.rm = TRUE)),
+  Downregulated = sapply(DE_datasets[-1], function(x) sum(x <= -1, na.rm = TRUE))
+)
+
 
 temp <- merge.data.table(targets, DE_datasets, by.x = "drugBank_target", by.y = "gene_id", all.x = T)
 temp2 <- DE_datasets[DE_datasets$gene_id %in% BRCA_markers, ]
