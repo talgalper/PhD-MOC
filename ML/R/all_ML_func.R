@@ -75,7 +75,6 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     #Train all models on this iteration's data
     this_iter_models <- list()
     for (model_name in names(tune_grids)) {
-      cat("Training", model_name, "\n")
       set.seed(iter)
       
       # XGboost may print depreciation message still
