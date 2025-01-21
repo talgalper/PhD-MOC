@@ -81,7 +81,9 @@ colnames(DE_datasets)[5] <- c("Xena")
 summary_table <- data.frame(
   Dataset = colnames(DE_datasets)[-1], # Exclude the `gene_id` column
   Upregulated = sapply(DE_datasets[-1], function(x) sum(x >= 1, na.rm = TRUE)),
-  Downregulated = sapply(DE_datasets[-1], function(x) sum(x <= -1, na.rm = TRUE))
+  Downregulated = sapply(DE_datasets[-1], function(x) sum(x <= -1, na.rm = TRUE)),
+  `Not Sig` = sapply(DE_datasets[-1], function(x) sum(is.na(x))),
+  `Total DE` = sapply(DE_datasets[-1], function(x) length(x[!is.na(x)]))
 )
 
 
