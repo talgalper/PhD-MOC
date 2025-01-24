@@ -26,6 +26,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
   # Set up parallel backend using doSNOW
   cl <- makeCluster(detectCores() - 1)
   registerDoParallel(cl)
+  on.exit(stopCluster(cl))
   
   # Define the silencing function 
   silence_all_output_null <- function(expr) {
@@ -62,7 +63,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
   
   # Export necessary variables and functions to the workers
   clusterExport(cl, 
-                varlist = c("silence_all_output_null", "numeric_features", "feature_matrix", "positive_set", "negative_pool"), 
+                list = c("silence_all_output_null", "numeric_features", "feature_matrix", "positive_set", "negative_pool"), 
                 envir = environment())
   
   # setup progress bar for parallelisation
@@ -153,31 +154,39 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     })
     
     
-    # Collect resamples
-    resamples[[iter]] <- resamples(this_iter_models)
+    # Collect resamples for this iteration
+    local_resamples <- resamples(this_iter_models)
     
-    # Make predictions on the full feature matrix
-    for (model in models) {
-      model_predictions[[model]][, iter] <- predict(
-        this_iter_models[[model]],
-        newdata = feature_matrix[, numeric_features],
-        type = "prob"
-      )[, 2]
-    }
+    # Predict probabilities
+    predicted_probs <- predict(
+      this_iter_models[[model]],
+      newdata = prediction_data,
+      type = "prob"
+    )[, 2]
     
-    list(model_predictions = model_predictions,
-         resamples = resamples)
+    # Assign predictions to the local model_predictions list
+    local_model_predictions[[model]] <- predicted_probs
+    
+    # Return predictions and resamples for this iteration
+    list(model_predictions = local_model_predictions,
+         resamples = local_resamples)
   } # dopar end
+  
   stopCluster(cl)
   
   # Combine the foreach results into model_predictions and resamples
   for (iter in 1:n_models) {
     iteration_result <- parallel_result[[iter]]
+    # Assign predictions
     for (model in models) {
       model_predictions[[model]][, iter] <- iteration_result$model_predictions[[model]]
     }
+    # Assign resamples
     resamples[[iter]] <- iteration_result$resamples
   }
+  
+  return(list(model_predictions = model_predictions,
+              resamples = resamples))
 } # function end
 
 
