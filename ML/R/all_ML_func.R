@@ -36,8 +36,12 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
                         envir = environment())
   
   # setup progress bar for parallelisation
-  pb <- txtProgressBar(max = n_models, style = 3)
-  progress <- function(n) setTxtProgressBar(pb, n)
+  pb <- progress_bar$new(
+    format = "[:bar] :current/:total (:percent) eta: :eta", 
+    total  = n_models)
+  progress <- function(n){
+    pb$tick(tokens = list(model = rep(1:n_models)))
+  }
   opts <- list(progress = progress)
   
   parallel_result <- foreach(
@@ -140,8 +144,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
                        iter_models = this_iter_models)
     list(results)
   } # dopar end
-  close(pb)
-  
+
   # Combine the foreach results into model_predictions and resamples
   iter_models <- list()
   for (iter in 1:n_models) {
@@ -181,7 +184,7 @@ start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
                                  positive_set = training_data$positive_set, 
                                  negative_pool = training_data$negative_pool, 
-                                 n_models = 3)
+                                 n_models = 100)
 print(Sys.time() - start)
 rm(start)
 
