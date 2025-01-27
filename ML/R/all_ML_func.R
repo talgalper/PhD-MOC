@@ -18,51 +18,20 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
               # "nb", 
               "nnet"#, 
               # "xgbTree"
-              )
+  )
   model_predictions <- list()
   for (model in models) {
     model_predictions[[model]] <- matrix(0, nrow = nrow(feature_matrix), ncol = n_models)
   }
-
-  # Set up parallel backend using doSNOW and 80% of cpu capacity
   
+  # Initialize resamples list
+  resamples_list <- vector("list", n_models)
+  
+  # Set up parallel backend using doSNOW and 80% of cpu capacity
   cl <- makeSOCKcluster(round(detectCores()*0.8))
   registerDoSNOW(cl)
   on.exit(stopCluster(cl))
   
-  
-  # # Define the silencing function 
-  # silence_all_output_null <- function(expr) {
-  #   # Determine the null device based on the operating system
-  #   nullfile <- if (.Platform$OS.type == "windows") "NUL" else "/dev/null"
-  #   
-  #   # Open connections to the null device
-  #   conn_out <- file(nullfile, open = "w")
-  #   conn_msg <- file(nullfile, open = "w")
-  #   
-  #   # Divert standard output and messages to the null device
-  #   sink(conn_out)
-  #   sink(conn_msg, type = "message")
-  #   
-  #   # Ensure that sinks are always restored, even if an error occurs
-  #   on.exit({
-  #     # Restore message sink first
-  #     if (sink.number(type = "message") > 0) sink(type = "message")
-  #     # Restore standard output sink
-  #     if (sink.number() > 0) sink()
-  #     # Close the connections
-  #     close(conn_msg)
-  #     close(conn_out)
-  #   }, add = TRUE)
-  #   
-  #   # Muffle warnings within the silenced block
-  #   withCallingHandlers(
-  #     expr,
-  #     warning = function(w) invokeRestart("muffleWarning")
-  #   )
-  #   
-  #   invisible(NULL)
-  # }
   
   # Export necessary variables and functions to the workers
   clusterExport(cl, 
@@ -76,8 +45,8 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
   
   parallel_result <- foreach(
     iter = 1:n_models, 
-    #.options.snow = opts, 
-    .combine = "list",
+    .options.snow = opts, 
+    .combine = "c",
     .packages = c("caret", "pROC")
   ) %dopar% {
     
@@ -125,34 +94,35 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     local_model_predictions <- list()
     # Train all models on this iteration's data within the silenced block
     this_iter_models <- list()
-    #silence_all_output_null({
-      for (model_name in names(tune_grids)) {
-        set.seed(iter)
-        
-        if (model_name == "xgbTree") {
-          Sys.setenv(XGBOOST_LOG_LEVEL = "0")
-          fit <- train(
-            x = training_features_numeric, 
-            y = training_labels, 
-            method = model_name, 
-            trControl = train_control, 
-            tuneGrid = tune_grids[[model_name]],
-            metric = "ROC", 
-            verbose = FALSE
-          )
-        } else {
-          fit <- train(
-            x = training_features_numeric, 
-            y = training_labels, 
-            method = model_name, 
-            trControl = train_control, 
-            tuneGrid = tune_grids[[model_name]],
-            metric = "ROC"
-          )
-        }
-        this_iter_models[[model_name]] <- fit
+    for (model_name in names(tune_grids)) {
+      set.seed(iter)
+      
+      if (model_name == "xgbTree") {
+        Sys.setenv(XGBOOST_LOG_LEVEL = "0")
+        fit <- train(
+          x = training_features_numeric, 
+          y = training_labels, 
+          method = model_name, 
+          trControl = train_control, 
+          tuneGrid = tune_grids[[model_name]],
+          metric = "ROC", 
+          verbose = FALSE
+        )
+      } else {
+        fit <- train(
+          x = training_features_numeric, 
+          y = training_labels, 
+          method = model_name, 
+          trControl = train_control, 
+          tuneGrid = tune_grids[[model_name]],
+          metric = "ROC"
+        )
       }
-    #})
+      this_iter_models[[model_name]] <- fit
+    }
+    
+    local_resamples <- resamples(this_iter_models)
+    
     
     for (model_name in models) {
       # Predict probabilities
@@ -167,15 +137,15 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     }
     
     # Return predictions and resamples for this iteration to be combined
-    list(iter_models = this_iter_models,
-         model_predictions = local_model_predictions)
+    results <- list(model_predictions = local_model_predictions,
+                       resamples = local_resamples,
+                       iter_models = this_iter_models)
+    list(results)
   } # dopar end
-  
-  stopCluster(cl)
   close(pb)
   
-  iter_models <- list()
   # Combine the foreach results into model_predictions and resamples
+  iter_models <- list()
   for (iter in 1:n_models) {
     iteration_result <- parallel_result[[iter]]
     iter_models[[iter]] <- parallel_result[[iter]][["iter_models"]]
@@ -184,6 +154,8 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     for (model_name in models) {
       model_predictions[[model_name]][, iter] <- iteration_result$model_predictions[[model_name]]
     }
+    # Assign resamples
+    resamples_list[[iter]] <- iteration_result$resamples
   }
   
   # mean prediction across iterations
@@ -191,10 +163,12 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     rowMeans(pred_matrix)
   })
   
-  return(list(model_predictions = model_predictions,
-              average_predictions = average_predictions))
+ return(list(iter_models = iter_models,
+             model_predictions = model_predictions,
+             average_predictions = average_predictions,
+             resamples = resamples_list)
+        )
 } # function end
-
 
 
 library(biomaRt)
@@ -202,13 +176,11 @@ ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
 training_data <- data_sets_from_TTD(feature_matrix, ensembl)
 
-# Select only numeric columns
-#training_data$feature_matrix_numeric <- training_data$feature_matrix[, sapply(training_data$feature_matrix[,c(2:70)], is.numeric)]
 
 start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
                                  positive_set = training_data$positive_set, 
                                  negative_pool = training_data$negative_pool, 
-                                 n_models = 2)
+                                 n_models = 3)
 print(Sys.time() - start)
 rm(start)
