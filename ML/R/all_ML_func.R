@@ -25,7 +25,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
   resamples_list <- vector("list", n_models)
   
   # Set up parallel backend using doSNOW and 80% of cpu capacity
-  cl <- makeSOCKcluster(round(detectCores()*0.5))
+  cl <- makeSOCKcluster(min(round(detectCores()*0.5), n_models))
   registerDoSNOW(cl)
   on.exit(stopCluster(cl))
   
@@ -103,7 +103,8 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
           trControl = train_control, 
           tuneGrid = tune_grids[[model_name]],
           metric = "ROC", 
-          verbose = FALSE
+          verbose = FALSE,
+          nthread = 1
         )
       } else {
         fit <- train(
@@ -180,7 +181,7 @@ start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
                                  positive_set = training_data$positive_set, 
                                  negative_pool = training_data$negative_pool, 
-                                 n_models = 2)
+                                 n_models = 3)
 print(Sys.time() - start)
 rm(start)
 
