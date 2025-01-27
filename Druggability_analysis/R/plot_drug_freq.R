@@ -52,13 +52,20 @@ ggplot(temp, aes(x=highest_score, fill=source)) +
 
 # frequency plot
 ggplot(temp, aes(x=highest_score, color=source)) +
-  geom_freqpoly(binwidth = 0.05, size = 1) +
+  geom_freqpoly(binwidth = 0.05, linewidth = 1) +
   labs(title="Frequency Plot of Druggable Proteins",
        x="Highest Score", y="Frequency") +
   geom_vline(xintercept = 0.7, color = "green", linetype = "dashed", size = 1) +
   geom_vline(xintercept = 0.5, color = "red", linetype = "dashed", size = 1) +
   scale_x_continuous(breaks = seq(min(temp$highest_score), max(temp$highest_score), by = 0.10)) +
-  theme_minimal()
+  theme_minimal() +
+  theme(panel.grid = element_blank(),
+        plot.title = element_blank(),
+        axis.title.x = element_text(size = 21, margin = margin(t=10)),
+        axis.title.y = element_text(size = 21, margin = margin(r=10)),
+        axis.text = element_text(size = 19, colour = "black"),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19))
 
 
 library(VennDiagram)
