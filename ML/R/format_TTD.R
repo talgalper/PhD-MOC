@@ -1,7 +1,7 @@
 
 
 # Read the lines from the file
-lines <- readLines("~/Downloads/P1-01-TTD_target_download.txt")
+lines <- readLines("data/TTD/P1-01-TTD_target_download.txt")
 
 # Initialize variables
 current_target_id <- NA
@@ -103,7 +103,7 @@ drug_info_df <- do.call(rbind, drug_info_list)
 
 
 # Read the lines from the file
-lines <- readLines("~/Downloads/P1-05-Drug_disease.txt")
+lines <- readLines("data/TTD/P1-05-Drug_disease.txt")
 
 # Initialize empty vectors to store the data
 ttd_drug_ids <- c()
@@ -177,7 +177,7 @@ drugDisease_data <- drugDisease_data[-1, ]
 
 
 # Read the lines from the file
-lines <- readLines("~/Downloads/P1-06-Target_disease.txt")
+lines <- readLines("data/TTD/P1-06-Target_disease.txt")
 
 # Initialize empty vectors to store the data
 target_ids <- c()
@@ -250,7 +250,7 @@ targetDisease_data <- data.frame(
 
 
 # Read the lines from your text file
-lines <- readLines("~/Downloads/P2-02-TTD_uniprot_successful.txt")
+lines <- readLines("data/TTD/P2-02-TTD_uniprot_successful.txt")
 
 # Find the starting index of the data (after the header and abbreviations)
 data_start_index <- which(grepl("^TARGETID\t", lines))[2]
@@ -304,7 +304,7 @@ TTD_approved <- TTD_approved[, all_keys]
 
 
 # Read the lines from your text file
-lines <- readLines("~/Downloads/P2-03-TTD_uniprot_clinical.txt")
+lines <- readLines("data/TTD/P2-03-TTD_uniprot_clinical.txt")
 
 # Find the starting index of the data (after the header and abbreviations)
 data_start_index <- which(grepl("^TARGETID\t", lines))[2]
@@ -437,7 +437,7 @@ drug_crossID_df <- do.call(rbind, drug_info_list)
 
 
 # get drug types
-file_path <- "~/Downloads/P1-02-TTD_drug_download.txt"
+file_path <- "data/TTD/P1-02-TTD_drug_download.txt"
 
 # Read all lines
 lines <- readLines(file_path)
