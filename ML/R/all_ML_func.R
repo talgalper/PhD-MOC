@@ -1,5 +1,6 @@
 
-ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
+ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool, big_grid = FALSE, 
+                       models = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree")) {
   
   suppressMessages({
     library(caret)
@@ -13,9 +14,6 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
   # Define fixed numeric features based on feature_matrix
   numeric_features <- names(feature_matrix)[sapply(feature_matrix, is.numeric)]
   
-  # Initialise matrix for each model
-  models <- c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree")
-  
   model_predictions <- list()
   for (model in models) {
     model_predictions[[model]] <- matrix(0, nrow = nrow(feature_matrix), ncol = n_models)
@@ -25,7 +23,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
   resamples_list <- vector("list", n_models)
   
   # Set up parallel backend using doSNOW and 80% of cpu capacity
-  cl <- makeSOCKcluster(min(round(detectCores()*0.5), n_models))
+  cl <- makeSOCKcluster(min(round(detectCores()*0.8), n_models))
   registerDoSNOW(cl)
   on.exit(stopCluster(cl))
   
@@ -68,34 +66,86 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
     
     # Train control with 10-fold cross-validation
     train_control <- trainControl(method = "cv", number = 10, 
-                                  summaryFunction = twoClassSummary, 
+                                  summaryFunction = multiClassSummary, 
                                   classProbs = TRUE, allowParallel = FALSE)
     
     n_features <- ncol(feature_matrix) - 3 # Adjust as per your data
-    # Hyperparameter grids
-    tune_grids <- list(
-      glmnet = expand.grid(alpha = c(0, 0.5, 1), lambda = 10^seq(-4, 1, length = 10)),
-      rf = expand.grid(mtry = seq(round(sqrt(n_features)) - 3, round(sqrt(n_features)) + 3, by = 1)),
-      svmRadial = expand.grid(sigma = c(0.01, 0.1, 1, 10), C = c(0.1, 1, 10, 100)),
-      knn = expand.grid(k = seq(round(sqrt(n_features)) - 3, round(sqrt(n_features)) + 3, by = 1)),  
-      nb = expand.grid(fL = c(0, 0.5, 1, 2), usekernel = c(TRUE, FALSE), adjust = c(0.5, 1, 2)),
-      nnet = expand.grid(size = c(5, 10, 15), decay = c(0.001, 0.01, 0.1, 1)),
-      xgbTree = expand.grid(
-        nrounds = c(50, 100, 150),
-        eta = c(0.01, 0.1, 1),
-        max_depth = c(3, 6, 9),
-        gamma = c(0, 1),
-        colsample_bytree = c(0.5, 0.8, 1),
-        min_child_weight = c(1, 5),
-        subsample = c(1)
-      )
-    )
     
+    if (isTRUE(big_grid)) {
+      tune_grids <- list(
+        glmnet = expand.grid(
+          alpha = c(0, 0.25, 0.5, 0.75, 1),
+          lambda = 10^seq(-5, 2, length = 15)
+        ),
+        
+        rf = expand.grid(
+          mtry = seq(
+            from = max(1, round(sqrt(n_features)) - 5), 
+            to = min(n_features, round(sqrt(n_features)) + 5), 
+            by = 1
+          )
+        ),
+        
+        svmRadial = expand.grid(
+          sigma = c(0.001, 0.01, 0.1, 1, 10, 100),
+          C = c(0.01, 0.1, 1, 10, 100, 1000)
+        ),
+
+        knn = expand.grid(
+          k = seq(
+            from = max(1, round(sqrt(n_features)) - 5),
+            to   = round(sqrt(n_features)) + 5,
+            by   = 2
+          )
+        ),
+        
+        nb = expand.grid(
+          fL        = c(0, 0.25, 0.5, 1, 2),   # Laplace smoothing
+          usekernel = c(TRUE, FALSE),
+          adjust    = c(0.25, 0.5, 1, 2, 4)
+        ),
+        
+        nnet = expand.grid(
+          size  = c(5, 10, 15, 20, 30),
+          decay = c(1e-4, 1e-3, 1e-2, 1e-1, 1)
+        ),
+        
+        xgbTree = expand.grid(
+          nrounds         = c(50, 100, 150, 200),
+          eta             = c(0.001, 0.01, 0.1, 0.3, 0.5, 1),
+          max_depth       = c(3, 5, 7, 9),
+          gamma           = c(0, 1, 2, 5),
+          colsample_bytree= c(0.5, 0.7, 0.8, 1),
+          min_child_weight= c(1, 3, 5),
+          subsample       = c(0.5, 0.75, 1)
+        )
+      )
+    } else {
+      # Hyperparameter grids
+      tune_grids <- list(
+        glmnet = expand.grid(alpha = c(0, 0.5, 1), lambda = 10^seq(-4, 1, length = 10)),
+        rf = expand.grid(mtry = seq(round(sqrt(n_features)) - 3, round(sqrt(n_features)) + 3, by = 1)),
+        svmRadial = expand.grid(sigma = c(0.01, 0.1, 1, 10), C = c(0.1, 1, 10, 100)),
+        knn = expand.grid(k = seq(round(sqrt(n_features)) - 3, round(sqrt(n_features)) + 3, by = 1)),  
+        nb = expand.grid(fL = c(0, 0.5, 1, 2), usekernel = c(TRUE, FALSE), adjust = c(0.5, 1, 2)),
+        nnet = expand.grid(size = c(5, 10, 15), decay = c(0.001, 0.01, 0.1, 1)),
+        xgbTree = expand.grid(
+          nrounds = c(50, 100, 150),
+          eta = c(0.01, 0.1, 1),
+          max_depth = c(3, 6, 9),
+          gamma = c(0, 1),
+          colsample_bytree = c(0.5, 0.8, 1),
+          min_child_weight = c(1, 5),
+          subsample = c(1)
+        )
+      )
+    }
+
     # initialise local data
     local_model_predictions <- list()
     # Train all models on this iteration's data within the silenced block
     this_iter_models <- list()
-    for (model_name in names(tune_grids)) {
+    for (model_name in models) {
       set.seed(iter)
       
       if (model_name == "xgbTree") {
@@ -106,7 +156,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
           method = model_name, 
           trControl = train_control, 
           tuneGrid = tune_grids[[model_name]],
-          metric = "ROC", 
+          metric = "Accuracy", 
           verbose = FALSE,
           nthread = 1
         )
@@ -117,7 +167,7 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool) {
           method = model_name, 
           trControl = train_control, 
           tuneGrid = tune_grids[[model_name]],
-          metric = "ROC"
+          metric = "Accuracy"
         )
       }
       this_iter_models[[model_name]] <- fit
@@ -179,7 +229,6 @@ ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
 training_data <- data_sets_from_TTD(feature_matrix, ensembl)
 
-
 start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
                                  positive_set = training_data$positive_set, 
@@ -188,169 +237,181 @@ ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
 print(Sys.time() - start)
 rm(start)
 
+load("~/OneDrive - RMIT University/PhD/large_git_files/ML/ML_bagging_100itr.RData")
 
 ##############################################################################
 #                                 Plot results                               #
 ##############################################################################
 plot_results <- function(return_plot_data = FALSE) {
   library(ggplot2)
+  library(dplyr)
+  library(tidyr)
+  library(reshape2)
   
-  # Initialize a data frame to store ROC for each model and iteration
-  performance_df <- data.frame(
-    Iteration = integer(),
-    Model = character(),
-    ROC = numeric(),
-    stringsAsFactors = FALSE
-  )
+  # Initialize a list to store performance metrics
+  performance_list <- list()
   
-  # Loop through each iteration and extract ROC
-  for (i in 1:length(ML_bagging_results$resamples)) {
+  # Loop through each iteration and extract all available metrics
+  for (i in seq_along(ML_bagging_results$resamples)) {
     resample <- ML_bagging_results$resamples[[i]]
-    # Extract ROC for each model
-    roc_values <- summary(resample)$statistics$ROC[, "Mean"]
+    all_metrics <- summary(resample)$statistics
     
-    # Create a temporary data frame for this iteration
-    temp_df <- data.frame(
-      Iteration = i,
-      Model = names(roc_values),
-      ROC = as.numeric(roc_values),
-      stringsAsFactors = FALSE
-    )
-    
-    # Append to the main data frame
-    performance_df <- rbind(performance_df, temp_df)
+    for (metric in names(all_metrics)) {
+      metric_values <- all_metrics[[metric]][, "Mean"]
+      
+      temp_df <- data.frame(
+        Iteration = i,
+        Model = names(metric_values),
+        Metric = metric,
+        Value = as.numeric(metric_values),
+        stringsAsFactors = FALSE
+      )
+      
+      performance_list[[length(performance_list) + 1]] <- temp_df
+    }
   }
   
-  # Compute summary statistics
-  summary_stats <- aggregate(ROC ~ Model, data = performance_df, 
-                             FUN = function(x) c(Mean = mean(x), SD = sd(x)))
+  # Combine all performance data
+  performance_df <- bind_rows(performance_list)
   
-  # Clean up the summary_stats data frame
-  summary_stats <- do.call(data.frame, summary_stats)
-  names(summary_stats) <- c("Model", "Mean_ROC", "SD_ROC")
+  # Compute summary statistics (Mean & SD) for each metric across models
+  summary_stats <- performance_df %>%
+    group_by(Model, Metric) %>%
+    summarise(
+      Mean = mean(Value, na.rm = TRUE),
+      SD = sd(Value, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    as.data.frame()
   
-  # Base R Boxplot
-  boxplot(ROC ~ Model, data = performance_df,
-          main = "Distribution of ROC AUC Across Iterations",
-          ylab = "ROC AUC",
-          col = "lightblue",
-          las = 2)  # Rotate x-axis labels for better readability
-  
-  # ggplot2 Line Plot
-  ggplot(performance_df, aes(x = Iteration, y = ROC, color = Model)) +
-    geom_line(alpha = 0.6) +
-    geom_smooth(method = "loess", se = FALSE) +  # Add trend lines
-    labs(title = "ROC AUC Across Iterations for Each Model",
-         x = "Iteration",
-         y = "ROC AUC") +
-    theme_minimal()
-  
-  # ggplot2 Faceted Plot
-  ggplot(performance_df, aes(x = Iteration, y = ROC)) +
-    geom_line(color = "blue") +
-    geom_point(alpha = 0.5) +
-    facet_wrap(~ Model, ncol = 2) +
-    labs(title = "ROC AUC Across Iterations by Model",
-         x = "Iteration",
-         y = "ROC AUC") +
-    theme_minimal()
-  
-  
-  # Convert average_predictions to a data frame
-  average_predictions_df <- data.frame(
-    Model = names(ML_bagging_results$average_predictions),
-    Average_Prediction = unlist(ML_bagging_results$average_predictions),
-    stringsAsFactors = FALSE
-  )
-  
-  # ggplot2 Error Bar Plot
-  ggplot(summary_stats, aes(x = reorder(Model, Mean_ROC), y = Mean_ROC)) +
-    geom_bar(stat = "identity", fill = "lightblue") +
-    geom_errorbar(aes(ymin = Mean_ROC - SD_ROC, ymax = Mean_ROC + SD_ROC), 
-                  width = 0.2) +
-    coord_flip() +  # Flip coordinates for better readability
-    labs(title = "Mean ROC AUC with Standard Deviation by Model",
-         x = "Model",
-         y = "Mean ROC AUC") +
-    theme_minimal()
-  
-  
-  # analyse hyperparamters
-  library(reshape2)
-  # Initialize a list to store hyperparameters
+  ### ANALYZE HYPERPARAMETERS ###
   hyperparameters_list <- list()
   
-  for (i in 1:length(ML_bagging_results$iter_models)) {
+  for (i in seq_along(ML_bagging_results$iter_models)) {
     iter_models <- ML_bagging_results$iter_models[[i]]
+    
     for (model_name in names(iter_models)) {
       model <- iter_models[[model_name]]
       best_tune <- model$bestTune
-      # Add Iteration and Model columns
-      best_tune$Iteration <- i
-      best_tune$Model <- model_name
-      # Append to the list
-      hyperparameters_list[[length(hyperparameters_list) + 1]] <- best_tune
+      
+      if (!is.null(best_tune)) {
+        best_tune$Iteration <- i
+        best_tune$Model <- model_name
+        hyperparameters_list[[length(hyperparameters_list) + 1]] <- best_tune
+      }
     }
   }
   
-  # Identify all unique hyperparameter names across all models
-  all_hyperparams <- unique(unlist(lapply(hyperparameters_list, names)))
-  # Remove 'Iteration' and 'Model' from hyperparameter names
-  all_hyperparams <- setdiff(all_hyperparams, c("Iteration", "Model"))
-  
-  # Function to standardize hyperparameter data frames
-  standardize_hyperparams <- function(df, all_params) {
-    missing_params <- setdiff(all_params, names(df))
-    if(length(missing_params) > 0){
-      df[missing_params] <- NA
+  # Combine hyperparameter data
+  if (length(hyperparameters_list) > 0) {
+    hyperparameters_df <- bind_rows(hyperparameters_list)
+    
+    # Ensure numeric conversion for hyperparameter values
+    hyperparameter_cols <- setdiff(names(hyperparameters_df), c("Iteration", "Model"))
+    hyperparameters_df[hyperparameter_cols] <- lapply(hyperparameters_df[hyperparameter_cols], as.numeric)
+    
+    # Merge performance data with hyperparameter data
+    merged_df <- merge(performance_df, hyperparameters_df, by = c("Iteration", "Model"), all.x = TRUE)
+    
+    # Reshape the merged data for plotting
+    melted_df <- melt(merged_df, 
+                      id.vars = c("Iteration", "Model", "Metric", "Value"), 
+                      variable.name = "Hyperparameter", 
+                      value.name = "Hyperparameter_Value",
+                      na.rm = TRUE)  # Remove rows with NA in hyperparameters
+    
+    # Ensure Metric column exists before filtering
+    if ("Metric" %in% colnames(melted_df)) {
+      # Plot Hyperparameter Effect on Accuracy
+      print(
+        ggplot(melted_df %>% filter(Metric == "Accuracy"), aes(x = Hyperparameter_Value, y = Value)) +
+          geom_point(alpha = 0.6, color = "lightblue") +
+          geom_smooth(method = "loess", se = FALSE, color = "tomato") +
+          facet_wrap(~ Hyperparameter, scales = "free_x") +
+          labs(title = "Effect of Hyperparameters on Accuracy",
+               x = "Hyperparameter Value",
+               y = "Accuracy") +
+          theme_minimal()
+      )
+    } else {
+      warning("Metric column not found in melted_df. Skipping hyperparameter plot.")
     }
-    # Ensure the order of columns is consistent
-    df <- df[, c("Iteration", "Model", all_params)]
-    return(df)
+  } else {
+    warning("No hyperparameter tuning data found. Skipping hyperparameter analysis.")
   }
   
-  # Apply the standardization to each hyperparameter data frame
-  hyperparameters_list_standardized <- lapply(hyperparameters_list, standardize_hyperparams, all_params = all_hyperparams)
-  
-  # Combine the standardized data frames into one
-  hyperparameters_df <- do.call(rbind, hyperparameters_list_standardized)
-  
-  # Convert appropriate columns to numeric (if they aren't already)
-  for(param in all_hyperparams){
-    hyperparameters_df[[param]] <- as.numeric(as.character(hyperparameters_df[[param]]))
-  }
-  
-  merged_df <- merge(performance_df, hyperparameters_df, by = c("Iteration", "Model"))
-  
-  # Melt the hyperparameters (excluding Iteration, Model, ROC)
-  melted_df <- melt(merged_df, 
-                    id.vars = c("Iteration", "Model", "ROC"), 
-                    variable.name = "Hyperparameter", 
-                    value.name = "Value",
-                    na.rm = TRUE)  # Remove rows with NA in hyperparameters
-  
-  # Convert Value to numeric (if not already)
-  melted_df$Value <- as.numeric(as.character(melted_df$Value))
-  
-  # Create a combined factor for Model and Hyperparameter for faceting
-  melted_df$Model_Hyperparameter <- paste(melted_df$Model, melted_df$Hyperparameter, sep = "_")
-  # Plot
-  ggplot(melted_df, aes(x = Value, y = ROC)) +
-    geom_point(alpha = 0.6, color = "lightblue") +
-    geom_smooth(method = "loess", se = FALSE, color = "tomato") +
-    facet_wrap(~ Model_Hyperparameter, scales = "free_x") +
-    labs(title = "Effect of Hyperparameters on ROC AUC",
-         x = "Hyperparameter Value",
-         y = "ROC AUC") +
-    theme_minimal()
-  
-  if (isTRUE(return_plot_data)) {
-    return(list(hyperparameter_data = melted_df,
-                performance_df = performance_df,
-                summary_stats = summary_stats))
+  if (return_plot_data) {
+    return(list(
+      hyperparameter_data = melted_df,
+      performance_df = performance_df,
+      summary_stats = summary_stats
+    ))
   }
 }
+plot_result <- plot_results(return_plot_data = TRUE)
 
 
+##############################################################################
+#                           Extract feature importance                       #
+##############################################################################
 
+extract_feature_importance <- function(ml_results, models_of_interest = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree")) {
+  library(caret)
+  
+  iter_models <- ml_results$iter_models
+  n_models <- length(iter_models)
+  
+  # Initialize a list to store feature importance for each model type
+  feature_importance_list <- list()
+  
+  for (model_name in models_of_interest) {
+    feature_importance_list[[model_name]] <- list()
+    
+    for (iter in 1:n_models) {
+      model <- iter_models[[iter]][[model_name]]
+      
+      # Check if the model exists and varImp is applicable
+      if (!is.null(model)) {
+        imp <- try(varImp(model, scale = FALSE), silent = TRUE)
+        
+        if (class(imp) != "try-error") {
+          # Extract the importance scores
+          imp_df <- imp$importance
+          
+          # Some models might return multiple columns (e.g., for classification)
+          # We'll take the overall importance by averaging if multiple columns exist
+          if (ncol(imp_df) > 1) {
+            imp_overall <- rowMeans(imp_df, na.rm = TRUE)
+          } else {
+            imp_overall <- imp_df
+          }
+          
+          # Store in the list
+          feature_importance_list[[model_name]][[iter]] <- imp_overall
+        }
+      }
+    }
+    
+    # Convert the list of importance vectors to a data frame
+    if (length(feature_importance_list[[model_name]]) > 0) {
+      imp_matrix <- do.call(cbind, feature_importance_list[[model_name]])
+      imp_df <- as.data.frame(imp_matrix)
+      
+      # Compute the average importance across iterations
+      avg_imp <- rowMeans(imp_df, na.rm = TRUE)
+      
+      # Sort the features by average importance
+      avg_imp_sorted <- sort(avg_imp, decreasing = TRUE)
+      
+      # Store back
+      feature_importance_list[[model_name]] <- avg_imp_sorted
+    } else {
+      feature_importance_list[[model_name]] <- NULL
+      warning(paste("No feature importance available for model:", model_name))
+    }
+  }
+  
+  return(feature_importance_list)
+}
 
+feature_importance <- extract_feature_importance(ML_bagging_results)
