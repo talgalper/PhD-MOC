@@ -109,3 +109,15 @@ string_df <- data.frame(ENSG = V(STRING_net)$name,
 save(string_df, file = "RData/human_string_PPI_metrics.RData")
 
 
+STRING_top10pct <- STRING_edge_uniprot[order(-combined_score)]
+STRING_top10pct <- STRING_top10pct[1:(nrow(STRING_top10pct)*0.1), ]
+STRING_top10pct_net <- graph_from_data_frame(STRING_top10pct, directed = F)
+
+STRING_top10pct_df <- data.frame(ENSG = V(STRING_top10pct_net)$name,
+                                 degree = degree(STRING_top10pct_net),
+                                 betweenness = betweenness(STRING_top10pct_net),
+                                 closeness = closeness(STRING_top10pct_net),
+                                 eigen_centrality = eigen_centrality(STRING_top10pct_net)$vector,
+                                 page_rank = page_rank(STRING_top10pct_net)$vector)
+
+save(STRING_top10pct_df, file = "RData/human_STRING_top10pct_PPI_metrics.RData")
