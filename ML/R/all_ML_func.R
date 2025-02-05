@@ -1,6 +1,5 @@
 
-ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool, big_grid = FALSE, 
-                       models = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree")) {
+ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool, models, big_grid = FALSE) {
   
   suppressMessages({
     library(caret)
@@ -221,28 +220,11 @@ ML_bagging <- function(n_models, feature_matrix, positive_set, negative_pool, bi
         )
 } # function end
 
-##############################################################################
-#                           Run ML bagging function                          #
-##############################################################################
-library(biomaRt)
-ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
-feature_matrix <- read.table("data/feature_matrix.txt", sep = "\t", header = T)
-training_data <- data_sets_from_TTD(feature_matrix, ensembl)
-
-start <- Sys.time()
-ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
-                                 positive_set = training_data$positive_set, 
-                                 negative_pool = training_data$negative_pool, 
-                                 n_models = 100)
-print(Sys.time() - start)
-rm(start)
-
-load("~/OneDrive - RMIT University/PhD/large_git_files/ML/ML_bagging_100itr.RData")
 
 ##############################################################################
-#                                 Plot results                               #
+#                       Plot cross validation results                        #
 ##############################################################################
-plot_results <- function(return_plot_data = FALSE) {
+plot_results <- function(ML_bagging_results, return_plot_data = FALSE) {
   library(ggplot2)
   library(dplyr)
   library(tidyr)
@@ -302,6 +284,46 @@ plot_results <- function(return_plot_data = FALSE) {
     }
   }
   
+  # Base R Boxplot of Accuracy values
+  boxplot(Value ~ Model, data = performance_df %>% filter(Metric == "Accuracy"),
+          main = "Distribution of Accuracy Across Iterations",
+          ylab = "Accuracy",
+          col = "steelblue",
+          las = 2)  # Rotate x-axis labels for better readability
+  
+  # ggplot2 Line Plot
+  print(
+    ggplot(performance_df %>% filter(Metric == "Accuracy"), aes(x = Iteration, y = Value, color = Model)) +
+    geom_line(alpha = 0.6) +
+    geom_smooth(method = "loess", se = FALSE) +  # Add trend lines
+    labs(title = "Accutacy Across Iterations for Each Model",
+         x = "Iteration",
+         y = "Accuracy") +
+    theme_minimal())
+  
+  # ggplot2 Faceted Plot
+  print(
+    ggplot(performance_df %>% filter(Metric == "Accuracy"), aes(x = Iteration, y = Value)) +
+    geom_line(color = "steelblue") +
+    geom_point(alpha = 0.5) +
+    facet_wrap(~ Model, ncol = 2) +
+    labs(title = "Accuracy Across Iterations by Model",
+         x = "Iteration",
+         y = "Accuracy") +
+    theme_minimal())
+  
+  # ggplot2 Error Bar Plot
+  print(
+    ggplot(summary_stats %>% filter(Metric == "Accuracy"), aes(x = reorder(Model, Mean), y = Mean)) +
+    geom_bar(stat = "identity", fill = "steelblue") +
+    geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD), 
+                  width = 0.2) +
+    coord_flip() +  # Flip coordinates for better readability
+    labs(title = "Mean Accuracy with Standard Deviation by Model",
+         x = "Model",
+         y = "Mean Accuracy") +
+    theme_minimal())
+  
   # Combine hyperparameter data
   if (length(hyperparameters_list) > 0) {
     hyperparameters_df <- bind_rows(hyperparameters_list)
@@ -348,14 +370,14 @@ plot_results <- function(return_plot_data = FALSE) {
     ))
   }
 }
-plot_result <- plot_results(return_plot_data = TRUE)
 
 
 ##############################################################################
 #                           Extract feature importance                       #
 ##############################################################################
-
-extract_feature_importance <- function(ml_results, models_of_interest = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree")) {
+extract_feature_importance <- function(ml_results, 
+                                       models_of_interest = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree"),
+                                       plot_feature_importance = TRUE) {
   library(caret)
   
   iter_models <- ml_results$iter_models
@@ -411,7 +433,169 @@ extract_feature_importance <- function(ml_results, models_of_interest = c("glmne
     }
   }
   
+  if (isTRUE(plot_feature_importance)) {
+    # Loop through each model in the list and plot
+    for (model_name in names(feature_importance)) {
+      # Skip if no feature importance available
+      if (is.null(feature_importance[[model_name]])) next
+      
+      # Extract named vector of importances
+      importance_vec <- feature_importance[[model_name]]
+      
+      # Convert to data frame
+      imp_df <- data.frame(
+        Feature    = names(importance_vec),
+        Importance = as.numeric(importance_vec),
+        stringsAsFactors = FALSE
+      )
+      
+      # (Optional) Subset to the top 20 most important for clarity
+      top_n <- 35
+      imp_df <- imp_df[order(imp_df$Importance, decreasing = TRUE), ]
+      imp_df <- head(imp_df, top_n)
+      
+      # Create bar plot
+      p <- ggplot(imp_df, aes(x = reorder(Feature, Importance), y = Importance)) +
+        geom_bar(stat = "identity", fill = "steelblue") +
+        coord_flip() +
+        theme_minimal(base_size = 14) +
+        labs(title = paste("Feature Importance -", model_name),
+             x = "Feature",
+             y = "Importance") +
+        theme(panel.grid = element_blank(),
+              axis.text = element_text(colour = "black", size = 20),
+              axis.title.x = element_text(size = 22, margin = margin(t=10)),
+              axis.title.y = element_text(size = 22, margin = margin(r=10)))
+      
+      print(p)  # Print the plot
+    }
+  }
+  
   return(feature_importance_list)
 }
 
-feature_importance <- extract_feature_importance(ML_bagging_results)
+
+##############################################################################
+#                           Model performance on test set                    #
+##############################################################################
+model_metrics <- function(feature_matrix, ML_bagging_results, plot_results = TRUE) {
+  # Append prediction scores to feature matrix
+  feature_data_scores_appended <- feature_matrix
+  for (model_name in models) {
+    feature_data_scores_appended[, paste0("Prediction_Score_", model_name)] <- ML_bagging_results$average_predictions[[model_name]]
+  }
+  
+  models <- names(ML_bagging_results$average_predictions)
+  
+  # Initialize a list to store confusion matrices and metrics
+  model_metrics <- list()
+  
+  for (model_name in models) {
+    
+    # Extract the probability scores
+    prob_scores <- feature_data_scores_appended[[paste0("Prediction_Score_", model_name)]]
+    
+    # Compute the ROC curve and AUC (which you already do)
+    suppressMessages({
+      roc_curve <- roc(response = feature_data_scores_appended$clinical, predictor = prob_scores)
+      auc_value <- auc(roc_curve)
+    })
+    
+    # Set threshold
+    threshold <- 0.5
+    
+    # Convert probabilities to class predictions
+    pred_class <- ifelse(prob_scores >= threshold, 1, 0)
+    
+    # Build a confusion matrix
+    cm <- confusionMatrix(
+      data = factor(pred_class, levels = c(0, 1)),  # predicted
+      reference = factor(feature_data_scores_appended$clinical, levels = c(0, 1))  # actual
+    )
+    
+    # Extract metrics from the confusion matrix
+    accuracy <- cm$overall["Accuracy"]
+    kappa <- cm$overall["Kappa"]
+    sensitivity <- cm$byClass["Sensitivity"]     # same as recall
+    specificity <- cm$byClass["Specificity"]
+    precision <- cm$byClass["Pos Pred Value"]
+    recall <- sensitivity                   # rename for clarity
+    f1_score <- 2 * (precision * recall) / (precision + recall)
+    balanced_acc <- cm$byClass["Balanced Accuracy"]
+    
+    # Store results
+    model_metrics[[model_name]] <- list(
+      ConfusionMatrix = cm,
+      AUC = auc_value,
+      Accuracy = accuracy,
+      Kappa = kappa,
+      Sensitivity = sensitivity,
+      Specificity = specificity,
+      Precision = precision,
+      Recall = recall,
+      F1_Score = f1_score,
+      Balanced_Acc = balanced_acc
+    )
+  }
+  
+  if (isTRUE(plot_results)) {
+    library(tidyverse)
+    library(ggplot2)
+    library(RColorBrewer)
+    
+    # Convert to a data frame, excluding the ConfusionMatrix object
+    df <- map_dfr(
+      names(model_metrics), 
+      function(model_name) {
+        x <- model_metrics[[model_name]]
+        # Make a 1-row data frame for each model with numeric metrics
+        data.frame(
+          Model = model_name,
+          AUC = as.numeric(x$AUC),
+          Accuracy = as.numeric(x$Accuracy),
+          Kappa = as.numeric(x$Kappa),
+          Sensitivity = as.numeric(x$Sensitivity),
+          Specificity = as.numeric(x$Specificity),
+          Precision = as.numeric(x$Precision),
+          Recall = as.numeric(x$Recall),
+          F1_Score = as.numeric(x$F1_Score),
+          Balanced_Acc = as.numeric(x$Balanced_Acc)
+        )
+      }
+    )
+    
+    # Now pivot to long format
+    df_long <- df %>%
+      pivot_longer(
+        cols = c(AUC, Accuracy, Kappa, Sensitivity, Specificity, Precision, Recall, F1_Score, Balanced_Acc),
+        names_to = "Metric",
+        values_to = "Value"
+      )
+    
+    # Faceted Plot
+    p <- ggplot(df_long, aes(x = Model, y = Value, fill = Model)) +
+      geom_col(position = "dodge") +
+      facet_wrap(~ Metric, scales = "free_y") +
+      labs(
+        title = "Model Performance (clinical) Comparison",
+        x = "Model",
+        y = "Metric Value"
+      ) +
+      scale_fill_brewer(palette = "Set2") +
+      theme_bw(base_size = 14) +
+      theme(
+        legend.position = "none",
+        strip.text = element_text(face = "bold")
+      )
+    
+    print(p)
+    
+    return(list(model_metrics = model_metrics,
+                feature_data_scores_appended = feature_data_scores_appended,
+                plot_data = df))
+  } else {
+    return(list(model_metrics = model_metrics,
+                feature_data_scores_appended = feature_data_scores_appended))
+  }
+}
+
