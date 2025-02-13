@@ -367,21 +367,31 @@ plot_results <- function(ML_bagging_results, return_plot_data = FALSE) {
   }
   
   # Base R Boxplot of Accuracy values
-  boxplot(Value ~ Model, data = performance_df %>% filter(Metric == "Accuracy"),
-          main = "Distribution of Accuracy Across Iterations",
-          ylab = "Accuracy",
-          col = "steelblue",
-          las = 2)  # Rotate x-axis labels for better readability
+  print(
+    ggplot(performance_df %>% filter(Metric == "Accuracy"), aes(x = Model, y = Value)) +
+    geom_boxplot(fill = "steelblue") +
+    labs(title = "Distribution of Accuracy Across Iterations", y = "Accuracy") +
+    theme(axis.text = element_text(size = 20, colour = "black"),
+          axis.title.x = element_text(size = 22, face = "bold", margin = margin(t=10)),
+          axis.title.y = element_text(size = 22, face = "bold", margin = margin(r=10)),
+          panel.grid = element_blank(),
+          panel.background = element_blank()))
   
   # ggplot2 Line Plot
   print(
     ggplot(performance_df %>% filter(Metric == "Accuracy"), aes(x = Iteration, y = Value, color = Model)) +
     geom_line(alpha = 0.6) +
     geom_smooth(method = "loess", se = FALSE) +  # Add trend lines
-    labs(title = "Accutacy Across Iterations for Each Model",
+    labs(title = "Accuracy Across Iterations for Each Model",
          x = "Iteration",
          y = "Accuracy") +
-    theme_minimal())
+      theme(axis.text = element_text(size = 20, colour = "black"),
+            axis.title.x = element_text(size = 22, face = "bold", margin = margin(t=10)),
+            axis.title.y = element_text(size = 22, face = "bold", margin = margin(r=10)),
+            legend.text = element_text(size = 18),
+            legend.title = element_text(size = 20),
+            panel.grid = element_blank(),
+            panel.background = element_blank()))
   
   # ggplot2 Faceted Plot
   print(
@@ -457,10 +467,10 @@ plot_results <- function(ML_bagging_results, return_plot_data = FALSE) {
 ##############################################################################
 #                           Extract feature importance                       #
 ##############################################################################
-extract_feature_importance <- function(ml_results, 
-                                       models_of_interest = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree"),
-                                       plot_feature_importance = TRUE) {
+extract_feature_importance <- function(ml_results, plot_feature_importance = TRUE) {
   library(caret)
+  
+  models_of_interest <- names(ML_bagging_results$model_predictions)
   
   iter_models <- ml_results$iter_models
   n_models <- length(iter_models)
@@ -517,12 +527,12 @@ extract_feature_importance <- function(ml_results,
   
   if (isTRUE(plot_feature_importance)) {
     # Loop through each model in the list and plot
-    for (model_name in names(feature_importance)) {
+    for (model_name in names(feature_importance_list)) {
       # Skip if no feature importance available
-      if (is.null(feature_importance[[model_name]])) next
+      if (is.null(feature_importance_list[[model_name]])) next
       
       # Extract named vector of importances
-      importance_vec <- feature_importance[[model_name]]
+      importance_vec <- feature_importance_list[[model_name]]
       
       # Convert to data frame
       imp_df <- data.frame(
@@ -562,6 +572,8 @@ extract_feature_importance <- function(ml_results,
 ##############################################################################
 model_metrics <- function(feature_matrix, ML_bagging_results, plot_results = TRUE) {
   models <- names(ML_bagging_results$average_predictions)
+  library(pROC)
+  library(caret)
   
   # Append prediction scores to feature matrix
   feature_data_scores_appended <- feature_matrix
