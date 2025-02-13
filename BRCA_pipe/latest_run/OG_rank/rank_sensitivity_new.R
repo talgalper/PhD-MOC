@@ -166,6 +166,9 @@ RS_PCSF <- rank_sensitivity(PCSF, ensembl, topx = 10)
 RS_HHnet <- rank_sensitivity(HHnet, ensembl, topx = 10)
 RS_HHnet_enrich <- rank_sensitivity(HHnet_enrich, ensembl, topx = 10)
 
+RS_PCSF <- read.csv("latest_run/OG_rank/PCSF_rank_sensitivity_top10.csv", row.names = 1)
+RS_HHnet <- read.csv("latest_run/OG_rank/HHnet_rank_sensitivity_top10.csv", row.names = 1)
+RS_HHnet_enrich <- read.csv("latest_run/OG_rank/HHnetEnrich_rank_sensitivity_top10.csv", row.names = 1)
 
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
@@ -178,5 +181,15 @@ temp2 <- RS_PCSF[RS_PCSF$external_gene_name %in% targets$drugBank_target, ]
 
 temp3 <- PCSF[PCSF$external_gene_name %in% targets$drugBank_target, ]
 
+library(ggVennDiagram)
+p <- ggVennDiagram(list(HHnet = RS_HHnet$external_gene_name,
+                        `HHnet Neighs` = RS_HHnet_enrich$external_gene_name,
+                        PCSF = RS_PCSF$external_gene_name),
+                   label = "count",
+                   set_size = 8, label_size = 6)
 
-
+p + scale_fill_distiller(palette = "Oranges", direction = 1) + coord_equal(clip = "off") +
+  theme(
+    legend.text = element_text(size = 18),
+    legend.title = element_text(size = 20)  
+  )
