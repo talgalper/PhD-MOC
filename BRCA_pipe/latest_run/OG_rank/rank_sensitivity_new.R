@@ -162,9 +162,9 @@ HHnet_enrich[, c(5:8,15)] <- lapply(HHnet_enrich[, c(5:8,15)], function(x) {
   (x - min(x)) / (max(x) - min(x))
 })
 
-RS_PCSF <- rank_sensitivity(PCSF, ensembl, topx = 10)
-RS_HHnet <- rank_sensitivity(HHnet, ensembl, topx = 10)
-RS_HHnet_enrich <- rank_sensitivity(HHnet_enrich, ensembl, topx = 10)
+RS_PCSF_20 <- rank_sensitivity(PCSF, ensembl, topx = 20)
+RS_HHnet_20 <- rank_sensitivity(HHnet, ensembl, topx = 20)
+RS_HHnet_enrich_20 <- rank_sensitivity(HHnet_enrich, ensembl, topx = 20)
 
 RS_PCSF <- read.csv("latest_run/OG_rank/PCSF_rank_sensitivity_top10.csv", row.names = 1)
 RS_HHnet <- read.csv("latest_run/OG_rank/HHnet_rank_sensitivity_top10.csv", row.names = 1)
@@ -193,3 +193,28 @@ p + scale_fill_distiller(palette = "Oranges", direction = 1) + coord_equal(clip 
     legend.text = element_text(size = 18),
     legend.title = element_text(size = 20)  
   )
+
+
+intersect(RS_HHnet$external_gene_name, intersect(RS_HHnet_enrich$external_gene_name, RS_PCSF$external_gene_name))
+PubTator_counts[symbol %in% c("FHIP1B", "GPR156", "ACAN", "HAO2")]
+
+
+i <- intersect(RS_HHnet_enrich$external_gene_name, RS_PCSF$external_gene_name)
+PubTator_counts[symbol %in% i]$symbol
+
+i <- intersect(RS_HHnet_enrich_no_cit$external_gene_name, RS_PCSF_no_cit$external_gene_name)
+PubTator_counts[symbol %in% i]
+
+
+
+
+
+
+RS_PCSF_20 <- rank_sensitivity(PCSF, ensembl, topx = 20)
+RS_HHnet_20 <- rank_sensitivity(HHnet, ensembl, topx = 20)
+RS_HHnet_enrich_20 <- rank_sensitivity(HHnet_enrich, ensembl, topx = 20)
+
+
+temp <- RS_HHnet_enrich_20[RS_HHnet_enrich_20$external_gene_name %in% targets$drugBank_target, ]
+temp2 <- RS_PCSF_20[RS_PCSF_20$external_gene_name %in% targets$drugBank_target, ]
+
