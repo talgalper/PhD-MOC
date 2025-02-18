@@ -3,6 +3,7 @@
 library(data.table)
 library(igraph)
 library(progress)
+library(tidyverse)
 
 
 druggability <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
@@ -18,10 +19,10 @@ load("latest_run/RData/STN_filt/PCSF_results.RData")
 PCSF <- df
 rm(df)
 
-
 # HHnet
 HHnet <- read.csv("../Hierarchical_HotNet/BRCA/STN_filt/results/df_subnet.csv")
 HHnet_enrich <- read.csv("../Hierarchical_HotNet/BRCA/STN_filt/results/df_subnetNeighs.csv")
+
 
 # PubTator3 counts and get total counts per gene
 PubTator <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/citaiton_counts_ognsmAnnot.csv") # mac
@@ -55,6 +56,15 @@ PCSF[, c(6:9,16)] <- lapply(PCSF[, c(6:9,16)], function(x) {
   (x - min(x)) / (max(x) - min(x))
 })
 
+# choose weights
+betweeness_w <- 1/6
+centrality_w <- 1/6
+closeness_w <- 1/6
+eigen_centrality_w <- 1/6
+druggability_w <- 1/6
+citation_w <- 1/6
+
+# or
 
 betweeness_w <- 0.15
 centrality_w <- 0.25
@@ -73,6 +83,8 @@ combined_score <- betweeness_w * PCSF$betweenness +
 
 PCSF$rank_score <- combined_score
 PCSF <- PCSF[order(-PCSF$rank_score), ]
+PCSF <- rownames_to_column(PCSF)
+
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- targets[, c(2,4)]
@@ -89,12 +101,6 @@ HHnet[, c(5:8,15)] <- lapply(HHnet[, c(5:8,15)], function(x) {
 })
 
 
-betweeness_w <- 0.15
-centrality_w <- 0.25
-closeness_w <- 0.10
-eigen_centrality_w <- 0.15
-druggability_w <- 0.25
-citation_w <- 0.10
 
 # Combine scores using custom weights
 combined_score <- betweeness_w * HHnet$betweenness +
@@ -106,7 +112,7 @@ combined_score <- betweeness_w * HHnet$betweenness +
 
 HHnet$rank_score <- combined_score
 HHnet <- HHnet[order(-HHnet$rank_score), ]
-
+HHnet <- rownames_to_column(HHnet)
 
 
 
@@ -118,13 +124,6 @@ HHnet_enrich[, c(5:8,15)] <- lapply(HHnet_enrich[, c(5:8,15)], function(x) {
 })
 
 
-betweeness_w <- 0.15
-centrality_w <- 0.25
-closeness_w <- 0.10
-eigen_centrality_w <- 0.15
-druggability_w <- 0.25
-citation_w <- 0.10
-
 # Combine scores using custom weights
 combined_score <- betweeness_w * HHnet_enrich$betweenness +
   centrality_w * HHnet_enrich$degree +
@@ -135,6 +134,7 @@ combined_score <- betweeness_w * HHnet_enrich$betweenness +
 
 HHnet_enrich$rank_score <- combined_score
 HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$rank_score), ]
+HHnet_enrich <- rownames_to_column(HHnet_enrich)
 
 
 targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
