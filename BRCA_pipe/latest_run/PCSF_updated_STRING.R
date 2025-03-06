@@ -41,11 +41,10 @@ df$degree_centrality <- centrality[as.character(df$gene_id)]
 df$betweenness <- as.integer(df$betweenness)
 df$degree_centrality <- as.integer(df$degree_centrality)
 df$eigen_centrality <- eigen_centrality(subnet)$vector
+df$page_rank <- page_rank(subnet)$vector
 df$closeness <- closeness(subnet)
 df$prize <- V(subnet)$prize
 df$type <- V(subnet)$type
-
-rownames(df) <- 1:nrow(df)
 
 df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
@@ -65,7 +64,7 @@ ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$descrip
 unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
 unrecognised <- df[!df$gene_id %in% ensembl_converted$ensembl_gene_id, ]
 
-df <- merge.data.table(ensembl_converted, df, by.x = "ensembl_gene_id", by.y = "gene_id", all.y = T)
+df <- merge(ensembl_converted, df, by.x = "ensembl_gene_id", by.y = "gene_id", all.y = T)
 df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
 
