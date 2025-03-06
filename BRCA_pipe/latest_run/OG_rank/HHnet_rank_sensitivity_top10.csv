@@ -1,103 +1,103 @@
-"","external_gene_name","description","count","counts_when_betweeness_0","counts_when_citation_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_eigen_centrality_0","counts_when_closeness_0"
-"1","ATP1B1","ATPase Na+/K+ transporting subunit beta 1",2173,119,126,82,121,66,122
-"2","ATP1A4","ATPase Na+/K+ transporting subunit alpha 4",2122,126,110,91,116,58,116
-"3","ABCC9","ATP binding cassette subfamily C member 9",2050,122,122,102,114,64,122
-"4","ATP1B2","ATPase Na+/K+ transporting subunit beta 2",1967,126,103,71,113,46,113
-"5","ATP1A2","ATPase Na+/K+ transporting subunit alpha 2",1691,120,98,59,102,16,96
-"6","PLN","phospholamban",1628,79,110,43,113,26,98
-"7","FXYD1","FXYD domain containing ion transport regulator 1",1178,98,52,51,78,0,79
-"8","RNF157","ring finger protein 157",1067,66,35,87,44,68,0
-"9","KCNJ8","potassium inwardly rectifying channel subfamily J member 8",1029,90,61,44,51,0,66
-"10","ABCB6","ATP binding cassette subfamily B member 6 (LAN blood group)",871,51,71,25,32,0,50
-"11","ATRNL1","attractin like 1",861,45,25,65,38,51,0
-"12","FOXM1","forkhead box M1",799,0,47,38,35,46,34
-"13","LIN37","lin-37 DREAM MuvB core complex component",739,0,0,61,25,96,57
-"14","FXYD2","FXYD domain containing ion transport regulator 2",717,30,20,14,87,0,26
-"15","ALDH1A2","aldehyde dehydrogenase 1 family member A2",709,0,29,42,14,54,28
-"16","LIN9","lin-9 DREAM MuvB core complex component",696,0,15,48,8,80,45
-"17","MEIS1","Meis homeobox 1",656,11,45,0,20,66,37
-"18","GPAT2","glycerol-3-phosphate acyltransferase 2, mitochondrial",526,28,6,38,13,34,0
-"19","CCNB2","cyclin B2",519,0,23,10,27,37,17
-"20","GPAT3","glycerol-3-phosphate acyltransferase 3",492,21,11,35,8,29,0
-"21","GOT2","glutamic-oxaloacetic transaminase 2",490,0,19,20,18,22,15
-"22","MELK","maternal embryonic leucine zipper kinase",460,0,12,39,2,25,11
-"23","GPAM","glycerol-3-phosphate acyltransferase, mitochondrial",447,17,12,28,6,23,0
-"24","CCR8","C-C motif chemokine receptor 8",404,20,11,0,6,26,11
-"25","SPDYC","speedy/RINGO cell cycle regulator family member C",351,12,0,20,3,14,7
-"26","ELANE","elastase, neutrophil expressed",350,0,32,1,6,20,7
-"27","S100A7","S100 calcium binding protein A7",330,0,8,15,9,14,5
-"28","CXCR3","C-X-C motif chemokine receptor 3",325,6,16,0,3,14,6
-"29","LGALS9B","galectin 9B",286,6,0,11,8,15,6
-"30","DNAAF8","dynein axonemal assembly factor 8",283,9,0,14,6,10,5
-"31","FHIP1B","FHF complex subunit HOOK interacting protein 1B",252,4,0,21,0,13,7
-"32","ZWINT","ZW10 interacting kinetochore protein",251,11,2,0,2,20,5
-"33","ATP6V0C","ATPase H+ transporting V0 subunit c",231,0,0,0,15,37,12
-"34","DPP6","dipeptidyl peptidase like 6",225,0,6,8,1,32,7
-"35","KCNIP4","potassium voltage-gated channel interacting protein 4",211,0,0,22,3,20,7
-"36","IL4I1","interleukin 4 induced 1",200,0,1,18,0,7,3
-"37","BUB1","BUB1 mitotic checkpoint serine/threonine kinase",185,1,18,0,0,16,7
-"38","RIMBP3","RIMS binding protein 3",184,1,0,15,0,11,5
-"39","SLX1A","SLX1 homolog A, structure-specific endonuclease subunit",157,4,0,6,0,3,2
-"40","GPR156","G protein-coupled receptor 156",153,4,0,3,0,4,3
-"41","COLEC10","collectin subfamily member 10",139,10,0,0,0,19,5
-"42","MAOA","monoamine oxidase A",132,0,5,2,0,2,0
-"43","FOXD4L1","forkhead box D4 like 1",120,2,0,2,2,3,1
-"44","C7orf25","chromosome 7 open reading frame 25",119,1,0,1,3,0,0
-"45","MEIS2","Meis homeobox 2",107,6,1,0,0,6,1
-"46","BTNL8","butyrophilin like 8",104,0,0,0,0,23,6
-"47","ALDH2","aldehyde dehydrogenase 2 family member",103,0,7,0,0,5,2
-"48","FXYD7","FXYD domain containing ion transport regulator 7",100,2,0,3,7,0,1
-"49","CLDN9","claudin 9",79,5,0,0,0,11,3
-"50","LCLAT1","lysocardiolipin acyltransferase 1",64,0,0,0,0,4,0
-"51","FXYD3","FXYD domain containing ion transport regulator 3",52,3,1,1,0,0,2
-"52","REEP6","receptor accessory protein 6",45,0,0,2,0,2,0
-"53","MBOAT2","membrane bound O-acyltransferase domain containing 2",42,1,0,0,0,0,0
-"54","KRT2","keratin 2",40,0,0,0,0,0,0
-"55","AGPAT4","1-acylglycerol-3-phosphate O-acyltransferase 4",39,2,0,0,0,0,0
-"56","NMUR1","neuromedin U receptor 1",38,0,0,1,1,2,1
-"57","FAHD2A","fumarylacetoacetate hydrolase domain containing 2A",33,0,0,0,0,0,0
-"58","ZBTB9","zinc finger and BTB domain containing 9",31,0,0,0,0,0,0
-"59","CNR1","cannabinoid receptor 1",30,0,0,0,0,0,0
-"60","CLDN5","claudin 5",29,0,0,0,0,0,0
-"61","NDC80","NDC80 kinetochore complex component",28,0,0,0,0,0,0
-"62","SLC8A2","solute carrier family 8 member A2",28,0,0,0,0,0,0
-"63","FHIP1A","FHF complex subunit HOOK interacting protein 1A",22,0,0,0,0,0,0
-"64","NHERF4","NHERF family PDZ scaffold protein 4",22,0,0,0,0,0,0
-"65","RNASEK","ribonuclease K",21,0,0,0,0,0,0
-"66","CCNP","cyclin P",20,0,0,0,0,0,0
-"67","SMIM3","small integral membrane protein 3",14,0,0,0,0,0,0
-"68","GPR55","G protein-coupled receptor 55",12,0,0,1,0,0,0
-"69","ACAN","aggrecan",11,0,0,0,0,0,0
-"70","KCNC2","potassium voltage-gated channel subfamily C member 2",11,0,0,0,0,0,0
-"71","FXYD6","FXYD domain containing ion transport regulator 6",10,1,0,0,0,0,1
-"72","PLA2G2C","phospholipase A2 group IIC",10,0,0,0,0,0,0
-"73","ERP27","endoplasmic reticulum protein 27",9,0,0,0,0,0,0
-"74","GJB2","gap junction protein beta 2",9,0,0,0,0,0,0
-"75","HAO2","hydroxyacid oxidase 2",8,0,0,0,0,0,0
-"76","ABHD16A","abhydrolase domain containing 16A, phospholipase",7,0,0,0,0,0,0
-"77","KRT6A","keratin 6A",7,0,0,0,0,0,0
-"78","PROCR","protein C receptor",7,0,0,0,0,0,0
-"79","AGPAT5","1-acylglycerol-3-phosphate O-acyltransferase 5",6,0,0,0,0,0,0
-"80","MUC3A","mucin 3A, cell surface associated",6,0,0,0,0,0,0
-"81","ADORA2A","adenosine A2a receptor",5,0,0,0,0,0,0
-"82","KRT81","keratin 81",5,0,0,0,0,0,0
-"83","MBOAT7","membrane bound O-acyltransferase domain containing 7",5,0,0,0,0,0,0
-"84","SLC9A3","solute carrier family 9 member A3",4,0,0,0,0,0,0
-"85","CENPE","centromere protein E",3,0,0,0,0,0,0
-"86","KRT6C","keratin 6C",3,0,0,0,0,0,0
-"87","KRT86","keratin 86",3,0,0,0,0,0,0
-"88","FAM241B","family with sequence similarity 241 member B",2,0,0,0,0,0,0
-"89","GPR171","G protein-coupled receptor 171",2,0,0,0,0,0,0
-"90","KRT31","keratin 31",2,0,0,0,0,0,0
-"91","KRT4","keratin 4",2,0,0,0,0,0,0
-"92","KRT40","keratin 40",2,0,0,0,0,0,0
-"93","LPCAT4","lysophosphatidylcholine acyltransferase 4",2,0,0,0,0,0,0
-"94","OSBP2","oxysterol binding protein 2",2,0,0,0,0,0,0
-"95","PLA2G2D","phospholipase A2 group IID",2,0,0,0,0,0,0
-"96","ADIPOR1","adiponectin receptor 1",1,0,0,0,0,0,0
-"97","ATP2A3","ATPase sarcoplasmic/endoplasmic reticulum Ca2+ transporting 3",1,0,0,0,0,0,0
-"98","CA2","carbonic anhydrase 2",1,0,0,0,0,0,0
-"99","F12","coagulation factor XII",1,0,0,0,0,0,0
-"100","MAD2L1BP","MAD2L1 binding protein",1,0,0,0,0,0,0
-"101","PAFAH2","platelet activating factor acetylhydrolase 2",1,0,0,0,0,0,0
-"102","TMBIM4","transmembrane BAX inhibitor motif containing 4",1,0,0,0,0,0,0
+"external_gene_name","description","count","counts_when_betweenness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_eigen_centrality_0","counts_when_closeness_0","counts_when_citation_0"
+"ATP1B1","ATPase Na+/K+ transporting subunit beta 1",2173,119,82,121,66,122,126
+"ATP1A4","ATPase Na+/K+ transporting subunit alpha 4",2122,126,91,116,58,116,110
+"ABCC9","ATP binding cassette subfamily C member 9",2050,122,102,114,64,122,122
+"ATP1B2","ATPase Na+/K+ transporting subunit beta 2",1967,126,71,113,46,113,103
+"ATP1A2","ATPase Na+/K+ transporting subunit alpha 2",1691,120,59,102,16,96,98
+"PLN","phospholamban",1628,79,43,113,26,98,110
+"FXYD1","FXYD domain containing ion transport regulator 1",1178,98,51,78,0,79,52
+"RNF157","ring finger protein 157",1067,66,87,44,68,0,35
+"KCNJ8","potassium inwardly rectifying channel subfamily J member 8",1029,90,44,51,0,66,61
+"ABCB6","ATP binding cassette subfamily B member 6 (LAN blood group)",871,51,25,32,0,50,71
+"ATRNL1","attractin like 1",861,45,65,38,51,0,25
+"FOXM1","forkhead box M1",799,0,38,35,46,34,47
+"LIN37","lin-37 DREAM MuvB core complex component",739,0,61,25,96,57,0
+"FXYD2","FXYD domain containing ion transport regulator 2",717,30,14,87,0,26,20
+"ALDH1A2","aldehyde dehydrogenase 1 family member A2",709,0,42,14,54,28,29
+"LIN9","lin-9 DREAM MuvB core complex component",696,0,48,8,80,45,15
+"MEIS1","Meis homeobox 1",656,11,0,20,66,37,45
+"GPAT2","glycerol-3-phosphate acyltransferase 2, mitochondrial",526,28,38,13,34,0,6
+"CCNB2","cyclin B2",519,0,10,27,37,17,23
+"GPAT3","glycerol-3-phosphate acyltransferase 3",492,21,35,8,29,0,11
+"GOT2","glutamic-oxaloacetic transaminase 2",490,0,20,18,22,15,19
+"MELK","maternal embryonic leucine zipper kinase",460,0,39,2,25,11,12
+"GPAM","glycerol-3-phosphate acyltransferase, mitochondrial",447,17,28,6,23,0,12
+"CCR8","C-C motif chemokine receptor 8",404,20,0,6,26,11,11
+"SPDYC","speedy/RINGO cell cycle regulator family member C",351,12,20,3,14,7,0
+"ELANE","elastase, neutrophil expressed",350,0,1,6,20,7,32
+"S100A7","S100 calcium binding protein A7",330,0,15,9,14,5,8
+"CXCR3","C-X-C motif chemokine receptor 3",325,6,0,3,14,6,16
+"LGALS9B","galectin 9B",286,6,11,8,15,6,0
+"DNAAF8","dynein axonemal assembly factor 8",283,9,14,6,10,5,0
+"FHIP1B","FHF complex subunit HOOK interacting protein 1B",252,4,21,0,13,7,0
+"ZWINT","ZW10 interacting kinetochore protein",251,11,0,2,20,5,2
+"ATP6V0C","ATPase H+ transporting V0 subunit c",231,0,0,15,37,12,0
+"DPP6","dipeptidyl peptidase like 6",225,0,8,1,32,7,6
+"KCNIP4","potassium voltage-gated channel interacting protein 4",211,0,22,3,20,7,0
+"IL4I1","interleukin 4 induced 1",200,0,18,0,7,3,1
+"BUB1","BUB1 mitotic checkpoint serine/threonine kinase",185,1,0,0,16,7,18
+"RIMBP3","RIMS binding protein 3",184,1,15,0,11,5,0
+"SLX1A","SLX1 homolog A, structure-specific endonuclease subunit",157,4,6,0,3,2,0
+"GPR156","G protein-coupled receptor 156",153,4,3,0,4,3,0
+"COLEC10","collectin subfamily member 10",139,10,0,0,19,5,0
+"MAOA","monoamine oxidase A",132,0,2,0,2,0,5
+"FOXD4L1","forkhead box D4 like 1",120,2,2,2,3,1,0
+"C7orf25","chromosome 7 open reading frame 25",119,1,1,3,0,0,0
+"MEIS2","Meis homeobox 2",107,6,0,0,6,1,1
+"BTNL8","butyrophilin like 8",104,0,0,0,23,6,0
+"ALDH2","aldehyde dehydrogenase 2 family member",103,0,0,0,5,2,7
+"FXYD7","FXYD domain containing ion transport regulator 7",100,2,3,7,0,1,0
+"CLDN9","claudin 9",79,5,0,0,11,3,0
+"LCLAT1","lysocardiolipin acyltransferase 1",64,0,0,0,4,0,0
+"FXYD3","FXYD domain containing ion transport regulator 3",52,3,1,0,0,2,1
+"REEP6","receptor accessory protein 6",45,0,2,0,2,0,0
+"MBOAT2","membrane bound O-acyltransferase domain containing 2",42,1,0,0,0,0,0
+"KRT2","keratin 2",40,0,0,0,0,0,0
+"AGPAT4","1-acylglycerol-3-phosphate O-acyltransferase 4",39,2,0,0,0,0,0
+"NMUR1","neuromedin U receptor 1",38,0,1,1,2,1,0
+"FAHD2A","fumarylacetoacetate hydrolase domain containing 2A",33,0,0,0,0,0,0
+"ZBTB9","zinc finger and BTB domain containing 9",31,0,0,0,0,0,0
+"CNR1","cannabinoid receptor 1",30,0,0,0,0,0,0
+"CLDN5","claudin 5",29,0,0,0,0,0,0
+"NDC80","NDC80 kinetochore complex component",28,0,0,0,0,0,0
+"SLC8A2","solute carrier family 8 member A2",28,0,0,0,0,0,0
+"FHIP1A","FHF complex subunit HOOK interacting protein 1A",22,0,0,0,0,0,0
+"NHERF4","NHERF family PDZ scaffold protein 4",22,0,0,0,0,0,0
+"RNASEK","ribonuclease K",21,0,0,0,0,0,0
+"CCNP","cyclin P",20,0,0,0,0,0,0
+"SMIM3","small integral membrane protein 3",14,0,0,0,0,0,0
+"GPR55","G protein-coupled receptor 55",12,0,1,0,0,0,0
+"ACAN","aggrecan",11,0,0,0,0,0,0
+"KCNC2","potassium voltage-gated channel subfamily C member 2",11,0,0,0,0,0,0
+"FXYD6","FXYD domain containing ion transport regulator 6",10,1,0,0,0,1,0
+"PLA2G2C","phospholipase A2 group IIC",10,0,0,0,0,0,0
+"ERP27","endoplasmic reticulum protein 27",9,0,0,0,0,0,0
+"GJB2","gap junction protein beta 2",9,0,0,0,0,0,0
+"HAO2","hydroxyacid oxidase 2",8,0,0,0,0,0,0
+"ABHD16A","abhydrolase domain containing 16A, phospholipase",7,0,0,0,0,0,0
+"KRT6A","keratin 6A",7,0,0,0,0,0,0
+"PROCR","protein C receptor",7,0,0,0,0,0,0
+"AGPAT5","1-acylglycerol-3-phosphate O-acyltransferase 5",6,0,0,0,0,0,0
+"MUC3A","mucin 3A, cell surface associated",6,0,0,0,0,0,0
+"ADORA2A","adenosine A2a receptor",5,0,0,0,0,0,0
+"KRT81","keratin 81",5,0,0,0,0,0,0
+"MBOAT7","membrane bound O-acyltransferase domain containing 7",5,0,0,0,0,0,0
+"SLC9A3","solute carrier family 9 member A3",4,0,0,0,0,0,0
+"CENPE","centromere protein E",3,0,0,0,0,0,0
+"KRT6C","keratin 6C",3,0,0,0,0,0,0
+"KRT86","keratin 86",3,0,0,0,0,0,0
+"FAM241B","family with sequence similarity 241 member B",2,0,0,0,0,0,0
+"GPR171","G protein-coupled receptor 171",2,0,0,0,0,0,0
+"KRT31","keratin 31",2,0,0,0,0,0,0
+"KRT4","keratin 4",2,0,0,0,0,0,0
+"KRT40","keratin 40",2,0,0,0,0,0,0
+"LPCAT4","lysophosphatidylcholine acyltransferase 4",2,0,0,0,0,0,0
+"OSBP2","oxysterol binding protein 2",2,0,0,0,0,0,0
+"PLA2G2D","phospholipase A2 group IID",2,0,0,0,0,0,0
+"ADIPOR1","adiponectin receptor 1",1,0,0,0,0,0,0
+"ATP2A3","ATPase sarcoplasmic/endoplasmic reticulum Ca2+ transporting 3",1,0,0,0,0,0,0
+"CA2","carbonic anhydrase 2",1,0,0,0,0,0,0
+"F12","coagulation factor XII",1,0,0,0,0,0,0
+"MAD2L1BP","MAD2L1 binding protein",1,0,0,0,0,0,0
+"PAFAH2","platelet activating factor acetylhydrolase 2",1,0,0,0,0,0,0
+"TMBIM4","transmembrane BAX inhibitor motif containing 4",1,0,0,0,0,0,0
