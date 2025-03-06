@@ -124,10 +124,11 @@ save(ML_bagging_results, feature_importance, model_prediction_results, plot_resu
 load("~/OneDrive - RMIT University/PhD/large_git_files/ML/ML_bagging_more_features(100itr).RData")
 
 
+
 ## compare results with network methods
 HHnet_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/HHnet_rank_sensitivity_top10.csv", row.names = 1)
-HHnetEnrich_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/HHnetEnrich_rank_sensitivity_top10.csv", row.names = 1)
-PCSF_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/PCSF_rank_sensitivity_top10.csv", row.names = 1)
+HHnetEnrich_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/HHnet_rank_sensitivity_noCite.csv")
+PCSF_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/PCSF_rank_sensitivity_noCite.csv")
 
 feature_data_scores_appended <- model_prediction_results$feature_data_scores_appended
 
@@ -213,7 +214,7 @@ ggVennDiagram(venn_data, label = c("count"), set_size = 8, label_size = 6) +
 
 # intersection of RS genes and ML predicted targets
 rownames(HHnetEnrich_RS) <- NULL
-temp3 <- HHnetEnrich_RS[HHnetEnrich_RS$uniprot_gn_id %in% ML_novels, ]
+temp3 <- HHnetEnrich_RS[HHnetEnrich_RS$uniprot_gn_id %in% predicted_targets, ]
 #temp3 <- temp3[!temp3$uniprot_gn_id %in% training_data$positive_set$Protein, ]
 
 temp3 <- PCSF_RS[PCSF_RS$uniprot_gn_id %in% predicted_targets, ]
@@ -225,7 +226,7 @@ temp4 <- temp4[!duplicated(temp4[, c("all_target_genes", "INDICATION")]), ]
 length(unique(temp4$all_target_genes))
 
 # get cancer, non-cancer and unknown related targets
-pattern <- paste(c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma"), collapse = "|")
+pattern <- paste(c("cancer", "carcinoma", "leukemia", "leukaemia", "neoplasm", "metastases", "tumour", "adenoma", "sarcoma"), collapse = "|")
 cancer_related <- temp4[grepl(pattern, temp4$INDICATION, ignore.case = TRUE), ]
 length(unique((cancer_related$all_target_genes)))
 nonCancer_related <- temp4[!temp4$all_target_genes %in% unique(cancer_related$all_target_genes), ]
@@ -233,6 +234,26 @@ unknown_indication <- nonCancer_related[is.na(nonCancer_related$INDICATION) & !d
 nonCancer_related <- nonCancer_related[!nonCancer_related$all_target_genes %in% unknown_indication$all_target_genes, ]
 nonCancer_related <- temp3[temp3$hgnc_symbol %in% unique(nonCancer_related$all_target_genes), ]
 unknown_indication <- temp3[temp3$hgnc_symbol %in% unique(unknown_indication$all_target_genes), ]
+no_TTD <- temp3[!temp3$hgnc_symbol %in% c(cancer_related$all_target_genes, nonCancer_related$hgnc_symbol, unknown_indication$hgnc_symbol), ]
+
+
+# total breast cancer related drugs
+breast_targets <- TTD_master[grepl("breast", TTD_master$INDICATION, ignore.case = TRUE), ]
+breast_targets <- breast_targets[breast_targets$HighestClinicalStatus == "Approved", ]
+
+breast_targets <- unique(breast_targets$all_target_genes)
+breast_targets <- na.omit(breast_targets)
+breast_targets <- strsplit(breast_targets, ";")
+breast_targets <- unlist(breast_targets)
+breast_targets <- strsplit(breast_targets, "/")
+breast_targets <- unlist(breast_targets)
+breast_targets <- unique(breast_targets)
+breast_targets <- trimws(breast_targets)
+
+table(breast_targets %in% temp3$hgnc_symbol)
+
+
+
 
 
 
