@@ -1,0 +1,115 @@
+"","external_gene_name","description","count","counts_when_betweeness_0","counts_when_citation_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_eigen_centrality_0","counts_when_closeness_0"
+"1","UBA52","ubiquitin A-52 residue ribosomal protein fusion product 1",2852,126,126,126,126,126,126
+"2","RPS27A","ribosomal protein S27a",2732,124,125,122,126,123,125
+"3","UBC","ubiquitin C",2591,119,126,115,125,116,122
+"4","HSP90AA1","heat shock protein 90 alpha family class A member 1",2353,96,126,102,113,108,104
+"5","UBB","ubiquitin B",2320,123,112,109,125,104,121
+"6","EGFR","epidermal growth factor receptor",2214,63,126,96,116,110,104
+"7","CTNNB1","catenin beta 1",1968,33,126,84,102,102,90
+"8","TP53","tumor protein p53",1933,59,120,68,116,70,86
+"9","H4C6","H4 clustered histone 6",1735,115,83,90,88,47,109
+"10","ESR1","estrogen receptor 1",1028,19,92,65,1,45,35
+"11","H3C12","H3 clustered histone 12",964,93,0,69,29,35,53
+"12","FN1","fibronectin 1",840,0,39,28,46,60,25
+"13","SRC","SRC proto-oncogene, non-receptor tyrosine kinase",775,9,35,6,37,64,10
+"14","H3C13","H3 clustered histone 13",677,74,0,46,18,21,37
+"15","EP300","E1A binding protein p300",573,41,16,7,45,0,23
+"16","IGKV1D-33","immunoglobulin kappa variable 1D-33",406,16,0,17,5,25,14
+"17","H2BC12","H2B clustered histone 12",352,49,0,23,3,2,19
+"18","IGKV2D-40","immunoglobulin kappa variable 2D-40",264,4,0,9,5,13,6
+"19","POTEC","POTE ankyrin domain family member C",243,3,0,7,0,9,8
+"20","HDAC1","histone deacetylase 1",228,20,6,4,0,6,6
+"21","H4C13","H4 clustered histone 13",183,21,0,11,3,0,10
+"22","CALML4","calmodulin like 4",171,6,0,6,4,20,0
+"23","SPDYC","speedy/RINGO cell cycle regulator family member C",146,2,0,5,0,4,3
+"24","IGLV10-54","immunoglobulin lambda variable 10-54",138,0,0,0,6,1,0
+"25","RIMBP3B","RIMS binding protein 3B",138,1,0,2,1,1,5
+"26","ATP5MGL","ATP synthase membrane subunit g like",137,1,0,1,2,2,2
+"27","CLDN24","claudin 24",136,1,0,3,0,4,4
+"28","LRRK2","leucine rich repeat kinase 2",118,0,1,5,0,8,0
+"29","H4C15","H4 clustered histone 15",117,13,0,10,1,0,6
+"30","NUDCD1","NudC domain containing 1",114,0,0,4,4,11,1
+"31","H2AC8","H2A clustered histone 8",110,21,0,6,0,0,3
+"32","CAPZA3","capping actin protein of muscle Z-line subunit alpha 3",104,0,0,0,0,4,1
+"33","HSP90AB1","heat shock protein 90 alpha family class B member 1",87,1,0,0,10,0,0
+"34","BOD1L2","biorientation of chromosomes in cell division 1 like 2",84,0,0,1,1,1,0
+"35","HSPA4","heat shock protein family A (Hsp70) member 4",84,0,0,1,0,2,0
+"36","SLCO6A1","solute carrier organic anion transporter family member 6A1",80,0,0,5,0,4,0
+"37","DNAAF8","dynein axonemal assembly factor 8",78,0,0,0,0,0,1
+"38","CD44","CD44 molecule (IN blood group)",75,0,0,0,0,2,0
+"39","BRD4","bromodomain containing 4",71,1,1,1,0,1,1
+"40","GRB2","growth factor receptor bound protein 2",63,0,0,0,0,4,0
+"41","H3-7","H3.7 histone (putative)",53,3,0,3,2,0,0
+"42","APP","amyloid beta precursor protein",49,0,0,0,0,0,0
+"43","PNLIPRP3","pancreatic lipase related protein 3",47,0,0,0,0,0,0
+"44","RMND5B","required for meiotic nuclear division 5 homolog B",44,0,0,0,0,0,0
+"45","FHIP1B","FHF complex subunit HOOK interacting protein 1B",42,0,0,0,0,0,0
+"46","HAUS6","HAUS augmin like complex subunit 6",32,0,0,0,0,2,0
+"47","H4C9","H4 clustered histone 9",31,3,0,2,0,0,0
+"48","CYB561A3","cytochrome b561 family member A3",30,0,0,0,0,0,0
+"49","GPR156","G protein-coupled receptor 156",30,0,0,0,0,0,0
+"50","LGALS9B","galectin 9B",30,0,0,0,0,0,0
+"51","RIMBP3C","RIMS binding protein 3C",30,0,0,0,0,0,0
+"52","SLX1A","SLX1 homolog A, structure-specific endonuclease subunit",29,0,0,1,0,0,0
+"53","IGKV1-33","immunoglobulin kappa variable 1-33",27,0,0,0,0,2,0
+"54","CALML6","calmodulin like 6",26,0,0,0,0,0,0
+"55","H4C5","H4 clustered histone 5",25,0,0,0,0,0,0
+"56","FYN","FYN proto-oncogene, Src family tyrosine kinase",18,0,0,0,0,0,0
+"57","KDM1A","lysine demethylase 1A",18,0,0,0,0,0,0
+"58","TRABD","TraB domain containing",15,0,0,0,0,0,0
+"59","RPS3A","ribosomal protein S3A",14,0,0,0,0,0,0
+"60","C7orf25","chromosome 7 open reading frame 25",12,0,0,0,0,0,0
+"61","GNB1","G protein subunit beta 1",12,0,0,0,0,1,0
+"62","KCNAB3","potassium voltage-gated channel subfamily A regulatory beta subunit 3",12,0,0,0,0,0,0
+"63","WDCP","WD repeat and coiled coil containing",10,0,0,0,0,0,0
+"64","NR3C1","nuclear receptor subfamily 3 group C member 1",8,0,0,0,0,0,0
+"65","H4C11","H4 clustered histone 11",6,0,0,0,0,0,0
+"66","TLNRD1","talin rod domain containing 1",6,0,0,0,0,0,0
+"67","CENPU","centromere protein U",5,0,0,0,0,0,0
+"68","FAM170A","family with sequence similarity 170 member A",5,0,0,0,0,0,0
+"69","SCARB2","scavenger receptor class B member 2",5,0,0,0,0,0,0
+"70","ACER1","alkaline ceramidase 1",4,0,0,0,0,0,0
+"71","CD36","CD36 molecule (CD36 blood group)",4,0,0,0,0,0,0
+"72","CMTM5","CKLF like MARVEL transmembrane domain containing 5",4,0,0,0,0,0,0
+"73","BIRC6","baculoviral IAP repeat containing 6",3,0,0,0,0,0,0
+"74","CD9","CD9 molecule",3,0,0,0,0,0,0
+"75","MDM2","MDM2 proto-oncogene",3,0,0,0,0,0,0
+"76","PPM1B","protein phosphatase, Mg2+/Mn2+ dependent 1B",3,0,0,0,0,0,0
+"77","TGFB1","transforming growth factor beta 1",3,0,0,0,0,0,0
+"78","ABHD16A","abhydrolase domain containing 16A, phospholipase",2,0,0,0,0,0,0
+"79","ACAN","aggrecan",2,0,0,0,0,0,0
+"80","ADGRL2","adhesion G protein-coupled receptor L2",2,0,0,0,0,0,0
+"81","AKT1","AKT serine/threonine kinase 1",2,0,0,0,0,0,0
+"82","DCTN1","dynactin subunit 1",2,0,0,0,0,0,0
+"83","DOLK","dolichol kinase",2,0,0,0,0,0,0
+"84","H3C1","H3 clustered histone 1",2,0,0,0,0,0,0
+"85","HDAC8","histone deacetylase 8",2,0,0,0,0,0,0
+"86","PSMD2","proteasome 26S subunit ubiquitin receptor, non-ATPase 2",2,0,0,0,0,0,0
+"87","REEP6","receptor accessory protein 6",2,0,0,0,0,0,0
+"88","RXRA","retinoid X receptor alpha",2,0,0,0,0,0,0
+"89","SCARB1","scavenger receptor class B member 1",2,0,0,0,0,0,0
+"90","STAT3","signal transducer and activator of transcription 3",2,0,0,0,0,0,0
+"91","ABCC8","ATP binding cassette subfamily C member 8",1,0,0,0,0,0,0
+"92","ADIPOR2","adiponectin receptor 2",1,0,0,0,0,0,0
+"93","AGPAT3","1-acylglycerol-3-phosphate O-acyltransferase 3",1,0,0,0,0,0,0
+"94","BRCA1","BRCA1 DNA repair associated",1,0,0,0,0,0,0
+"95","CACNA1A","calcium voltage-gated channel subunit alpha1 A",1,0,0,0,0,0,0
+"96","COX15","cytochrome c oxidase assembly homolog COX15",1,0,0,0,0,0,0
+"97","CREBBP","CREB binding protein",1,0,0,0,0,0,0
+"98","DAO","D-amino acid oxidase",1,0,0,0,0,0,0
+"99","DNAJA1","DnaJ heat shock protein family (Hsp40) member A1",1,0,0,0,0,0,0
+"100","ERV3-1","endogenous retrovirus group 3 member 1, envelope",1,0,0,0,0,0,0
+"101","FANCC","FA complementation group C",1,0,0,0,0,0,0
+"102","HAO2","hydroxyacid oxidase 2",1,0,0,0,0,0,0
+"103","ITPR1","inositol 1,4,5-trisphosphate receptor type 1",1,0,0,0,0,0,0
+"104","LCK","LCK proto-oncogene, Src family tyrosine kinase",1,0,0,0,0,0,0
+"105","MAOB","monoamine oxidase B",1,0,0,0,0,0,0
+"106","MAPK1","mitogen-activated protein kinase 1",1,0,0,0,0,0,0
+"107","MYCBP2","MYC binding protein 2",1,0,0,0,0,0,0
+"108","RPP38","ribonuclease P/MRP subunit p38",1,0,0,0,0,0,0
+"109","SMO","smoothened, frizzled class receptor",1,0,0,0,0,0,0
+"110","SYK","spleen associated tyrosine kinase",1,0,0,0,0,0,0
+"111","TAFAZZIN","tafazzin, phospholipid-lysophospholipid transacylase",1,0,0,0,0,0,0
+"112","TCIRG1","T cell immune regulator 1, ATPase H+ transporting V0 subunit a3",1,0,0,0,0,0,0
+"113","TMEM208","transmembrane protein 208",1,0,0,0,0,0,0
+"114","TRAF6","TNF receptor associated factor 6",1,0,0,0,0,0,0
