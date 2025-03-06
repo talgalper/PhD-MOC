@@ -1,144 +1,148 @@
-"","external_gene_name","description","count","counts_when_betweeness_0","counts_when_citation_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_eigen_centrality_0","counts_when_closeness_0"
-"1","TRIM28","tripartite motif containing 28",1760,94,107,59,88,41,120
-"2","WDR76","WD repeat domain 76",1426,1,86,59,84,88,126
-"3","CNTNAP3","contactin associated protein family member 3",1356,100,64,116,52,79,0
-"4","ESR1","estrogen receptor 1",1319,11,94,34,52,64,96
-"5","ZNF813","zinc finger protein 813",1262,100,28,111,70,77,0
-"6","SDSL","serine dehydratase like",1120,84,46,98,41,63,0
-"7","ZDHHC8","zinc finger DHHC-type palmitoyltransferase 8",987,87,68,96,0,62,0
-"8","HSP90AA1","heat shock protein 90 alpha family class A member 1",922,38,74,0,32,40,64
-"9","CFAP298","cilia and flagella associated protein 298",918,88,50,97,0,63,0
-"10","EDEM3","ER degradation enhancing alpha-mannosidase like protein 3",867,0,39,29,54,49,77
-"11","GNB3","G protein subunit beta 3",813,18,62,5,15,54,99
-"12","OBP2B","odorant binding protein 2B",770,55,54,71,0,44,0
-"13","ZNF816","zinc finger protein 816",758,70,0,78,66,54,0
-"14","CLTC","clathrin heavy chain",694,0,52,17,25,35,63
-"15","CNTNAP3B","contactin associated protein family member 3B",643,45,0,50,73,38,0
-"16","HSPA8","heat shock protein family A (Hsp70) member 8",607,0,40,15,33,23,38
-"17","BRCA1","BRCA1 DNA repair associated",583,21,35,0,28,19,26
-"18","ELMOD3","ELMO domain containing 3",582,46,0,53,57,35,0
-"19","EGFR","epidermal growth factor receptor",576,26,42,0,15,20,27
-"20","SDS","serine dehydratase",576,23,61,28,0,17,0
-"21","CHST7","carbohydrate sulfotransferase 7",557,55,16,56,0,44,0
-"22","HAUS7","HAUS augmin like complex subunit 7",536,0,11,23,6,41,91
-"23","TP53","tumor protein p53",502,15,34,0,21,14,16
-"24","GRB2","growth factor receptor bound protein 2",488,26,23,0,16,16,23
-"25","HSD17B13","hydroxysteroid 17-beta dehydrogenase 13",472,10,57,11,0,7,0
-"26","MSANTD7","Myb/SANT DNA binding domain containing 7",384,17,0,19,9,11,23
-"27","GNG2","G protein subunit gamma 2",379,18,6,0,31,10,14
-"28","CHST3","carbohydrate sulfotransferase 3",377,13,35,14,0,12,0
-"29","GNG10","G protein subunit gamma 10",363,0,0,0,62,9,10
-"30","PAK1","p21 (RAC1) activated kinase 1",337,0,20,14,3,11,18
-"31","CALML4","calmodulin like 4",333,38,0,0,8,19,35
-"32","ZNF737","zinc finger protein 737",331,13,1,19,0,0,25
-"33","SH3GL2","SH3 domain containing GRB2 like 2, endophilin A1",316,0,9,6,26,12,17
-"34","BRINP2","BMP/retinoic acid inducible neural specific 2",283,0,0,0,57,0,0
-"35","CETN2","centrin 2",273,0,7,17,0,9,17
-"36","NAALAD2","N-acetylated alpha-linked acidic dipeptidase 2",267,0,0,0,50,0,0
-"37","REELD1","reeler domain containing 1",267,9,0,10,5,7,14
-"38","COMMD5","COMM domain containing 5",265,3,0,1,30,17,32
-"39","B3GALT1","beta-1,3-galactosyltransferase 1",255,0,0,0,46,0,0
-"40","GNG13","G protein subunit gamma 13",243,9,0,0,22,0,0
-"41","CIMIP2C","ciliary microtubule inner protein 2C",210,23,0,0,0,10,27
-"42","GNG3","G protein subunit gamma 3",203,0,0,0,35,2,2
-"43","CFAP144","cilia and flagella associated protein 144",187,21,0,0,0,6,25
-"44","IQCJ-SCHIP1","IQCJ-SCHIP1 readthrough",179,3,0,6,2,3,9
-"45","SCGB1D2","secretoglobin family 1D member 2",165,0,0,0,24,0,0
-"46","TMEM249","transmembrane protein 249",164,5,0,2,0,2,12
-"47","ZNF610","zinc finger protein 610",155,5,0,5,0,0,11
-"48","RAMACL","RNA guanine-7 methyltransferase activating subunit like",154,1,0,3,8,1,3
-"49","ZNF552","zinc finger protein 552",135,3,0,3,0,0,8
-"50","SRD5A1","steroid 5 alpha-reductase 1",125,9,7,9,0,5,0
-"51","ZNF724","zinc finger protein 724",118,3,0,3,1,0,6
-"52","HSPA4","heat shock protein family A (Hsp70) member 4",106,3,5,0,0,0,0
-"53","ZNF468","zinc finger protein 468",105,2,0,2,0,0,9
-"54","MYC","MYC proto-oncogene, bHLH transcription factor",102,0,1,0,0,0,0
-"55","KIF19","kinesin family member 19",98,7,0,0,0,8,23
-"56","KCNAB3","potassium voltage-gated channel subfamily A regulatory beta subunit 3",93,9,0,0,0,1,10
-"57","H2AX","H2A.X variant histone",90,0,15,0,0,1,4
-"58","TUBB8B","tubulin beta 8B",88,1,0,1,2,1,1
-"59","FYN","FYN proto-oncogene, Src family tyrosine kinase",87,3,4,0,0,0,1
-"60","ZNF681","zinc finger protein 681",85,0,0,0,1,0,5
-"61","ZNF480","zinc finger protein 480",76,1,0,1,0,0,4
-"62","EPHB3","EPH receptor B3",72,0,0,4,0,0,0
-"63","CCDC196","coiled-coil domain containing 196",71,0,0,1,0,0,2
-"64","TGFA","transforming growth factor alpha",69,0,0,0,0,0,0
-"65","MATCAP1","microtubule associated tyrosine carboxypeptidase 1",67,0,0,0,0,0,0
-"66","NAALADL2","N-acetylated alpha-linked acidic dipeptidase like 2",59,7,0,7,0,7,0
-"67","SRD5A3","steroid 5 alpha-reductase 3",59,5,1,6,0,2,0
-"68","ZNF564","zinc finger protein 564",59,0,0,0,3,0,0
-"69","ZNF730","zinc finger protein 730",51,0,0,0,2,0,0
-"70","ZNF727","zinc finger protein 727",48,0,0,0,2,0,0
-"71","SRD5A2","steroid 5 alpha-reductase 2",45,2,3,1,0,1,0
-"72","GOLGA8R","golgin A8 family member R",44,0,0,0,0,0,0
-"73","GNG5","G protein subunit gamma 5",42,0,0,0,1,0,0
-"74","H2BC5","H2B clustered histone 5",40,0,0,0,0,2,5
-"75","H2BC7","H2B clustered histone 7",40,0,0,0,0,0,12
-"76","CALML5","calmodulin like 5",39,9,0,0,0,0,0
-"77","CFAP90","cilia and flagella associated protein 90",39,0,0,0,1,0,0
-"78","ZNF233","zinc finger protein 233",39,0,0,0,0,0,1
-"79","ZNF678","zinc finger protein 678",38,0,0,0,0,0,0
-"80","SLURP2","secreted LY6/PLAUR domain containing 2",37,0,0,0,1,0,0
-"81","CFAP141","cilia and flagella associated protein 141",33,0,0,0,0,0,0
-"82","ZNF700","zinc finger protein 700",33,0,0,0,0,0,1
-"83","PIERCE2","piercer of microtubule wall 2",29,2,0,0,0,0,0
-"84","OR52B2","olfactory receptor family 52 subfamily B member 2",28,0,0,0,0,0,0
-"85","YWHAZ","tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein zeta",26,0,2,0,0,1,4
-"86","SPDYE2","speedy/RINGO cell cycle regulator family member E2",25,0,0,0,0,0,0
-"87","ZNF20","zinc finger protein 20",25,0,0,0,0,0,0
-"88","KIF25","kinesin family member 25",24,3,0,0,0,0,0
-"89","ZNF485","zinc finger protein 485",24,0,0,0,0,0,0
-"90","ZNF449","zinc finger protein 449",21,0,0,0,0,0,0
-"91","ZNF860","zinc finger protein 860",20,0,0,0,0,0,0
-"92","HLA-DQB2","major histocompatibility complex, class II, DQ beta 2",19,0,0,0,0,0,1
-"93","CCT3","chaperonin containing TCP1 subunit 3",18,0,1,0,0,0,0
-"94","WDCP","WD repeat and coiled coil containing",16,0,0,0,0,0,0
-"95","EZR","ezrin",15,0,0,0,0,0,0
-"96","RFC3","replication factor C subunit 3",14,0,0,0,0,3,3
-"97","UGT3A2","UDP glycosyltransferase family 3 member A2",13,0,0,0,0,0,0
-"98","FHIP1B","FHF complex subunit HOOK interacting protein 1B",11,0,0,0,0,0,0
-"99","CFAP53","cilia and flagella associated protein 53",10,0,0,0,0,0,0
-"100","TMEM52B","transmembrane protein 52B",10,0,0,0,0,0,0
-"101","ZNF43","zinc finger protein 43",10,0,0,0,0,0,0
-"102","ZNF626","zinc finger protein 626",10,0,0,0,0,0,0
-"103","ZNF696","zinc finger protein 696",9,0,0,0,0,0,0
-"104","ADCY5","adenylate cyclase 5",8,0,0,0,0,0,0
-"105","GPR156","G protein-coupled receptor 156",8,0,0,0,0,0,0
-"106","CACNA1G","calcium voltage-gated channel subunit alpha1 G",7,0,0,0,0,0,0
-"107","CD36","CD36 molecule (CD36 blood group)",7,0,0,0,0,0,0
-"108","RRH","retinal pigment epithelium-derived rhodopsin homolog",6,0,0,0,0,0,0
-"109","ZNF429","zinc finger protein 429",6,0,0,0,0,0,0
-"110","ZNF486","zinc finger protein 486",6,0,0,0,0,0,0
-"111","DST","dystonin",5,0,0,0,0,0,0
-"112","HAO2","hydroxyacid oxidase 2",5,0,0,0,0,0,0
-"113","HAUS8","HAUS augmin like complex subunit 8",5,0,0,0,0,0,0
-"114","KCTD14","potassium channel tetramerization domain containing 14",5,0,0,0,0,0,0
-"115","ACAN","aggrecan",4,0,0,0,0,0,0
-"116","C6orf52","chromosome 6 open reading frame 52",4,0,0,0,0,0,0
-"117","CYP4F8","cytochrome P450 family 4 subfamily F member 8",4,0,0,0,0,0,0
-"118","RFC4","replication factor C subunit 4",4,0,0,0,0,0,0
-"119","RPS3A","ribosomal protein S3A",4,0,0,0,0,0,0
-"120","SULT1E1","sulfotransferase family 1E member 1",4,0,0,0,0,0,0
-"121","SYK","spleen associated tyrosine kinase",4,0,0,0,0,0,0
-"122","BNIPL","BCL2 interacting protein like",3,0,0,0,0,0,0
-"123","CLCN3","chloride voltage-gated channel 3",3,0,0,0,0,0,0
-"124","KCNAB1","potassium voltage-gated channel subfamily A regulatory beta subunit 1",3,0,0,0,0,0,0
-"125","PRKDC","protein kinase, DNA-activated, catalytic subunit",3,0,0,0,0,0,0
-"126","PROCR","protein C receptor",3,0,0,0,0,0,0
-"127","TRAM1","translocation associated membrane protein 1",3,0,0,0,0,0,0
-"128","ABCA12","ATP binding cassette subfamily A member 12",2,0,0,0,0,0,0
-"129","B3GALT5","beta-1,3-galactosyltransferase 5",2,0,0,0,0,0,0
-"130","CETP","cholesteryl ester transfer protein",2,0,0,0,0,0,0
-"131","H2BC13","H2B clustered histone 13",2,0,0,0,0,0,0
-"132","LRPPRC","leucine rich pentatricopeptide repeat containing",2,0,0,0,0,0,0
-"133","MMRN2","multimerin 2",2,0,0,0,0,0,0
-"134","TIGD4","tigger transposable element derived 4",2,0,0,0,0,0,0
-"135","CYP4F12","cytochrome P450 family 4 subfamily F member 12",1,0,0,0,0,0,0
-"136","DPY19L2","dpy-19 like 2",1,0,0,0,0,0,0
-"137","KCNK13","potassium two pore domain channel subfamily K member 13",1,0,0,0,0,0,0
-"138","MAPK15","mitogen-activated protein kinase 15",1,0,0,0,0,0,0
-"139","SERINC2","serine incorporator 2",1,0,0,0,0,0,0
-"140","SIDT1","SID1 transmembrane family member 1",1,0,0,0,0,0,0
-"141","SLC8A2","solute carrier family 8 member A2",1,0,0,0,0,0,0
-"142","STT3B","STT3 oligosaccharyltransferase complex catalytic subunit B",1,0,0,0,0,0,0
-"143","TMEM45B","transmembrane protein 45B",1,0,0,0,0,0,0
+"external_gene_name","description","count","counts_when_betweenness_0","counts_when_centrality_0","counts_when_druggability_0","counts_when_eigen_centrality_0","counts_when_closeness_0","counts_when_citation_0"
+"TRIM28","tripartite motif containing 28",1760,94,59,88,41,120,107
+"WDR76","WD repeat domain 76",1426,1,59,84,88,126,86
+"ESR1","estrogen receptor 1",1319,11,34,52,64,96,94
+"CNTNAP3","contactin associated protein family member 3",1296,100,116,52,79,0,64
+"ZNF813","zinc finger protein 813",1148,100,111,70,77,0,28
+"SDSL","serine dehydratase like",1014,84,98,41,63,0,46
+"HSP90AA1","heat shock protein 90 alpha family class A member 1",922,38,0,32,40,64,74
+"CFAP298","cilia and flagella associated protein 298",911,88,97,0,63,0,50
+"ZDHHC8","zinc finger DHHC-type palmitoyltransferase 8",869,87,96,0,62,0,68
+"EDEM3","ER degradation enhancing alpha-mannosidase like protein 3",867,0,29,54,49,77,39
+"GNB3","G protein subunit beta 3",813,18,5,15,54,99,62
+"ZNF816","zinc finger protein 816",758,70,78,66,54,0,0
+"CLTC","clathrin heavy chain",694,0,17,25,35,63,52
+"OBP2B","odorant binding protein 2B",667,55,71,0,44,0,54
+"CNTNAP3B","contactin associated protein family member 3B",643,45,50,73,38,0,0
+"HSPA8","heat shock protein family A (Hsp70) member 8",607,0,15,33,23,38,40
+"BRCA1","BRCA1 DNA repair associated",583,21,0,28,19,26,35
+"ELMOD3","ELMO domain containing 3",582,46,53,57,35,0,0
+"EGFR","epidermal growth factor receptor",576,26,0,15,20,27,42
+"CHST7","carbohydrate sulfotransferase 7",567,55,56,0,44,0,16
+"HAUS7","HAUS augmin like complex subunit 7",536,0,23,6,41,91,11
+"TP53","tumor protein p53",502,15,0,21,14,16,34
+"GRB2","growth factor receptor bound protein 2",488,26,0,16,16,23,23
+"SDS","serine dehydratase",478,23,28,0,17,0,61
+"CHST3","carbohydrate sulfotransferase 3",417,13,14,0,12,0,35
+"BRINP2","BMP/retinoic acid inducible neural specific 2",393,0,0,57,0,0,0
+"MSANTD7","Myb/SANT DNA binding domain containing 7",384,17,19,9,11,23,0
+"GNG2","G protein subunit gamma 2",379,18,0,31,10,14,6
+"HSD17B13","hydroxysteroid 17-beta dehydrogenase 13",379,10,11,0,7,0,57
+"B3GALT1","beta-1,3-galactosyltransferase 1",373,0,0,46,0,0,0
+"GNG10","G protein subunit gamma 10",363,0,0,62,9,10,0
+"PAK1","p21 (RAC1) activated kinase 1",337,0,14,3,11,18,20
+"CALML4","calmodulin like 4",333,38,0,8,19,35,0
+"ZNF737","zinc finger protein 737",331,13,19,0,0,25,1
+"SH3GL2","SH3 domain containing GRB2 like 2, endophilin A1",316,0,6,26,12,17,9
+"CETN2","centrin 2",273,0,17,0,9,17,7
+"NAALAD2","N-acetylated alpha-linked acidic dipeptidase 2",267,0,0,50,0,0,0
+"REELD1","reeler domain containing 1",267,9,10,5,7,14,0
+"COMMD5","COMM domain containing 5",265,3,1,30,17,32,0
+"GNG13","G protein subunit gamma 13",243,9,0,22,0,0,0
+"CIMIP2C","ciliary microtubule inner protein 2C",210,23,0,0,10,27,0
+"GNG3","G protein subunit gamma 3",203,0,0,35,2,2,0
+"CFAP144","cilia and flagella associated protein 144",187,21,0,0,6,25,0
+"IQCJ-SCHIP1","IQCJ-SCHIP1 readthrough",179,3,6,2,3,9,0
+"TMEM249","transmembrane protein 249",164,5,2,0,2,12,0
+"SCGB1D2","secretoglobin family 1D member 2",163,0,0,24,0,0,0
+"ZNF610","zinc finger protein 610",155,5,5,0,0,11,0
+"RAMACL","RNA guanine-7 methyltransferase activating subunit like",154,1,3,8,1,3,0
+"ZNF552","zinc finger protein 552",126,3,3,0,0,8,0
+"SRD5A1","steroid 5 alpha-reductase 1",125,9,9,0,5,0,7
+"ASPRV1","aspartic peptidase retroviral like 1",118,0,0,0,0,0,0
+"ZNF724","zinc finger protein 724",118,3,3,1,0,6,0
+"B3GALT5","beta-1,3-galactosyltransferase 5",116,0,0,0,0,0,0
+"BRINP3","BMP/retinoic acid inducible neural specific 3",108,0,0,0,0,0,0
+"HSPA4","heat shock protein family A (Hsp70) member 4",106,3,0,0,0,0,5
+"ZNF468","zinc finger protein 468",105,2,2,0,0,9,0
+"MYC","MYC proto-oncogene, bHLH transcription factor",102,0,0,0,0,0,1
+"KIF19","kinesin family member 19",98,7,0,0,8,23,0
+"KCNAB3","potassium voltage-gated channel subfamily A regulatory beta subunit 3",93,9,0,0,1,10,0
+"H2AX","H2A.X variant histone",90,0,0,0,1,4,15
+"TUBB8B","tubulin beta 8B",88,1,1,2,1,1,0
+"FYN","FYN proto-oncogene, Src family tyrosine kinase",87,3,0,0,0,1,4
+"ZNF681","zinc finger protein 681",85,0,0,1,0,5,0
+"CLEC14A","C-type lectin domain containing 14A",83,0,0,0,0,0,0
+"EPHB3","EPH receptor B3",72,0,4,0,0,0,0
+"CCDC196","coiled-coil domain containing 196",71,0,1,0,0,2,0
+"TGFA","transforming growth factor alpha",69,0,0,0,0,0,0
+"MATCAP1","microtubule associated tyrosine carboxypeptidase 1",67,0,0,0,0,0,0
+"ZNF480","zinc finger protein 480",67,1,1,0,0,4,0
+"NAALADL2","N-acetylated alpha-linked acidic dipeptidase like 2",59,7,7,0,7,0,0
+"SRD5A3","steroid 5 alpha-reductase 3",59,5,6,0,2,0,1
+"ZNF564","zinc finger protein 564",59,0,0,3,0,0,0
+"ZNF730","zinc finger protein 730",50,0,0,2,0,0,0
+"ZNF727","zinc finger protein 727",49,0,0,2,0,0,0
+"SRD5A2","steroid 5 alpha-reductase 2",45,2,1,0,1,0,3
+"GOLGA8R","golgin A8 family member R",44,0,0,0,0,0,0
+"GNG5","G protein subunit gamma 5",42,0,0,1,0,0,0
+"H2BC5","H2B clustered histone 5",40,0,0,0,2,5,0
+"H2BC7","H2B clustered histone 7",40,0,0,0,0,12,0
+"CALML5","calmodulin like 5",39,9,0,0,0,0,0
+"CFAP90","cilia and flagella associated protein 90",39,0,0,1,0,0,0
+"ZNF233","zinc finger protein 233",39,0,0,0,0,1,0
+"ZNF678","zinc finger protein 678",38,0,0,0,0,0,0
+"SLURP2","secreted LY6/PLAUR domain containing 2",37,0,0,1,0,0,0
+"CFAP141","cilia and flagella associated protein 141",33,0,0,0,0,0,0
+"ZNF700","zinc finger protein 700",33,0,0,0,0,1,0
+"PIERCE2","piercer of microtubule wall 2",29,2,0,0,0,0,0
+"ZNF485","zinc finger protein 485",29,0,0,0,0,0,0
+"OR52B2","olfactory receptor family 52 subfamily B member 2",28,0,0,0,0,0,0
+"ZNF20","zinc finger protein 20",27,0,0,0,0,0,0
+"YWHAZ","tyrosine 3-monooxygenase/tryptophan 5-monooxygenase activation protein zeta",26,0,0,0,1,4,2
+"SPDYE2","speedy/RINGO cell cycle regulator family member E2",25,0,0,0,0,0,0
+"KIF25","kinesin family member 25",24,3,0,0,0,0,0
+"ZNF449","zinc finger protein 449",21,0,0,0,0,0,0
+"HLA-DQB2","major histocompatibility complex, class II, DQ beta 2",19,0,0,0,0,1,0
+"CCT3","chaperonin containing TCP1 subunit 3",18,0,0,0,0,0,1
+"WDCP","WD repeat and coiled coil containing",16,0,0,0,0,0,0
+"EZR","ezrin",15,0,0,0,0,0,0
+"ZNF732","zinc finger protein 732",15,0,0,0,0,0,0
+"RFC3","replication factor C subunit 3",14,0,0,0,3,3,0
+"UGT3A2","UDP glycosyltransferase family 3 member A2",13,0,0,0,0,0,0
+"FHIP1B","FHF complex subunit HOOK interacting protein 1B",11,0,0,0,0,0,0
+"CFAP53","cilia and flagella associated protein 53",10,0,0,0,0,0,0
+"TMEM52B","transmembrane protein 52B",10,0,0,0,0,0,0
+"ZFP30","ZFP30 zinc finger protein",10,0,0,0,0,0,0
+"ZNF124","zinc finger protein 124",10,0,0,0,0,0,0
+"ZNF138","zinc finger protein 138",9,0,0,0,0,0,0
+"ZNF154","zinc finger protein 154",9,0,0,0,0,0,0
+"ADCY5","adenylate cyclase 5",8,0,0,0,0,0,0
+"GPR156","G protein-coupled receptor 156",8,0,0,0,0,0,0
+"CACNA1G","calcium voltage-gated channel subunit alpha1 G",7,0,0,0,0,0,0
+"CD36","CD36 molecule (CD36 blood group)",7,0,0,0,0,0,0
+"ZNF253","zinc finger protein 253",7,0,0,0,0,0,0
+"RRH","retinal pigment epithelium-derived rhodopsin homolog",6,0,0,0,0,0,0
+"ZNF257","zinc finger protein 257",6,0,0,0,0,0,0
+"ZNF28","zinc finger protein 28",6,0,0,0,0,0,0
+"ACAN","aggrecan",5,0,0,0,0,0,0
+"DST","dystonin",5,0,0,0,0,0,0
+"HAO2","hydroxyacid oxidase 2",5,0,0,0,0,0,0
+"HAUS8","HAUS augmin like complex subunit 8",5,0,0,0,0,0,0
+"KCTD14","potassium channel tetramerization domain containing 14",5,0,0,0,0,0,0
+"C6orf52","chromosome 6 open reading frame 52",4,0,0,0,0,0,0
+"CLCN3","chloride voltage-gated channel 3",4,0,0,0,0,0,0
+"CYP4F8","cytochrome P450 family 4 subfamily F member 8",4,0,0,0,0,0,0
+"RFC4","replication factor C subunit 4",4,0,0,0,0,0,0
+"RPS3A","ribosomal protein S3A",4,0,0,0,0,0,0
+"SULT1E1","sulfotransferase family 1E member 1",4,0,0,0,0,0,0
+"SYK","spleen associated tyrosine kinase",4,0,0,0,0,0,0
+"BNIPL","BCL2 interacting protein like",3,0,0,0,0,0,0
+"KCNAB1","potassium voltage-gated channel subfamily A regulatory beta subunit 1",3,0,0,0,0,0,0
+"PRKDC","protein kinase, DNA-activated, catalytic subunit",3,0,0,0,0,0,0
+"PROCR","protein C receptor",3,0,0,0,0,0,0
+"ABCA12","ATP binding cassette subfamily A member 12",2,0,0,0,0,0,0
+"CETP","cholesteryl ester transfer protein",2,0,0,0,0,0,0
+"H2BC13","H2B clustered histone 13",2,0,0,0,0,0,0
+"LRPPRC","leucine rich pentatricopeptide repeat containing",2,0,0,0,0,0,0
+"MMRN2","multimerin 2",2,0,0,0,0,0,0
+"TIGD4","tigger transposable element derived 4",2,0,0,0,0,0,0
+"TRAM1","translocation associated membrane protein 1",2,0,0,0,0,0,0
+"CH25H","cholesterol 25-hydroxylase",1,0,0,0,0,0,0
+"CYP4F12","cytochrome P450 family 4 subfamily F member 12",1,0,0,0,0,0,0
+"DPY19L2","dpy-19 like 2",1,0,0,0,0,0,0
+"IL4I1","interleukin 4 induced 1",1,0,0,0,0,0,0
+"KCNK13","potassium two pore domain channel subfamily K member 13",1,0,0,0,0,0,0
+"MAPK15","mitogen-activated protein kinase 15",1,0,0,0,0,0,0
+"SERINC2","serine incorporator 2",1,0,0,0,0,0,0
+"TMEM45B","transmembrane protein 45B",1,0,0,0,0,0,0
