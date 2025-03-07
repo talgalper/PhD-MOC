@@ -91,7 +91,15 @@ colnames(master)[6] <- "PCSF_degree"
 master <- merge(master, dif_exp, by.x = "ensembl_id", by.y = "gene_id", all.x = T)
 master <- master[, -c(8:11)]
 master <- merge(master, kWithin, by.x = "ensembl_id", by.y = "row.names", all.x = T)
-master <- master[, -c(8,10,11)]
+master <- master[, -c(9,10,11)]
 master$tumour_associated <- ifelse(master$target %in% tumour_associated$external_gene_name, "yes", "no")
 
 write.csv(master, "~/Desktop/temp.csv")
+
+
+
+# create the above table but with normalised scores
+kWithin$kWithin <- (kWithin$kWithin - min(kWithin$kWithin)) / (max(kWithin$kWithin) - min(kWithin$kWithin))
+df$degree_centrality <- (df$degree_centrality - min(df$degree_centrality)) / (max(df$degree_centrality) - min(df$degree_centrality))
+HHnet_result$degree <- (HHnet_result$degree - min(HHnet_result$degree)) / (max(HHnet_result$degree) - min(HHnet_result$degree))
+
