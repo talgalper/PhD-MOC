@@ -211,6 +211,52 @@ temp2 <- RS_HHnet_enrich_new[RS_HHnet_enrich_new$gene %in% targets$drugBank_targ
 
 
 
+
+# RS with ML prediction score
+HHnet_enrich <- HHnet_enrich_og
+HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$highest_score, HHnet_enrich$degree), ]
+HHnet_enrich <- HHnet_enrich[!duplicated(HHnet_enrich$external_gene_name), ]
+
+feature_matrix <- read.csv("~/Desktop/temp.csv", row.names = 1)
+feature_matrix <- feature_matrix[, c(1,105:108)]
+
+gene_ids <- getBM(
+  attributes = c("uniprot_gn_id", "external_gene_name"),
+  filters = "uniprot_gn_id",
+  values = feature_matrix$Protein,
+  mart = ensembl)
+
+feature_matrix <- merge(gene_ids, feature_matrix, by.x = "uniprot_gn_id", by.y = "Protein", all = T)
+feature_matrix <- feature_matrix[order(-feature_matrix$Prediction_Score_rf), ]
+rownames(feature_matrix) <- NULL
+
+HHnet_enrich <- merge.data.table(HHnet_enrich, feature_matrix, by = "external_gene_name", all.x = T)
+HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$Prediction_Score_rf), ]
+rownames(HHnet_enrich) <- NULL
+HHnet_enrich <- unique(HHnet_enrich, by = c("external_gene_name", "degree_centrality"))
+HHnet_enrich <- HHnet_enrich[complete.cases(HHnet_enrich), ]
+
+HHnet_enrich$Prediction_Score_rf <- (HHnet_enrich$Prediction_Score_rf - min(HHnet_enrich$Prediction_Score_rf)) / (max(HHnet_enrich$Prediction_Score_rf) - min(HHnet_enrich$Prediction_Score_rf))
+
+
+RS_HHnet_enrich_ML <- combined_rank_sensitivity(HHnet_enrich,
+                                                features = list(
+                                                  betweenness = "betweenness",
+                                                  centrality = "degree_centrality",
+                                                  druggability = "highest_score",
+                                                  eigen_centrality = "eigen_centrality",
+                                                  closeness = "closeness",
+                                                  page_rank = "page_rank",
+                                                  ML_pred = "Prediction_Score_rf"), 
+                                                step = 0.1)
+
+rownames(RS_HHnet_enrich_ML) <- NULL
+
+
+
+
+
+
 # same function as above but trying to include feature contribution/importance
 combined_rank_sensitivity_with_contrib <- function(input_data,
                                                    # Optionally, you can supply known targets if needed
