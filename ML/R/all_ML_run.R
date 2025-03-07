@@ -166,13 +166,13 @@ HHnet_RS <- HHnet_RS[!duplicated(HHnet_RS$hgnc_symbol) & HHnet_RS$uniprot_gn_id 
 uniprot_ids <- getBM(
   attributes = c("hgnc_symbol", "uniprotswissprot", "uniprot_gn_id"),
   filters = "hgnc_symbol",
-  values = HHnetEnrich_RS$external_gene_name,
+  values = HHnetEnrich_RS$gene,
   mart = ensembl)
 
-HHnetEnrich_RS <- merge(uniprot_ids, HHnetEnrich_RS, by.x = "hgnc_symbol", by.y = "external_gene_name", all.y = T)
+HHnetEnrich_RS <- merge(uniprot_ids, HHnetEnrich_RS, by.x = "hgnc_symbol", by.y = "gene", all.y = T)
 HHnetEnrich_RS <- merge(HHnetEnrich_RS, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.y = )
 HHnetEnrich_RS <- unique(HHnetEnrich_RS)
-HHnetEnrich_RS <- HHnetEnrich_RS[order(-HHnetEnrich_RS$count), ]
+HHnetEnrich_RS <- HHnetEnrich_RS[order(HHnetEnrich_RS$avg_rank), ]
 HHnetEnrich_RS <- HHnetEnrich_RS[!duplicated(HHnetEnrich_RS$hgnc_symbol) & HHnetEnrich_RS$uniprot_gn_id != "", ]
 
 uniprot_ids <- getBM(
@@ -203,7 +203,7 @@ predicted_targets <- model_prediction_results$feature_data_scores_appended$Prote
 
 venn_data <- list(#HHnet_RS = HHnet_RS$uniprot_gn_id,
                   HHnetEnrich_RS = HHnetEnrich_RS$uniprot_gn_id,
-                  PCSF_RS = PCSF_RS$uniprot_gn_id,
+                  #PCSF_RS = PCSF_RS$uniprot_gn_id,
                   ML_predicted = predicted_targets)
 ggVennDiagram(venn_data, label = c("count"), set_size = 8, label_size = 6) +
   coord_equal(clip = "off") +
@@ -215,12 +215,26 @@ ggVennDiagram(venn_data, label = c("count"), set_size = 8, label_size = 6) +
 # intersection of RS genes and ML predicted targets
 rownames(HHnetEnrich_RS) <- NULL
 temp3 <- HHnetEnrich_RS[HHnetEnrich_RS$uniprot_gn_id %in% predicted_targets, ]
+temp3 <- temp3[order(temp3$avg_rank), ]
 #temp3 <- temp3[!temp3$uniprot_gn_id %in% training_data$positive_set$Protein, ]
+not_ml_pred <- HHnetEnrich_RS[!HHnetEnrich_RS$uniprot_gn_id %in% predicted_targets, ]
 
 temp3 <- PCSF_RS[PCSF_RS$uniprot_gn_id %in% predicted_targets, ]
 #temp3 <- temp3[!temp3$uniprot_gn_id %in% training_data$positive_set$Protein, ]
 
 # indications for temp3
+load("~/Desktop/temp.RData")
+TTD_master <- TTD_master[grep("breast", TTD_master$INDICATION, ignore.case = T), ]
+TTD_master <- TTD_master[TTD_master$HighestClinicalStatus == "Approved", ]
+TTD_master <- unique(TTD_master$all_target_genes)
+TTD_master <- na.omit(TTD_master)
+TTD_master <- strsplit(TTD_master, ";")
+TTD_master <- unlist(TTD_master)
+TTD_master <- strsplit(TTD_master, "/")
+TTD_master <- unlist(TTD_master)
+TTD_master <- unique(TTD_master)
+TTD_master <- trimws(TTD_master)
+
 temp4 <- TTD_master[TTD_master$all_target_genes %in% temp3$hgnc_symbol, ]
 temp4 <- temp4[!duplicated(temp4[, c("all_target_genes", "INDICATION")]), ]
 length(unique(temp4$all_target_genes))
@@ -234,7 +248,8 @@ unknown_indication <- nonCancer_related[is.na(nonCancer_related$INDICATION) & !d
 nonCancer_related <- nonCancer_related[!nonCancer_related$all_target_genes %in% unknown_indication$all_target_genes, ]
 nonCancer_related <- temp3[temp3$hgnc_symbol %in% unique(nonCancer_related$all_target_genes), ]
 unknown_indication <- temp3[temp3$hgnc_symbol %in% unique(unknown_indication$all_target_genes), ]
-no_TTD <- temp3[!temp3$hgnc_symbol %in% c(cancer_related$all_target_genes, nonCancer_related$hgnc_symbol, unknown_indication$hgnc_symbol), ]
+no_TTD <- temp3[!temp3$hgnc_symbol %in% unique(TTD_master$all_target_genes), ]
+cancer_related <- temp3[temp3$hgnc_symbol %in% unique(cancer_related$all_target_genes), ]
 
 
 # total breast cancer related drugs
@@ -250,10 +265,13 @@ breast_targets <- unlist(breast_targets)
 breast_targets <- unique(breast_targets)
 breast_targets <- trimws(breast_targets)
 
-table(breast_targets %in% temp3$hgnc_symbol)
+table(breast_targets %in% cancer_related$hgnc_symbol)
 
 
-
+rank <- rownames(not_ml_pred)
+not_ml_pred <- merge.data.table(not_ml_pred, PubTator_counts, by.x = "hgnc_symbol", by.y = "symbol", all.x = T)
+not_ml_pred <- not_ml_pred[order(not_ml_pred$avg_rank), ]
+rownames(not_ml_pred) <- rank
 
 
 
