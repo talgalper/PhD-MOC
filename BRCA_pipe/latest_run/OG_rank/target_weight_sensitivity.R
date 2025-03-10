@@ -81,6 +81,19 @@ target_weight_sensitivity <- function(input_data, target_genes,
   return(results_df)
 }
 
+
+
+HHnet <- read.csv("latest_run/OG_rank/HHnet_input.csv", row.names = 1)
+HHnet_enrich <- read.csv("~/Desktop/HHnetEnrich_pageRank.csv")
+PCSF <- read.csv("latest_run/OG_rank/PCSF_input.csv", row.names = 1)
+
+colnames(HHnet)[5] <- "degree_centrality"
+colnames(HHnet_enrich)[5] <- "degree_centrality"
+
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- targets[, c(2:4)]
+targets <- targets[!duplicated(targets$ensembl_gene_id), ]
+
 # broader set of known breast targets
 load("~/Desktop/temp.RData")
 TTD_master <- TTD_master[grep("breast", TTD_master$INDICATION, ignore.case = T), ]
@@ -96,19 +109,7 @@ TTD_master <- trimws(TTD_master)
 table(TTD_master %in% HHnet_enrich$external_gene_name)
 table(targets$drugBank_target %in% TTD_master)
 
-temp <- TTD_master[TTD_master$all_target_genes %in% HHnet$external_gene_name, ]
 
-targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
-targets <- targets[, c(2:4)]
-targets <- targets[!duplicated(targets$ensembl_gene_id), ]
-
-
-HHnet <- read.csv("latest_run/OG_rank/HHnet_input.csv", row.names = 1)
-HHnet_enrich <- read.csv("latest_run/OG_rank/HHnet_enrich_input.csv", row.names = 1)
-PCSF <- read.csv("latest_run/OG_rank/PCSF_input.csv", row.names = 1)
-
-colnames(HHnet)[5] <- "degree_centrality"
-colnames(HHnet_enrich)[5] <- "degree_centrality"
 
 # normalise data
 PCSF$counts_norm <- log10(PCSF$counts)
@@ -150,6 +151,27 @@ TWS_PCSF_noCite <- target_weight_sensitivity(PCSF, unique(targets$drugBank_targe
                                       step = 0.1)
 
 
+# run again with page_rank
+TWS_HHnet_enrich_pageRank <- target_weight_sensitivity(HHnet_enrich, unique(targets$drugBank_target),
+                                                     features = list(
+                                                       betweenness = "betweenness",
+                                                       centrality = "degree_centrality",
+                                                       druggability = "highest_score",
+                                                       eigen_centrality = "eigen_centrality",
+                                                       closeness = "closeness",
+                                                       page_rank = "page_rank"), 
+                                                     step = 0.1)
+
+TWS_PCSF_pageRank <- target_weight_sensitivity(PCSF, unique(targets$drugBank_target),
+                                             features = list(
+                                               betweenness = "betweenness",
+                                               centrality = "degree_centrality",
+                                               druggability = "highest_score",
+                                               eigen_centrality = "eigen_centrality",
+                                               closeness = "closeness",
+                                               page_rank = "page_rank"), 
+                                             step = 0.1)
+
 # Assuming 'results_df' is the output from target_weight_sensitivity()
 features <- c("betweenness_w", "centrality_w", "druggability_w", "eigen_centrality_w", "closeness_w", "page_rank_w")
 
@@ -179,7 +201,7 @@ HHnet_results_df <- do.call(rbind, results_list)
 # Repeat for PCSF
 results_list <- lapply(features, function(feature) {
   # Run the Spearman correlation test
-  test <- cor.test(TWS_PCSF[[feature]], TWS_PCSF$avg_rank, method = "spearman")
+  test <- cor.test(TWS_PCSF_pageRank[[feature]], TWS_PCSF_pageRank$avg_rank, method = "spearman")
   
   # Extract the correlation estimate, p-value, and confidence interval (if available)
   conf_int <- if(!is.null(test$conf.int)) test$conf.int else c(NA, NA)
@@ -196,7 +218,6 @@ results_list <- lapply(features, function(feature) {
 
 # Combine the results into a single data frame
 PCSF_results_df <- do.call(rbind, results_list)
-print(results_df)
 
 
 
