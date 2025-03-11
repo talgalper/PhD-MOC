@@ -83,6 +83,8 @@ control_data <- t(control_data)
 control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 30)
 
 ## perform diff_i method
+tumour_dissTOM <- 1 - tumour_TOM
+
 
 ## figure out how they performed wierd STRING PPI corss reference
 
