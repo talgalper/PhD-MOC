@@ -3,6 +3,11 @@ library(tidyverse)
 library(WGCNA)
 library(edgeR)
 library(DESeq2)
+library(doParallel)
+
+registerDoParallel(cores = 30)
+enableWGCNAThreads(nThreads = 30)
+WGCNAnThreads()
 
 ## create WGCNA adjacencey matrices
 # load in data
@@ -65,38 +70,17 @@ all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
 all_wgcna_data <- vst_norm(all_subtype_counts_filt)
 
 
-sft <- pickSoftThreshold(all_wgcna_data,
-                         blockSize = 45000,
-                         verbose = 2)
-
-sft <- sft$fitIndices
-
-library(gridExtra)
-library(grid)
-a1 <- ggplot(sft, aes(Power, SFT.R.sq, label = Power)) +
-  geom_point() +
-  geom_text(nudge_y = 0.1, size = 7) +
-  geom_hline(yintercept = 0.8, color = 'red') +
-  labs(x = 'Power', y = 'Scale free topology model fit') +
-  theme_classic() +
-  theme(axis.text = element_text(size = 18, colour = "black"),
-        axis.title = element_text(size = 20))
-
-a2 <- ggplot(sft, aes(Power, mean.k., label = Power)) +
-  geom_point() +
-  geom_text(nudge_y = 1000, size = 7) +
-  labs(x = 'Power', y = 'Mean Connectivity') +
-  theme_classic() +
-  theme(axis.text = element_text(size = 18, colour = "black"),
-        axis.title = element_text(size = 20))
-
-grid.arrange(a1, a2, nrow = 2)
-rm(a1, a2)
 # separate and create dissTOM's
 tumour_data <- all_subtype_counts_filt[, colnames(all_subtype_counts_filt) %in% sample_info$sample[sample_info$group != "control"]]
 control_data <- all_subtype_counts_filt[, colnames(all_subtype_counts_filt) %in% sample_info$sample[sample_info$group == "control"]]
 
-tumour_TOM <- adjacency(tumour_data, power = 12, type = "signed")
+tumour_data[] <- lapply(tumour_data, as.numeric)
+tumour_data <- t(tumour_data)
+tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6, nThreads = 30)
+
+control_data[] <- lapply(control_data, as.numeric)
+control_data <- t(control_data)
+control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 30)
 
 ## perform diff_i method
 
