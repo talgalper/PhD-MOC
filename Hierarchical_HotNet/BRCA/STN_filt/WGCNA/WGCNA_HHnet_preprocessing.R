@@ -83,15 +83,21 @@ all_wgcna_data <- vst_norm(all_wgcna_data, transpose = F)
 save(all_wgcna_data, sample_info, file = "BRCA/STN_filt/WGCNA/expression_data_common.RData")
 
 # separate and create TOM's
-load("BRCA/STN_filt/WGCNA/expression_data.RData")
+load("BRCA/STN_filt/WGCNA/expression_data_common.RData")
 tumour_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample[sample_info$group != "control"]]
 control_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample[sample_info$group == "control"]]
 
 tumour_data <- t(tumour_data)
+gene_names <- colnames(tumour_data)
 tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6)
+rownames(tumour_TOM) <- gene_names
+colnames(tumour_TOM) <- gene_names
 
 control_data <- t(control_data)
+gene_names <- colnames(control_data)
 control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6)
+rownames(control_TOM) <- gene_names
+colnames(control_TOM) <- gene_names
 
 save(tumour_TOM, file = "~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/tumour_TOM.RData")
 save(control_TOM, file = "~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/control_TOM.RData")
@@ -104,19 +110,43 @@ load("~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/tumour_TOM
 # rm(tumour_TOM, control_TOM)
 # collectGarbage()
 
-## perform diff_i method
+## perform diff_i method (kinda)
 
 # Normalise so that the maximum value in each matrix is 1
 tumour_TOM   <- tumour_TOM / max(tumour_TOM, na.rm = TRUE)
 control_TOM <- control_TOM / max(control_TOM, na.rm = TRUE)
 
 # Compute the median. with only two conditions, the median of the two values is just their average
-median_matrix <- (tumour_TOM + control_TOM) / 2
+# median_matrix <- (tumour_TOM + control_TOM) / 2
 
 # Compute the differential interaction weights 
-diff_i <- tumour_TOM - median_matrix
+diff_i <- abs(tumour_TOM - control_TOM)
 
-## figure out how they performed weird STRING PPI cross reference
+save(diff_i, file = "~/OneDrive - RMIT University/PhD/large_git_files/HHnet/STN_filt/diff_i.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/STN_filt/diff_i.RData")
+
+## perform STRING PPI cross reference
+library(igraph)
+library(data.table)
+STRING_edge <- fread("STRING_data/STRING_physical_ENSG.csv") 
+STRING_edge <- STRING_edge[, -3]
+STRING_edge <- STRING_edge[!duplicated(t(apply(STRING_edge, 1, sort))), ]
+
+edge_indices <- which(upper.tri(diff_i), arr.ind = TRUE)
+gene_names <- rownames(diff_i)
+
+edge_list <- data.table(
+  gene1 = gene_names[edge_indices[, 1]],
+  gene2 = gene_names[edge_indices[, 2]],
+  weight = diff_i[edge_indices]
+)
+
+# create a key term to match up with
+STRING_edge[, pair := paste(pmin(protein1_ENSG, protein2_ENSG), pmax(protein1_ENSG, protein2_ENSG), sep = "_")]
+edge_list[, pair := paste(pmin(gene1, gene2), pmax(gene1, gene2), sep = "_")]
+
+
+
 
 ## create index and indexed edge list
 
