@@ -80,13 +80,14 @@ filter_low_expr <- function(tumour_matrix, control_matrix, sep = F) {
 
 
 # perform variance stabilizing transformation and transpose matrix for WGCNA
-vst_norm <- function(counts_df) {
+vst_norm <- function(counts_df, transpose = T) {
   matrix <- as.matrix(counts_df)
   matrix_norm <- vst(matrix)
   df_nrom <- as.data.frame(matrix_norm)
-  transposed_norm_data <- t(df_nrom)
-  
-  return(transposed_norm_data)
+  if (isTRUE(transpose)) {
+    df_nrom <- t(df_nrom)
+  }
+  return(df_nrom)
 }
 
 
