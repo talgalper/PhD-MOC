@@ -124,6 +124,7 @@ diff_i <- abs(tumour_TOM - control_TOM)
 
 save(diff_i, file = "~/OneDrive - RMIT University/PhD/large_git_files/HHnet/STN_filt/diff_i.RData")
 load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/STN_filt/diff_i.RData")
+load("~/Downloads/diff_i.RData") # ubuntu
 
 ## perform STRING PPI cross reference
 library(igraph)
@@ -143,10 +144,12 @@ edge_list <- data.table(
 
 # create a key term to match up with
 STRING_edge[, pair := paste(pmin(protein1_ENSG, protein2_ENSG), pmax(protein1_ENSG, protein2_ENSG), sep = "_")]
-edge_list[, pair := paste(pmin(gene1, gene2), pmax(gene1, gene2), sep = "_")]
+edge_list[, pair := paste0(pmin(gene1, gene2), "_", pmax(gene1, gene2))] # tried using paste0 to speed it up
 
-
-
+# filter edge_list based on STRING interactions
+filtered_edge_list <- edge_list[pair %in% STRING_edge$pair]
+filtered_edge_list[, pair := NULL] # drop pair column
+filtered_edge_list <- filtered_edge_list[order(-weight)]
 
 ## create index and indexed edge list
 
