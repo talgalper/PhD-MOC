@@ -5,8 +5,8 @@ library(edgeR)
 library(DESeq2)
 library(doParallel)
 
-registerDoParallel(cores = 30)
-enableWGCNAThreads(nThreads = 30)
+registerDoParallel(cores = 8)
+enableWGCNAThreads(nThreads = 8)
 WGCNAnThreads()
 
 ## create WGCNA adjacencey matrices
@@ -67,26 +67,47 @@ all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
                                            control_matrix = GTEx_ENS)
 
 # normalisation (transposes matrix)
-all_wgcna_data <- vst_norm(all_subtype_counts_filt)
+all_wgcna_data <- vst_norm(all_subtype_counts_filt, transpose = F)
 
+save(all_wgcna_data, sample_info, file = "BRCA/STN_filt/WGCNA/expression_data.RData")
 
-# separate and create dissTOM's
-tumour_data <- all_subtype_counts_filt[, colnames(all_subtype_counts_filt) %in% sample_info$sample[sample_info$group != "control"]]
-control_data <- all_subtype_counts_filt[, colnames(all_subtype_counts_filt) %in% sample_info$sample[sample_info$group == "control"]]
+# separate and create TOM's
+load("BRCA/STN_filt/WGCNA/expression_data.RData")
+tumour_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample[sample_info$group != "control"]]
+control_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample[sample_info$group == "control"]]
 
-tumour_data[] <- lapply(tumour_data, as.numeric)
 tumour_data <- t(tumour_data)
-tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6, nThreads = 30)
+tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6, nThreads = 8)
 
-control_data[] <- lapply(control_data, as.numeric)
 control_data <- t(control_data)
-control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 30)
+# control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 8, )
+control_adj <- adjacency(control_data, power = 6)
+control_TOM <- TOMsimilarity(control_adj)
+
+save(tumour_TOM, file = "BRCA/STN_filt/WGCNA/tumour_TOM.RData")
+save(control_TOM, file = "BRCA/STN_filt/WGCNA/control_TOM.RData")
+
+load("BRCA/STN_filt/WGCNA/control_TOM.RData")
+load("BRCA/STN_filt/WGCNA/tumour_TOM.RData")
+
+# control_dissTOM <- 1 - control_TOM
+# tumour_dissTOM <- 1 - tumour_TOM
+# rm(tumour_TOM, control_TOM)
+# collectGarbage()
 
 ## perform diff_i method
-tumour_dissTOM <- 1 - tumour_TOM
 
+# Normalise so that the maximum value in each matrix is 1
+tumour_TOM   <- tumour_TOM / max(tumour_TOM, na.rm = TRUE)
+control_TOM <- control_TOM / max(control_TOM, na.rm = TRUE)
 
-## figure out how they performed wierd STRING PPI corss reference
+# Compute the median. with only two conditions, the median of the two values is just their average
+median_matrix <- (tumour_TOM + control_TOM) / 2
+
+# Compute the differential interaction weights 
+diff_i <- tumour_TOM - median_matrix
+
+## figure out how they performed weird STRING PPI cross reference
 
 ## create index and indexed edge list
 
