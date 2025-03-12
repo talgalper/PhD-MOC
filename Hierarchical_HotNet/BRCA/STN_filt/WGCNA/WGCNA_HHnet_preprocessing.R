@@ -5,8 +5,8 @@ library(edgeR)
 library(DESeq2)
 library(doParallel)
 
-registerDoParallel(cores = 8)
-enableWGCNAThreads(nThreads = 8)
+registerDoParallel(cores = 30)
+enableWGCNAThreads(nThreads = 30)
 WGCNAnThreads()
 
 ## create WGCNA adjacencey matrices
@@ -64,10 +64,25 @@ all_subtypes <- all_subtypes[, !colnames(all_subtypes) %in% STN_samples]
 
 # QC + combines tumour and control samples
 all_subtype_counts_filt <- filter_low_expr(tumour_matrix = all_subtypes,
-                                           control_matrix = GTEx_ENS)
+                                           control_matrix = GTEx_ENS,
+                                           sep = T)
 
-# normalisation (transposes matrix)
-all_wgcna_data <- vst_norm(all_subtype_counts_filt, transpose = F)
+# common_genes <- intersect(rownames(all_subtype_counts_filt$control), rownames(all_subtype_counts_filt$tumour))
+# temp <- c(setdiff(rownames(all_subtype_counts_filt$control), rownames(all_subtype_counts_filt$tumour)), setdiff(rownames(all_subtype_counts_filt$tumour), rownames(all_subtype_counts_filt$control)))
+# 
+# library(biomaRt)
+# ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+# gene_names <- getBM(
+#   attributes = c("ensembl_gene_id", "external_gene_name"),
+#   filters = "ensembl_gene_id",
+#   values = temp,
+#   mart = ensembl)
+
+all_wgcna_data <- merge(all_subtype_counts_filt$tumour, all_subtype_counts_filt$control, by = "row.names")
+all_wgcna_data <- column_to_rownames(all_wgcna_data, var = "Row.names")
+
+# normalisation
+all_wgcna_data <- vst_norm(all_wgcna_data, transpose = F)
 
 save(all_wgcna_data, sample_info, file = "BRCA/STN_filt/WGCNA/expression_data.RData")
 
@@ -77,10 +92,11 @@ tumour_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample
 control_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample[sample_info$group == "control"]]
 
 tumour_data <- t(tumour_data)
-tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6, nThreads = 8)
+tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6, nThreads = 30)
 
 control_data <- t(control_data)
-# control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 8, )
+control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 30)
+
 control_adj <- adjacency(control_data, power = 6)
 control_TOM <- TOMsimilarity(control_adj)
 
