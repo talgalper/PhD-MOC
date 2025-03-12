@@ -5,10 +5,6 @@ library(edgeR)
 library(DESeq2)
 library(doParallel)
 
-registerDoParallel(cores = 30)
-enableWGCNAThreads(nThreads = 30)
-WGCNAnThreads()
-
 ## create WGCNA adjacencey matrices
 # load in data
 load("../BRCA_pipe/RData/LumA/DE_data.RData")
@@ -84,7 +80,7 @@ all_wgcna_data <- column_to_rownames(all_wgcna_data, var = "Row.names")
 # normalisation
 all_wgcna_data <- vst_norm(all_wgcna_data, transpose = F)
 
-save(all_wgcna_data, sample_info, file = "BRCA/STN_filt/WGCNA/expression_data.RData")
+save(all_wgcna_data, sample_info, file = "BRCA/STN_filt/WGCNA/expression_data_common.RData")
 
 # separate and create TOM's
 load("BRCA/STN_filt/WGCNA/expression_data.RData")
@@ -92,19 +88,16 @@ tumour_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample
 control_data <- all_wgcna_data[, colnames(all_wgcna_data) %in% sample_info$sample[sample_info$group == "control"]]
 
 tumour_data <- t(tumour_data)
-tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6, nThreads = 30)
+tumour_TOM <- TOMsimilarityFromExpr(tumour_data, TOMType = "unsigned", power = 6)
 
 control_data <- t(control_data)
-control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6, nThreads = 30)
+control_TOM <- TOMsimilarityFromExpr(control_data, TOMType = "unsigned", power = 6)
 
-control_adj <- adjacency(control_data, power = 6)
-control_TOM <- TOMsimilarity(control_adj)
+save(tumour_TOM, file = "~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/tumour_TOM.RData")
+save(control_TOM, file = "~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/control_TOM.RData")
 
-save(tumour_TOM, file = "BRCA/STN_filt/WGCNA/tumour_TOM.RData")
-save(control_TOM, file = "BRCA/STN_filt/WGCNA/control_TOM.RData")
-
-load("BRCA/STN_filt/WGCNA/control_TOM.RData")
-load("BRCA/STN_filt/WGCNA/tumour_TOM.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/control_TOM.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/WGCNA/unsigned/tumour_TOM.RData")
 
 # control_dissTOM <- 1 - control_TOM
 # tumour_dissTOM <- 1 - tumour_TOM
