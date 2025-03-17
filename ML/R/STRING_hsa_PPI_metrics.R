@@ -2,7 +2,8 @@ library(data.table)
 # STRING source data saved to onedrive
 setDTthreads(8)
 
-STRING_edge <- fread("~/Downloads/9606.protein.physical.links.full.v12.0.txt")
+STRING_edge <- fread("~/Downloads/9606.protein.physical.links.full.v12.0.onlyAB.txt")
+
 # STRING_edge <- STRING_edge[, c(1,2,10)]
 # STRING_info <- fread("~/Downloads/9606.protein.info.v12.0.txt")
 # STRING_info <- STRING_info[, c(1,2)]
