@@ -42,7 +42,7 @@ load("../../../../Desktop/WGCNA_BRCA_large_files/TCGA_GTEx_filt_norm.RData") # U
 
 load("../WGCNA/BRCA/RData/STN_filt/venn_data.RData")
 
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
 WGCNAsigned_modules <- as.data.frame(bwnet$colors)
 WGCNAsigned_modules <- rownames_to_column(WGCNAsigned_modules)
@@ -62,18 +62,23 @@ tumour_associated <- merge(tumour_associated, WGCNAsigned_modules, by.x = "tumou
 load("../WGCNA/BRCA/RData/STN_filt/venn_data.RData")
 common_genes <- Reduce(intersect, list(DE_genes, tumour_associated, top_kwithin, top_gene_membership))
 
-library(ggVennDiagram)
+library(venn)
+library(RColorBrewer)
+pdf("venn_plot.pdf", width = 15, height = 15)
 venn_data <- list(PCSF = df$ensembl_gene_id,
                   WGCNA = common_genes,
                   `HHnet Neighs` = HHnet_result$ensembl_gene_id,
                   HHnet = HHnetsubnet_result$ensembl_gene_id)
 
-ggVennDiagram(venn_data,
-              set_size = 8,
-              label_size = 8) + 
-  theme(legend.text = element_text(size = 15),
-        legend.title = element_text(size = 17))
-
+venn(venn_data, 
+     ellipse = T, 
+     zcolor = brewer.pal(n = 4, name = "Dark2"),
+     box = FALSE,
+     ilabels = "counts",
+     sncs = 3,
+     ilcs = 3,
+     plotsize = 50)
+dev.off()
 
 # combine all the data for the FDA drug targets
 targets <- read.csv("data_general/target_all_dbs.csv")
