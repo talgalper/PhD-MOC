@@ -374,6 +374,23 @@ kWithin[rownames(kWithin) %in% "ENSG00000141510", ] # TP53
 
 load("BRCA/RData/STN_filt/venn_data.RData")
 
+
+library(venn)
+library(RColorBrewer)
+pdf("venn_plot.pdf", width = 15, height = 15)
+venn(x = list(`DE genes` = DE_genes, 
+              `Tumour Associated` = tumour_associated, 
+              `Top10% kWithin` = top_kwithin,
+              `Top10% MM` = top_gene_membership), 
+     ellipse = T, 
+     zcolor = brewer.pal(n = 4, name = "Dark2"),
+     box = FALSE,
+     ilabels = "counts",
+     sncs = 3,
+     ilcs = 3,
+     plotsize = 50)
+
+
 library(ggVennDiagram)
 ggVennDiagram(x = list(`DE genes` = DE_genes, 
                        `Tumour Associated` = tumour_associated, 
