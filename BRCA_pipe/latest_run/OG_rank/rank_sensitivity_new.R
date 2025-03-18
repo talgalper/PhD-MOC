@@ -21,12 +21,12 @@ rank_sensitivity <- function(input_data, ensembl, topx,
   feature_names <- names(features)
   weight_names <- paste0(feature_names, "_w")
   
-  # 1. Dynamically generate all weight combinations for selected features
+  # Dynamically generate all weight combinations for selected features
   grid_list <- lapply(seq_along(feature_names), function(i) seq(0, 1, step))
   names(grid_list) <- weight_names
   all_combos <- expand.grid(grid_list)
   
-  # 2. Keep only the combinations where the weights sum to 1 (within tolerance)
+  # Keep only the combinations where the weights sum to 1 (within tolerance)
   valid_combos <- subset(all_combos, abs(rowSums(all_combos) - 1) < 1e-9)
   
   # Create a progress bar over valid_combos only
