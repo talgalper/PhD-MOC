@@ -346,7 +346,7 @@ targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 targets <- unique(targets$ensembl_gene_id)
 
 df_subnet_targets <- df_subnet[df_subnet$ensembl_gene_id %in% targets, ]
-df_subnetNeighs_targets <- df_subnetNeighs[df_subnetNeighs$ensembl_gene_id %in% targets, ]
+df_subnetNeighs_targets <- df_subnetNeighs[df_subnetNeighs$display.name %in% targets$drugBank_target, ]
 
 
 
