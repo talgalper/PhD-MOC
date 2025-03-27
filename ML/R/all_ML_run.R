@@ -126,9 +126,9 @@ load("~/OneDrive - RMIT University/PhD/large_git_files/ML/ML_bagging_more_featur
 
 
 ## compare results with network methods
-HHnet_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/HHnet_rank_sensitivity_top10.csv", row.names = 1)
-HHnetEnrich_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/HHnet_rank_sensitivity_noCite.csv")
-PCSF_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/PCSF_rank_sensitivity_noCite.csv")
+#HHnet_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/HHnet_rank_sensitivity_top10.csv", row.names = 1)
+HHnetEnrich_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/avg_RS_HHnetEnrich.csv")
+PCSF_RS <- read.csv("../BRCA_pipe/latest_run/OG_rank/avg_RS_PCSF.csv")
 
 feature_data_scores_appended <- model_prediction_results$feature_data_scores_appended
 
@@ -150,6 +150,8 @@ temp2 <- temp2[!duplicated(temp2$drugBank_target), ]
 temp2 <- temp2[order(-temp2$Prediction_Score_rf), ]
 rownames(temp2) <- rank
 
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+
 uniprot_ids <- getBM(
   attributes = c("hgnc_symbol", "uniprotswissprot", "uniprot_gn_id"),
   filters = "hgnc_symbol",
@@ -164,28 +166,28 @@ HHnet_RS <- HHnet_RS[!duplicated(HHnet_RS$hgnc_symbol) & HHnet_RS$uniprot_gn_id 
 
 
 uniprot_ids <- getBM(
-  attributes = c("hgnc_symbol", "uniprotswissprot", "uniprot_gn_id"),
-  filters = "hgnc_symbol",
+  attributes = c("external_gene_name", "uniprotswissprot", "uniprot_gn_id"),
+  filters = "external_gene_name",
   values = HHnetEnrich_RS$gene,
   mart = ensembl)
 
-HHnetEnrich_RS <- merge(uniprot_ids, HHnetEnrich_RS, by.x = "hgnc_symbol", by.y = "gene", all.y = T)
+HHnetEnrich_RS <- merge(uniprot_ids, HHnetEnrich_RS, by.x = "external_gene_name", by.y = "gene", all.y = T)
 HHnetEnrich_RS <- merge(HHnetEnrich_RS, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.y = )
 HHnetEnrich_RS <- unique(HHnetEnrich_RS)
 HHnetEnrich_RS <- HHnetEnrich_RS[order(HHnetEnrich_RS$avg_rank), ]
-HHnetEnrich_RS <- HHnetEnrich_RS[!duplicated(HHnetEnrich_RS$hgnc_symbol) & HHnetEnrich_RS$uniprot_gn_id != "", ]
+HHnetEnrich_RS <- HHnetEnrich_RS[!duplicated(HHnetEnrich_RS$external_gene_name) & HHnetEnrich_RS$uniprot_gn_id != "", ]
 
 uniprot_ids <- getBM(
-  attributes = c("hgnc_symbol", "uniprotswissprot", "uniprot_gn_id"),
-  filters = "hgnc_symbol",
-  values = PCSF_RS$external_gene_name,
+  attributes = c("external_gene_name", "uniprotswissprot", "uniprot_gn_id"),
+  filters = "external_gene_name",
+  values = PCSF_RS$gene,
   mart = ensembl)
 
-PCSF_RS <- merge(uniprot_ids, PCSF_RS, by.x = "hgnc_symbol", by.y = "external_gene_name", all.y = T)
+PCSF_RS <- merge(uniprot_ids, PCSF_RS, by.x = "external_gene_name", by.y = "gene", all.y = T)
 PCSF_RS <- merge(PCSF_RS, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.y = )
 PCSF_RS <- unique(PCSF_RS)
-PCSF_RS <- PCSF_RS[order(-PCSF_RS$count), ]
-PCSF_RS <- PCSF_RS[!duplicated(PCSF_RS$hgnc_symbol) & PCSF_RS$uniprot_gn_id != "", ]
+PCSF_RS <- PCSF_RS[order(PCSF_RS$avg_rank), ]
+PCSF_RS <- PCSF_RS[!duplicated(PCSF_RS$external_gene_name) & PCSF_RS$uniprot_gn_id != "", ]
 
 table(model_prediction_results$feature_data_scores_appended$Prediction_Score_rf >= 0.5)
 table(model_prediction_results$feature_data_scores_appended$Prediction_Score_rf >= 0.5 & 
@@ -198,18 +200,23 @@ table(model_prediction_results$feature_data_scores_appended$Prediction_Score_rf 
 updated_feature_data[updated_feature_data$Protein == "P11511", "approved"]
 
 
-library(ggVennDiagram)
 predicted_targets <- model_prediction_results$feature_data_scores_appended$Protein[model_prediction_results$feature_data_scores_appended$Prediction_Score_rf >= 0.5]
 
 venn_data <- list(#HHnet_RS = HHnet_RS$uniprot_gn_id,
-                  HHnetEnrich_RS = HHnetEnrich_RS$uniprot_gn_id,
-                  #PCSF_RS = PCSF_RS$uniprot_gn_id,
-                  ML_predicted = predicted_targets)
-ggVennDiagram(venn_data, label = c("count"), set_size = 8, label_size = 6) +
-  coord_equal(clip = "off") +
-  theme(
-    legend.text = element_text(size = 18),
-    legend.title = element_text(size = 20)  )
+                  HHnetEnrich = HHnetEnrich_RS$uniprot_gn_id,
+                  PCSF = PCSF_RS$uniprot_gn_id,
+                  `ML predicted` = predicted_targets)
+
+library(venn)
+library(RColorBrewer)
+venn(venn_data, 
+     ellipse = T, 
+     zcolor = brewer.pal(length(venn_data), name = "Dark2"),
+     box = FALSE,
+     ilabels = "counts",
+     sncs = 2,
+     ilcs = 2)
+
 
 
 # intersection of RS genes and ML predicted targets
