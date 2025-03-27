@@ -209,7 +209,23 @@ RS_HHnet_enrich_new <- combined_rank_sensitivity(HHnet_enrich,
 rownames(RS_HHnet_enrich_new) <- NULL
 temp2 <- RS_HHnet_enrich_new[RS_HHnet_enrich_new$gene %in% targets$drugBank_target, ]
 
+write.csv(RS_HHnet_enrich_new, "latest_run/OG_rank/avg_RS_HHnetEnrich.csv", row.names = F)
 
+# run avg rank with PCSF
+RS_PCSF_new <- combined_rank_sensitivity(PCSF,
+                                         features = list(
+                                           betweenness = "betweenness",
+                                                         centrality = "degree_centrality",
+                                                         druggability = "highest_score",
+                                                         eigen_centrality = "eigen_centrality",
+                                                         closeness = "closeness",
+                                                         page_rank = "page_rank"), 
+                                         step = 0.1)
+
+rownames(RS_PCSF_new) <- NULL
+temp2 <- RS_PCSF_new[RS_PCSF_new$gene %in% targets$drugBank_target, ]
+
+write.csv(RS_PCSF_new, "latest_run/OG_rank/avg_RS_PCSF.csv", row.names = F)
 
 
 # RS with ML prediction score
