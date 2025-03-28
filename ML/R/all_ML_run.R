@@ -231,18 +231,18 @@ temp3 <- PCSF_RS[PCSF_RS$uniprot_gn_id %in% predicted_targets, ]
 
 # indications for temp3
 load("~/Desktop/temp.RData")
-TTD_master <- TTD_master[grep("breast", TTD_master$INDICATION, ignore.case = T), ]
-TTD_master <- TTD_master[TTD_master$HighestClinicalStatus == "Approved", ]
-TTD_master <- unique(TTD_master$all_target_genes)
-TTD_master <- na.omit(TTD_master)
-TTD_master <- strsplit(TTD_master, ";")
-TTD_master <- unlist(TTD_master)
-TTD_master <- strsplit(TTD_master, "/")
-TTD_master <- unlist(TTD_master)
-TTD_master <- unique(TTD_master)
-TTD_master <- trimws(TTD_master)
+# TTD_master <- TTD_master[grep("breast", TTD_master$INDICATION, ignore.case = T), ]
+# TTD_master <- TTD_master[TTD_master$HighestClinicalStatus == "Approved", ]
+# TTD_master <- unique(TTD_master$all_target_genes)
+# TTD_master <- na.omit(TTD_master)
+# TTD_master <- strsplit(TTD_master, ";")
+# TTD_master <- unlist(TTD_master)
+# TTD_master <- strsplit(TTD_master, "/")
+# TTD_master <- unlist(TTD_master)
+# TTD_master <- unique(TTD_master)
+# TTD_master <- trimws(TTD_master)
 
-temp4 <- TTD_master[TTD_master$all_target_genes %in% temp3$hgnc_symbol, ]
+temp4 <- TTD_master[TTD_master$all_target_genes %in% temp3$external_gene_name, ]
 temp4 <- temp4[!duplicated(temp4[, c("all_target_genes", "INDICATION")]), ]
 length(unique(temp4$all_target_genes))
 
@@ -253,10 +253,10 @@ length(unique((cancer_related$all_target_genes)))
 nonCancer_related <- temp4[!temp4$all_target_genes %in% unique(cancer_related$all_target_genes), ]
 unknown_indication <- nonCancer_related[is.na(nonCancer_related$INDICATION) & !duplicated(nonCancer_related$all_target_genes), ]
 nonCancer_related <- nonCancer_related[!nonCancer_related$all_target_genes %in% unknown_indication$all_target_genes, ]
-nonCancer_related <- temp3[temp3$hgnc_symbol %in% unique(nonCancer_related$all_target_genes), ]
-unknown_indication <- temp3[temp3$hgnc_symbol %in% unique(unknown_indication$all_target_genes), ]
-no_TTD <- temp3[!temp3$hgnc_symbol %in% unique(TTD_master$all_target_genes), ]
-cancer_related <- temp3[temp3$hgnc_symbol %in% unique(cancer_related$all_target_genes), ]
+nonCancer_related <- temp3[temp3$external_gene_name %in% unique(nonCancer_related$all_target_genes), ]
+unknown_indication <- temp3[temp3$external_gene_name %in% unique(unknown_indication$all_target_genes), ]
+no_TTD <- temp3[!temp3$external_gene_name %in% unique(TTD_master$all_target_genes), ]
+cancer_related <- temp3[temp3$external_gene_name %in% unique(cancer_related$all_target_genes), ]
 
 
 # total breast cancer related drugs
