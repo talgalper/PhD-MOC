@@ -536,12 +536,12 @@ extract_feature_importance <- function(ml_results, plot_feature_importance = TRU
       
       # Convert to data frame
       imp_df <- data.frame(
-        Feature    = names(importance_vec),
+        Feature = names(importance_vec),
         Importance = as.numeric(importance_vec),
         stringsAsFactors = FALSE
       )
       
-      # (Optional) Subset to the top 20 most important for clarity
+      # Subset to the top 35
       top_n <- 35
       imp_df <- imp_df[order(imp_df$Importance, decreasing = TRUE), ]
       imp_df <- head(imp_df, top_n)
