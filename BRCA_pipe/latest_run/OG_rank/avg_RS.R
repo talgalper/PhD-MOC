@@ -229,12 +229,13 @@ write.csv(RS_PCSF_new, "latest_run/OG_rank/avg_RS_PCSF.csv", row.names = F)
 
 
 # RS with ML prediction score
-HHnet_enrich <- HHnet_enrich_og
 HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$highest_score, HHnet_enrich$degree), ]
 HHnet_enrich <- HHnet_enrich[!duplicated(HHnet_enrich$external_gene_name), ]
 
-feature_matrix <- read.csv("~/Desktop/temp.csv", row.names = 1)
+feature_matrix <- read.csv("~/Desktop/temp.csv") # feature_data_scores_appended
 feature_matrix <- feature_matrix[, c(1,105:108)]
+
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
 gene_ids <- getBM(
   attributes = c("uniprot_gn_id", "external_gene_name"),
@@ -267,6 +268,20 @@ RS_HHnet_enrich_ML <- combined_rank_sensitivity(HHnet_enrich,
                                                 step = 0.1)
 
 rownames(RS_HHnet_enrich_ML) <- NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
