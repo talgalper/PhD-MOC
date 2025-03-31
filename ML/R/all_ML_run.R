@@ -152,17 +152,17 @@ rownames(temp2) <- rank
 
 ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 
-uniprot_ids <- getBM(
-  attributes = c("hgnc_symbol", "uniprotswissprot", "uniprot_gn_id"),
-  filters = "hgnc_symbol",
-  values = HHnet_RS$external_gene_name,
-  mart = ensembl)
-
-HHnet_RS <- merge(uniprot_ids, HHnet_RS, by.x = "hgnc_symbol", by.y = "external_gene_name", all.y = T)
-HHnet_RS <- merge(HHnet_RS, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.y = )
-HHnet_RS <- unique(HHnet_RS)
-HHnet_RS <- HHnet_RS[order(-HHnet_RS$count), ]
-HHnet_RS <- HHnet_RS[!duplicated(HHnet_RS$hgnc_symbol) & HHnet_RS$uniprot_gn_id != "", ]
+# uniprot_ids <- getBM(
+#   attributes = c("hgnc_symbol", "uniprotswissprot", "uniprot_gn_id"),
+#   filters = "hgnc_symbol",
+#   values = HHnet_RS$external_gene_name,
+#   mart = ensembl)
+# 
+# HHnet_RS <- merge(uniprot_ids, HHnet_RS, by.x = "hgnc_symbol", by.y = "external_gene_name", all.y = T)
+# HHnet_RS <- merge(HHnet_RS, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.y = )
+# HHnet_RS <- unique(HHnet_RS)
+# HHnet_RS <- HHnet_RS[order(-HHnet_RS$count), ]
+# HHnet_RS <- HHnet_RS[!duplicated(HHnet_RS$hgnc_symbol) & HHnet_RS$uniprot_gn_id != "", ]
 
 
 uniprot_ids <- getBM(
