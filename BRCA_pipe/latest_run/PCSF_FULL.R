@@ -88,7 +88,7 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
   names(colours) <- groups
   
   # Create the PCA plot with color mapping
-  library(ggrepel)
+  #library(ggrepel)
   PCA_plot <- ggplot(PCA_plot$plot_data, aes(PC1, PC2, color = group, shape = sample_type)) +
     geom_point() +
     #geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # opt for point labels
@@ -98,9 +98,9 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
          y = paste0('PC2: ', PCA_plot$pca_var_perc[2], ' %')) +
     theme(
       axis.title = element_text(size = 20),
-      axis.text = element_text(size = 18),
-      legend.title = element_text(size = 18),
-      legend.text = element_text(size = 16))
+      axis.text = element_text(size = 18, colour = "black"),
+      legend.title = element_text(size = 20),
+      legend.text = element_text(size = 18))
   
   print(PCA_plot)
   
