@@ -470,7 +470,7 @@ plot_results <- function(ML_bagging_results, return_plot_data = FALSE) {
 extract_feature_importance <- function(ml_results, plot_feature_importance = TRUE) {
   library(caret)
   
-  models_of_interest <- names(ML_bagging_results$model_predictions)
+  models_of_interest <- names(ml_results$model_predictions)
   
   iter_models <- ml_results$iter_models
   n_models <- length(iter_models)
