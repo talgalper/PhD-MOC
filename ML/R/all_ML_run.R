@@ -101,7 +101,7 @@ start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = updated_feature_data,
                                  positive_set = positive_set, 
                                  negative_pool = training_data$negative_pool, 
-                                 n_models = 100,
+                                 n_models = 1000,
                                  models = c("glmnet", "rf", "svmRadial", "nnet"))
 print(Sys.time() - start)
 rm(start)
