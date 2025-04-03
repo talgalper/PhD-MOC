@@ -88,19 +88,39 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
   names(colours) <- groups
   
   # Create the PCA plot with color mapping
-  #library(ggrepel)
-  PCA_plot <- ggplot(PCA_plot$plot_data, aes(PC1, PC2, color = group, shape = sample_type)) +
-    geom_point() +
-    #geom_text_repel(aes(label = row.names(pca_data)), size = 3) +  # opt for point labels
-    scale_color_manual(values = colours) +
-    theme_bw() +
-    labs(x = paste0('PC1: ', PCA_plot$pca_var_perc[1], ' %'),
-         y = paste0('PC2: ', PCA_plot$pca_var_perc[2], ' %')) +
-    theme(
-      axis.title = element_text(size = 20),
-      axis.text = element_text(size = 18, colour = "black"),
-      legend.title = element_text(size = 20),
-      legend.text = element_text(size = 18))
+  library(ggrepel)
+  library(ggalt)
+  
+  if (isTRUE(circle_clust)) {
+    PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
+      geom_point(size = 4) +
+      geom_encircle(aes(group = Classification), s_shape = 0, expand = 0.05, color = "black") +
+      scale_color_manual(values = colours) +
+      theme_bw() +
+      labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+           y = paste0('PC2: ', pca_var_perc[2], ' %')) +
+      theme(
+        axis.title = element_text(size = 20),
+        axis.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 16),
+        panel.grid = element_blank()
+      )
+  } else {
+    PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
+      geom_point(size = 4) +
+      scale_color_manual(values = colours) +
+      theme_bw() +
+      labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+           y = paste0('PC2: ', pca_var_perc[2], ' %')) +
+      theme(
+        axis.title = element_text(size = 20),
+        axis.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 16),
+        panel.grid = element_blank()
+      )
+  }
   
   print(PCA_plot)
   
@@ -111,7 +131,8 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
 
 PCA_plot <- plot_PCA(expr_data = counts_filt$counts_filt, 
                      sample_info = PCA_sample_info, 
-                     output_plot_data = T)
+                     output_plot_data = T,
+                     circle_clust = F)
 
 
 # remove solid tissue normal samples and re-plot PCA
@@ -124,7 +145,8 @@ PCA_sample_info_filt <- PCA_sample_info[!PCA_sample_info$sample %in% STN_samples
 
 PCA_plot_filt <- plot_PCA(expr_data = expr_data_filt$counts_filt, 
                           sample_info = PCA_sample_info_filt, 
-                          output_plot_data = T)
+                          output_plot_data = T,
+                          circle_clust = F)
 
 save(PCA_plot, PCA_plot_filt, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
 load("~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
