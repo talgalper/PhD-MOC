@@ -1,4 +1,6 @@
 library(TCGAbiolinks)
+library(SummarizedExperiment)
+library(tidyverse)
 
 # extract all TCGA-OV RNA-seq samples
 TCGA_query <- GDCquery(project = "TCGA-OV",
@@ -39,11 +41,9 @@ GTEx_data <- column_to_rownames(GTEx_data, var = "Name")
 rownames(GTEx_data) <- gsub("\\.\\d+", "", rownames(GTEx_data))
 save(GTEx_data, file = "data/serous-OV/GTEx-OV_unstranded.RData")
 
-## comapre MOC to TCGA-OV + GTEx-OV
-library(SummarizedExperiment)
-library(tidyverse)
 
-# read in expression data
+
+## comapre Kylie samples to TCGA-OV & GTEx-OV
 load("data/serous-OV/TCGA-OV_unstranded.RData")
 load("data/serous-OV/GTEx-OV_unstranded.RData")
 MOC_raw_counts <- read.csv("data/analysis_set_raw_counts.csv", row.names = 1)
@@ -81,7 +81,7 @@ low_exp_genes <- all_expr_data[!rownames(all_expr_data) %in% rownames(counts_fil
 
 
 # plot PCA + cluster circles
-plot_PCA <- function(expr_data, sample_info, output_plot_data = T, circle_clust = F) {
+plot_PCA <- function(expr_data, sample_info, output_plot_data = T, circle_clust = F, label_group = NULL) {
   # convert expression data frame into CPM normalised + transposed matrix
   PCA_data <- cpm(as.matrix(expr_data), log = T)
   PCA_data <- t(PCA_data)
@@ -139,8 +139,17 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T, circle_clust 
       )
   }
 
-  print(PCA_plot)
-  
+  # add sample labels to specified groups
+  if (is.null(label_group)) {
+    print(PCA_plot)
+  } else {
+    print(PCA_plot +
+            geom_text_repel(
+              data = subset(pca_data, Classification == label_group),
+              aes(label = Row.names),
+              size = 5,
+              show.legend = FALSE))
+  }  
   if (output_plot_data == T) {
     return(list(PCA_plot = PCA_plot, plot_data = pca_data, pca_var_perc = pca_var_perc))
   }
@@ -151,32 +160,11 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
                      output_plot_data = T,
                      circle_clust = F)
 
-save(PCA_plot, file = "RData/master-OV_PCA.RData")
+save(PCA_plot, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/master-OV_PCA.RData")
 
 
-# add labels to MOC samples
-groups <- unique(sample_info[ ,2])
-num_colors <- length(groups)
-colours <- brewer.pal(n = num_colors, name = "Set1")
-names(colours) <- groups
 
-ggplot(PCA_plot$plot_data, aes(PC1, PC2, color = group)) +
-  geom_point(size = 4) +
-  geom_text_repel(
-    data = subset(PCA_plot$plot_data, group == "MOC"),
-    aes(label = Row.names),
-    size = 5,
-    show.legend = FALSE) +
-  scale_color_manual(values = colours) +
-  theme_bw() +
-  labs(x = paste0('PC1: ', PCA_plot$pca_var_perc[1], ' %'),
-       y = paste0('PC2: ', PCA_plot$pca_var_perc[2], ' %')) +
-  theme(
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 18),
-    legend.title = element_text(size = 18),
-    legend.text = element_text(size = 16),
-    panel.grid = element_blank())
+
 
 
 
