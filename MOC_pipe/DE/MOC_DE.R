@@ -1,11 +1,9 @@
 ### Perform pre-processing and DE analysis on MOC data ###
 
-library(readxl)
 library(edgeR)
 
 MOC_raw_counts <- read.csv("data/analysis_set_raw_counts.csv", row.names = 1)
 sample_info <- read.csv("data/All survival_CN_Aug18.csv")
-#sample_info2 <- read_xlsx("data/sampleInformation.xlsx")
 
 # change colnames to match sample info
 colnames(MOC_raw_counts) <- sub("GAMuT_", "", colnames(MOC_raw_counts))
@@ -65,19 +63,36 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
   library(ggrepel)
   library(ggalt)
   
-  PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
-    geom_point(size = 4) +
-    geom_encircle(aes(group = Classification), s_shape = 0, expand = 0.05, color = "black") +
-    scale_color_manual(values = colours) +
-    theme_bw() +
-    labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
-         y = paste0('PC2: ', pca_var_perc[2], ' %')) +
-    theme(
-      axis.title = element_text(size = 20),
-      axis.text = element_text(size = 18),
-      legend.title = element_text(size = 18),
-      legend.text = element_text(size = 16)
-    )
+  if (isTRUE(circle_clust)) {
+    PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
+      geom_point(size = 4) +
+      geom_encircle(aes(group = Classification), s_shape = 0, expand = 0.05, color = "black") +
+      scale_color_manual(values = colours) +
+      theme_bw() +
+      labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+           y = paste0('PC2: ', pca_var_perc[2], ' %')) +
+      theme(
+        axis.title = element_text(size = 20),
+        axis.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 16),
+        panel.grid = element_blank()
+      )
+  } else {
+    PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
+      geom_point(size = 4) +
+      scale_color_manual(values = colours) +
+      theme_bw() +
+      labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
+           y = paste0('PC2: ', pca_var_perc[2], ' %')) +
+      theme(
+        axis.title = element_text(size = 20),
+        axis.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 16),
+        panel.grid = element_blank()
+      )
+  }
   
   print(PCA_plot)
   
@@ -88,7 +103,8 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
 
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
                      sample_info = sample_info, 
-                     output_plot_data = T)
+                     output_plot_data = T,
+                     circle_clust = T)
 
 
 keep_samples <- sample_info$GAMUT_ID[sample_info$Classification %in% c("MOC", "BEN")]
@@ -103,7 +119,8 @@ hist(cpm(counts_filt, log = T))
 
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
                      sample_info = sample_info, 
-                     output_plot_data = T)
+                     output_plot_data = T,
+                     circle_clust = T)
 
 
 
