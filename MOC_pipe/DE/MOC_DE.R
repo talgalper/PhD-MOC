@@ -36,7 +36,7 @@ counts_filt <- MOC_raw_counts[counts_filt, ]
 low_exp_genes <- MOC_raw_counts[!rownames(MOC_raw_counts) %in% rownames(counts_filt), ]
 
 # plot PCA + cluster circles
-plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
+plot_PCA <- function(expr_data, sample_info, output_plot_data = T, circle_clust = F, label_group = NULL) {
   # convert expression data frame into CPM normalised + transposed matrix
   PCA_data <- cpm(as.matrix(expr_data), log = T)
   PCA_data <- t(PCA_data)
@@ -94,7 +94,16 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
       )
   }
   
-  print(PCA_plot)
+  if (is.null(label_group)) {
+    print(PCA_plot)
+  } else {
+    print(PCA_plot +
+            geom_text_repel(
+              data = subset(pca_data, Classification == label_group),
+              aes(label = Row.names),
+              size = 5,
+              show.legend = FALSE))
+  }
   
   if (output_plot_data == T) {
     return(list(PCA_plot = PCA_plot, plot_data = pca_data, pca_var_perc = pca_var_perc))
@@ -104,7 +113,8 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
                      sample_info = sample_info, 
                      output_plot_data = T,
-                     circle_clust = T)
+                     circle_clust = F,
+                     label_group = "MOC")
 
 
 keep_samples <- sample_info$GAMUT_ID[sample_info$Classification %in% c("MOC", "BEN")]
@@ -120,7 +130,7 @@ hist(cpm(counts_filt, log = T))
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
                      sample_info = sample_info, 
                      output_plot_data = T,
-                     circle_clust = T)
+                     circle_clust = F)
 
 
 
