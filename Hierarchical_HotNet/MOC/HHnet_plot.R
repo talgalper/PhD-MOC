@@ -68,11 +68,11 @@ plot.igraph(subnet_neighs, asp = 0, vertex.label = NA, edge.arrow.size = 0.3, ed
 #plot(clust1_net_filt, asp = 0, vertex.label = NA, vertex.size = 2, edge.arrow.size = 0.3)
 
 
-write_graph(subnet_neighs, "MOC/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
-write_graph(subnet, "MOC/results/hhnet_cluster1_net.graphml", format = "graphml")
+write_graph(subnet_neighs, "MOC/results/hhnet_netNeighs.graphml", format = "graphml")
+write_graph(subnet, "MOC/results/hhnet_subnet.graphml", format = "graphml")
 
-clust1_net <- read_graph("BRCA/STN_filt/results/hhnet_cluster1_netNeighs.graphml", format = "graphml")
-subnet <- read_graph("BRCA/STN_filt/results/hhnet_cluster1_net.graphml", format = "graphml")
+subnet_neighs <- read_graph("MOC/results/hhnet_netNeighs.graphml", format = "graphml")
+subnet <- read_graph("MOC/results/hhnet_subnet.graphml", format = "graphml")
 
 
 df_subnet <- data.frame(ENSG = V(subnet)$name,
@@ -80,6 +80,7 @@ df_subnet <- data.frame(ENSG = V(subnet)$name,
                         betweenness = betweenness(subnet),
                         closeness = closeness(subnet),
                         eigen_centrality = eigen_centrality(subnet)$vector,
+                        page_rank = page_rank(subnet)$vector,
                         cluster = V(subnet)$color)
 df_subnet$source <- ifelse(df_subnet$cluster != "white", "subnet", "STRING")
 
@@ -116,6 +117,7 @@ df_subnetNeighs <- data.frame(ENSG = V(subnet_neighs)$name,
                               betweenness = betweenness(subnet_neighs),
                               closeness = closeness(subnet_neighs),
                               eigen_centrality = eigen_centrality(subnet_neighs)$vector,
+                              page_rank = page_rank(subnet_neighs)$vector,
                               cluster = V(subnet_neighs)$color)
 df_subnetNeighs$source <- ifelse(df_subnetNeighs$cluster != "white", "subnet", "STRING")
 
