@@ -212,6 +212,12 @@ library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 ensembl_id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
+  library(tidyverse)
+  if (col_id == 0) {
+    data <- rownames_to_column(data)
+    col_id <- 1
+  }
+  
   ensembl_annot <- getBM(attributes = c(input_type, convert_to), 
                              filters = input_type, 
                              values = data[, col_id], 
