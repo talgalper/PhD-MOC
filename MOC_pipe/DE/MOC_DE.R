@@ -128,9 +128,10 @@ low_exp_genes <- MOC_raw_counts_filt[!rownames(MOC_raw_counts_filt) %in% rowname
 hist(cpm(counts_filt, log = T))
 
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
-                     sample_info = sample_info, 
+                     sample_info = sample_info_filt, 
                      output_plot_data = T,
-                     circle_clust = F)
+                     circle_clust = F,
+                     label_group = "MOC")
 
 
 
