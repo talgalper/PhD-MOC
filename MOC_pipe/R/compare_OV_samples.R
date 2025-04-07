@@ -1,6 +1,7 @@
 library(TCGAbiolinks)
 library(SummarizedExperiment)
 library(tidyverse)
+library(edgeR)
 
 # extract all TCGA-OV RNA-seq samples
 TCGA_query <- GDCquery(project = "TCGA-OV",
@@ -25,6 +26,8 @@ table(clinical_query$figo_stage)
 GDCdownload(TCGA_query, directory = "data/serous-OV/")
 
 save(TCGA_query, file = "data/serous-OV/TCGA-OV_query.RData")
+load("data/serous-OV/TCGA-OV_query.RData")
+
 write.csv(clinical, "data/serous-OV/TCGA-OV_clinical.csv", row.names = F)
 
 TCGA_OV_data <- GDCprepare(TCGA_query, summarizedExperiment = TRUE, directory = "data/TCGA-OV/")
@@ -69,15 +72,31 @@ sample_info <- rbind(
              group = rep("GTEx-OV", ncol(GTEx_data)))
 )
 
-all_expr_data <- merge(MOC_raw_counts, TCGA_OV_data_unstranded, by = "row.names")
+all_expr_data <- merge(GTEx_data, TCGA_OV_data_unstranded, by = "row.names")
 all_expr_data <- column_to_rownames(all_expr_data, var = "Row.names")
-all_expr_data <- merge(all_expr_data, GTEx_data, by = "row.names")
+all_expr_data <- merge(all_expr_data, MOC_raw_counts, by = "row.names")
 all_expr_data <- column_to_rownames(all_expr_data, var = "Row.names")
 
 # filter low counts
 counts_filt <- filterByExpr(all_expr_data, group = sample_info$group)
 counts_filt <- all_expr_data[counts_filt, ]
 low_exp_genes <- all_expr_data[!rownames(all_expr_data) %in% rownames(counts_filt), ]
+
+
+venn_data <- list(
+  `TCGA-OV` = rownames(TCGA_OV_data_unstranded),
+  `GTEx-OV` = rownames(GTEx_data),
+  MOC = rownames(MOC_raw_counts))
+
+library(venn)
+library(RColorBrewer)
+venn(venn_data, 
+     ellipse = T, 
+     zcolor = brewer.pal(length(venn_data), name = "Dark2"),
+     box = FALSE,
+     ilabels = "counts",
+     sncs = 2,
+     ilcs = 2)
 
 
 # plot PCA + cluster circles
@@ -145,7 +164,7 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T, circle_clust 
   } else {
     print(PCA_plot +
             geom_text_repel(
-              data = subset(pca_data, Classification == label_group),
+              data = subset(pca_data, group == label_group),
               aes(label = Row.names),
               size = 5,
               show.legend = FALSE))
@@ -158,14 +177,21 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = T, circle_clust 
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
                      sample_info = sample_info, 
                      output_plot_data = T,
-                     circle_clust = F)
+                     circle_clust = F,
+                     label_group = "MOC")
 
 save(PCA_plot, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/master-OV_PCA.RData")
 
+load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/master-OV_PCA.RData")
+print(PCA_plot$PCA_plot)
 
 
 
-
+pca <- t(counts_filt)
+pca <- prcomp(pca, scale. = TRUE, center = TRUE)
+loadings_PC1 <- pca$rotation[, "PC1"]
+top_genes_PC1 <- sort(abs(loadings_PC1), decreasing = TRUE)[1:25]
+print(top_genes_PC1)
 
 
 
