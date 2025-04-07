@@ -38,7 +38,7 @@ drug_scores <- merge(IDs_converted, drug_scores, by.x = "uniprot_gn_id", by.y = 
 drug_scores <- unique(drug_scores)
 
 write.csv(drug_scores, "data_general/druggability_scores_annot.csv", row.names = F)
-
+drug_scores <- read.csv("data_general/druggability_scores_annot.csv")
 
 drug_scores <- read.csv("data_general/druggability_scores_annot.csv")
 AF_Fpocket <- read.csv("Fpocket/results_2024.05/fpocket_druggability_full.csv")
