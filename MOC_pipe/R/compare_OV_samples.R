@@ -186,7 +186,7 @@ load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/master-OV_PCA.RData")
 print(PCA_plot$PCA_plot)
 
 
-
+pca <- as.matrix(cpm(counts_filt, log = T))
 pca <- t(counts_filt)
 pca <- prcomp(pca, scale. = TRUE, center = TRUE)
 loadings_PC1 <- pca$rotation[, "PC1"]
