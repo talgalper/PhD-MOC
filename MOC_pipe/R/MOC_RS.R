@@ -193,7 +193,8 @@ rownames(RS_HHnet_enrich) <- NULL
 
 RS_HHnet_enrich <- merge.data.table(RS_HHnet_enrich, PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
 
-write.csv(RS_HHnet_enrich, "results/HHnet_RS_ML_overlap.csv")
+write.csv(RS_HHnet_enrich, "results/HHnet_RS_ML_overlap.csv", row.names = F)
+RS_HHnet_enrich <- read.csv("results/HHnet_RS_ML_overlap.csv")
 
 venn_data <- list(
   HHnetEnrich = RS_HHnet_enrich$uniprot_gn_id,
@@ -212,6 +213,8 @@ venn(venn_data,
 
 
 
-
-
-
+temp <- merge(HHnet_enrich[,c(1:4,15)], RS_HHnet_enrich[,c(1,2,3,6,9)], by = "external_gene_name")
+temp <- temp[,c("external_gene_name", "ensembl_gene_id", "uniprot_gn_id", "description", "gene_biotype", "avg_rank", "highest_score", "Prediction_Score_rf", "counts")]
+colnames(temp)[c(6:9)] <- c("RS_avg_rank", "druggability", "Prediction_Score_rf", "citations")
+temp <- temp[order(temp$RS_avg_rank), ]
+rownames(temp) <- NULL
