@@ -133,23 +133,58 @@ DE_analysis <- function(counts_matrix, sample_info) {
 }
 
 
-
-# convert and annotate gene name IDs
 id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
   library(tidyverse)
-  if (col_id == 0) {
-    data <- rownames_to_column(data)
-    col_id <- 1
+  
+  if (is.character(data)) {
+    ensembl_annot <- getBM(
+      attributes = c(input_type, convert_to), 
+      filters = input_type, 
+      values = data, 
+      mart = ensembl
+    )
+    ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
+    
+    # Create a matrix of NA's with rows equal to the length of 'data' and
+    missing_df <- data.frame(
+      matrix(NA, nrow = length(data), ncol = length(c(input_type, convert_to))),
+      stringsAsFactors = FALSE
+    )
+    # Set the column names to match the ones used in getBM:
+    colnames(missing_df) <- c(input_type, convert_to)
+    # Fill in the input identifier column with the values in 'data'
+    missing_df[, input_type] <- data
+    
+    # Combine the returned annotations with the missing rows data frame
+    data_annot <- rbind(ensembl_annot, missing_df)
+    data_annot <- data_annot[!duplicated(data_annot[,input_type]), ]
+    
+  } else {
+    if (col_id == 0) {
+      data <- rownames_to_column(data)
+      col_id <- 1
+    }
+    
+    ensembl_annot <- getBM(
+      attributes = c(input_type, convert_to), 
+      filters = input_type, 
+      values = data[, col_id], 
+      mart = ensembl
+    )
+    
+    ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
+    data_annot <- merge(
+      ensembl_annot, 
+      data, 
+      by.x = input_type, 
+      by.y = colnames(data)[col_id], 
+      all.y = TRUE
+    )
   }
   
-  ensembl_annot <- getBM(attributes = c(input_type, convert_to), 
-                         filters = input_type, 
-                         values = data[, col_id], 
-                         mart = ensembl)
-  ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
-  
-  data_annot <- merge(ensembl_annot, data, by.x = input_type, by.y = colnames(data)[col_id], all.y = T)
+  return(data_annot)
 }
+
 
 
 
