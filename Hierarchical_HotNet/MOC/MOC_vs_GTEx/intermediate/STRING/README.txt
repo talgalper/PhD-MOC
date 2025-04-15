@@ -1,0 +1,1 @@
+STRING similarity matrix on AWS instance at "~/Desktop/HHnet_large_files/MOC_simMatrix/"
