@@ -18,9 +18,9 @@ edge_list_index <- data.frame(from = match(STRING_edge$protein1_ENSG, gene_index
 
 # create score file
 DE_data <- read.csv("../MOC_pipe/DE/MOC_vs_BEN/MOC_DE_results.csv")
-DE_data <- subset(DE_data, select = c("external_gene_name", "logFC"))
+DE_data <- subset(DE_data, select = c("ensembl_gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
-DE_data_abs <- subset(DE_data, select = c("external_gene_name", "logFC_abs"))
+DE_data_abs <- subset(DE_data, select = c("ensembl_gene_id", "logFC_abs"))
 
 
 fwrite(gene_index, "MOC/data/gene_index.tsv", col.names = F, sep = "\t")
@@ -32,9 +32,9 @@ fwrite(DE_data_abs, "MOC/data/logFC_scores_abs.tsv", col.names = F, sep = "\t")
 
 # create score files for MOC vs GTEx
 DE_data <- read.csv("../MOC_pipe/DE/MOC_vs_GTEx/MOC_vs_GTEx_DE_results.csv")
-DE_data <- subset(DE_data, select = c("external_gene_name", "logFC"))
+DE_data <- subset(DE_data, select = c("ensembl_gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
-DE_data_abs <- subset(DE_data, select = c("external_gene_name", "logFC_abs"))
+DE_data_abs <- subset(DE_data, select = c("ensembl_gene_id", "logFC_abs"))
 
 fwrite(gene_index, "MOC/MOC_vs_GTEx/data/gene_index.tsv", col.names = F, sep = "\t")
 fwrite(edge_list_index, "MOC/MOC_vs_GTEx/data/edge_list_index.tsv", col.names = F, sep = "\t")
