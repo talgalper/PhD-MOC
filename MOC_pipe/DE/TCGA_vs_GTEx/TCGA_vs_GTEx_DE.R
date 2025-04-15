@@ -28,8 +28,8 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
 DE_results <- DE_analysis(counts_matrix = counts_filt, 
                           sample_info = sample_info)
 
-save(DE_results, file = "DE/TCGA_vs_GTEx/DE_results_TCGA_vs_GTEx.RData")
-load("DE/TCGA_vs_GTEx/DE_results_TCGA_vs_GTEx.RData")
+save(DE_results, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_TCGA_vs_GTEx.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_TCGA_vs_GTEx.RData")
 
 # get DE counts summary
 print(summary(decideTests(DE_results$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
