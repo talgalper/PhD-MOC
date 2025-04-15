@@ -143,7 +143,10 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
       values = data, 
       mart = ensembl
     )
-    ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
+    
+    if (convert_to %in% "description") {
+      ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
+    }
     
     # Create a matrix of NA's with rows equal to the length of 'data' and
     missing_df <- data.frame(
@@ -172,7 +175,10 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
       mart = ensembl
     )
     
-    ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
+    if (convert_to %in% "description") {
+      ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
+    }    
+    
     data_annot <- merge(
       ensembl_annot, 
       data, 
