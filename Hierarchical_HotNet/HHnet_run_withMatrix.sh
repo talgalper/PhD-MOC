@@ -2,9 +2,9 @@
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-data=$PWD/MOC/MOCvsGTEx/data
-intermediate=$PWD/MOC/MOCvsGTEx/intermediate
-results=$PWD/MOC/MOCvsGTEx/results
+data=$PWD/MOC/MOC_vs_GTEx/data
+intermediate=$PWD/MOC/MOC_vs_GTEx/intermediate
+results=$PWD/MOC/MOC_vs_GTEx/results
 
 # Create directories
 mkdir -p $data
