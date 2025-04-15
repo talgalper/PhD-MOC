@@ -2,9 +2,9 @@
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-data=$PWD/BRCA_CNV/data
-intermediate=$PWD/BRCA_CNV/intermediate
-results=$PWD/BRCA_CNV/results
+data=$PWD/MOC/MOCvsGTEx/data
+intermediate=$PWD/MOC/MOCvsGTEx/intermediate
+results=$PWD/MOC/MOCvsGTEx/results
 
 # Create directories
 mkdir -p $data
@@ -13,12 +13,12 @@ mkdir -p $results
 
 # Set the name of your network and score file
 network=STRING
-score=BRCA_CNV_freq
+score=MOC_logFC
 
 # Filenames for your input files
 index_gene_file=gene_index.tsv
 edge_list_file=edge_list_index.tsv
-score_file=cnv_alterations.tsv
+score_file=logFC_scores_abs.tsv
 
 num_permutations=100
 
