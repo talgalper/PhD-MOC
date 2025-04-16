@@ -144,7 +144,7 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
       mart = ensembl
     )
     
-    if (convert_to %in% "description") {
+    if ("description" %in% convert_to) {
       ensembl_annot$description <- gsub("\\[.*?\\]", "", ensembl_annot$description)
     }
     
