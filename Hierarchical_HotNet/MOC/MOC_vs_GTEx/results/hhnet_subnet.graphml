@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="v_color" for="node" attr.name="color" attr.type="string"/>
+  <key id="e_combined_score" for="edge" attr.name="combined_score" attr.type="double"/>
+  <graph id="G" edgedefault="undirected">
+    <node id="n0">
+      <data key="v_name">ENSG00000006611</data>
+      <data key="v_color">orchid</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">ENSG00000011105</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n2">
+      <data key="v_name">ENSG00000186529</data>
+      <data key="v_color">maroon1</data>
+    </node>
+    <node id="n3">
+      <data key="v_name">ENSG00000120075</data>
+      <data key="v_color">gold</data>
+    </node>
+    <node id="n4">
+      <data key="v_name">ENSG00000260027</data>
+      <data key="v_color">gold</data>
+    </node>
+    <node id="n5">
+      <data key="v_name">ENSG00000197757</data>
+      <data key="v_color">gold</data>
+    </node>
+    <node id="n6">
+      <data key="v_name">ENSG00000138109</data>
+      <data key="v_color">maroon1</data>
+    </node>
+    <node id="n7">
+      <data key="v_name">ENSG00000158486</data>
+      <data key="v_color">yellowgreen</data>
+    </node>
+    <node id="n8">
+      <data key="v_name">ENSG00000041353</data>
+      <data key="v_color">mediumseagreen</data>
+    </node>
+    <node id="n9">
+      <data key="v_name">ENSG00000110013</data>
+      <data key="v_color">cyan</data>
+    </node>
+    <node id="n10">
+      <data key="v_name">ENSG00000115648</data>
+      <data key="v_color">mediumseagreen</data>
+    </node>
+    <node id="n11">
+      <data key="v_name">ENSG00000039139</data>
+      <data key="v_color">yellowgreen</data>
+    </node>
+    <node id="n12">
+      <data key="v_name">ENSG00000100170</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n13">
+      <data key="v_name">ENSG00000151693</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <node id="n14">
+      <data key="v_name">ENSG00000104267</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <node id="n15">
+      <data key="v_name">ENSG00000013288</data>
+      <data key="v_color">cyan</data>
+    </node>
+    <node id="n16">
+      <data key="v_name">ENSG00000108242</data>
+      <data key="v_color">maroon1</data>
+    </node>
+    <node id="n17">
+      <data key="v_name">ENSG00000160181</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n18">
+      <data key="v_name">ENSG00000160182</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n19">
+      <data key="v_name">ENSG00000162366</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n20">
+      <data key="v_name">ENSG00000167748</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n21">
+      <data key="v_name">ENSG00000171155</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n22">
+      <data key="v_name">ENSG00000170340</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n23">
+      <data key="v_name">ENSG00000171533</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n24">
+      <data key="v_name">ENSG00000175311</data>
+      <data key="v_color">orchid</data>
+    </node>
+    <node id="n25">
+      <data key="v_name">ENSG00000118997</data>
+      <data key="v_color">yellowgreen</data>
+    </node>
+    <node id="n26">
+      <data key="v_name">ENSG00000174844</data>
+      <data key="v_color">yellowgreen</data>
+    </node>
+    <node id="n27">
+      <data key="v_name">ENSG00000137501</data>
+      <data key="v_color">mediumseagreen</data>
+    </node>
+    <node id="n28">
+      <data key="v_name">ENSG00000185015</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <node id="n29">
+      <data key="v_name">ENSG00000179913</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n30">
+      <data key="v_name">ENSG00000182742</data>
+      <data key="v_color">gold</data>
+    </node>
+    <node id="n31">
+      <data key="v_name">ENSG00000088280</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <node id="n32">
+      <data key="v_name">ENSG00000171492</data>
+      <data key="v_color">saddlebrown</data>
+    </node>
+    <node id="n33">
+      <data key="v_name">ENSG00000109654</data>
+      <data key="v_color">saddlebrown</data>
+    </node>
+    <node id="n34">
+      <data key="v_name">ENSG00000168903</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n35">
+      <data key="v_name">ENSG00000113303</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n36">
+      <data key="v_name">ENSG00000091138</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <node id="n37">
+      <data key="v_name">ENSG00000172367</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <node id="n38">
+      <data key="v_name">ENSG00000139629</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n39">
+      <data key="v_name">ENSG00000198805</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n40">
+      <data key="v_name">ENSG00000118526</data>
+      <data key="v_color">gold</data>
+    </node>
+    <node id="n41">
+      <data key="v_name">ENSG00000187908</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n42">
+      <data key="v_name">ENSG00000134716</data>
+      <data key="v_color">maroon1</data>
+    </node>
+    <node id="n43">
+      <data key="v_name">ENSG00000138115</data>
+      <data key="v_color">maroon1</data>
+    </node>
+    <node id="n44">
+      <data key="v_name">ENSG00000165841</data>
+      <data key="v_color">maroon1</data>
+    </node>
+    <node id="n45">
+      <data key="v_name">ENSG00000099282</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n46">
+      <data key="v_name">ENSG00000204175</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n47">
+      <data key="v_name">ENSG00000070214</data>
+      <data key="v_color">saddlebrown</data>
+    </node>
+    <node id="n48">
+      <data key="v_name">ENSG00000135048</data>
+      <data key="v_color">cyan</data>
+    </node>
+    <node id="n49">
+      <data key="v_name">ENSG00000158125</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n50">
+      <data key="v_name">ENSG00000169894</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n51">
+      <data key="v_name">ENSG00000196208</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n52">
+      <data key="v_name">ENSG00000102854</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n53">
+      <data key="v_name">ENSG00000025708</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n54">
+      <data key="v_name">ENSG00000106460</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n55">
+      <data key="v_name">ENSG00000099834</data>
+      <data key="v_color">orchid</data>
+    </node>
+    <node id="n56">
+      <data key="v_name">ENSG00000181143</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n57">
+      <data key="v_name">ENSG00000106392</data>
+      <data key="v_color">springgreen</data>
+    </node>
+    <node id="n58">
+      <data key="v_name">ENSG00000147041</data>
+      <data key="v_color">mediumseagreen</data>
+    </node>
+    <node id="n59">
+      <data key="v_name">ENSG00000104774</data>
+      <data key="v_color">cyan</data>
+    </node>
+    <node id="n60">
+      <data key="v_name">ENSG00000184956</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n61">
+      <data key="v_name">ENSG00000145113</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n62">
+      <data key="v_name">ENSG00000108511</data>
+      <data key="v_color">gold</data>
+    </node>
+    <node id="n63">
+      <data key="v_name">ENSG00000160180</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n64">
+      <data key="v_name">ENSG00000117983</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n65">
+      <data key="v_name">ENSG00000105877</data>
+      <data key="v_color">yellowgreen</data>
+    </node>
+    <node id="n66">
+      <data key="v_name">ENSG00000171017</data>
+      <data key="v_color">saddlebrown</data>
+    </node>
+    <node id="n67">
+      <data key="v_name">ENSG00000275395</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n68">
+      <data key="v_name">ENSG00000215182</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n69">
+      <data key="v_name">ENSG00000074276</data>
+      <data key="v_color">orchid</data>
+    </node>
+    <node id="n70">
+      <data key="v_name">ENSG00000169994</data>
+      <data key="v_color">orchid</data>
+    </node>
+    <node id="n71">
+      <data key="v_name">ENSG00000142765</data>
+      <data key="v_color">mediumseagreen</data>
+    </node>
+    <node id="n72">
+      <data key="v_name">ENSG00000100665</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n73">
+      <data key="v_name">ENSG00000198788</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n74">
+      <data key="v_name">ENSG00000197147</data>
+      <data key="v_color">saddlebrown</data>
+    </node>
+    <node id="n75">
+      <data key="v_name">ENSG00000221890</data>
+      <data key="v_color">cyan</data>
+    </node>
+    <node id="n76">
+      <data key="v_name">ENSG00000065600</data>
+      <data key="v_color">tomato</data>
+    </node>
+    <node id="n77">
+      <data key="v_name">ENSG00000080493</data>
+      <data key="v_color">royalblue</data>
+    </node>
+    <edge source="n3" target="n4">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n3" target="n5">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_combined_score">0.852</data>
+    </edge>
+    <edge source="n8" target="n10">
+      <data key="e_combined_score">0.908</data>
+    </edge>
+    <edge source="n7" target="n11">
+      <data key="e_combined_score">0.72</data>
+    </edge>
+    <edge source="n9" target="n15">
+      <data key="e_combined_score">0.504</data>
+    </edge>
+    <edge source="n6" target="n16">
+      <data key="e_combined_score">0.647</data>
+    </edge>
+    <edge source="n12" target="n19">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n21" target="n22">
+      <data key="e_combined_score">0.45</data>
+    </edge>
+    <edge source="n0" target="n24">
+      <data key="e_combined_score">0.979</data>
+    </edge>
+    <edge source="n7" target="n25">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n11" target="n25">
+      <data key="e_combined_score">0.72</data>
+    </edge>
+    <edge source="n7" target="n26">
+      <data key="e_combined_score">0.54</data>
+    </edge>
+    <edge source="n11" target="n26">
+      <data key="e_combined_score">0.54</data>
+    </edge>
+    <edge source="n25" target="n26">
+      <data key="e_combined_score">0.54</data>
+    </edge>
+    <edge source="n8" target="n27">
+      <data key="e_combined_score">0.721</data>
+    </edge>
+    <edge source="n14" target="n28">
+      <data key="e_combined_score">0.499</data>
+    </edge>
+    <edge source="n22" target="n29">
+      <data key="e_combined_score">0.909</data>
+    </edge>
+    <edge source="n3" target="n30">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n4" target="n30">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n5" target="n30">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n13" target="n31">
+      <data key="e_combined_score">0.93</data>
+    </edge>
+    <edge source="n18" target="n35">
+      <data key="e_combined_score">0.405</data>
+    </edge>
+    <edge source="n14" target="n36">
+      <data key="e_combined_score">0.445</data>
+    </edge>
+    <edge source="n31" target="n37">
+      <data key="e_combined_score">0.487</data>
+    </edge>
+    <edge source="n36" target="n37">
+      <data key="e_combined_score">0.408</data>
+    </edge>
+    <edge source="n19" target="n41">
+      <data key="e_combined_score">0.42</data>
+    </edge>
+    <edge source="n2" target="n42">
+      <data key="e_combined_score">0.426</data>
+    </edge>
+    <edge source="n6" target="n42">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n6" target="n43">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n42" target="n43">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n6" target="n44">
+      <data key="e_combined_score">0.967</data>
+    </edge>
+    <edge source="n16" target="n44">
+      <data key="e_combined_score">0.589</data>
+    </edge>
+    <edge source="n43" target="n44">
+      <data key="e_combined_score">0.927</data>
+    </edge>
+    <edge source="n1" target="n45">
+      <data key="e_combined_score">0.412</data>
+    </edge>
+    <edge source="n29" target="n45">
+      <data key="e_combined_score">0.404</data>
+    </edge>
+    <edge source="n9" target="n48">
+      <data key="e_combined_score">0.451</data>
+    </edge>
+    <edge source="n34" target="n49">
+      <data key="e_combined_score">0.928</data>
+    </edge>
+    <edge source="n35" target="n49">
+      <data key="e_combined_score">0.928</data>
+    </edge>
+    <edge source="n39" target="n49">
+      <data key="e_combined_score">0.805</data>
+    </edge>
+    <edge source="n18" target="n51">
+      <data key="e_combined_score">0.505</data>
+    </edge>
+    <edge source="n39" target="n53">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n23" target="n54">
+      <data key="e_combined_score">0.624</data>
+    </edge>
+    <edge source="n35" target="n54">
+      <data key="e_combined_score">0.414</data>
+    </edge>
+    <edge source="n0" target="n55">
+      <data key="e_combined_score">0.669</data>
+    </edge>
+    <edge source="n20" target="n56">
+      <data key="e_combined_score">0.408</data>
+    </edge>
+    <edge source="n46" target="n56">
+      <data key="e_combined_score">0.404</data>
+    </edge>
+    <edge source="n50" target="n56">
+      <data key="e_combined_score">0.461</data>
+    </edge>
+    <edge source="n52" target="n56">
+      <data key="e_combined_score">0.979</data>
+    </edge>
+    <edge source="n21" target="n57">
+      <data key="e_combined_score">0.946</data>
+    </edge>
+    <edge source="n38" target="n57">
+      <data key="e_combined_score">0.404</data>
+    </edge>
+    <edge source="n8" target="n58">
+      <data key="e_combined_score">0.587</data>
+    </edge>
+    <edge source="n15" target="n59">
+      <data key="e_combined_score">0.9</data>
+    </edge>
+    <edge source="n17" target="n60">
+      <data key="e_combined_score">0.512</data>
+    </edge>
+    <edge source="n56" target="n61">
+      <data key="e_combined_score">0.639</data>
+    </edge>
+    <edge source="n3" target="n62">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n4" target="n62">
+      <data key="e_combined_score">0.814</data>
+    </edge>
+    <edge source="n5" target="n62">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n30" target="n62">
+      <data key="e_combined_score">0.8</data>
+    </edge>
+    <edge source="n40" target="n62">
+      <data key="e_combined_score">0.42</data>
+    </edge>
+    <edge source="n18" target="n63">
+      <data key="e_combined_score">0.54</data>
+    </edge>
+    <edge source="n41" target="n63">
+      <data key="e_combined_score">0.408</data>
+    </edge>
+    <edge source="n41" target="n64">
+      <data key="e_combined_score">0.747</data>
+    </edge>
+    <edge source="n52" target="n64">
+      <data key="e_combined_score">0.429</data>
+    </edge>
+    <edge source="n60" target="n64">
+      <data key="e_combined_score">0.448</data>
+    </edge>
+    <edge source="n11" target="n65">
+      <data key="e_combined_score">0.41</data>
+    </edge>
+    <edge source="n32" target="n66">
+      <data key="e_combined_score">0.499</data>
+    </edge>
+    <edge source="n33" target="n66">
+      <data key="e_combined_score">0.637</data>
+    </edge>
+    <edge source="n63" target="n67">
+      <data key="e_combined_score">0.83</data>
+    </edge>
+    <edge source="n60" target="n68">
+      <data key="e_combined_score">0.773</data>
+    </edge>
+    <edge source="n63" target="n68">
+      <data key="e_combined_score">0.507</data>
+    </edge>
+    <edge source="n64" target="n68">
+      <data key="e_combined_score">0.956</data>
+    </edge>
+    <edge source="n0" target="n69">
+      <data key="e_combined_score">0.716</data>
+    </edge>
+    <edge source="n55" target="n69">
+      <data key="e_combined_score">0.989</data>
+    </edge>
+    <edge source="n0" target="n70">
+      <data key="e_combined_score">0.958</data>
+    </edge>
+    <edge source="n24" target="n70">
+      <data key="e_combined_score">0.757</data>
+    </edge>
+    <edge source="n8" target="n71">
+      <data key="e_combined_score">0.803</data>
+    </edge>
+    <edge source="n20" target="n72">
+      <data key="e_combined_score">0.983</data>
+    </edge>
+    <edge source="n60" target="n73">
+      <data key="e_combined_score">0.414</data>
+    </edge>
+    <edge source="n64" target="n73">
+      <data key="e_combined_score">0.741</data>
+    </edge>
+    <edge source="n67" target="n73">
+      <data key="e_combined_score">0.731</data>
+    </edge>
+    <edge source="n68" target="n73">
+      <data key="e_combined_score">0.761</data>
+    </edge>
+    <edge source="n32" target="n74">
+      <data key="e_combined_score">0.777</data>
+    </edge>
+    <edge source="n47" target="n74">
+      <data key="e_combined_score">0.426</data>
+    </edge>
+    <edge source="n66" target="n74">
+      <data key="e_combined_score">0.602</data>
+    </edge>
+    <edge source="n9" target="n75">
+      <data key="e_combined_score">0.42</data>
+    </edge>
+    <edge source="n41" target="n76">
+      <data key="e_combined_score">0.418</data>
+    </edge>
+    <edge source="n14" target="n77">
+      <data key="e_combined_score">0.613</data>
+    </edge>
+  </graph>
+</graphml>

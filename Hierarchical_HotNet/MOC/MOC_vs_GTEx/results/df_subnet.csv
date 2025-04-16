@@ -1,0 +1,79 @@
+ensembl_gene_id,external_gene_name,description,gene_biotype,degree,betweenness,closeness,eigen_centrality,page_rank,cluster,source
+ENSG00000108511,HOXB6,homeobox B6 ,protein_coding,5,4,0.2,1,0.0176566895122312,gold,subnet
+ENSG00000117983,MUC5B,"mucin 5B, oligomeric mucus/gel-forming ",protein_coding,5,147,0.0121951219512195,0,0.0216592268691329,tomato,subnet
+ENSG00000181143,MUC16,"mucin 16, cell surface associated ",protein_coding,5,114,0.00909090909090909,0,0.0303728558040477,tomato,subnet
+ENSG00000006611,USH1C,USH1 protein network component harmonin ,protein_coding,4,4,0.25,0,0.0204678362573099,orchid,subnet
+ENSG00000039139,DNAH5,dynein axonemal heavy chain 5 ,protein_coding,4,3,0.25,0,0.0182087111503091,yellowgreen,subnet
+ENSG00000041353,RAB27B,"RAB27B, member RAS oncogene family ",protein_coding,4,6,0.25,1.29743422747384e-16,0.0304920304920305,mediumseagreen,subnet
+ENSG00000120075,HOXB5,homeobox B5 ,protein_coding,4,0,0.166666666666667,0.951136103880145,0.0135854183176724,gold,subnet
+ENSG00000138109,CYP2C9,cytochrome P450 family 2 subfamily C member 9 ,protein_coding,4,3.5,0.166666666666667,0,0.0181922437754667,maroon1,subnet
+ENSG00000160180,TFF3,trefoil factor 3 ,protein_coding,4,159.5,0.0125,0,0.0184171213739739,tomato,subnet
+ENSG00000182742,HOXB4,homeobox B4 ,protein_coding,4,0,0.166666666666667,0.951136103880145,0.0135854183176724,gold,subnet
+ENSG00000184956,MUC6,"mucin 6, oligomeric mucus/gel-forming ",protein_coding,4,25,0.0108695652173913,0,0.0176005413798914,tomato,subnet
+ENSG00000187908,DMBT1,deleted in malignant brain tumors 1 ,protein_coding,4,111,0.0125,0,0.0199422424455552,tomato,subnet
+ENSG00000197757,HOXC6,homeobox C6 ,protein_coding,4,0,0.166666666666667,0.951136103880144,0.0135854183176724,gold,subnet
+ENSG00000198788,MUC2,"mucin 2, oligomeric mucus/gel-forming ",protein_coding,4,10.5,0.0108695652173913,0,0.0169379423832067,tomato,subnet
+ENSG00000215182,MUC5AC,"mucin 5AC, oligomeric mucus/gel-forming ",protein_coding,4,65,0.0120481927710843,0,0.0168582115824573,tomato,subnet
+ENSG00000260027,HOXB7,homeobox B7 ,protein_coding,4,0,0.166666666666667,0.951136103880144,0.0135854183176724,gold,subnet
+ENSG00000104267,CA2,carbonic anhydrase 2 ,protein_coding,3,9,0.0833333333333333,9.72420041037365e-17,0.0216263194366392,royalblue,subnet
+ENSG00000110013,SIAE,sialic acid acetylesterase ,protein_coding,3,5,0.2,8.3796029402678e-17,0.0229203703407875,cyan,subnet
+ENSG00000113303,BTNL8,butyrophilin like 8 ,protein_coding,3,128,0.00980392156862745,0,0.0177334262997649,tomato,subnet
+ENSG00000118997,DNAH7,dynein axonemal heavy chain 7 ,protein_coding,3,0,0.2,0,0.0133671416365791,yellowgreen,subnet
+ENSG00000134716,CYP2J2,cytochrome P450 family 2 subfamily J member 2 ,protein_coding,3,4,0.142857142857143,0,0.0149919278858964,maroon1,subnet
+ENSG00000138115,CYP2C8,cytochrome P450 family 2 subfamily C member 8 ,protein_coding,3,1,0.142857142857143,0,0.01396880403552,maroon1,subnet
+ENSG00000158125,XDH,xanthine dehydrogenase ,protein_coding,3,71,0.00826446280991736,0,0.0191875333859258,tomato,subnet
+ENSG00000158486,DNAH3,dynein axonemal heavy chain 3 ,protein_coding,3,0,0.2,0,0.0133671416365791,yellowgreen,subnet
+ENSG00000160182,TFF1,trefoil factor 1 ,protein_coding,3,151,0.0112359550561798,0,0.0164598920543514,tomato,subnet
+ENSG00000165841,CYP2C19,cytochrome P450 family 2 subfamily C member 19 ,protein_coding,3,0.5,0.125,0,0.0138782202675969,maroon1,subnet
+ENSG00000171017,LRRC8E,leucine rich repeat containing 8 VRAC subunit E ,protein_coding,3,3,0.2,4.84577245223323e-17,0.0186170212765957,saddlebrown,subnet
+ENSG00000174844,DNAH12,dynein axonemal heavy chain 12 ,protein_coding,3,0,0.2,0,0.0133671416365791,yellowgreen,subnet
+ENSG00000197147,LRRC8B,leucine rich repeat containing 8 VRAC subunit B ,protein_coding,3,3,0.2,3.57908467478907e-17,0.0186170212765957,saddlebrown,subnet
+ENSG00000013288,MAN2B2,mannosidase alpha class 2B member 2 ,protein_coding,2,3,0.166666666666667,8.84899792332426e-17,0.0157366688650992,cyan,subnet
+ENSG00000074276,CDHR2,cadherin related family member 2 ,protein_coding,2,0,0.166666666666667,0,0.0109086819613135,orchid,subnet
+ENSG00000088280,ASAP3,"ArfGAP with SH3 domain, ankyrin repeat and PH domain 3 ",protein_coding,2,5,0.0666666666666667,8.14930661272833e-17,0.0151320429649816,royalblue,subnet
+ENSG00000091138,SLC26A3,solute carrier family 26 member 3 ,protein_coding,2,9,0.0909090909090909,7.89039591961027e-17,0.0141584342329811,royalblue,subnet
+ENSG00000099282,TSPAN15,tetraspanin 15 ,protein_coding,2,5,0.0625,6.87532245120522e-17,0.0151165071073538,springgreen,subnet
+ENSG00000099834,CDHR5,cadherin related family member 5 ,protein_coding,2,0,0.166666666666667,0,0.0109086819613135,orchid,subnet
+ENSG00000102854,MSLN,mesothelin ,protein_coding,2,120,0.0105263157894737,0,0.0107685309775176,tomato,subnet
+ENSG00000106392,C1GALT1,"core 1 synthase, glycoprotein-N-acetylgalactosamine 3-beta-galactosyltransferase 1 ",protein_coding,2,5,0.0625,9.46772041377631e-17,0.0151165071073538,springgreen,subnet
+ENSG00000106460,TMEM106B,transmembrane protein 106B ,protein_coding,2,25,0.008,0,0.013435871769277,tomato,subnet
+ENSG00000108242,CYP2C18,cytochrome P450 family 2 subfamily C member 18 ,protein_coding,2,0,0.111111111111111,0,0.00972109113451605,maroon1,subnet
+ENSG00000162366,PDZK1IP1,PDZK1 interacting protein 1 ,protein_coding,2,25,0.00970873786407767,0,0.0122041782033233,tomato,subnet
+ENSG00000167748,KLK1,kallikrein 1 ,protein_coding,2,25,0.0075187969924812,0,0.0136533507544116,tomato,subnet
+ENSG00000169994,MYO7B,myosin VIIB ,protein_coding,2,0,0.166666666666667,0,0.0109086819613135,orchid,subnet
+ENSG00000170340,B3GNT2,"UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 2 ",protein_coding,2,9,0.0833333333333333,6.98102482522707e-17,0.0141190301373368,springgreen,subnet
+ENSG00000171155,C1GALT1C1,C1GALT1 specific chaperone 1 ,protein_coding,2,8,0.0769230769230769,9.97288156442399e-17,0.0143481802520704,springgreen,subnet
+ENSG00000171492,LRRC8D,leucine rich repeat containing 8 VRAC subunit D ,protein_coding,2,0,0.166666666666667,0,0.0124727223131478,saddlebrown,subnet
+ENSG00000172367,NHERF4,NHERF family PDZ scaffold protein 4 ,protein_coding,2,8,0.0833333333333333,7.03777972802833e-17,0.0143715297322111,royalblue,subnet
+ENSG00000175311,ANKS4B,ankyrin repeat and sterile alpha motif domain containing 4B ,protein_coding,2,0,0.166666666666667,0,0.0109086819613135,orchid,subnet
+ENSG00000179913,B3GNT3,"UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3 ",protein_coding,2,8,0.0769230769230769,8.36299747522644e-17,0.0143481802520704,springgreen,subnet
+ENSG00000198805,PNP,purine nucleoside phosphorylase ,protein_coding,2,25,0.00694444444444444,3.83469431597735e-17,0.0140808768694658,tomato,subnet
+ENSG00000275395,FCGBP,Fc gamma binding protein ,protein_coding,2,5,0.010752688172043,0,0.00943602797147779,tomato,subnet
+ENSG00000011105,TSPAN9,tetraspanin 9 ,protein_coding,1,0,0.0476190476190476,5.55503337781205e-17,0.00834759244370228,springgreen,subnet
+ENSG00000025708,TYMP,thymidine phosphorylase ,protein_coding,1,0,0.00591715976331361,2.74116145675751e-17,0.00790744959259988,tomato,subnet
+ENSG00000065600,PACC1,proton activated chloride channel 1 ,protein_coding,1,0,0.00952380952380953,0,0.0061608034427574,tomato,subnet
+ENSG00000070214,SLC44A1,solute carrier family 44 member 1 ,protein_coding,1,0,0.125,0,0.00719789961811238,saddlebrown,subnet
+ENSG00000080493,SLC4A4,solute carrier family 4 member 4 ,protein_coding,1,0,0.0588235294117647,3.88642033958117e-17,0.00805053409679136,royalblue,subnet
+ENSG00000100170,SLC5A1,solute carrier family 5 member 1 ,protein_coding,1,0,0.0078125,0,0.00710985265948934,tomato,subnet
+ENSG00000100665,SERPINA4,serpin family A member 4 ,protein_coding,1,0,0.00632911392405063,0,0.00772575099370186,tomato,subnet
+ENSG00000104774,MAN2B1,mannosidase alpha class 2B member 1 ,protein_coding,1,0,0.111111111111111,3.06178650385232e-17,0.00861116119074406,cyan,subnet
+ENSG00000105877,DNAH11,dynein axonemal heavy chain 11 ,protein_coding,1,0,0.142857142857143,0,0.00579242804251762,yellowgreen,subnet
+ENSG00000109654,TRIM2,tripartite motif containing 2 ,protein_coding,1,0,0.125,0,0.00719789961811238,saddlebrown,subnet
+ENSG00000115648,MLPH,melanophilin ,protein_coding,1,0,0.142857142857143,5.17485268719587e-17,0.0084026334026334,mediumseagreen,subnet
+ENSG00000118526,TCF21,transcription factor 21 ,protein_coding,1,0,0.111111111111111,0.246829826210458,0.00492471414015623,gold,subnet
+ENSG00000135048,CEMIP2,cell migration inducing hyaluronidase 2 ,protein_coding,1,0,0.125,1.91232686782488e-17,0.0084171818529667,cyan,subnet
+ENSG00000137501,SYTL2,synaptotagmin like 2 ,protein_coding,1,0,0.142857142857143,5.25269223608282e-17,0.00840263340263341,mediumseagreen,subnet
+ENSG00000139629,GALNT6,polypeptide N-acetylgalactosaminyltransferase 6 ,protein_coding,1,0,0.0476190476190476,4.51863763339053e-17,0.00834759244370228,springgreen,subnet
+ENSG00000142765,SYTL1,synaptotagmin like 1 ,protein_coding,1,0,0.142857142857143,8.68588358542753e-17,0.00840263340263341,mediumseagreen,subnet
+ENSG00000145113,MUC4,"mucin 4, cell surface associated ",protein_coding,1,0,0.00740740740740741,0,0.00708646240976503,tomato,subnet
+ENSG00000147041,SYTL5,synaptotagmin like 5 ,protein_coding,1,0,0.142857142857143,6.16785949666881e-17,0.00840263340263341,mediumseagreen,subnet
+ENSG00000151693,ASAP2,"ArfGAP with SH3 domain, ankyrin repeat and PH domain 2 ",protein_coding,1,0,0.05,3.00061612200623e-17,0.00835419518319411,royalblue,subnet
+ENSG00000160181,TFF2,trefoil factor 2 ,protein_coding,1,0,0.00854700854700855,0,0.00566319196630384,tomato,subnet
+ENSG00000168903,BTNL3,butyrophilin like 3 ,protein_coding,1,0,0.00684931506849315,0,0.00735954471575589,tomato,subnet
+ENSG00000169894,MUC3A,"mucin 3A, cell surface associated ",protein_coding,1,0,0.00740740740740741,0,0.00708646240976503,tomato,subnet
+ENSG00000171533,MAP6,microtubule associated protein 6 ,protein_coding,1,0,0.00666666666666667,9.73332196410154e-18,0.00763332242501965,tomato,subnet
+ENSG00000185015,CA13,carbonic anhydrase 13 ,protein_coding,1,0,0.0588235294117647,3.58345362990167e-17,0.00805053409679136,royalblue,subnet
+ENSG00000186529,CYP4F3,cytochrome P450 family 4 subfamily F member 3 ,protein_coding,1,0,0.0909090909090909,0,0.00617078982408089,maroon1,subnet
+ENSG00000196208,GREB1,growth regulating estrogen receptor binding 1 ,protein_coding,1,0,0.0087719298245614,0,0.00658671300514316,tomato,subnet
+ENSG00000204175,GPRIN2,G protein regulated inducer of neurite outgrowth 2 ,protein_coding,1,0,0.00740740740740741,0,0.00708646240976503,tomato,subnet
+ENSG00000221890,NPTXR,neuronal pentraxin receptor ,protein_coding,1,0,0.125,2.55272951069515e-17,0.0084171818529667,cyan,subnet
