@@ -134,7 +134,7 @@ DE_analysis <- function(counts_matrix, sample_info) {
 
 
 id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
-  library(tidyverse)
+  library(tibble)
   
   if (is.character(data)) {
     ensembl_annot <- getBM(
@@ -191,6 +191,245 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
   return(data_annot)
 }
 
+
+
+
+
+id_annot_2 <- function(ensembl, data, col_id = 1,
+                       input_type, convert_to) {
+  # deps: biomaRt::getBM, tibble::rownames_to_column()
+  
+  strip_desc <- function(df) {
+    if ("description" %in% convert_to && "description" %in% names(df)) {
+      df$description <- gsub("\\[.*?\\]", "", df$description)
+    }
+    df
+  }
+  
+  # helper to build the "missing" rows data.frame
+  make_missing <- function(keys) {
+    miss <- data.frame(
+      matrix(NA, 
+             nrow = length(keys),
+             ncol = 1 + length(convert_to)),
+      stringsAsFactors = FALSE
+    )
+    colnames(miss) <- c(input_type, convert_to)
+    miss[[input_type]] <- keys
+    miss
+  }
+  
+  # FLAG: converting FROM uniprot_gn_id into anything
+  special_in  <- (input_type == "uniprot_gn_id")
+  # FLAG: converting TO uniprot_gn_id (gene→UniProt)
+  special_out <- ("uniprot_gn_id" %in% convert_to && 
+                    input_type != "uniprot_gn_id")
+  
+  # —— WORK WITH character VECTOR ——  
+  if (is.character(data)) {
+    keys <- data
+    
+    # 1) INPUT_TYPE = uniprot_gn_id → union of Swiss‐Prot + GN lookups
+    if (special_in) {
+      # Swiss‐Prot first
+      bm1 <- biomaRt::getBM(
+        attributes = c("uniprotswissprot", convert_to),
+        filters    = "uniprotswissprot",
+        values     = keys,
+        mart       = ensembl
+      )
+      bm1 <- bm1[bm1$uniprotswissprot != "" & 
+                   !is.na(bm1$uniprotswissprot), , drop=FALSE]
+      names(bm1)[1] <- input_type
+      bm1 <- strip_desc(bm1)
+      
+      # then other UniProt GN
+      bm2 <- biomaRt::getBM(
+        attributes = c("uniprot_gn_id", convert_to),
+        filters    = "uniprot_gn_id",
+        values     = keys,
+        mart       = ensembl
+      )
+      bm2 <- bm2[bm2$uniprot_gn_id != "" & 
+                   !is.na(bm2$uniprot_gn_id), , drop=FALSE]
+      names(bm2)[1] <- input_type
+      bm2 <- strip_desc(bm2)
+      
+      # union, preferring bm1 rows
+      used <- bm1[[input_type]]
+      annot <- rbind(bm1, bm2[! bm2[[input_type]] %in% used, , drop=FALSE])
+    }
+    
+    # 2) GENE→uniprot_gn_id: collapse Swiss vs GN, plus any extra attrs
+    else if (special_out) {
+      other_attrs <- setdiff(convert_to, "uniprot_gn_id")
+      attrs <- c(input_type,
+                 "uniprotswissprot",
+                 "uniprot_gn_id",
+                 other_attrs)
+      bm <- biomaRt::getBM(
+        attributes = attrs,
+        filters    = input_type,
+        values     = keys,
+        mart       = ensembl
+      )
+      bm <- strip_desc(bm)
+      
+      # split & collapse per key
+      by_key <- split(bm, bm[[input_type]])
+      out_list <- lapply(by_key, function(df_sub) {
+        # pick uniprot_gn_id
+        swiss <- unique(na.omit(
+          ifelse(df_sub$uniprotswissprot=="", NA, df_sub$uniprotswissprot)
+        ))
+        if (length(swiss)>0) {
+          upid <- paste(swiss, collapse=";")
+        } else {
+          gids <- unique(na.omit(
+            ifelse(df_sub$uniprot_gn_id=="", NA, df_sub$uniprot_gn_id)
+          ))
+          upid <- paste(gids, collapse=";")
+        }
+        # build one row
+        row <- setNames(
+          as.list(rep(NA, 1+length(convert_to))),
+          c(input_type, convert_to)
+        )
+        row[[input_type]]      <- df_sub[[input_type]][1]
+        row[["uniprot_gn_id"]] <- upid
+        
+        # collapse any other attrs too
+        for (attr in other_attrs) {
+          vals <- unique(na.omit(df_sub[[attr]]))
+          row[[attr]] <- if (length(vals)>0) 
+            paste(vals, collapse=";") 
+          else 
+            NA
+        }
+        as.data.frame(row, stringsAsFactors=FALSE)
+      })
+      annot <- do.call(rbind, out_list)
+    }
+    
+    # 3) DEFAULT: single-query lookup
+    else {
+      annot <- biomaRt::getBM(
+        attributes = c(input_type, convert_to),
+        filters    = input_type,
+        values     = keys,
+        mart       = ensembl
+      )
+      annot <- strip_desc(annot)
+    }
+    
+    # 4) bind in missing rows & dedupe
+    miss    <- make_missing(keys)
+    all_out <- rbind(annot, miss)
+    data_annot <- all_out[!duplicated(all_out[[input_type]]), , drop=FALSE]
+  }
+  
+  # —— WORK WITH data.frame ——  
+  else {
+    df <- data
+    if (col_id == 0) {
+      df <- tibble::rownames_to_column(df)
+      col_id <- 1
+    }
+    keys <- df[[ colnames(df)[col_id] ]]
+    
+    # same 3‐branch logic, but merging at the end
+    if (special_in) {
+      bm1 <- biomaRt::getBM(
+        attributes = c("uniprotswissprot", convert_to),
+        filters    = "uniprotswissprot",
+        values     = keys,
+        mart       = ensembl
+      )
+      bm1 <- bm1[bm1$uniprotswissprot!="" & 
+                   !is.na(bm1$uniprotswissprot), , drop=FALSE]
+      names(bm1)[1] <- input_type
+      bm1 <- strip_desc(bm1)
+      
+      bm2 <- biomaRt::getBM(
+        attributes = c("uniprot_gn_id", convert_to),
+        filters    = "uniprot_gn_id",
+        values     = keys,
+        mart       = ensembl
+      )
+      bm2 <- bm2[bm2$uniprot_gn_id!="" & 
+                   !is.na(bm2$uniprot_gn_id), , drop=FALSE]
+      names(bm2)[1] <- input_type
+      bm2 <- strip_desc(bm2)
+      
+      used  <- bm1[[input_type]]
+      annot <- rbind(bm1, bm2[! bm2[[input_type]] %in% used, , drop=FALSE])
+    }
+    else if (special_out) {
+      other_attrs <- setdiff(convert_to, "uniprot_gn_id")
+      attrs <- c(input_type,
+                 "uniprotswissprot",
+                 "uniprot_gn_id",
+                 other_attrs)
+      bm <- biomaRt::getBM(
+        attributes = attrs,
+        filters    = input_type,
+        values     = keys,
+        mart       = ensembl
+      )
+      bm <- strip_desc(bm)
+      
+      by_key <- split(bm, bm[[input_type]])
+      out_list <- lapply(by_key, function(df_sub) {
+        swiss <- unique(na.omit(
+          ifelse(df_sub$uniprotswissprot=="", NA, df_sub$uniprotswissprot)
+        ))
+        if (length(swiss)>0) {
+          upid <- paste(swiss, collapse=";")
+        } else {
+          gids <- unique(na.omit(
+            ifelse(df_sub$uniprot_gn_id=="", NA, df_sub$uniprot_gn_id)
+          ))
+          upid <- paste(gids, collapse=";")
+        }
+        row <- setNames(
+          as.list(rep(NA, 1+length(convert_to))),
+          c(input_type, convert_to)
+        )
+        row[[input_type]]      <- df_sub[[input_type]][1]
+        row[["uniprot_gn_id"]] <- upid
+        for (attr in other_attrs) {
+          vals <- unique(na.omit(df_sub[[attr]]))
+          row[[attr]] <- if (length(vals)>0)
+            paste(vals, collapse=";")
+          else
+            NA
+        }
+        as.data.frame(row, stringsAsFactors=FALSE)
+      })
+      annot <- do.call(rbind, out_list)
+    }
+    else {
+      annot <- biomaRt::getBM(
+        attributes = c(input_type, convert_to),
+        filters    = input_type,
+        values     = keys,
+        mart       = ensembl
+      )
+      annot <- strip_desc(annot)
+    }
+    
+    # merge back to original df
+    data_annot <- merge(
+      annot, df,
+      by.x  = input_type,
+      by.y  = colnames(df)[col_id],
+      all.y = TRUE,
+      sort  = FALSE
+    )
+  }
+  
+  return(data_annot)
+}
 
 
 
