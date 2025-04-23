@@ -1,4 +1,4 @@
-### perform rank sensitivity with page_rank
+### perform rank sensitivity with page_rank ###
 
 library(tidyverse)
 library(progress)
@@ -15,7 +15,7 @@ druggability <- unique(druggability)
 
 
 # PubTator3 counts and get total counts per gene
-PubTator <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/citaiton_counts_ognsmAnnot.csv") # mac
+PubTator <- fread("~/OneDrive - RMIT University/PhD/large_git_files/PubTator3/citaiton_counts_ognsmAnnot.csv")
 PubTator$tax_id <- as.character(PubTator$tax_id)
 PubTator$entrezgene_id <- as.character(PubTator$entrezgene_id)
 PubTator[, combined := ifelse(symbol == "", entrezgene_id, symbol)]
@@ -39,6 +39,7 @@ colnames(HHnet_enrich)[5] <- "degree_centrality"
 HHnet_enrich <- merge.data.table(as.data.table(HHnet_enrich), PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
 HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$degree), ]
 HHnet_enrich <- merge(HHnet_enrich, druggability, by = "external_gene_name", all.x = T)
+temp <- HHnet_enrich[is.na(HHnet_enrich$druggability), ]
 HHnet_enrich <- HHnet_enrich[complete.cases(HHnet_enrich), ]
 
 # normalise data
@@ -179,17 +180,21 @@ library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 uniprot_ids <- getBM(
-  attributes = c("external_gene_name", "uniprot_gn_id"),
+  attributes = c("external_gene_name", "uniprot_gn_id", "uniprotswissprot"),
   filters = "external_gene_name",
   values = RS_HHnet_enrich$gene,
   mart = ensembl)
 
+uniprot_ids$combined <- ifelse(uniprot_ids$uniprot_gn_id == "", uniprot_ids$uniprotswissprot, uniprot_ids$uniprot_gn_id)
+
 RS_HHnet_enrich <- merge(uniprot_ids, RS_HHnet_enrich, by.x = "external_gene_name", by.y = "gene", all.y = T)
-RS_HHnet_enrich <- merge(RS_HHnet_enrich, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.y = T)
+RS_HHnet_enrich <- merge(RS_HHnet_enrich, feature_data_scores_appended[, c(1,105:108)], by.x = "combined", by.y = "Protein", all.x = T)
 RS_HHnet_enrich <- unique(RS_HHnet_enrich)
-RS_HHnet_enrich <- RS_HHnet_enrich[!duplicated(RS_HHnet_enrich$external_gene_name) & RS_HHnet_enrich$uniprot_gn_id != "", ]
+RS_HHnet_enrich <- RS_HHnet_enrich[!duplicated(RS_HHnet_enrich$external_gene_name) & RS_HHnet_enrich$combined != "", ]
 RS_HHnet_enrich <- RS_HHnet_enrich[order(RS_HHnet_enrich$avg_rank), ]
 rownames(RS_HHnet_enrich) <- NULL
+RS_HHnet_enrich <- RS_HHnet_enrich[, -c(3,4)]
+colnames(RS_HHnet_enrich)[1] <- "uniprot_gn_id"
 
 RS_HHnet_enrich <- merge.data.table(RS_HHnet_enrich, PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
 
