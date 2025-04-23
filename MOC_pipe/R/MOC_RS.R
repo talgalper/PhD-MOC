@@ -176,27 +176,15 @@ load("~/OneDrive - RMIT University/PhD/large_git_files/ML/ML_bagging_more_featur
 predicted_targets <- model_prediction_results$feature_data_scores_appended$Protein[model_prediction_results$feature_data_scores_appended$Prediction_Score_rf >= 0.5]
 feature_data_scores_appended <- model_prediction_results$feature_data_scores_appended
 
+# annotate with uniprot ids
 library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+RS_HHnet_enrich <- id_annot_2(ensembl, RS_HHnet_enrich, input_type = "external_gene_name", convert_to = "uniprot_gn_id")
 
-uniprot_ids <- getBM(
-  attributes = c("external_gene_name", "uniprot_gn_id", "uniprotswissprot"),
-  filters = "external_gene_name",
-  values = RS_HHnet_enrich$gene,
-  mart = ensembl)
-
-uniprot_ids$combined <- ifelse(uniprot_ids$uniprot_gn_id == "", uniprot_ids$uniprotswissprot, uniprot_ids$uniprot_gn_id)
-
-RS_HHnet_enrich <- merge(uniprot_ids, RS_HHnet_enrich, by.x = "external_gene_name", by.y = "gene", all.y = T)
-RS_HHnet_enrich <- merge(RS_HHnet_enrich, feature_data_scores_appended[, c(1,105:108)], by.x = "combined", by.y = "Protein", all.x = T)
-RS_HHnet_enrich <- unique(RS_HHnet_enrich)
-RS_HHnet_enrich <- RS_HHnet_enrich[!duplicated(RS_HHnet_enrich$external_gene_name) & RS_HHnet_enrich$combined != "", ]
+RS_HHnet_enrich <- merge(RS_HHnet_enrich, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.x = T)
+RS_HHnet_enrich <- merge.data.table(RS_HHnet_enrich, PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
 RS_HHnet_enrich <- RS_HHnet_enrich[order(RS_HHnet_enrich$avg_rank), ]
 rownames(RS_HHnet_enrich) <- NULL
-RS_HHnet_enrich <- RS_HHnet_enrich[, -c(3,4)]
-colnames(RS_HHnet_enrich)[1] <- "uniprot_gn_id"
-
-RS_HHnet_enrich <- merge.data.table(RS_HHnet_enrich, PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
 
 write.csv(RS_HHnet_enrich, "results/HHnet_RS_ML_overlap.csv", row.names = F)
 RS_HHnet_enrich <- read.csv("results/HHnet_RS_ML_overlap.csv")
