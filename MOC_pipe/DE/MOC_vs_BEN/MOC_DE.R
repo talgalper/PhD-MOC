@@ -110,4 +110,17 @@ write.csv(DE_result_geneSymbol, "DE/MOC_vs_BEN/MOC_DE_results.csv", row.names = 
 write.csv(DE_hits_geneSymbol, "DE/MOC_vs_BEN/MOC_DE_hits.csv", row.names = F)
 
 
+# compare stage vs grade PCA
+PCA_plot <- plot_PCA(expr_data = counts_filt, 
+                     sample_info = sample_info_filt, 
+                     output_plot_data = T,
+                     circle_clust = T,
+                     label_group = "MOC", 
+                     colour = "Grade")
 
+PCA_plot <- plot_PCA(expr_data = counts_filt, 
+                     sample_info = sample_info_filt, 
+                     output_plot_data = T,
+                     circle_clust = T,
+                     label_group = "MOC", 
+                     colour = "stage")
