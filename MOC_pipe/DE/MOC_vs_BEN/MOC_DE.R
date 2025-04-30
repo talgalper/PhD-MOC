@@ -61,7 +61,7 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
 
 
 # perform DE analysis - read in from R/funcitons.R
-DE_results <- DE_analysis(counts_matrix = MOC_raw_counts_filt, 
+DE_results <- DE_analysis(counts_matrix = counts_filt, 
                           sample_info = sample_info_filt)
 
 save(DE_results, file = "DE/MOC_vs_BEN/DE_results.RData")
@@ -69,7 +69,7 @@ load("DE/MOC_vs_BEN/DE_results.RData")
 
 # get DE counts summary
 print(summary(decideTests(DE_results$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
-
+cat("Total DE:", nrow(DE_results$dif_exp))
 
 # create volcano plot
 plot_data <- DE_results$toptags$table
@@ -97,11 +97,11 @@ library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # read in from R/functions.R
-DE_result_geneSymbol <- id_annot(ensembl, DE_results$dif_exp,
+DE_result_geneSymbol <- id_annot_2(ensembl, DE_results$dif_exp,
                                  input_type = "ensembl_gene_id",
                                  convert_to = c("external_gene_name", "description", "gene_biotype"))
 
-DE_hits_geneSymbol <- id_annot(ensembl, DE_results$hits,
+DE_hits_geneSymbol <- id_annot_2(ensembl, DE_results$hits,
                                input_type = "ensembl_gene_id",
                                convert_to = c("external_gene_name", "description", "gene_biotype"))
 
@@ -110,17 +110,3 @@ write.csv(DE_result_geneSymbol, "DE/MOC_vs_BEN/MOC_DE_results.csv", row.names = 
 write.csv(DE_hits_geneSymbol, "DE/MOC_vs_BEN/MOC_DE_hits.csv", row.names = F)
 
 
-# compare stage vs grade PCA
-PCA_plot <- plot_PCA(expr_data = counts_filt, 
-                     sample_info = sample_info_filt, 
-                     output_plot_data = T,
-                     circle_clust = T,
-                     label_group = "MOC", 
-                     colour = "Grade")
-
-PCA_plot <- plot_PCA(expr_data = counts_filt, 
-                     sample_info = sample_info_filt, 
-                     output_plot_data = T,
-                     circle_clust = T,
-                     label_group = "MOC", 
-                     colour = "stage")
