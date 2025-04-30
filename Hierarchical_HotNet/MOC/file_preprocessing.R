@@ -1,5 +1,4 @@
 library(data.table)
-library(tidyverse)
 
 # load in BRCA data
 STRING_edge <- fread("STRING_data/STRING_physical_ENSG.csv") 
