@@ -1,7 +1,7 @@
 ### MOC pipeline Functions ###
 
-
-plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clust = FALSE, label_group = NULL, shape = NULL) {
+plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clust = FALSE, 
+                     label_group = NULL, colour = "Classification", shape = NULL) {
   library(edgeR)
   library(ggplot2)
   library(ggrepel)
@@ -23,23 +23,23 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
   pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = 1)
   
   # Create a custom colour palette for stages
-  groups <- unique(sample_info[ ,2])
+  groups <- unique(sample_info[ ,colour])
   num_colors <- length(groups)
   colours <- brewer.pal(n = num_colors, name = "Set1")
   names(colours) <- groups
   
   # Set up the base aesthetic mapping depending on whether a shape variable is provided
   base_aes <- if (!is.null(shape)) {
-    aes(PC1, PC2, color = Classification, shape = !!sym(shape))
+    aes(PC1, PC2, color = !!sym(colour), shape = !!sym(shape))
   } else {
-    aes(PC1, PC2, color = Classification)
+    aes(PC1, PC2, color = !!sym(colour))
   }
   
   # Build the ggplot object based on whether we want cluster encircling or not
   if (isTRUE(circle_clust)) {
     PCA_plot <- ggplot(pca_data, base_aes) +
       geom_point(size = 4) +
-      geom_encircle(aes(group = Classification), s_shape = 0, expand = 0.05, color = "black") +
+      geom_encircle(aes(group = !!sym(colour)), s_shape = 0, expand = 0.05, color = "black") +
       scale_color_manual(values = colours) +
       theme_bw() +
       labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
@@ -85,8 +85,6 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
     return(list(PCA_plot = PCA_plot, plot_data = pca_data, pca_var_perc = pca_var_perc))
   }
 }
-
-
 
 
 
