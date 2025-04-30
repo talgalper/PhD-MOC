@@ -89,15 +89,15 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
 
 
 # unpaired DE analysis
-DE_analysis <- function(counts_matrix, sample_info) {
+DE_analysis <- function(counts_matrix, sample_info, group = "Classification") {
   
-  data <- DGEList(counts = counts_matrix, group = sample_info$Classification)
+  data <- DGEList(counts = counts_matrix, group = sample_info[, group])
   
   cat("Normalising library size \n")
   
   data <- normLibSizes(data)
   
-  design <- model.matrix(~Classification, data = sample_info)
+  design <- model.matrix(reformulate(group), data = sample_info)
   
   cat("Estimating dispersion \n")
   
@@ -193,10 +193,8 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
 
 
 
-id_annot_2 <- function(ensembl, data, col_id = 1,
-                       input_type, convert_to) {
-  # deps: biomaRt::getBM, tibble::rownames_to_column()
-  
+id_annot_2 <- function(ensembl, data, col_id = 1, input_type, convert_to) {
+
   strip_desc <- function(df) {
     if ("description" %in% convert_to && "description" %in% names(df)) {
       df$description <- gsub("\\[.*?\\]", "", df$description)
