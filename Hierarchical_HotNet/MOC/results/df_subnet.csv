@@ -1,0 +1,89 @@
+ensembl_gene_id,external_gene_name,description,gene_biotype,degree,betweenness,closeness,eigen_centrality,page_rank,cluster,source
+ENSG00000080986,NDC80,NDC80 kinetochore complex component ,protein_coding,8,158.5,0.00847457627118644,1,0.0222543030149602,tomato,subnet
+ENSG00000088325,TPX2,TPX2 microtubule nucleation factor ,protein_coding,5,290.5,0.00847457627118644,0.0393654714946031,0.0234244140239847,tomato,subnet
+ENSG00000117724,CENPF,centromere protein F ,protein_coding,5,135.5,0.00840336134453782,0.611688894433899,0.0152958926837623,tomato,subnet
+ENSG00000169679,BUB1,BUB1 mitotic checkpoint serine/threonine kinase ,protein_coding,5,22,0.0075187969924812,0.793762921620363,0.0138647255689141,tomato,subnet
+ENSG00000221866,PLXNA4,plexin A4 ,protein_coding,5,5.5,0.2,0,0.0210664458684694,orchid,subnet
+ENSG00000065328,MCM10,minichromosome maintenance 10 replication initiation factor ,protein_coding,4,124,0.00775193798449612,0.0917625713376979,0.0138679402341967,tomato,subnet
+ENSG00000101003,GINS1,GINS complex subunit 1 ,protein_coding,4,32,0.00632911392405063,0.0365045467840165,0.0134219580989388,tomato,subnet
+ENSG00000103257,SLC7A5,solute carrier family 7 member 5 ,protein_coding,4,6,0.166666666666667,0,0.016767735383767,maroon1,subnet
+ENSG00000114554,PLXNA1,plexin A1 ,protein_coding,4,1.5,0.166666666666667,0,0.0165989573895842,orchid,subnet
+ENSG00000143228,NUF2,NUF2 component of NDC80 kinetochore complex ,protein_coding,4,0,0.00671140939597315,0.684902224130248,0.0112341667293937,tomato,subnet
+ENSG00000147536,GINS4,GINS complex subunit 4 ,protein_coding,4,32,0.00632911392405063,0.0365045467840165,0.0134219580989388,tomato,subnet
+ENSG00000152253,SPC25,SPC25 component of NDC80 kinetochore complex ,protein_coding,4,0,0.00671140939597315,0.684902224130248,0.0112341667293937,tomato,subnet
+ENSG00000161888,SPC24,SPC24 component of NDC80 kinetochore complex ,protein_coding,4,0,0.00671140939597315,0.684902224130248,0.0112341667293937,tomato,subnet
+ENSG00000167513,CDT1,chromatin licensing and DNA replication factor 1 ,protein_coding,4,198.5,0.00833333333333333,0.268166885016763,0.0145745474897238,tomato,subnet
+ENSG00000197635,DPP4,dipeptidyl peptidase 4 ,protein_coding,4,18,0.0555555555555556,0,0.0248580396180254,springgreen,subnet
+ENSG00000067715,SYT1,synaptotagmin 1 ,protein_coding,3,2,0.0909090909090909,0,0.0129119855524409,royalblue,subnet
+ENSG00000069849,ATP1B3,ATPase Na+/K+ transporting subunit beta 3 ,protein_coding,3,1.5,0.142857142857143,0,0.0126934545667654,maroon1,subnet
+ENSG00000079841,RIMS1,regulating synaptic membrane exocytosis 1 ,protein_coding,3,2,0.0909090909090909,0,0.0129119855524409,royalblue,subnet
+ENSG00000081377,CDC14B,cell division cycle 14B ,protein_coding,3,0,0.00526315789473684,0.0201737982446743,0.010384820957296,tomato,subnet
+ENSG00000094804,CDC6,cell division cycle 6 ,protein_coding,3,156,0.00854700854700855,0.0826758738879447,0.0117472724937703,tomato,subnet
+ENSG00000126787,DLGAP5,DLG associated protein 5 ,protein_coding,3,127,0.00694444444444444,0.0094292728045008,0.0160592643755639,tomato,subnet
+ENSG00000130294,KIF1A,kinesin family member 1A ,protein_coding,3,8,0.1,0,0.0137219661378533,royalblue,subnet
+ENSG00000131153,GINS2,GINS complex subunit 2 ,protein_coding,3,0,0.00526315789473684,0.0201737982446744,0.010384820957296,tomato,subnet
+ENSG00000152763,DNAI4,dynein axonemal intermediate chain 4 ,protein_coding,3,2,0.333333333333333,0,0.0169981861939792,cyan,subnet
+ENSG00000154839,SKA1,spindle and kinetochore associated complex subunit 1 ,protein_coding,3,0,0.00740740740740741,0.445340230928821,0.00935294550547754,tomato,subnet
+ENSG00000161036,LRWD1,leucine rich repeats and WD repeat domain containing 1 ,protein_coding,3,98,0.00675675675675676,0.0642259615062132,0.0148114369201276,tomato,subnet
+ENSG00000162063,CCNF,cyclin F ,protein_coding,3,169.5,0.00840336134453782,0.0219508875740881,0.0139945447944377,tomato,subnet
+ENSG00000163399,ATP1A1,ATPase Na+/K+ transporting subunit alpha 1 ,protein_coding,3,1.5,0.142857142857143,0,0.0126934545667654,maroon1,subnet
+ENSG00000165480,SKA3,spindle and kinetochore associated complex subunit 3 ,protein_coding,3,0,0.00740740740740741,0.445340230928821,0.00935294550547754,tomato,subnet
+ENSG00000171345,KRT19,keratin 19 ,protein_coding,3,2,0.333333333333333,0,0.0169981861939792,mediumseagreen,subnet
+ENSG00000171848,RRM2,ribonucleotide reductase regulatory subunit M2 ,protein_coding,3,204.5,0.00833333333333333,0.0139631069072271,0.0144009558327698,tomato,subnet
+ENSG00000174827,PDZK1,PDZ domain containing 1 ,protein_coding,3,3,0.333333333333333,0,0.0222354451786665,yellowgreen,subnet
+ENSG00000177380,PPFIA3,PTPRF interacting protein alpha 3 ,protein_coding,3,9,0.111111111111111,0,0.0129428050461214,royalblue,subnet
+ENSG00000187017,ESPN,espin ,protein_coding,3,2,0.333333333333333,0,0.0169981861939792,saddlebrown,subnet
+ENSG00000040608,RTN4R,reticulon 4 receptor ,protein_coding,2,15,0.0555555555555556,0,0.0123684952708803,springgreen,subnet
+ENSG00000066279,ASPM,assembly factor for spindle microtubules ,protein_coding,2,66,0.00574712643678161,0.0021469871880359,0.0117505425657581,tomato,subnet
+ENSG00000072571,HMMR,hyaluronan mediated motility receptor ,protein_coding,2,66,0.00675675675675676,0.00896327476171511,0.0109586326587681,tomato,subnet
+ENSG00000075702,WDR62,WD repeat domain 62 ,protein_coding,2,34,0.00485436893203884,0.000487673545393273,0.0128524584282398,tomato,subnet
+ENSG00000077942,FBLN1,fibulin 1 ,protein_coding,2,4,0.0909090909090909,0,0.0138630791051039,gold,subnet
+ENSG00000092068,SLC7A8,solute carrier family 7 member 8 ,protein_coding,2,0,0.111111111111111,0,0.00921959408069035,maroon1,subnet
+ENSG00000092421,SEMA6A,semaphorin 6A ,protein_coding,2,0,0.125,0,0.00884669707027291,orchid,subnet
+ENSG00000099860,GADD45B,growth arrest and DNA damage inducible beta ,protein_coding,2,34,0.0054945054945055,0.000722159385069715,0.01241657741972,tomato,subnet
+ENSG00000101447,FAM83D,family with sequence similarity 83 member D ,protein_coding,2,34,0.00555555555555556,0.00203594693332989,0.0123255516408101,tomato,subnet
+ENSG00000107331,ABCA2,ATP binding cassette subfamily A member 2 ,protein_coding,2,0,0.1,0,0.00893108041518019,maroon1,subnet
+ENSG00000108244,KRT23,keratin 23 ,protein_coding,2,0,0.25,0,0.011398740143143,mediumseagreen,subnet
+ENSG00000114993,RTKN,rhotekin ,protein_coding,2,4,0.0909090909090909,0,0.0138630791051039,gold,subnet
+ENSG00000118997,DNAH7,dynein axonemal heavy chain 7 ,protein_coding,2,0,0.25,0,0.011398740143143,cyan,subnet
+ENSG00000127863,TNFRSF19,TNF receptor superfamily member 19 ,protein_coding,2,12,0.0476190476190476,0,0.0127355743073081,springgreen,subnet
+ENSG00000131435,PDLIM4,PDZ and LIM domain 4 ,protein_coding,2,0,0.25,0,0.011398740143143,saddlebrown,subnet
+ENSG00000136999,CCN3,cellular communication network factor 3 ,protein_coding,2,6,0.111111111111111,0,0.0132694459948098,gold,subnet
+ENSG00000138079,SLC3A1,solute carrier family 3 member 1 ,protein_coding,2,0,0.111111111111111,0,0.00921959408069035,maroon1,subnet
+ENSG00000139292,LGR5,leucine rich repeat containing G protein-coupled receptor 5 ,protein_coding,2,7,0.0384615384615385,0,0.0135078611525587,springgreen,subnet
+ENSG00000143434,SEMA6C,semaphorin 6C ,protein_coding,2,0,0.125,0,0.00884669707027292,orchid,subnet
+ENSG00000143847,PPFIA4,PTPRF interacting protein alpha 4 ,protein_coding,2,0,0.0666666666666667,0,0.00905491464039629,royalblue,subnet
+ENSG00000148773,MKI67,marker of proliferation Ki-67 ,protein_coding,2,132,0.00826446280991736,0.140951189312252,0.00832057496766345,tomato,subnet
+ENSG00000158486,DNAH3,dynein axonemal heavy chain 3 ,protein_coding,2,0,0.25,0,0.011398740143143,cyan,subnet
+ENSG00000161847,RAVER1,"ribonucleoprotein, PTB binding 1 ",protein_coding,2,66,0.00666666666666667,0.00317931321497908,0.0110954390500122,tomato,subnet
+ENSG00000166825,ANPEP,"alanyl aminopeptidase, membrane ",protein_coding,2,16,0.0588235294117647,0,0.012277066736301,springgreen,subnet
+ENSG00000171346,KRT15,keratin 15 ,protein_coding,2,0,0.25,0,0.011398740143143,mediumseagreen,subnet
+ENSG00000173272,MZT2A,mitotic spindle organizing protein 2A ,protein_coding,2,34,0.00555555555555556,0.014588490573475,0.0116040720542107,tomato,subnet
+ENSG00000176749,CDK5R1,cyclin dependent kinase 5 regulatory subunit 1 ,protein_coding,2,0,0.125,0,0.00884669707027291,orchid,subnet
+ENSG00000186185,KIF18B,kinesin family member 18B ,protein_coding,2,0,0.0714285714285714,0,0.00978437084012449,royalblue,subnet
+ENSG00000196154,S100A4,S100 calcium binding protein A4 ,protein_coding,2,6,0.111111111111111,0,0.0132694459948098,gold,subnet
+ENSG00000196923,PDLIM7,PDZ and LIM domain 7 ,protein_coding,2,0,0.25,0,0.011398740143143,saddlebrown,subnet
+ENSG00000237649,KIFC1,kinesin family member C1 ,protein_coding,2,0,0.0714285714285714,0,0.00978437084012449,royalblue,subnet
+ENSG00000007174,DNAH9,dynein axonemal heavy chain 9 ,protein_coding,1,0,0.2,0,0.00655427558230723,cyan,subnet
+ENSG00000023839,ABCC2,ATP binding cassette subfamily C member 2 ,protein_coding,1,0,0.2,0,0.00803816562796864,yellowgreen,subnet
+ENSG00000100031,GGT1,gamma-glutamyltransferase 1 ,protein_coding,1,0,0.04,6.78124665555299e-18,0.00702045624617686,springgreen,subnet
+ENSG00000112782,CLIC5,chloride intracellular channel 5 ,protein_coding,1,0,0.2,0,0.00655427558230723,saddlebrown,subnet
+ENSG00000125257,ABCC4,ATP binding cassette subfamily C member 4 (PEL blood group) ,protein_coding,1,0,0.2,0,0.00803816562796864,yellowgreen,subnet
+ENSG00000130222,GADD45G,growth arrest and DNA damage inducible gamma ,protein_coding,1,0,0.00462962962962963,0.000156345198689205,0.00701516823072747,tomato,subnet
+ENSG00000135917,SLC19A3,solute carrier family 19 member 3 ,protein_coding,1,0,0.2,0,0.00803816562796864,yellowgreen,subnet
+ENSG00000137745,MMP13,matrix metallopeptidase 13 ,protein_coding,1,0,0.04,6.06785354430874e-18,0.00702045624617686,springgreen,subnet
+ENSG00000137804,NUSAP1,nucleolar and spindle associated protein 1 ,protein_coding,1,0,0.0065359477124183,0.00475229699998207,0.00570324385243715,tomato,subnet
+ENSG00000141519,CCDC40,coiled-coil domain 40 molecular ruler complex subunit ,protein_coding,1,0,0.00467289719626168,0.000440776003736969,0.00697648227469074,tomato,subnet
+ENSG00000152082,MZT2B,mitotic spindle organizing protein 2B ,protein_coding,1,0,0.00467289719626168,0.00315836158117043,0.00666985345038603,tomato,subnet
+ENSG00000163520,FBLN2,fibulin 2 ,protein_coding,1,0,0.0666666666666667,0,0.00762993144701563,gold,subnet
+ENSG00000165304,MELK,maternal embryonic leucine zipper kinase ,protein_coding,1,0,0.00561797752808989,0.00204140742416894,0.00628824773375623,tomato,subnet
+ENSG00000167680,SEMA6B,semaphorin 6B ,protein_coding,1,0,0.111111111111111,0,0.00531941862498626,orchid,subnet
+ENSG00000167767,KRT80,keratin 80 ,protein_coding,1,0,0.2,0,0.00655427558230723,mediumseagreen,subnet
+ENSG00000167962,ZNF598,"zinc finger protein 598, E3 ubiquitin ligase ",protein_coding,1,0,0.00657894736842105,0.00852249875797813,0.00572027321142387,tomato,subnet
+ENSG00000172572,PDE3A,phosphodiesterase 3A ,protein_coding,1,0,0.00416666666666667,0.000105579763866966,0.00720041765934838,tomato,subnet
+ENSG00000183579,ZNRF3,zinc and ring finger 3 ,protein_coding,1,0,0.0303030303030303,0,0.00747896381718392,springgreen,subnet
+ENSG00000196549,MME,membrane metalloendopeptidase ,protein_coding,1,0,0.04,0,0.00702045624617686,springgreen,subnet
+ENSG00000213977,TAX1BP3,Tax1 binding protein 3 ,protein_coding,1,0,0.0666666666666667,0,0.00762993144701563,gold,subnet
+ENSG00000214022,REPIN1,replication initiator 1 ,protein_coding,1,0,0.0054945054945055,0.0139047153859618,0.00593469662138261,tomato,subnet
+ENSG00000099998,GGT5,gamma-glutamyltransferase 5 ,protein_coding,0,0,,0,0.00173812282734647,springgreen,subnet
+ENSG00000105877,DNAH11,dynein axonemal heavy chain 11 ,protein_coding,0,0,,0,0.00173812282734647,cyan,subnet
