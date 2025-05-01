@@ -1,4 +1,3 @@
-library(tidyverse)
 library(igraph)
 library(data.table)
 
@@ -7,8 +6,9 @@ STRING_net <- STRING_net[!duplicated(t(apply(STRING_net, 1, sort))), ] # get rid
 STRING_net <- graph_from_data_frame(STRING_net, directed = F)
 
 
-hh_results <- read_lines("MOC/results/clusters_STRING_MOC_logFC.tsv", skip = 7)
+hh_results <- readr::read_lines("MOC/results/clusters_STRING_MOC_logFC.tsv", skip = 7)
 hh_results <- str_split(hh_results, pattern = "\t")
+table(lengths(hh_results))
 
 top <- unlist(hh_results[1:10])
 
@@ -139,7 +139,7 @@ fwrite(df_subnetNeighs, "MOC/results/df_subnetNeighs.csv")
 library(clusterProfiler)
 library(progress)
 
-load("../MOC_pipe/DE/DE_results.RData")
+load("../MOC_pipe/DE/MOC_vs_BEN/DE_results.RData")
 filtered_MOC_data <- DE_results$input_data
 
 pb <- progress_bar$new(
@@ -182,10 +182,10 @@ GO_formatted$color <- ifelse(GO_formatted$cluster == 8, "yellowgreen", GO_format
 GO_formatted$color <- ifelse(GO_formatted$cluster == 9, "mediumseagreen", GO_formatted$color)
 GO_formatted$color <- ifelse(GO_formatted$cluster == 10, "saddlebrown", GO_formatted$color)
 
-save(cluster_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/HHnet_cluster_GO.RData")
-load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_cluster_GO.RData")
+save(cluster_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/MOCvsBEN_HHnet_cluster_GO.RData")
 fwrite(GO_formatted, "MOC/results/subnetNeighs_cluster_GO.csv")
 
+load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_cluster_GO.RData")
 
 
 
