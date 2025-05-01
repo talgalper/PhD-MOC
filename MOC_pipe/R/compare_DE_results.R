@@ -1,11 +1,11 @@
 ### Compare and analyse DE results ###
 library(edgeR)
 
-load("DE/DE_results_MOC_vs_GTEx.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_MOC_vs_GTEx.RData")
 MOC_vs_GTEx <- DE_results
-load("DE/DE_results.RData")
+load("DE/MOC_vs_BEN/DE_results.RData")
 MOC_vs_BEN <- DE_results
-load("DE/DE_results_TCGA_vs_GTEx.RData")
+load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_TCGA_vs_GTEx.RData")
 TCGA_vs_GTEx <- DE_results
 rm(DE_results)
 
