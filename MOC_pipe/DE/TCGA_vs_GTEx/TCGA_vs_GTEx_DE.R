@@ -1,13 +1,16 @@
 ### Differential expression analysis between TCGA-OV and GTEx-OV ###
 
 library(edgeR)
-library(tidyverse)
 
 load("data/serous-OV/GTEx-OV_unstranded.RData")
 load("data/serous-OV/TCGA-OV_unstranded.RData")
+MOC_raw_counts <- read.csv("data/analysis_set_raw_counts.csv", row.names = 1)
+common_genes <- intersect(rownames(MOC_raw_counts), intersect(rownames(TCGA_OV_data_unstranded), rownames(GTEx_data)))
 
 all_expr_data <- merge(TCGA_OV_data_unstranded, GTEx_data, by = "row.names")
-all_expr_data <- column_to_rownames(all_expr_data, "Row.names")
+all_expr_data <- tibble::column_to_rownames(all_expr_data, "Row.names")
+
+all_expr_data <- all_expr_data[rownames(all_expr_data) %in% common_genes, ]
 
 sample_info <- data.frame(sample = c(colnames(TCGA_OV_data_unstranded), colnames(GTEx_data)),
                           Classification = c(rep("TCGA-OV", ncol(TCGA_OV_data_unstranded)),
