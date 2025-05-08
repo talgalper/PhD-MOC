@@ -30,6 +30,30 @@ sample_info$stage <- ifelse(sample_info$Stage %in% c("I", "IA", "IC"), "I",
 # check distribution
 hist(cpm(MOC_raw_counts, log = T))
 
+old <- par(
+  mar  = c(5, 4, 4, 8) + 0.1,
+  xpd  = TRUE   
+)
+stage_order <- unique(sample_info$stage[order(sample_info$stage)])
+ord <- order(sample_info$stage)
+colours <- RColorBrewer::brewer.pal(n = length(stage_order), name = "Set1")
+names(colours) <- stage_order
+boxplot(
+  cpm(MOC_raw_counts[, ord], log = TRUE),
+  las   = 2,
+  col   = colours[as.character(sample_info$stage[ord])],
+  main  = "MOC Raw Counts (logCPM)",
+  ylab  = "logCPM")
+legend(
+  "topright",
+  inset = c(-0.20, 0),
+  legend = stage_order,
+  fill = colours[stage_order],
+  cex = 1,
+  bty = "n",
+  x.intersp = 0.3)
+rm(colours, ord, stage_order, old)
+
 # filter low counts
 counts_filt <- filterByExpr(MOC_raw_counts, group = sample_info$Classification)
 counts_filt <- MOC_raw_counts[counts_filt, ]
@@ -53,11 +77,36 @@ low_exp_genes <- MOC_raw_counts_filt[!rownames(MOC_raw_counts_filt) %in% rowname
 
 hist(cpm(counts_filt, log = T))
 
+old <- par(
+  mar  = c(5, 4, 4, 8) + 0.1, 
+  xpd  = TRUE    
+)
+stage_order <- unique(sample_info_filt$stage[order(sample_info_filt$stage)])
+ord <- order(sample_info_filt$stage)
+colours <- RColorBrewer::brewer.pal(n = length(stage_order), name = "Set1")
+names(colours) <- stage_order
+boxplot(
+  cpm(counts_filt[, ord], log = TRUE),
+  las = 2,
+  col = colours[as.character(sample_info_filt$stage[ord])],
+  main = "MOC Raw Counts (logCPM)",
+  ylab = "logCPM")
+legend(
+  "topright",
+  inset = c(-0.20, 0),
+  legend = stage_order,
+  fill = colours[stage_order],
+  cex = 1,
+  bty = "n",
+  x.intersp = 0.3)
+rm(colours, ord, stage_order, old)
+
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
                      sample_info = sample_info_filt, 
                      output_plot_data = T,
                      circle_clust = F,
-                     label_group = "MOC")
+                     label_group = "MOC",
+                     shape = 'stage')
 
 
 # perform DE analysis - read in from R/funcitons.R
