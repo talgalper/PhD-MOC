@@ -7,16 +7,20 @@ load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_MOC_vs_GTE
 MOC_vs_GTEx <- DE_results
 load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_TCGA_vs_GTEx.RData")
 TCGA_vs_GTEx <- DE_results
+load("~/OneDrive - RMIT University/PhD/large_git_files/MOC/DE_results_TCGA_vs_GTEx(full).RData")
+TCGA_vs_GTEx_full <- DE_results
 rm(DE_results)
 
 print(summary(decideTests(MOC_vs_BEN$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
 print(summary(decideTests(MOC_vs_GTEx$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
 print(summary(decideTests(TCGA_vs_GTEx$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
+print(summary(decideTests(TCGA_vs_GTEx_full$qlf, p = 0.05, adjust = "fdr", lfc = 1)))
 
 
 MOC_vs_BEN_difExp <- read.csv("DE/MOC_vs_BEN/MOC_DE_results.csv")
 MOC_vs_GTEx_difExp <- read.csv("DE/MOC_vs_GTEx/MOC_vs_GTEx_DE_results.csv")
 TCGA_vs_GTEx_difExp <- read.csv("DE/TCGA_vs_GTEx/TCGA_vs_GTEx_DE_results.csv")
+TCGA_vs_GTEx_difExp_full <- read.csv("DE/TCGA_vs_GTEx/full/TCGA_vs_GTEx_DE_results.csv")
 
 venn_data <- list(
   MOC_vs_BEN = MOC_vs_BEN_difExp$ensembl_gene_id,
@@ -26,7 +30,7 @@ venn_data <- list(
 library(venn)
 library(RColorBrewer)
 venn(venn_data, 
-     ellipse = T, 
+     ellipse = F, 
      zcolor = brewer.pal(length(venn_data), name = "Dark2"),
      box = FALSE,
      ilabels = "counts",
