@@ -192,9 +192,19 @@ DE_analysis <- function(counts_matrix, sample_info, group = "Classification") {
 
 
 
-
 id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
 
+  if (isFALSE(exists("ensembl", envir = globalenv(), inherits = FALSE))) {
+    cat("No ensembl object, loading to global env...", "\n")
+    library(biomaRt)
+    ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") 
+    assign("ensembl", ensembl, envir = .GlobalEnv) # add to global env
+  } else {
+    if (missing(ensembl)) {
+      stop("Uh-oh silly! ensembl object in env, please include", call. = FALSE)
+    }
+  }
+  
   strip_desc <- function(df) {
     if ("description" %in% convert_to && "description" %in% names(df)) {
       df$description <- gsub("\\[.*?\\]", "", df$description)
@@ -424,6 +434,7 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
     )
   }
   
+  cat("Done!")
   return(data_annot)
 }
 
