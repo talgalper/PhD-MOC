@@ -41,11 +41,11 @@ names(colours) <- stage_order
 par(font.lab = 2,
     mar = c(6,4,3,8))
 boxplot(
-  cpm(MOC_raw_counts[, ord], log = TRUE),
+  log2(MOC_raw_counts[, ord] + 1),
   las   = 2,
   col   = colours[as.character(sample_info$stage[ord])],
   #main  = "MOC Raw Counts (logCPM)",
-  ylab  = "logCPM",
+  ylab  = "log2(counts + 1)",
   cex.lab = 1.2,
   cex.axis = 1.2)
 legend(
