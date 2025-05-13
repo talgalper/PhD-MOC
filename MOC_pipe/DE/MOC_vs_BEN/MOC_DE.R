@@ -32,26 +32,30 @@ hist(cpm(MOC_raw_counts, log = T))
 
 old <- par(
   mar  = c(5, 4, 4, 8) + 0.1,
-  xpd  = TRUE   
+  xpd  = TRUE
 )
 stage_order <- unique(sample_info$stage[order(sample_info$stage)])
 ord <- order(sample_info$stage)
 colours <- RColorBrewer::brewer.pal(n = length(stage_order), name = "Set1")
 names(colours) <- stage_order
+par(font.lab = 2,
+    mar = c(6,4,3,8))
 boxplot(
   cpm(MOC_raw_counts[, ord], log = TRUE),
   las   = 2,
   col   = colours[as.character(sample_info$stage[ord])],
-  main  = "MOC Raw Counts (logCPM)",
-  ylab  = "logCPM")
+  #main  = "MOC Raw Counts (logCPM)",
+  ylab  = "logCPM",
+  cex.lab = 1.2,
+  cex.axis = 1.2)
 legend(
   "topright",
-  inset = c(-0.20, 0),
+  inset = c(-0.225, 0),
   legend = stage_order,
   fill = colours[stage_order],
-  cex = 1,
+  cex = 1.2,
   bty = "n",
-  x.intersp = 0.3)
+  x.intersp = 0.2)
 rm(colours, ord, stage_order, old)
 
 # filter low counts
@@ -85,20 +89,25 @@ stage_order <- unique(sample_info_filt$stage[order(sample_info_filt$stage)])
 ord <- order(sample_info_filt$stage)
 colours <- RColorBrewer::brewer.pal(n = length(stage_order), name = "Set1")
 names(colours) <- stage_order
+par(font.lab = 2,
+    mar = c(6,4,3,8))
 boxplot(
-  cpm(counts_filt[, ord], log = TRUE),
+  log2(counts_filt[, ord] + 1),
   las = 2,
   col = colours[as.character(sample_info_filt$stage[ord])],
-  main = "MOC Raw Counts (logCPM)",
-  ylab = "logCPM")
+  #main = "MOC Raw Counts",
+  ylab = "log2(counts + 1)",
+  cex.lab = 1.2,
+  cex.axis = 1.2
+  )
 legend(
   "topright",
-  inset = c(-0.20, 0),
+  inset = c(-0.225, 0),
   legend = stage_order,
   fill = colours[stage_order],
-  cex = 1,
+  cex = 1.2,
   bty = "n",
-  x.intersp = 0.3)
+  x.intersp = 0.2)
 rm(colours, ord, stage_order, old)
 
 PCA_plot <- plot_PCA(expr_data = counts_filt, 
