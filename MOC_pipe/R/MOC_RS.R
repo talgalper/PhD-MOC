@@ -177,9 +177,7 @@ predicted_targets <- model_prediction_results$feature_data_scores_appended$Prote
 feature_data_scores_appended <- model_prediction_results$feature_data_scores_appended
 
 # annotate with uniprot ids
-library(biomaRt)
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-RS_HHnet_enrich <- id_annot_2(ensembl, RS_HHnet_enrich, input_type = "external_gene_name", convert_to = "uniprot_gn_id")
+RS_HHnet_enrich <- id_annot(ensembl, RS_HHnet_enrich, input_type = "external_gene_name", convert_to = "uniprot_gn_id")
 
 RS_HHnet_enrich <- merge(RS_HHnet_enrich, feature_data_scores_appended[, c(1,105:108)], by.x = "uniprot_gn_id", by.y = "Protein", all.x = T)
 RS_HHnet_enrich <- merge.data.table(RS_HHnet_enrich, PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
