@@ -7,7 +7,6 @@ load("RData/LumA/DE_data.RData")
 load("RData/LumB/DE_data.RData")
 load("RData/Her2/DE_data.RData")
 load("RData/basal/DE_data.RData")
-load("RData/TCGA_normal.RData")
 
 GTEx_data <- read.table("../BRCA_pipe/gene_reads_2017-06-05_v8_breast_mammary_tissue.gct", skip = 2)
 colnames(GTEx_data) <- GTEx_data[1, ]
