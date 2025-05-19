@@ -7,7 +7,7 @@ STRING_net <- graph_from_data_frame(STRING_net, directed = F)
 
 
 hh_results <- readr::read_lines("MOC/results/clusters_STRING_MOC_logFC.tsv", skip = 7)
-hh_results <- str_split(hh_results, pattern = "\t")
+hh_results <- stringr::str_split(hh_results, pattern = "\t")
 table(lengths(hh_results))
 
 top <- unlist(hh_results[1:10])
@@ -138,6 +138,9 @@ fwrite(df_subnetNeighs, "MOC/results/df_subnetNeighs.csv")
 
 library(clusterProfiler)
 library(progress)
+
+GO <- enrichGO(MOCvsBEN$external_gene_name, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "BP", universe = rownames(filtered_MOC_data))
+result <- GO@result
 
 load("../MOC_pipe/DE/MOC_vs_BEN/DE_results.RData")
 filtered_MOC_data <- DE_results$input_data
