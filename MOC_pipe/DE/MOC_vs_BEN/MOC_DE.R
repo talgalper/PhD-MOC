@@ -68,9 +68,9 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
                      sample_info = sample_info, 
                      output_plot_data = T,
                      circle_clust = F,
-                     label_group = "MOC")
+                     shape = "stage")
 
-
+# remove UNK, BDL and EOM samples
 keep_samples <- sample_info$GAMUT_ID[sample_info$Classification %in% c("MOC", "BEN")]
 MOC_raw_counts_filt <- MOC_raw_counts[, colnames(MOC_raw_counts) %in% keep_samples]
 sample_info_filt <- sample_info[sample_info$GAMUT_ID %in% keep_samples, ]
@@ -114,7 +114,6 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
                      sample_info = sample_info_filt, 
                      output_plot_data = T,
                      circle_clust = F,
-                     label_group = "MOC",
                      shape = 'stage')
 
 
