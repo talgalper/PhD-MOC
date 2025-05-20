@@ -209,3 +209,15 @@ temp <- temp[,c("external_gene_name", "ensembl_gene_id", "uniprot_gn_id", "descr
 colnames(temp)[c(6:9)] <- c("RS_avg_rank", "druggability", "Prediction_Score_rf", "citations")
 temp <- temp[order(temp$RS_avg_rank), ]
 rownames(temp) <- NULL
+
+
+temp <- RS_HHnet_enrich[RS_HHnet_enrich$Prediction_Score_rf > 0.5, ]
+load("../Druggability_analysis/data_general/TTD_master.RData")
+
+temp2 <- TTD_master[TTD_master$all_target_genes %in% temp$external_gene_name, ]
+temp2 <- temp2[order(match(temp2$all_target_genes, temp$external_gene_name)), ]
+
+
+
+
+
