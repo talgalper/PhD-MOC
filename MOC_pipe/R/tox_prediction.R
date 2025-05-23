@@ -2,7 +2,7 @@
 
 library(data.table)
 # GenomeAd data - healthy cell toxicity 
-GenomAD <- fread("~/Downloads/gnomad.v4.1.constraint_metrics.tsv", sep = "\t") #
+GenomAD <- fread("~/OneDrive - RMIT University/PhD/large_git_files/tox/gnomad.v4.1.constraint_metrics.tsv", sep = "\t") 
 
 GenomAD_filt <- GenomAD[mane_select == TRUE | canonical == TRUE, ]
 GenomAD_filt <- GenomAD_filt[, c("gene", "gene_id", "lof_hc_lc.pLI", "lof.pLI", "lof.oe_ci.upper", 
@@ -19,8 +19,8 @@ GenomAD_filt$essential <- ifelse(GenomAD_filt$lof.pLI >= 0.9 & GenomAD_filt$lof.
 
 
 # depmap data - cancer selectivity
-effects <- fread("~/Downloads/CRISPRGeneEffect.csv")
-models <- fread("~/Downloads/Model.csv")
+effects <- fread("~/OneDrive - RMIT University/PhD/large_git_files/tox/CRISPRGeneEffect.csv")
+models <- fread("~/OneDrive - RMIT University/PhD/large_git_files/tox/Model.csv")
 
 # subset only cancer mnodels
 cancer_ids <- models[OncotreePrimaryDisease != "Non-Cancerous", ]
@@ -57,7 +57,7 @@ gene_summary <- data.frame(
 )
 
 
-essentials <- read.csv("~/Downloads/CRISPRInferredCommonEssentials.csv")
+essentials <- read.csv("~/OneDrive - RMIT University/PhD/large_git_files/tox/CRISPRInferredCommonEssentials.csv")
 gene_summary$comEss <- ifelse(gene_summary$gene %in% essentials$Essentials, TRUE, FALSE)
 
 
@@ -95,6 +95,9 @@ tox_summary$category <- with(tox_summary,
 
 # CHRONOS = 0: no dependency in cancer cell line
 # CHRONOS = -1: essential in cancer cell line
+
+# Cancer-selective required mean_effect ≤ –0.5 (strong overall depletion)
+# Non-essential required mean_effect > –0.2 (little effect on average)
 
 # lof.oe = 0: intolerant
 # lof.oe = 1: non-essential
