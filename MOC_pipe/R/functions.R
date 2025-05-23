@@ -150,7 +150,7 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
     assign("ensembl", ensembl, envir = .GlobalEnv) # add to global env
   } else {
     if (missing(ensembl)) {
-      stop("Uh-oh silly! ensembl object in env, please include", call. = FALSE)
+      stop("Uh-oh silly! ensembl object in env, please include as arg", call. = FALSE)
     }
   }
   
