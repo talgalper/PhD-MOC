@@ -1,6 +1,5 @@
 ### perform rank sensitivity with page_rank ###
 
-library(tidyverse)
 library(progress)
 library(biomaRt)
 library(data.table)
@@ -204,18 +203,28 @@ venn(venn_data,
 
 
 
-temp <- merge(HHnet_enrich[,c(1:4,15)], RS_HHnet_enrich[,c(1,2,3,6,9)], by = "external_gene_name")
-temp <- temp[,c("external_gene_name", "ensembl_gene_id", "uniprot_gn_id", "description", "gene_biotype", "avg_rank", "highest_score", "Prediction_Score_rf", "counts")]
-colnames(temp)[c(6:9)] <- c("RS_avg_rank", "druggability", "Prediction_Score_rf", "citations")
-temp <- temp[order(temp$RS_avg_rank), ]
+# format a nice table
+druggability <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
+temp <- merge(RS_HHnet_enrich[,c(1:4,6,9)], druggability, by = c("external_gene_name", "uniprot_gn_id"), all.x = TRUE)
+temp <- temp[order(temp$avg_rank), ]
 rownames(temp) <- NULL
+temp$CP_score <- round(temp$CP_score, digits = 3)
+temp$`FP/CP` <- paste(temp$druggability, temp$CP_score, sep = "/")
+temp <- temp[, -c(8:13)]
+temp <- temp[,c("external_gene_name", "uniprot_gn_id", "description", "avg_rank", 
+                "rank_variance", "Prediction_Score_rf", "counts", "FP/CP", "source")]
+rm(druggability)
 
+# subset genes with less than 5000 citations
+temp2 <- temp[temp$counts < 5000, ]
 
-temp <- RS_HHnet_enrich[RS_HHnet_enrich$Prediction_Score_rf > 0.5, ]
+# predicted by RF
+temp3 <- temp[temp$Prediction_Score_rf > 0.5, ]
+
+# identify genes with existing/(pre)clinical drugs
 load("../Druggability_analysis/data_general/TTD_master.RData")
-
-temp2 <- TTD_master[TTD_master$all_target_genes %in% temp$external_gene_name, ]
-temp2 <- temp2[order(match(temp2$all_target_genes, temp$external_gene_name)), ]
+temp3 <- TTD_master[TTD_master$all_target_genes %in% temp$external_gene_name, ]
+temp3 <- temp3[order(match(temp3$all_target_genes, temp$external_gene_name)), ]
 
 
 
