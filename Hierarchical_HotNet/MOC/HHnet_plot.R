@@ -139,7 +139,11 @@ fwrite(df_subnetNeighs, "MOC/results/df_subnetNeighs.csv")
 library(clusterProfiler)
 library(progress)
 
-GO <- enrichGO(MOCvsBEN$external_gene_name, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "BP", universe = rownames(filtered_MOC_data))
+
+MOCvsBEN <- read.csv("../MOC_pipe/results/HHnet_RS_ML_overlap.csv")
+genes_ENS <- id_annot(ensembl, data = MOCvsBEN$external_gene_name, input_type = "external_gene_name", convert_to = "ensembl_gene_id")
+
+GO <- enrichGO(MOCvsBEN$external_gene_name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP", universe = rownames(filtered_MOC_data))
 result <- GO@result
 
 load("../MOC_pipe/DE/MOC_vs_BEN/DE_results.RData")
