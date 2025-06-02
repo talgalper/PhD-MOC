@@ -1,6 +1,7 @@
 ### MOC pipeline Functions ###
 
 # plot PCA with optional lot parameters for data vis.
+## 
 plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clust = FALSE, 
                      label_group = NULL, colour = "Classification", shape = NULL) {
   
@@ -55,7 +56,7 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
         legend.title = element_text(size = 22),
         legend.text = element_text(size = 21),
         panel.grid = element_blank(),
-        panel.border = element_rect(colour = "black", size = 1.5)
+        panel.border = element_rect(colour = "black", linewidth = 1.5)
       )
   } else {
     PCA_plot <- ggplot(pca_data, base_aes) +
@@ -70,7 +71,7 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
         legend.title = element_text(size = 22),
         legend.text = element_text(size = 21),
         panel.grid = element_blank(),
-        panel.border = element_rect(colour = "black", size = 1.5)
+        panel.border = element_rect(colour = "black", linewidth = 1.5)
       )
   }
   
