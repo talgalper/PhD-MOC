@@ -52,3 +52,18 @@ AKT <- c(
 
 AKT_AF <- AF_Fpocket[AF_Fpocket$uniprot_id %in% AKT, ]
 AKT_SM <- SM_Fpocket[SM_Fpocket$uniprot_id %in% AKT, ]
+
+
+
+# annotate with new id_annot function in moc_pipe
+drug_scores_annot <- id_annot(ensembl,
+                              data = drug_scores, 
+                              input_type = "uniprot_gn_id", 
+                              convert_to = c("external_gene_name","description", "gene_biotype"))
+temp <- rbind(
+  drug_scores_annot[duplicated(drug_scores_annot$external_gene_name), ],
+  drug_scores_annot[duplicated(drug_scores_annot$external_gene_name, fromLast = TRUE), ]
+)
+
+write.csv(drug_scores_annot, "data_general/druggability_scores_annot2.0.csv", row.names = F)
+
