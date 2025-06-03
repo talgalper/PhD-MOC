@@ -53,10 +53,11 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
                      sample_info = sample_info, 
                      output_plot_data = T,
                      circle_clust = F,
-                     shape = "stage")
+                     shape = "stage", 
+                     colour = "Classification")
 
 
-
+# perform DE analysis
 DE_results <- DE_analysis(counts_matrix = counts_filt, 
                           sample_info = sample_info)
 
