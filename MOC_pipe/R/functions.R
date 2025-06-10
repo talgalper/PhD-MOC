@@ -395,7 +395,7 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
     )
   }
   
-  cat("Done!")
+  cat("Done!", "\n")
   return(data_annot)
 }
 
