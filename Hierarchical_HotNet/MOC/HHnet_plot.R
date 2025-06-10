@@ -139,19 +139,18 @@ fwrite(df_subnetNeighs, "MOC/results/df_subnetNeighs.csv")
 library(clusterProfiler)
 library(progress)
 
-
-MOCvsBEN <- read.csv("../MOC_pipe/results/HHnet_RS_ML_overlap.csv")
-genes_ENS <- id_annot(ensembl, data = MOCvsBEN$external_gene_name, input_type = "external_gene_name", convert_to = "ensembl_gene_id")
-
-GO <- enrichGO(MOCvsBEN$external_gene_name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP", universe = rownames(filtered_MOC_data))
-result <- GO@result
+# MOCvsBEN <- read.csv("../MOC_pipe/results/HHnet_RS_ML_overlap.csv")
+# genes_ENS <- id_annot(ensembl, data = MOCvsBEN$external_gene_name, input_type = "external_gene_name", convert_to = "ensembl_gene_id")
+# 
+# GO <- enrichGO(MOCvsBEN$external_gene_name, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP", universe = rownames(filtered_MOC_data))
+# result <- GO@result
 
 load("../MOC_pipe/DE/MOC_vs_BEN/DE_results.RData")
 filtered_MOC_data <- DE_results$input_data
 
 pb <- progress_bar$new(
   format = "  Performing GO Analysis [:bar] :percent eta: :eta",
-  total = 18
+  total = 10
 )
 
 cluster_GO <- list()
@@ -160,10 +159,9 @@ for (cluster in hh_results[1:10]) {
   GO <- enrichGO(cluster, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP", universe = rownames(filtered_MOC_data))
   cluster_GO[[clust_no]] <- GO
   clust_no <- clust_no + 1
-  rm(GO, cluster)
   pb$tick()
 }
-rm(clust_no, pb)
+rm(clust_no, pb, cluster, GO)
 
 GO_formatted <- data.frame()
 clust_no <- 1
@@ -173,26 +171,99 @@ for (cluster in cluster_GO) {
   result_top$cluster <- rep(clust_no, nrow(result_top))
   
   GO_formatted <- rbind(GO_formatted, result_top)
-  rm(result_top, result)
   clust_no <- clust_no + 1
 }
-rm(clust_no)
+rm(clust_no, result_top, result)
 
-GO_formatted$color <- ifelse(GO_formatted$cluster == 1, "tomato", "")
-GO_formatted$color <- ifelse(GO_formatted$cluster == 2, "springgreen", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 3, "royalblue", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 4, "maroon1", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 5, "gold", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 6, "orchid", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 7, "cyan", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 8, "yellowgreen", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 9, "mediumseagreen", GO_formatted$color)
-GO_formatted$color <- ifelse(GO_formatted$cluster == 10, "saddlebrown", GO_formatted$color)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 1, "tomato", "")
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 2, "springgreen", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 3, "royalblue", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 4, "maroon1", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 5, "gold", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 6, "orchid", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 7, "cyan", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 8, "yellowgreen", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 9, "mediumseagreen", GO_formatted$colour)
+GO_formatted$colour <- ifelse(GO_formatted$cluster == 10, "saddlebrown", GO_formatted$colour)
 
-save(cluster_GO, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/MOCvsBEN_HHnet_cluster_GO.RData")
-fwrite(GO_formatted, "MOC/results/subnetNeighs_cluster_GO.csv")
+save(cluster_GO, GO_formatted, file = "~/OneDrive - RMIT University/PhD/large_git_files/MOC/MOCvsBEN_HHnet_cluster_GO.RData")
+fwrite(GO_formatted, "MOC/results/subnet_cluster_GO.csv")
 
 load("~/OneDrive - RMIT University/PhD/large_git_files/HHnet/HHnet_cluster_GO.RData")
+
+
+# remove redundant GO terms based on semantic similarity
+library(rrvgo)
+
+cluster_GO_reduced <- list()
+clust_no <- 1
+for (cluster in cluster_GO) {
+  cat("Processing cluster ", clust_no, "...", sep = "")
+  
+  if (length(cluster@result$ID) > 100) {
+    GO_ids <- cluster@result$ID[1:100]
+    qvals <- cluster@result$qvalue[1:100]
+  } else {
+    GO_ids <- cluster@result$ID
+    qvals <- cluster@result$qvalue
+  }
+  
+  simMatrix <- calculateSimMatrix(GO_ids,
+                                  orgdb="org.Hs.eg.db",
+                                  ont="BP",
+                                  method="Rel")
+  
+  scores <- setNames(-log10(qvals), GO_ids)
+  reducedTerms <- reduceSimMatrix(simMatrix,
+                                  scores,
+                                  threshold=0.7,
+                                  orgdb="org.Hs.eg.db")
+  
+  results <- list(reducedTerms = reducedTerms, simMatrix = simMatrix)
+  
+  cluster_GO_reduced[[clust_no]] <- results
+  clust_no <- clust_no + 1
+}
+
+rm(simMatrix, scores, reducedTerms, cluster, clust_no, results, GO_ids, qvals)
+gc()
+
+
+GO_formatted_reduced <- data.frame()
+clust_no <- 1
+for (cluster in cluster_GO_reduced) {
+  result <- cluster$reducedTerms
+  result_top <- head(result, 10)
+  result_top$cluster <- rep(clust_no, nrow(result_top))
+  
+  GO_formatted_reduced <- rbind(GO_formatted_reduced, result_top)
+  clust_no <- clust_no + 1
+}
+rm(clust_no, result_top, result)
+gc()
+
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 1, "tomato", "")
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 2, "springgreen", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 3, "royalblue", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 4, "maroon1", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 5, "gold", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 6, "orchid", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 7, "cyan", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 8, "yellowgreen", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 9, "mediumseagreen", GO_formatted$colour)
+GO_formatted_reduced$colour <- ifelse(GO_formatted$cluster == 10, "saddlebrown", GO_formatted$colour)
+
+
+# plot results
+heatmapPlot(simMatrix,
+            reducedTerms,
+            annotateParent=TRUE,
+            annotationLabel="parentTerm",
+            fontsize=6)
+
+scatterPlot(simMatrix, reducedTerms)
+
+wordcloudPlot(reducedTerms, min.freq=1, colors="black")
 
 
 
