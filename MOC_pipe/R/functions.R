@@ -3,7 +3,7 @@
 # plot PCA with optional lot parameters for data vis.
 # colour defaults to Classification so nothing earlier breaks
 plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clust = FALSE, 
-                     label_group = NULL, colour = "Classification", shape = NULL) {
+                     label_group = NULL, colour = "Classification", shape = NULL, shape_values = NULL) {
   
   suppressMessages({
     library(edgeR)
@@ -85,6 +85,12 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
       colour = guide_legend(order = 1),
       shape = guide_legend(order = 2)
     )
+  
+  # Apply manual shapes if provided
+  if (!is.null(shape) && !is.null(shape_values)) {
+    PCA_plot <- PCA_plot +
+      scale_shape_manual(values = shape_values)
+  }
   
   # Optionally add labels for a specific group if label_group is provided
   if (!is.null(label_group)) {
