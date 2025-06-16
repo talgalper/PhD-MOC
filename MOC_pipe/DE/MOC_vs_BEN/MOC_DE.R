@@ -154,16 +154,25 @@ library(biomaRt)
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # read in from R/functions.R
-DE_result_geneSymbol <- id_annot_2(ensembl, DE_results$dif_exp,
+DE_result_geneSymbol <- id_annot(ensembl, DE_results$dif_exp,
                                  input_type = "ensembl_gene_id",
                                  convert_to = c("external_gene_name", "description", "gene_biotype"))
 
-DE_hits_geneSymbol <- id_annot_2(ensembl, DE_results$hits,
+DE_hits_geneSymbol <- id_annot(ensembl, DE_results$hits,
                                input_type = "ensembl_gene_id",
                                convert_to = c("external_gene_name", "description", "gene_biotype"))
 
 
 write.csv(DE_result_geneSymbol, "DE/MOC_vs_BEN/MOC_DE_results.csv", row.names = F)
 write.csv(DE_hits_geneSymbol, "DE/MOC_vs_BEN/MOC_DE_hits.csv", row.names = F)
+
+
+# show all results
+toptags <- DE_results$toptags$table
+toptags <- id_annot(data = toptags, 
+                    col_id = 0, 
+                    input_type = "ensembl_gene_id", 
+                    convert_to = c("external_gene_name", "description", "gene_biotype"))
+
 
 
