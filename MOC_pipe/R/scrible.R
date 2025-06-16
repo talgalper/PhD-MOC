@@ -75,6 +75,7 @@ load("data/serous-OV/TCGA-OV_unstranded.RData")
 load("data/serous-OV/GTEx-OV_unstranded.RData")
 sample_info <- read.csv("data/serous-OV/TCGA-OV_clinical.csv")
 MOC_raw_counts <- read.csv("data/analysis_set_raw_counts.csv", row.names = 1)
+
 common_genes <- intersect(rownames(MOC_raw_counts), intersect(rownames(TCGA_OV_data_unstranded), rownames(GTEx_data)))
 
 all_expr_data <- merge(TCGA_OV_data_unstranded, GTEx_data, by = "row.names")
@@ -86,11 +87,13 @@ sample_info$stage <- ifelse(sample_info$figo_stage %in% c("Stage I", "Stage IA",
                             ifelse(sample_info$figo_stage %in% c("Stage II", "Stage IIB", "Stage IIC", "Stage IIA"), "II",
                                    ifelse(sample_info$figo_stage %in% c("Stage III", "Stage IIIA", "Stage IIIc", "Stage IIIC", "Stage IIIB"), "III",
                                           ifelse(sample_info$figo_stage %in% "Stage IV", "IV",
-                                                 ifelse(is.na(sample_info$figo_stage), "UNK", NA)))))
+                                                 ifelse(is.na(sample_info$figo_stage), "UNK", NA)
+                                                 ))))
 
 temp <- data.frame(sample = c(colnames(TCGA_OV_data_unstranded), colnames(GTEx_data)),
-                          Classification = c(rep("TCGA-OV", ncol(TCGA_OV_data_unstranded)),
-                                             rep("GTEx-OV", ncol(GTEx_data))))
+                   Classification = c(rep("TCGA-OV", ncol(TCGA_OV_data_unstranded)), 
+                                      rep("GTEx-OV", ncol(GTEx_data)))
+                   )
 
 sample_info <- merge(temp, sample_info, by.x = "sample", by.y = "cases", all = TRUE)
 sample_info$stage <- ifelse(is.na(sample_info$stage), "GTEx", sample_info$stage)
@@ -103,7 +106,7 @@ rm(temp)
                           colour = "Classification", 
                           shape = "stage")
 PCA_plot <- `TCGA-OV_PCA_MOC_subset`$PCA_plot
-save(PCA_plot, file = "DE/TCGA_vs_GTEx/PCA_plot.RData")
+
 
 `TCGA-OV_PCA_MOC_subset` <- plot_PCA(expr_data = all_expr_data_MOC_subset,
                                      sample_info = sample_info,
@@ -111,9 +114,65 @@ save(PCA_plot, file = "DE/TCGA_vs_GTEx/PCA_plot.RData")
                                      colour = "Classification",
                                      shape = "stage")
 PCA_plot <- `TCGA-OV_PCA`$PCA_plot
-save(PCA_plot, file = "DE/TCGA_vs_GTEx/full/PCA_plot.RData")
 
 
+# all data PCA
+load("data/serous-OV/TCGA-OV_unstranded.RData")
+load("data/serous-OV/GTEx-OV_unstranded.RData")
+sample_info <- read.csv("data/serous-OV/TCGA-OV_clinical.csv")
+MOC_raw_counts <- read.csv("data/analysis_set_raw_counts.csv", row.names = 1)
+MOC_sample_info <- read.csv("data/All survival_CN_Aug18.csv")
+colnames(MOC_raw_counts) <- sub("GAMuT_", "", colnames(MOC_raw_counts))
+MOC_sample_info <- MOC_sample_info[MOC_sample_info$GAMUT_ID %in% colnames(MOC_raw_counts), ]
+MOC_sample_info <- MOC_sample_info[, c(1,2,4,5)]
+
+all_expr_data <- merge(TCGA_OV_data_unstranded, MOC_raw_counts, by = "row.names")
+all_expr_data <- tibble::column_to_rownames(all_expr_data, "Row.names")
+all_expr_data <- merge(all_expr_data, GTEx_data, by = "row.names")
+all_expr_data <- tibble::column_to_rownames(all_expr_data, "Row.names")
+
+sample_info$stage <- ifelse(sample_info$figo_stage %in% c("Stage I", "Stage IA", "Stage IC"), "I",
+                            ifelse(sample_info$figo_stage %in% c("Stage II", "Stage IIB", "Stage IIC", "Stage IIA"), "II",
+                                   ifelse(sample_info$figo_stage %in% c("Stage III", "Stage IIIA", "Stage IIIc", "Stage IIIC", "Stage IIIB"), "III",
+                                          ifelse(sample_info$figo_stage %in% "Stage IV", "IV",
+                                                 ifelse(is.na(sample_info$figo_stage), "UNK", NA)
+                                          ))))
+
+MOC_sample_info <- rbind(MOC_sample_info, data.frame(GAMUT_ID = setdiff(colnames(MOC_raw_counts), MOC_sample_info$GAMUT_ID),
+                                                     Classification = "UNK", 
+                                                     Grade = "UNK", 
+                                                     Stage = "UNK"))
+MOC_sample_info$stage <- ifelse(MOC_sample_info$Stage %in% c("I", "IA", "IC"), "I",
+                            ifelse(MOC_sample_info$Stage %in% c("II", "IIB"), "II",
+                                   ifelse(MOC_sample_info$Stage %in% c("III", "IIIA", "IIIc", "IIIC"), "III",
+                                          ifelse(MOC_sample_info$Stage %in% "IV", "IV",
+                                                 ifelse(MOC_sample_info$Classification == "BEN", "BEN", "UNK")))))
+
+
+sample_info <- data.frame(sample = c(colnames(TCGA_OV_data_unstranded), colnames(MOC_raw_counts), colnames(GTEx_data)),
+                          classification = c(rep("TCGA-OV", ncol(TCGA_OV_data_unstranded)), 
+                                             rep("MOC", ncol(MOC_raw_counts)), 
+                                             rep("GTEx-OV", ncol(GTEx_data))),
+                          stage = c(sample_info$stage, 
+                                    MOC_sample_info$stage, 
+                                    rep("Healthy", ncol(GTEx_data)))
+                          )
+
+library(edgeR)
+counts_filt <- filterByExpr(all_expr_data, group = sample_info$classification)
+counts_filt <- all_expr_data[counts_filt, ]
+low_exp_genes <- all_expr_data[!rownames(all_expr_data) %in% rownames(counts_filt), ]
+
+all_OV_data_PCA <- plot_PCA(expr_data = all_expr_data,
+                        sample_info = sample_info,
+                        output_plot_data = TRUE,
+                        colour = "classification",
+                        shape = "stage",
+                        shape_values = c(16,16,5,2,18,15,13))
+
+print(all_OV_data_PCA$PCA_plot +
+  scale_shape_manual(values = c(1,1,5,2,8,18,13))
+)
 
 # get structres that failed pre-checks
 af_low_conf_struct <- read.csv("../Druggability_analysis/Fpocket/results_2024.05/af_low_conf_struct.csv")
@@ -123,6 +182,11 @@ af_low_conf_struct <- id_annot(ensembl,
                                input_type = "uniprot_gn_id",
                                convert_to = "external_gene_name")
 temp <- merge(temp, af_low_conf_struct, by = "external_gene_name", all.x = TRUE)
+
+
+load("../Druggability_analysis/data_general/TTD_master.RData")
+temp <- TTD_master[TTD_master$all_target_genes %in% "TP53" & TTD_master$DRUGTYPE %in% "Small molecular drug", ]
+
 
 
 
