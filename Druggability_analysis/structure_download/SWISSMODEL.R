@@ -2,13 +2,11 @@ library(tidyverse)
 library(bio3d)
 
 # read in metadata from SWISS-MODEL download
-meta <- read.table("../SWISS-MODEL_Repository/INDEX", sep = "\t", header = T)
+meta <- read.table("~/Desktop/SWISS-MODEL_Repository/INDEX", sep = "\t", header = T)
 
 # subset structure with highest qmeandisco_global score for each uniprot ID
 meta_subset <- meta
 meta_subset$uniprot_id <- sub("-\\d+$", "", meta_subset$UniProtKB_ac)
-
-
 
 #meta_subset <- meta_subset[order(-meta_subset$qmeandisco_global), ]
 #meta_subset <- meta_subset[!duplicated(meta_subset$uniprot_id), ]
@@ -28,7 +26,7 @@ split_into_pairs <- function(input_string) {
 # create location ID to navigate SWISSMODEL directory
 library(progress)
 pb <- progress_bar$new(
-  format = "  Splitting [:bar] :percent eta: :eta",
+  format = "  Splitting uniprot ID [:bar] :percent eta: :eta",
   total = length(meta_subset$uniprot_id), clear = FALSE)
 
 loc_id <- list()
@@ -105,7 +103,7 @@ for (i in seq_along(meta_subset$uniprot_id)) {
 rm(pb)
 
 
-# moves all structures to Fpocket data analysis dir with beter organisaiton 
+# moves all structures to Fpocket data analysis dir with better organisation 
 library(progress)
 pb <- progress_bar$new(
   format = "  Copying files [:bar] :percent eta: :eta",
