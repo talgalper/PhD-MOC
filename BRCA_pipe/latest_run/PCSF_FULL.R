@@ -63,75 +63,123 @@ hist(log(as.matrix(counts_filt$counts_filt)),
 )
 
 ## plot PCA
-plot_PCA <- function(expr_data, sample_info, output_plot_data = T) {
-  # convert expression data frame into CPM normalised + transposed matrix
-  PCA_data <- cpm(as.matrix(expr_data), log = T)
+plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clust = FALSE, 
+                     label_group = NULL, colour = "Classification", shape = NULL, shape_values = NULL) {
+  
+  suppressMessages({
+    library(edgeR)
+    library(ggplot2)
+    library(ggrepel)
+    library(ggalt)
+    library(RColorBrewer)
+    library(rlang)
+    library(tools)
+  })
+  
+  # Convert expression data frame into CPM-normalized + transposed matrix
+  PCA_data <- cpm(as.matrix(expr_data), log = TRUE)
   PCA_data <- t(PCA_data)
   
-  pca <- prcomp(PCA_data, scale. = T, center = T)
-  pca_data <- pca$x
+  pca <- prcomp(PCA_data, scale. = TRUE, center = TRUE)
+  pca_data <- as.data.frame(pca$x)
   
   pca_var <- pca$sdev^2
-  pca_var_perc <- round(pca_var/sum(pca_var)*100, digits = 2)
-  
-  pca_data <- as.data.frame(pca_data)
+  pca_var_perc <- round(pca_var/sum(pca_var) * 100, digits = 2)
   
   # Merge sample mapping with PCA data
-  pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = "sample")
+  pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = 1)
   
   # Create a custom colour palette for stages
-  library(RColorBrewer)
-  groups <- unique(PCA_sample_info[ ,2])
+  groups <- unique(sample_info[ ,colour])
   num_colors <- length(groups)
-  colours <- brewer.pal(n = num_colors, name = "Dark2")
+  colours <- brewer.pal(n = 6, name = "Set1")
   names(colours) <- groups
   
-  # Create the PCA plot with color mapping
-  library(ggrepel)
-  library(ggalt)
+  # Set up the base aesthetic mapping depending on whether a shape variable is provided
+  base_aes <- if (!is.null(shape)) {
+    aes(PC1, PC2, color = !!sym(colour), shape = !!sym(shape))
+  } else {
+    aes(PC1, PC2, color = !!sym(colour))
+  }
   
+  # Build the ggplot object based on whether we want cluster encircling or not
   if (isTRUE(circle_clust)) {
-    PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
-      geom_point(size = 4) +
-      geom_encircle(aes(group = Classification), s_shape = 0, expand = 0.05, color = "black") +
+    PCA_plot <- ggplot(pca_data, base_aes) +
+      geom_point(size = 6) +
+      geom_encircle(aes(group = !!sym(colour)), s_shape = 0, expand = 0.05, color = "black") +
       scale_color_manual(values = colours) +
       theme_bw() +
       labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
            y = paste0('PC2: ', pca_var_perc[2], ' %')) +
       theme(
-        axis.title = element_text(size = 20),
-        axis.text = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 16),
-        panel.grid = element_blank()
+        axis.title = element_text(size = 24, face = "bold"),
+        axis.text = element_text(size = 22, colour = "black"),
+        legend.title = element_text(size = 22),
+        legend.text = element_text(size = 21),
+        panel.grid = element_blank(),
+        panel.border = element_rect(colour = "black", linewidth = 1.5)
       )
   } else {
-    PCA_plot <- ggplot(pca_data, aes(PC1, PC2, color = Classification)) +
-      geom_point(size = 4) +
+    PCA_plot <- ggplot(pca_data, base_aes) +
+      geom_point(size = 6) +
       scale_color_manual(values = colours) +
       theme_bw() +
       labs(x = paste0('PC1: ', pca_var_perc[1], ' %'),
            y = paste0('PC2: ', pca_var_perc[2], ' %')) +
       theme(
-        axis.title = element_text(size = 20),
-        axis.text = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 16),
-        panel.grid = element_blank()
+        axis.title = element_text(size = 24, face = "bold"),
+        axis.text = element_text(size = 22, colour = "black"),
+        legend.title = element_text(size = 22),
+        legend.text = element_text(size = 21),
+        panel.grid = element_blank(),
+        panel.border = element_rect(colour = "black", linewidth = 1.5)
       )
   }
   
+  # override legend titles so that they are capitalised 
+  PCA_plot <- PCA_plot +
+    labs(
+      colour = toTitleCase(colour),
+      shape = if (!is.null(shape)) toTitleCase(shape) else NULL
+    ) +
+    guides(
+      colour = guide_legend(order = 1),
+      shape = guide_legend(order = 2)
+    )
+  
+  # Apply manual shapes if provided
+  if (!is.null(shape) && !is.null(shape_values)) {
+    PCA_plot <- PCA_plot +
+      scale_shape_manual(values = shape_values)
+  }
+  
+  # Optionally add labels for a specific group if label_group is provided
+  if (!is.null(label_group)) {
+    PCA_plot <- PCA_plot + 
+      geom_text_repel(
+        data = pca_data[pca_data[[colour]] == label_group, ],
+        aes(label = Row.names),
+        size = 5,
+        show.legend = FALSE,
+        max.overlaps = 30
+      )
+  }
+  
+  # Print and optionally return the plot and plot data
   print(PCA_plot)
   
-  if (output_plot_data == T) {
+  if (output_plot_data) {
     return(list(PCA_plot = PCA_plot, plot_data = pca_data, pca_var_perc = pca_var_perc))
   }
 }
 
+
 PCA_plot <- plot_PCA(expr_data = counts_filt$counts_filt, 
                      sample_info = PCA_sample_info, 
                      output_plot_data = T,
-                     circle_clust = F)
+                     circle_clust = F, 
+                     colour = "group", 
+                     shape = "sample_type")
 
 
 # remove solid tissue normal samples and re-plot PCA
@@ -145,7 +193,9 @@ PCA_sample_info_filt <- PCA_sample_info[!PCA_sample_info$sample %in% STN_samples
 PCA_plot_filt <- plot_PCA(expr_data = expr_data_filt$counts_filt, 
                           sample_info = PCA_sample_info_filt, 
                           output_plot_data = T,
-                          circle_clust = F)
+                          circle_clust = F,
+                          colour = "group", 
+                          shape = "sample_type")
 
 save(PCA_plot, PCA_plot_filt, file = "~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
 load("~/OneDrive - RMIT University/PhD/large_git_files/DE_data/PCA_plot_data.RData")
