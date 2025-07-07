@@ -41,7 +41,7 @@ temp <- merge.data.table(targets, hits, by = "ensembl_gene_id", all.x = T)
 OncoDB <- read.table("../../../../Downloads/expression_diff_BRCA.txt", header = T)
 
 
-Xena <- read.csv("../../../../Downloads/DEG_results_Primary_Tumor vs. Normal_Tissue.csv", row.names = 1)
+Xena <- read.csv("../../../../Downloads/DEG_results_TCGA_Breast_Invasive_Carcinoma vs. GTEX_Breast.csv", row.names = 1)
 Xena <- Xena[Xena$logFC >= 1 | Xena$logFC <= -1, ]
 
 
