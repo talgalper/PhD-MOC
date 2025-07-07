@@ -98,7 +98,7 @@ training_data <- data_sets_from_TTD(updated_feature_data, ensembl)
 # run bagging
 # use original positive training set and clinical with updated negative pool
 start <- Sys.time()
-ML_bagging_results <- ML_bagging(feature_matrix = updated_feature_data,
+ML_bagging_results <- ML_bagging(feature_matrix = updated_feature_data[,-c(72,73)],
                                  positive_set = positive_set, 
                                  negative_pool = training_data$negative_pool, 
                                  n_models = 1000,
