@@ -173,14 +173,16 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
   }
 }
 
-
+PCA_sample_info$group <- toTitleCase(PCA_sample_info$group)
+colnames(PCA_sample_info)[3] <- "Classification"
 PCA_plot <- plot_PCA(expr_data = counts_filt$counts_filt, 
                      sample_info = PCA_sample_info, 
                      output_plot_data = T,
                      circle_clust = F, 
                      colour = "group", 
-                     shape = "sample_type")
+                     shape = "Classification")
 
+print(PCA_plot$PCA_plot + scale_shape_manual(values = c(20,17,0,8)))
 
 # remove solid tissue normal samples and re-plot PCA
 STN_samples <- PCA_sample_info$sample[PCA_sample_info$sample_type == "Solid Tissue Normal"]
