@@ -27,24 +27,37 @@ TCGA_data <- cbind(normal_unstranded, LumA_unstranded, LumB_unstranded, Her2_uns
 data_master <- merge(GTEx_ENS, TCGA_data, by = "row.names")
 data_master <- column_to_rownames(data_master, "Row.names")
 
+
+
 sample_info <- data.frame(
   sample = colnames(data_master),
   group = c(rep("GTEx", ncol(GTEx_ENS)), 
-            rep("TCGA_normal", ncol(normal_unstranded)),
+            rep("Normal", ncol(normal_unstranded)),
             rep("LumA", ncol(LumA_unstranded)),
             rep("LumB", ncol(LumB_unstranded)),
             rep("Her2", ncol(Her2_unstranded)),
-            rep("Basal", ncol(Basal_unstranded))))
-sample_info$group <- factor(sample_info$group, levels = c("GTEx", "TCGA_normal", "LumA", "LumB", "Her2", "Basal"))
+            rep("Basal", ncol(Basal_unstranded)),
+            rep("Normal", ncol(normal_unstranded))))
+sample_info$group <- factor(sample_info$group, levels = c("GTEx", "Normal", "LumA", "LumB", "Her2", "Basal"))
 
+# add sample type to sample_info
+load("RData/TCGA_query.RData")
+common <- common[, c(1,3)]
+sample_info <- merge(sample_info, common, by.x = "sample", by.y = "cases", all.x = T)
+sample_info$sample_type <- ifelse(is.na(sample_info$sample_type), "Healthy", sample_info$sample_type)
+
+# filter low expression genes
 data_master_filt <- filterByExpr(data_master, group = sample_info$group)
 data_master_filt <- data_master[data_master_filt, ]
 
-data_master_norm <- cpm(as.matrix(data_master_filt), log = T)
-
-# requires function from WGCNA_functions.R
-PCA_all_data <- plot_PCA(expr_data = t(data_master_filt), sample_info = sample_info)
-
+# master function from MOC_pipe dir
+PCA_plot <- plot_PCA(expr_data = data_master_filt, 
+                     sample_info = sample_info, 
+                     output_plot_data = T,
+                     circle_clust = F, 
+                     colour = "group",
+                     shape = "sample_type")
+print(PCA_plot$PCA_plot + scale_shape_manual(name = "Sample Type"))
 
 
 
