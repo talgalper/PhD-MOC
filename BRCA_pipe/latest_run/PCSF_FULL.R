@@ -173,8 +173,9 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
   }
 }
 
-PCA_sample_info$group <- toTitleCase(PCA_sample_info$group)
+PCA_sample_info$group <- tools::toTitleCase(PCA_sample_info$group)
 colnames(PCA_sample_info)[3] <- "Classification"
+PCA_sample_info$group <- ifelse(PCA_sample_info$group == "Control", "GTEx", PCA_sample_info$group)
 PCA_plot <- plot_PCA(expr_data = counts_filt$counts_filt, 
                      sample_info = PCA_sample_info, 
                      output_plot_data = T,
