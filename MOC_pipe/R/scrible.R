@@ -189,4 +189,23 @@ temp <- TTD_master[TTD_master$all_target_genes %in% "TP53" & TTD_master$DRUGTYPE
 
 
 
+# venn diagram between GTEX and BEN DE
+venn_data <- list(
+  MOCvsBEN = MOCvsBEN$dif_exp$gene_id,
+  MOCvsGTEx = MOCvsGTEx$dif_exp$gene_id
+)
+
+library(venn)
+library(RColorBrewer)
+venn(venn_data, 
+     ellipse = T, 
+     zcolor = brewer.pal(length(venn_data), name = "Dark2"),
+     box = FALSE,
+     ilabels = "counts",
+     sncs = 2,
+     ilcs = 2)
+
+
+
+
 
