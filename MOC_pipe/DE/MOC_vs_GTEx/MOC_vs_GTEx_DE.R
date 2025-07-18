@@ -56,6 +56,10 @@ PCA_plot <- plot_PCA(expr_data = counts_filt,
                      shape = "stage", 
                      colour = "Classification")
 
+print(PCA_plot$PCA_plot + scale_color_manual(name = "Group", 
+                                             values = c("#4DAF4A", "#E41A1C"), 
+                                             labels = c("GTEx-OV", "MOC")))
+
 
 # perform DE analysis
 DE_results <- DE_analysis(counts_matrix = counts_filt, 
