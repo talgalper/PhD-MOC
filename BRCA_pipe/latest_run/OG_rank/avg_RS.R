@@ -27,9 +27,11 @@ PubTator_counts <- PubTator_counts[order(-PubTator_counts$counts), ]
 colnames(PubTator_counts)[1] <- "symbol"
 
 
-HHnet_enrich <- read.csv("~/Desktop/HHnetEnrich_pageRank.csv")
+HHnet_enrich <- read.csv("../Hierarchical_HotNet/BRCA/STN_filt/results/df_subnetNeighs_pageRank.csv")
 colnames(HHnet_enrich)[5] <- "degree_centrality"
-PCSF <- read.csv("~/Desktop/PCSF_pageRank.csv")
+load("latest_run/RData/STN_filt/PCSF_results_pageRank.RData")
+PCSF <- df
+rm(df)
 
 PCSF <- merge.data.table(as.data.table(PCSF), PubTator_counts, by.x = "external_gene_name", by.y = "symbol", all.x = T)
 PCSF <- PCSF[order(-PCSF$degree_centrality), ]
@@ -107,23 +109,19 @@ TWS_PCSF_pageRank <- target_weight_sensitivity(PCSF, unique(targets$drugBank_tar
 
 
 
-
-
 ## Average ranking system
-combined_rank_sensitivity <- function(input_data,
-                                      # Ensembl object for annotation is optional here;
-                                      # if needed you can extend the function to retrieve gene descriptions.
-                                      features = list(
-                                        betweenness = "betweenness",
-                                        centrality = "degree_centrality",
-                                        druggability = "highest_score",
-                                        eigen_centrality = "eigen_centrality",
-                                        closeness = "closeness",
-                                        citation = "counts_norm"
-                                      ),
-                                      # Specify which features should be subtracted (e.g. citation counts)
-                                      negative_features = c("citation"),
-                                      step = 0.1) {
+avg_rank_sensitivity <- function(input_data,
+                                 features = list(
+                                   betweenness = "betweenness",
+                                   centrality = "degree_centrality",
+                                   druggability = "highest_score",
+                                   eigen_centrality = "eigen_centrality",
+                                   closeness = "closeness",
+                                   citation = "counts_norm"
+                                 ),
+                                 # Specify which features should be subtracted (e.g. citation counts)
+                                 negative_features = c("citation"),
+                                 step = 0.1) {
   # Extract feature names and build corresponding weight column names.
   feature_names <- names(features)
   weight_names <- paste0(feature_names, "_w")
@@ -195,7 +193,8 @@ combined_rank_sensitivity <- function(input_data,
 }
 
 
-RS_HHnet_enrich_new <- combined_rank_sensitivity(HHnet_enrich,
+
+RS_HHnet_enrich_new <- avg_rank_sensitivity(HHnet_enrich,
                                                  features = list(
                                                    betweenness = "betweenness",
                                                    centrality = "degree_centrality",
@@ -212,18 +211,18 @@ temp2 <- RS_HHnet_enrich_new[RS_HHnet_enrich_new$gene %in% targets$drugBank_targ
 write.csv(RS_HHnet_enrich_new, "latest_run/OG_rank/avg_RS_HHnetEnrich.csv", row.names = F)
 
 # run avg rank with PCSF
-RS_PCSF_new <- combined_rank_sensitivity(PCSF,
-                                         features = list(
-                                           betweenness = "betweenness",
-                                                         centrality = "degree_centrality",
-                                                         druggability = "highest_score",
-                                                         eigen_centrality = "eigen_centrality",
-                                                         closeness = "closeness",
-                                                         page_rank = "page_rank"), 
-                                         step = 0.1)
+RS_PCSF <- avg_rank_sensitivity(PCSF,
+                                    features = list(
+                                      betweenness = "betweenness",
+                                      centrality = "degree_centrality",
+                                      druggability = "highest_score",
+                                      eigen_centrality = "eigen_centrality",
+                                      closeness = "closeness",
+                                      page_rank = "page_rank"), 
+                                    step = 0.1)
 
-rownames(RS_PCSF_new) <- NULL
-temp2 <- RS_PCSF_new[RS_PCSF_new$gene %in% targets$drugBank_target, ]
+rownames(RS_PCSF) <- NULL
+temp2 <- RS_PCSF[RS_PCSF$gene %in% targets$drugBank_target, ]
 
 write.csv(RS_PCSF_new, "latest_run/OG_rank/avg_RS_PCSF.csv", row.names = F)
 
@@ -232,18 +231,14 @@ write.csv(RS_PCSF_new, "latest_run/OG_rank/avg_RS_PCSF.csv", row.names = F)
 HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$highest_score, HHnet_enrich$degree), ]
 HHnet_enrich <- HHnet_enrich[!duplicated(HHnet_enrich$external_gene_name), ]
 
-feature_matrix <- read.csv("~/Desktop/temp.csv") # feature_data_scores_appended
+load("~/OneDrive - RMIT University/PhD/large_git_files/ML/ML_bagging_more_features(100itr).RData")
+feature_matrix <- model_prediction_results$feature_data_scores_appended
 feature_matrix <- feature_matrix[, c(1,105:108)]
 
-ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+feature_matrix <- id_annot(data = feature_matrix, 
+                           input_type = "uniprot_gn_id", 
+                           convert_to = c("external_gene_name"))
 
-gene_ids <- getBM(
-  attributes = c("uniprot_gn_id", "external_gene_name"),
-  filters = "uniprot_gn_id",
-  values = feature_matrix$Protein,
-  mart = ensembl)
-
-feature_matrix <- merge(gene_ids, feature_matrix, by.x = "uniprot_gn_id", by.y = "Protein", all = T)
 feature_matrix <- feature_matrix[order(-feature_matrix$Prediction_Score_rf), ]
 rownames(feature_matrix) <- NULL
 
@@ -252,11 +247,17 @@ HHnet_enrich <- HHnet_enrich[order(-HHnet_enrich$Prediction_Score_rf), ]
 rownames(HHnet_enrich) <- NULL
 HHnet_enrich <- unique(HHnet_enrich, by = c("external_gene_name", "degree_centrality"))
 HHnet_enrich <- HHnet_enrich[complete.cases(HHnet_enrich), ]
-
 HHnet_enrich$Prediction_Score_rf <- (HHnet_enrich$Prediction_Score_rf - min(HHnet_enrich$Prediction_Score_rf)) / (max(HHnet_enrich$Prediction_Score_rf) - min(HHnet_enrich$Prediction_Score_rf))
 
+PCSF <- merge.data.table(PCSF, feature_matrix, by = "external_gene_name", all.x = T)
+PCSF <- PCSF[order(-PCSF$Prediction_Score_rf), ]
+rownames(PCSF) <- NULL
+PCSF <- unique(PCSF, by = c("external_gene_name", "degree_centrality"))
+PCSF <- PCSF[complete.cases(PCSF), ]
+PCSF$Prediction_Score_rf <- (PCSF$Prediction_Score_rf - min(PCSF$Prediction_Score_rf)) / (max(PCSF$Prediction_Score_rf) - min(PCSF$Prediction_Score_rf))
 
-RS_HHnet_enrich_ML <- combined_rank_sensitivity(HHnet_enrich,
+
+RS_HHnet_enrich_ML <- avg_rank_sensitivity(HHnet_enrich,
                                                 features = list(
                                                   betweenness = "betweenness",
                                                   centrality = "degree_centrality",
@@ -271,12 +272,27 @@ rownames(RS_HHnet_enrich_ML) <- NULL
 
 
 
+RS_PCSF_ML <- avg_rank_sensitivity(PCSF,
+                                   features = list(
+                                     betweenness = "betweenness",
+                                     centrality = "degree_centrality",
+                                     druggability = "highest_score",
+                                     eigen_centrality = "eigen_centrality",
+                                     closeness = "closeness",
+                                     page_rank = "page_rank",
+                                     ML_pred = "Prediction_Score_rf"), 
+                                   step = 0.1)
+
+rownames(RS_PCSF_ML) <- NULL
 
 
 
+targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
+targets <- targets[, c(2,4)]
+targets <- targets[!duplicated(targets$ensembl_gene_id), ]
 
-
-
+temp <- RS_HHnet_enrich_ML[RS_HHnet_enrich_ML$gene %in% targets$drugBank_target, ]
+temp2 <- RS_PCSF_ML[RS_PCSF_ML$gene %in% targets$drugBank_target, ]
 
 
 
