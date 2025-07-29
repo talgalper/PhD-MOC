@@ -10,9 +10,9 @@ start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = training_data$feature_matrix,
                                  positive_set = training_data$positive_set, 
                                  negative_pool = training_data$negative_pool,
-                                 models = c("glmnet", "rf", "svmRadial", "knn", "nb", "nnet", "xgbTree"),
+                                 models = c("rf"),
                                  n_models = 100,
-                                 big_grid = FALSE)
+                                 big_grid = TRUE)
 print(Sys.time() - start)
 rm(start)
 
@@ -101,7 +101,7 @@ start <- Sys.time()
 ML_bagging_results <- ML_bagging(feature_matrix = updated_feature_data[,-c(72,73)],
                                  positive_set = positive_set, 
                                  negative_pool = training_data$negative_pool, 
-                                 n_models = 1000,
+                                 n_models = 100,
                                  models = c("glmnet", "rf", "svmRadial", "nnet"))
 print(Sys.time() - start)
 rm(start)
