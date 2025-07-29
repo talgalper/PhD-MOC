@@ -51,24 +51,15 @@ rownames(df) <- NULL
 
 
 
-# add gene symbols
-library(biomaRt)
-ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+# add gene symbols - read in function from "../MOC_pipe/R/functions.R"
+df <- id_annot(data = df,
+               input_type = "ensembl_gene_id", 
+               convert_to = c("external_gene_name", "description", "gene_biotype"))
 
-ensembl_converted <- getBM(attributes = c("ensembl_gene_id", "external_gene_name", "description", "gene_biotype"), 
-                           filters = "ensembl_gene_id", 
-                           values = df$gene_id, 
-                           mart = ensembl)
-ensembl_converted$description <- gsub("\\[.*?\\]", "", ensembl_converted$description)
-
-unmapped <- ensembl_converted[ensembl_converted$external_gene_name == "", ]
-unrecognised <- df[!df$gene_id %in% ensembl_converted$ensembl_gene_id, ]
-
-df <- merge(ensembl_converted, df, by.x = "ensembl_gene_id", by.y = "gene_id", all.y = T)
 df <- df[order(-df$degree_centrality), ]
 rownames(df) <- NULL
 
-save(df, file = "latest_run/RData/STN_filt/PCSF_results.RData")
+save(df, file = "latest_run/RData/STN_filt/PCSF_results_pageRank.RData")
 load("latest_run/RData/STN_filt/PCSF_results.RData")
 
 library(clusterProfiler)
