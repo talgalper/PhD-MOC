@@ -1,6 +1,7 @@
 ### Perform pre-processing and DE analysis on MOC data ###
 
 library(edgeR)
+source("R/functions.R")
 
 MOC_raw_counts <- read.csv("data/analysis_set_raw_counts.csv", row.names = 1)
 sample_info <- read.csv("data/All survival_CN_Aug18.csv")
@@ -30,6 +31,7 @@ sample_info$stage <- ifelse(sample_info$Stage %in% c("I", "IA", "IC"), "I",
 # check distribution
 hist(cpm(MOC_raw_counts, log = T))
 
+# create library size bar plot
 old <- par(
   mar  = c(5, 4, 4, 8) + 0.1,
   xpd  = TRUE
@@ -81,6 +83,7 @@ low_exp_genes <- MOC_raw_counts_filt[!rownames(MOC_raw_counts_filt) %in% rowname
 
 hist(cpm(counts_filt, log = T))
 
+# replot the bar plot with the removed samples
 old <- par(
   mar  = c(5, 4, 4, 8) + 0.1, 
   xpd  = TRUE    
