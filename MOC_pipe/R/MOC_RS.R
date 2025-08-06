@@ -3,6 +3,7 @@
 library(progress)
 library(biomaRt)
 library(data.table)
+source("R/functions.R")
 
 druggability <- read.csv("../Druggability_analysis/data_general/druggability_scores_annot.csv")
 load("../ML/RData/full_fpocket_results.RData")
