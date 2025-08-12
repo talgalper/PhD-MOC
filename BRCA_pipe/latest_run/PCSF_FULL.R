@@ -231,6 +231,9 @@ EnhancedVolcano(
   title = "BRCA DE: TCGA vs GTEx",
   legendPosition = "right",
   drawConnectors = T,
+  cutoffLineType = "blank",
+  gridlines.major = F,
+  gridlines.minor = F
 )
 
 
