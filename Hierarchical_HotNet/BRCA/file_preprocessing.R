@@ -21,9 +21,10 @@ load("../BRCA_pipe/latest_run/RData/STN_filt/dif_exp.RData")
 DE_data <- subset(dif_exp, select = c("gene_id", "logFC"))
 DE_data$logFC_abs <- abs(DE_data$logFC) # get absolute values
 DE_data_abs <- subset(DE_data, select = c("gene_id", "logFC_abs"))
-
+DE_data_signed <-  subset(DE_data, select = c("gene_id", "logFC"))
 
 fwrite(gene_index, "BRCA/STN_filt/data/gene_index.tsv", col.names = F, sep = "\t")
 fwrite(edge_list_index, "BRCA/STN_filt/data/edge_list_index.tsv", col.names = F, sep = "\t")
 fwrite(DE_data_abs, "BRCA/STN_filt/data/updated_DE/logFC_scores_abs.tsv", col.names = F, sep = "\t")
+fwrite(DE_data_signed, "BRCA/STN_filt/data/logFC_scores_signed.tsv", col.names = F, sep = "\t")
 
