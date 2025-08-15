@@ -1,6 +1,6 @@
 library(data.table)
 
-# load in BRCA data
+# load in STRING data
 STRING_edge <- fread("STRING_data/STRING_physical_ENSG.csv") 
 STRING_edge <- STRING_edge[, -3]
 STRING_edge <- STRING_edge[!duplicated(t(apply(STRING_edge, 1, sort))), ]
