@@ -71,30 +71,30 @@ avg_rank_sensitivity <- function(input_data,
   feature_names <- names(features)
   weight_names <- paste0(feature_names, "_w")
   
-  # 1. Dynamically generate all weight combinations for the selected features.
+  # Dynamically generate all weight combinations for the selected features.
   grid_list <- lapply(seq_along(feature_names), function(i) seq(0, 1, step))
   names(grid_list) <- weight_names
   all_combos <- expand.grid(grid_list)
   
-  # 2. Keep only the combinations where the weights sum to 1 (within a tiny tolerance).
+  # Keep only the combinations where the weights sum to 1 (within a tiny tolerance).
   valid_combos <- subset(all_combos, abs(rowSums(all_combos) - 1) < 1e-9)
   
   num_combos <- nrow(valid_combos)
   num_genes <- nrow(input_data)
   gene_names <- input_data$external_gene_name
   
-  # 3. Create a matrix to store the rank of every gene for each weight combination.
+  # Create a matrix to store the rank of every gene for each weight combination.
   rank_matrix <- matrix(NA, nrow = num_genes, ncol = num_combos)
   rownames(rank_matrix) <- gene_names
   colnames(rank_matrix) <- paste0("Combo_", seq_len(num_combos))
   
-  # Set up a progress bar (optional).
+  # Set up a progress bar
   pb <- progress_bar$new(
     format = "[:bar] :current/:total (:percent) eta: :eta", 
     total = num_combos
   )
   
-  # 4. Loop over each valid weight combination.
+  # Loop over each valid weight combination.
   for(i in seq_len(num_combos)) {
     pb$tick()
     current_weights <- valid_combos[i, ]
@@ -119,7 +119,7 @@ avg_rank_sensitivity <- function(input_data,
     rank_matrix[, i] <- ranks
   }
   
-  # 5. Calculate the average rank and variance for each gene over all weight combinations.
+  # Calculate the average rank and variance for each gene over all weight combinations.
   avg_ranks <- rowMeans(rank_matrix)
   var_ranks <- apply(rank_matrix, 1, var)
   
