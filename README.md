@@ -15,7 +15,7 @@ The final pipeline combines multiple analytic layers:
 
 ## Reproducing MOC Results
 1. **MOC expression processing:** launch the R project in [`MOC_pipe/`](MOC_pipe/) and run the differential expression scripts under `R/` to regenerate contrast tables in `results/`.
-2. **Subnetwork Identification:** feed the ranked gene lists into [`Hierarchical_HotNet/`](Hierarchical_HotNet/) using `HHnet_run.sh` to derive significant subnet hierarchies saved under `MOC/results/`. Follow the script to enrich the 
+2. **Subnetwork Identification:** feed the differential expression values (as absolute values) into [`Hierarchical_HotNet/`](Hierarchical_HotNet/) using `HHnet_run.sh` to derive significant subnet hierarchies saved under `MOC/results/`. Follow the script to enrich the 
 likely small subnetwork with nearest neighbours for greater bioloigcal context.
 3. **Integration:** combine network metrics from Hierarchical HotNet in [`MOC_pipe/R/MOC_RS.R`](MOC_pipe/R/MOC_RS.R) following the script workflow which pulls citaiton and druggability data from respective directories for post hoc analysis.  
 
