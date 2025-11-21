@@ -720,22 +720,44 @@ colnames(tumour_sizes) <- c("Module", "TumourSize")
 data <- merge(data, tumour_sizes, by.x = "Test", by.y = "Module")
 data <- merge(data, control_sizes, by.x = "Reference", by.y = "Module")
 
-# Create labels with module size
-data$Reference <- paste(data$Reference, "(", data$ControlSize, ")", sep = "")
-data$Test <- paste(data$Test, "(", data$TumourSize, ")", sep = "")
+# Keep raw module names for alignment
+data$TestMod <- data$Test 
+data$ReferenceMod <- data$Reference 
 
-ggplot(data, aes(x = Test, y = Reference, fill = LogPValue)) +
+# Create pretty labels including sizes (for display only)
+data$TestLabel <- paste0(data$TestMod, " (", data$TumourSize,  ")")
+data$ReferenceLabel <- paste0(data$ReferenceMod, " (", data$ControlSize, ")")
+
+# Force both axes to share the same ordering
+mods <- sort(unique(c(as.character(data$TestMod),
+                      as.character(data$ReferenceMod))))
+
+data$TestMod <- factor(data$TestMod, levels = mods)
+data$ReferenceMod <- factor(data$ReferenceMod, levels = mods)
+
+# Unique label mappings
+test_labs_df <- unique(data[c("TestMod", "TestLabel")])
+ref_labs_df  <- unique(data[c("ReferenceMod", "ReferenceLabel")])
+
+test_labs <- setNames(test_labs_df$TestLabel, test_labs_df$TestMod)
+ref_labs <- setNames(ref_labs_df$ReferenceLabel, ref_labs_df$ReferenceMod)
+
+
+ggplot(data, aes(x = TestMod, y = ReferenceMod, fill = LogPValue)) +
   geom_tile(color = "white") +
   scale_fill_gradient(low = "white", high = "red") +
-  geom_text(aes(label = Count), size = 5) +  # Display only counts
+  geom_text(aes(label = Count), size = 5) +
+  scale_x_discrete(labels = test_labs, drop = FALSE) +
+  scale_y_discrete(labels = ref_labs,  drop = FALSE) +
   theme_minimal() +
   labs(x = "Test Modules", y = "Reference Modules") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         axis.text = element_text(colour = "black", size = 18),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 14),
-        legend.title = element_text(size = 16))
-
+        legend.title = element_text(size = 16),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 
 ## plot the colour mapping between control and tumour bwnet
 control_colors <- control_bwnet$colors
