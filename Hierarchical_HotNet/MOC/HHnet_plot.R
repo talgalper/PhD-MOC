@@ -52,7 +52,7 @@ neighbs <- neighborhood(
   order = 1,
   nodes = top
 )
-neighbs <- flatten(neighbs)
+neighbs <- purrr::flatten(neighbs)
 neighbs <- names(neighbs)
 neighbs <- unique(neighbs)
 
