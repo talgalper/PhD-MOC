@@ -132,8 +132,8 @@ rownames(df_subnetNeighs) <- NULL
 fwrite(df_subnet, "MOC/results/df_subnet.csv")
 fwrite(df_subnetNeighs, "MOC/results/df_subnetNeighs.csv")
 
-subnet <- read.csv("MOC/results/df_subnet.csv")
-
+df_subnet <- read.csv("MOC/results/df_subnet.csv")
+df_subnetNeighs <- read.csv("MOC/results/df_subnetNeighs.csv")
 
 
 library(clusterProfiler)
