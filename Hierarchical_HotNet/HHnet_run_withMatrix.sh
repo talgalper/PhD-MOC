@@ -2,9 +2,9 @@
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-data=$PWD/MOC/data
-intermediate=$PWD/MOC/intermediate
-results=$PWD/MOC/results
+data=$PWD/BRCA/subtype_analysis/lumA/data
+intermediate=$PWD/BRCA/subtype_analysis/lumA/intermediate
+results=$PWD/BRCA/subtype_analysis/lumA/results
 
 # Create directories
 mkdir -p $data
@@ -13,7 +13,7 @@ mkdir -p $results
 
 # Set the name of your network and score file
 network=STRING
-score=MOC_logFC
+score=lumA_logFC
 
 # Filenames for your input files
 index_gene_file=gene_index.tsv
