@@ -34,4 +34,7 @@ subtypes <- c("lumA", "lumB", "Her2", "basal")
 
 for (subtype in subtypes) {
   preProcessing(subtype)
+  
+  # create intermediate filder for matrix
+  dir.create(paste0("BRCA/subtype_analysis/", subtype, "/intermediate/STRING"), recursive = TRUE, showWarnings = FALSE)
 }
