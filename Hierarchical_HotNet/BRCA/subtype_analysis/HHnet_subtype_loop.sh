@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
+# requires existing matrix and beta file in lumA/intermediate/STRING
+
 subtypes=("lumA" "lumB" "Her2" "basal")
 
 for subtype in "${subtypes[@]}"; do
+
+echo "===== Starting analysis for: $subtype ====="
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
@@ -37,7 +41,7 @@ num_permutations=100
 # to specify the number of cores for your system.
 
 ##### MAKE SURE THIS IS CORRECT #####
-num_cores=32
+num_cores=48
 
 mkdir -p $intermediate/"$network"
 mkdir -p $intermediate/"$network"_"$score"
