@@ -2,9 +2,7 @@
 
 # requires existing matrix and beta file in lumA/intermediate/STRING
 
-subtypes=("lumA" "lumB" "Her2" "basal")
-
-for subtype in "${subtypes[@]}"; do
+for subtype in lumA lumB Her2 basal; do
 
 echo "===== Starting analysis for: $subtype ====="
 
