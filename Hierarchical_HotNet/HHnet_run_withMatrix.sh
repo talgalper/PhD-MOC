@@ -2,9 +2,9 @@
 
 # IMPORTANT: Make sure to double check and update paths and filenames
 # Set the paths for your data, intermediate, and results directories
-data=$PWD/BRCA/subtype_analysis/lumA/data
-intermediate=$PWD/BRCA/subtype_analysis/lumA/intermediate
-results=$PWD/BRCA/subtype_analysis/lumA/results
+data=$PWD/BRCA/subtype_analysis/basal/data
+intermediate=$PWD/BRCA/subtype_analysis/basal/intermediate
+results=$PWD/BRCA/subtype_analysis/basal/results
 
 # Create directories
 mkdir -p $data
@@ -13,7 +13,7 @@ mkdir -p $results
 
 # Set the name of your network and score file
 network=STRING
-score=lumA_logFC
+score=basal_logFC
 
 # Filenames for your input files
 index_gene_file=gene_index.tsv
@@ -28,7 +28,7 @@ num_permutations=100
 # to specify the number of cores for your system.
 
 ##### MAKE SURE THIS IS CORRECT #####
-num_cores=32
+num_cores=40
 
 mkdir -p $intermediate/"$network"
 mkdir -p $intermediate/"$network"_"$score"
