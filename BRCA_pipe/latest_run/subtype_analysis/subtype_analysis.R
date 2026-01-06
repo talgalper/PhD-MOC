@@ -196,5 +196,20 @@ write.csv(basal_difExp, "latest_run/subtype_analysis/basal_difExp.csv", row.name
 
 
 
+# analyse HHnet results
+load("../Hierarchical_HotNet/BRCA/subtype_analysis/subtype_results.RData")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
