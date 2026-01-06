@@ -24,10 +24,10 @@ preProcessing <- function(subtype) {
   DE_data_abs <- subset(DE_data, select = c("gene_id", "logFC_abs"))
   DE_data_signed <-  subset(DE_data, select = c("gene_id", "logFC"))
   
-  write.table(gene_index, paste0("BRCA/subtype_analysis/", subtype, "/data/gene_index.tsv"), col.names = F, row.names = F, sep = "\t")
-  write.table(edge_list_index, paste0("BRCA/subtype_analysis/", subtype, "/data/edge_list_index.tsv"), col.names = F, row.names = F, sep = "\t")
-  write.table(DE_data_abs, paste0("BRCA/subtype_analysis/", subtype, "/data/logFC_scores_abs.tsv"), col.names = F, row.names = F, sep = "\t")
-  write.table(DE_data_signed, paste0("BRCA/subtype_analysis/", subtype, "/data/logFC_scores_signed.tsv"), col.names = F, row.names = F, sep = "\t")
+  write.table(gene_index, paste0("BRCA/subtype_analysis/", subtype, "/data/gene_index.tsv"), col.names = F, row.names = F, sep = "\t", quote = FALSE)
+  write.table(edge_list_index, paste0("BRCA/subtype_analysis/", subtype, "/data/edge_list_index.tsv"), col.names = F, row.names = F, sep = "\t", quote = FALSE)
+  write.table(DE_data_abs, paste0("BRCA/subtype_analysis/", subtype, "/data/logFC_scores_abs.tsv"), col.names = F, row.names = F, sep = "\t", quote = FALSE)
+  write.table(DE_data_signed, paste0("BRCA/subtype_analysis/", subtype, "/data/logFC_scores_signed.tsv"), col.names = F, row.names = F, sep = "\t", quote = FALSE)
 }
 
 subtypes <- c("lumA", "lumB", "Her2", "basal")
