@@ -20,8 +20,8 @@ The final pipeline combines multiple analytic layers:
 likely small subnetwork with nearest neighbours for greater bioloigcal context.
 3. **Integration:** combine network metrics from Hierarchical HotNet in [`MOC_pipe/R/MOC_RS.R`](MOC_pipe/R/MOC_RS.R) following the script workflow which pulls citaiton and druggability data from respective directories for post hoc analysis.  
 
-### Optional (fix this section)
-If you would like to re-run any of scripts to generate the mmachine learning or druggability data you can do so as follows:
+### Optional (To be improved)
+If you would like to re-run any of the scripts to generate the machine learning or druggability data you can do so as follows:
 
 - **Druggability annotation:** open [`Druggability_analysis/`](Druggability_analysis/) and run relevant structural database downlaod scripts if you wish to obtain the latest version of the datasets (optionally visit the database webpages). Run the drug binding pocket prediction tools [`Fpocket/`](Druggability_analysis/Fpocket/) and [`PocketMiner`](Druggability_analysis/PocketMiner/) on the updated structure set(s).
 
