@@ -3,10 +3,10 @@
 This repository encompasses all coding work in Tal Galper's PhD project.
 There will be an update here soon to a separate repo with a neat and tidy version of the optimsied pipleine for those interested in applying this workflow in their own research.
 
-## Thesis context
+## Thesis Context
 This repository aggregates the computational work supporting my PhD research into the molecular underpinnings and therapeutic vulnerabilities of mucinous ovarian carcinoma (MOC). The code base spans RNA-seq processing, network propagation, druggability profiling, and downstream integration analyses that collectively prioritise candidate targets for experimental follow-up. Note that some large files are not found here and are either on the university OneDrive and/or in my posession. Can be provided on request.
 
-## Pipeline overview
+## Pipeline Overview
 The final pipeline combines multiple analytic layers:
 - **Transcriptomic preprocessing (`MOC_pipe/`)** – generates differential expression contrasts (MOC vs. benign ovarian, GTEx, and TCGA cohorts) and quality-control visualisations used to seed downstream analyses.
 - **Network diffusion (`Hierarchical_HotNet/`)** – applies Hierarchical HotNet to propagate differential signals through STRING-derived interaction networks and returns subnetworks enriched for MOC-specific perturbations.
