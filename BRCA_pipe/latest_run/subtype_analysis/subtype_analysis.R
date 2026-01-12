@@ -390,3 +390,42 @@ gc()
 
 save(RS_HHnet_results, file = "latest_run/subtype_analysis/RS_HHnet_subtype_results.RData")
 
+
+
+
+load("latest_run/subtype_analysis/RS_HHnet_subtype_results.RData")
+
+
+# get BRCA specific subtypes
+TTD_approved_cancer <- read.csv("../Druggability_analysis/data_general/TTD_approved_EXT.csv")
+
+# Her2 subtype
+filter_terms <- c("Trastuzumab", "Pertuzumab", "Neratinib", "lapatinib")
+pattern <- paste(filter_terms, collapse = "|")
+TTD_approved_cancer <- TTD_approved[grepl(pattern, TTD_approved$INDICATION, ignore.case = TRUE), ]
+
+
+Her2 <- RS_HHnet_results$Her2_results
+
+# subset genes with less than 5000 citations
+filt <- Her2[Her2$counts < 5000, ]
+# predicted by RF
+filt <- Her2[Her2$Prediction_Score_rf > 0.5, ]
+rownames(filt) <- NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
