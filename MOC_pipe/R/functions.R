@@ -162,7 +162,7 @@ DE_analysis <- function(counts_matrix, sample_info, group = "Classification") {
 id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
 
   if (isFALSE(exists("ensembl", envir = globalenv(), inherits = FALSE))) {
-    cat("No ensembl object, loading to global env...", "\n")
+    cat("No ensembl object, loading to workspace environment...", "\n")
     library(biomaRt)
     ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") 
     assign("ensembl", ensembl, envir = .GlobalEnv) # add to global env
