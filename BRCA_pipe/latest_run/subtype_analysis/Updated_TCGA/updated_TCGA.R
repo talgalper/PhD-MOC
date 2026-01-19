@@ -46,11 +46,11 @@ BRCA_Her2 <- BRCA_RNAseq_unstranded[, colnames(BRCA_RNAseq_unstranded) %in%
                                         BRCA_sample_data$cases[BRCA_sample_data$BRCA_Subtype_PAM50 == "Her2"]]
 rownames(BRCA_Her2) <- gsub("\\.\\d+", "", rownames(BRCA_Her2))
 
-write.csv(BRCA_normal, "latest_run/subtype_analysis/Updated_TCGA/TCGA_normal_RNAseq.csv")
-write.csv(BRCA_basal, "latest_run/subtype_analysis/Updated_TCGA/TCGA_basal_RNAseq.csv")
-write.csv(BRCA_lumA, "latest_run/subtype_analysis/Updated_TCGA/TCGA_lumA_RNAseq.csv")
-write.csv(BRCA_lumB, "latest_run/subtype_analysis/Updated_TCGA/TCGA_lumB_RNAseq.csv")
-write.csv(BRCA_Her2, "latest_run/subtype_analysis/Updated_TCGA/TCGA_Her2_RNAseq.csv")
+write.csv(BRCA_normal, "~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_normal_RNAseq.csv")
+write.csv(BRCA_basal, "~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_basal_RNAseq.csv")
+write.csv(BRCA_lumA, "~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_lumA_RNAseq.csv")
+write.csv(BRCA_lumB, "~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_lumB_RNAseq.csv")
+write.csv(BRCA_Her2, "~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_Her2_RNAseq.csv")
 
 save(query, query_output, BRCA_sample_data, file = "latest_run/subtype_analysis/Updated_TCGA/query_data.RData")
 
@@ -178,11 +178,11 @@ subtype_analysis <- function(subtype_data, control_data, subtype_name, PCA = TRU
 }
 
 
-BRCA_lumA <- read.csv("latest_run/subtype_analysis/Updated_TCGA/TCGA_lumA_RNAseq.csv", row.names = 1)
-BRCA_lumB <- read.csv("latest_run/subtype_analysis/Updated_TCGA/TCGA_lumB_RNAseq.csv", row.names = 1)
-BRCA_Her2 <- read.csv("latest_run/subtype_analysis/Updated_TCGA/TCGA_Her2_RNAseq.csv", row.names = 1)
-BRCA_basal <- read.csv("latest_run/subtype_analysis/Updated_TCGA/TCGA_basal_RNAseq.csv", row.names = 1)
-BRCA_normal <- read.csv("latest_run/subtype_analysis/Updated_TCGA/TCGA_normal_RNAseq.csv", row.names = 1)
+BRCA_lumA <- read.csv("~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_lumA_RNAseq.csv", row.names = 1)
+BRCA_lumB <- read.csv("~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_lumB_RNAseq.csv", row.names = 1)
+BRCA_Her2 <- read.csv("~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_Her2_RNAseq.csv", row.names = 1)
+BRCA_basal <- read.csv("~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_basal_RNAseq.csv", row.names = 1)
+BRCA_normal <- read.csv("~/OneDrive - RMIT University/PhD/large_git_files/BRCA_subtype_analysis/updated_TCGA/TCGA_normal_RNAseq.csv", row.names = 1)
 
 # read in and format GTEx data
 GTEx_data <- read.table("../BRCA_pipe/latest_run/subtype_analysis/Updated_TCGA/GTEx_breast_mammary_v10.gct", skip = 2)
