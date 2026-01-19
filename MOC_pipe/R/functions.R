@@ -14,6 +14,16 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
     library(rlang)
     library(tools)
   })
+  
+  # handles NA values in selected shape/colour column
+  cols_to_fix <- unique(na.omit(c(colour, shape)))
+  for (nm in cols_to_fix) {
+    if (nm %in% colnames(sample_info)) {
+      sample_info[[nm]] <- as.character(sample_info[[nm]])
+      sample_info[[nm]][is.na(sample_info[[nm]])] <- "NA"
+      sample_info[[nm]] <- factor(sample_info[[nm]])
+    }
+  }
 
   # Convert expression data frame into CPM-normalized + transposed matrix
   PCA_data <- cpm(as.matrix(expr_data), log = TRUE)
@@ -29,7 +39,7 @@ plot_PCA <- function(expr_data, sample_info, output_plot_data = TRUE, circle_clu
   pca_data <- merge(pca_data, sample_info, by.x = "row.names", by.y = 1)
   
   # Create a custom colour palette for stages
-  groups <- unique(sample_info[ ,colour])
+  groups <- unique(pca_data[[colour]])
   num_colors <- length(groups)
   colours <- brewer.pal(n = 6, name = "Set1")
   names(colours) <- groups
@@ -127,7 +137,7 @@ DE_analysis <- function(counts_matrix, sample_info, group = "Classification") {
   
   cat("Estimating dispersion \n")
   
-  data <- estimateDisp(data)
+  data <- estimateDisp(data, design)
   
   cat("Conduct quasi-likelihood F-test \n")
   
