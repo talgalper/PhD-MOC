@@ -393,9 +393,58 @@ save(RS_HHnet_results, file = "latest_run/subtype_analysis/RS_HHnet_subtype_resu
 
 
 
+
+
+
+
+
+
+source("../MOC_pipe/R/functions.R")
+
 load("latest_run/subtype_analysis/RS_HHnet_subtype_results.RData")
 
+BRCA_targets <- read.csv("../Druggability_analysis/data_general/target_all_dbs.csv")
 
+lumA_target_ranks <- RS_HHnet_results$lumA_results
+lumA_target_ranks <- lumA_target_ranks[lumA_target_ranks$external_gene_name %in% BRCA_targets$drugBank_target, ]
+lumA_target_ranks <- id_annot(ensembl, data = lumA_target_ranks, 
+                               input_type = "external_gene_name", 
+                               convert_to = "ensembl_gene_id")
+basal_DE <- read.csv("latest_run/subtype_analysis/lumA_difExp.csv")
+lumA_target_ranks <- merge(lumA_target_ranks, lumA_DE[, c(1,2,6)], by.x = "ensembl_gene_id", by.y = "gene_id", all.x = TRUE)
+
+
+lumB_target_ranks <- RS_HHnet_results$lumB_results
+lumB_target_ranks <- lumB_target_ranks[lumB_target_ranks$external_gene_name %in% BRCA_targets$drugBank_target, ]
+
+Her2_target_ranks <- RS_HHnet_results$Her2_results
+Her2_target_ranks <- Her2_target_ranks[Her2_target_ranks$external_gene_name %in% BRCA_targets$drugBank_target, ]
+
+basal_target_ranks <- RS_HHnet_results$basal_results
+basal_target_ranks <- basal_target_ranks[basal_target_ranks$external_gene_name %in% BRCA_targets$drugBank_target, ]
+basal_target_ranks <- id_annot(ensembl, data = basal_target_ranks, 
+                               input_type = "external_gene_name", 
+                               convert_to = "ensembl_gene_id")
+basal_DE <- read.csv("latest_run/subtype_analysis/basal_difExp.csv")
+basal_target_ranks <- merge(basal_target_ranks, basal_DE[, c(1,2,6)], by.x = "ensembl_gene_id", by.y = "gene_id", all.x = TRUE)
+
+
+lumA_subnet <- read.csv("../Hierarchical_HotNet/BRCA/subtype_analysis/lumA/results/df_subnet.csv")
+lumB_subnet <- read.csv("../Hierarchical_HotNet/BRCA/subtype_analysis/lumB/results/df_subnet.csv")
+Her2_subnet <- read.csv("../Hierarchical_HotNet/BRCA/subtype_analysis/Her2/results/df_subnet.csv")
+basal_subnet <- read.csv("../Hierarchical_HotNet/BRCA/subtype_analysis/basal/results/df_subnet.csv")
+
+
+
+
+
+
+filt <- lumA_target_ranks[lumA_target_ranks$Prediction_Score_rf > 0.5, ]
+rownames(filt) <- NULL
+filt <- filt[filt$external_gene_name %in% BRCA_targets$drugBank_target, ]
+
+
+  
 # get BRCA specific subtypes
 TTD_approved_cancer <- read.csv("../Druggability_analysis/data_general/TTD_approved_EXT.csv")
 
@@ -403,6 +452,7 @@ TTD_approved_cancer <- read.csv("../Druggability_analysis/data_general/TTD_appro
 filter_terms <- c("Trastuzumab", "Pertuzumab", "Neratinib", "lapatinib")
 pattern <- paste(filter_terms, collapse = "|")
 TTD_approved_cancer <- TTD_approved[grepl(pattern, TTD_approved$INDICATION, ignore.case = TRUE), ]
+
 
 
 Her2 <- RS_HHnet_results$Her2_results
