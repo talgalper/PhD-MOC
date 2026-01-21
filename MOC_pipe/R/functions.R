@@ -171,14 +171,14 @@ DE_analysis <- function(counts_matrix, sample_info, group = "Classification") {
 # IDs by comibing uniprotswissprot and uniprot_gn_id. Works vice versa.
 id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
 
-  if (isFALSE(exists("ensembl", envir = globalenv(), inherits = FALSE))) {
-    cat("No ensembl object, loading to workspace environment...", "\n")
-    library(biomaRt)
-    ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") 
-    assign("ensembl", ensembl, envir = .GlobalEnv) # add to global env
-  } else {
-    if (missing(ensembl)) {
-      stop("Uh-oh silly! ensembl object in env, please include as arg", call. = FALSE)
+  if (missing(ensembl)) {
+    if (exists("ensembl", envir = globalenv(), inherits = FALSE)) {
+      ensembl <- get("ensembl", envir = globalenv(), inherits = FALSE)
+    } else {
+      cat("No ensembl object, loading to workspace environment...", "\n")
+      library(biomaRt)
+      ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") 
+      assign("ensembl", ensembl, envir = .GlobalEnv) # add to global env
     }
   }
   
@@ -414,6 +414,114 @@ id_annot <- function(ensembl, data, col_id = 1, input_type, convert_to) {
   cat("Done!", "\n")
   return(data_annot)
 }
+
+
+plot_lib_size <- function(expr_matrix,
+                          sample_info,
+                          colour = NULL,
+                          palette_name = "Set1",
+                          ylab = "log2(counts + 1)",
+                          cex_lab = 1.2,
+                          cex_axis = 1.2,
+                          legend_cex = 1.2,
+                          ...) {
+  
+  # Align sample_info to expr_matrix columns if possible
+  if (!is.null(rownames(sample_info)) && all(colnames(expr_matrix) %in% rownames(sample_info))) {
+    sample_info <- sample_info[colnames(expr_matrix), , drop = FALSE]
+  } else {
+    # fallback: assume rows are already in the same order as columns
+    if (nrow(sample_info) != ncol(expr_matrix)) {
+      stop(
+        "Cannot match sample_info rows to expr_matrix columns.\n",
+        "Either set rownames(sample_info) to sample names or ensure nrow(sample_info) == ncol(expr_matrix)."
+      )
+    }
+  }
+  
+  # ordering + colours
+  ord <- seq_len(ncol(expr_matrix))
+  box_cols <- "grey70"
+  legend_levels <- NULL
+  legend_fills <- NULL
+  
+  if (!is.null(colour)) {
+    if (!colour %in% colnames(sample_info)) {
+      stop(sprintf("Column '%s' not found in sample_info.", colour))
+    }
+    
+    group <- as.character(sample_info[[colour]])
+    if (any(is.na(group))) {
+      stop(sprintf("Column '%s' contains NA values; please remove/fix them before plotting.", colour))
+    }
+    
+    # Order samples by group (like your original stage ordering)
+    ord <- order(group)
+    legend_levels <- unique(group[ord])
+    
+    # Build palette (recycle/expand safely if more groups than palette supports)
+    n_groups <- length(legend_levels)
+    
+    if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+      stop("Package 'RColorBrewer' is required. Install it via install.packages('RColorBrewer').")
+    }
+    
+    max_n <- RColorBrewer::brewer.pal.info[palette_name, "maxcolors"]
+    if (is.na(max_n)) {
+      stop(sprintf("Palette '%s' not found in RColorBrewer.", palette_name))
+    }
+    
+    if (n_groups <= max_n) {
+      colours <- RColorBrewer::brewer.pal(n = n_groups, name = palette_name)
+    } else {
+      # If many groups, interpolate the brewer palette into a longer set
+      base_cols <- RColorBrewer::brewer.pal(n = max_n, name = palette_name)
+      colours <- grDevices::colorRampPalette(base_cols)(n_groups)
+    }
+    
+    names(colours) <- legend_levels
+    box_cols <- colours[group[ord]]
+    legend_fills <- colours[legend_levels]
+  }
+  
+  # plotting
+  old_par <- par(no.readonly = TRUE)
+  on.exit(par(old_par), add = TRUE)
+  
+  par(
+    font.lab = 2,
+    mar = c(6, 4, 3, 8),
+    xpd = TRUE
+  )
+  
+  boxplot(
+    log2(expr_matrix[, ord, drop = FALSE] + 1),
+    las = 2,
+    col = box_cols,
+    ylab = ylab,
+    cex.lab = cex_lab,
+    cex.axis = cex_axis,
+    ...
+  )
+  
+  if (!is.null(colour)) {
+    legend(
+      "topright",
+      inset = c(-0.225, 0),
+      legend = legend_levels,
+      fill = legend_fills,
+      cex = legend_cex,
+      bty = "n",
+      x.intersp = 0.2
+    )
+  }
+  
+  invisible(NULL)
+}
+
+
+
+
 
 
 
