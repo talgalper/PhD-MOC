@@ -3,7 +3,7 @@
 This repository encompasses all coding work in Tal Galper's PhD project.
 I would highly recomend going straight to the NextFlow pipeline below as it is much more organised and maintained than this repo. This repo will remain up for reproducability sake in accordance with responsible data protocols for PhD's.
 
-**NextFlow pipeline is now available!:** https://github.com/talgalper/NetIntegRank.git
+**NextFlow pipeline is now available:** https://github.com/talgalper/NetIntegRank.git
 
 ## Thesis Context
 This repository aggregates the computational work supporting my PhD research into the molecular underpinnings and therapeutic vulnerabilities of mucinous ovarian carcinoma (MOC). The code base spans RNA-seq processing, network propagation, druggability profiling, and downstream integration analyses that collectively prioritise candidate targets for experimental follow-up. Note that some large files are not found here and are either on the university OneDrive and/or in my posession. Can be provided on request.
